@@ -1,7 +1,9 @@
 module OUI.Explorer exposing (..)
 
 import Browser
+import Effect exposing (Effect)
 import Element exposing (Element)
+import Element.Background as Background
 import Markdown.Parser
 import Markdown.Renderer
 import Spa
@@ -17,6 +19,14 @@ type alias Page msg =
     { title : String
     , content : Element msg
     }
+
+
+type alias Shared =
+    { lastEvents : List String }
+
+
+type SharedMsg
+    = Event String
 
 
 defaultView : Page msg
@@ -81,12 +91,18 @@ addBook b expl =
                         Nothing
                 )
                 (\_ ->
-                    Spa.Page.static
-                        { title = b.title
-                        , content =
-                            b.chapters
-                                |> List.reverse
-                                |> Element.column [ Element.spacing 20 ]
+                    Spa.Page.element
+                        { init = \_ -> ( (), Effect.none )
+                        , update = \(SharedMsg msg) () -> ( (), Effect.fromShared msg )
+                        , view =
+                            \_ ->
+                                { title = b.title
+                                , content =
+                                    b.chapters
+                                        |> List.reverse
+                                        |> Element.column [ Element.spacing 20 ]
+                                }
+                        , subscriptions = \_ -> Sub.none
                         }
                 )
     , categories =
@@ -103,6 +119,15 @@ type alias Book msg =
     { title : String
     , chapters : List (Element msg)
     }
+
+
+type BookMsg
+    = SharedMsg SharedMsg
+
+
+event : String -> BookMsg
+event value =
+    SharedMsg <| Event value
 
 
 book : String -> Book msg
@@ -150,12 +175,23 @@ finalize expl =
     in
     Spa.application mapView
         { toRoute = \url -> url.path
-        , init = \() _ -> ( (), Cmd.none )
-        , update = \_ _ -> ( (), Cmd.none )
+        , init = \() _ -> ( { lastEvents = [] }, Cmd.none )
+        , update =
+            \msg shared ->
+                case msg of
+                    Event value ->
+                        ( { shared
+                            | lastEvents =
+                                value
+                                    :: shared.lastEvents
+                                    |> List.take 10
+                          }
+                        , Cmd.none
+                        )
         , subscriptions = \_ -> Sub.none
         , protectPage = \s -> "/"
         , toDocument =
-            \_ b ->
+            \shared b ->
                 { title = b.title
                 , body =
                     [ Element.column
@@ -171,7 +207,6 @@ finalize expl =
                         , Element.row
                             [ Element.height Element.fill
                             , Element.width Element.fill
-                            , Element.scrollbarY
                             ]
                             [ categories
                                 |> List.concatMap
@@ -201,17 +236,39 @@ finalize expl =
                                     , Element.width <| Element.px 200
                                     , Element.height Element.fill
                                     ]
-                            , b.content
-                                |> Element.el
-                                    [ Element.scrollbarY
-                                    , Element.height Element.fill
+                            , Element.column
+                                [ Element.width Element.fill
+                                , Element.height Element.fill
+                                ]
+                                [ b.content
+                                    |> Element.el
+                                        [ Element.scrollbarY
+                                        , Element.height Element.fill
+                                        , Element.width Element.fill
+                                        ]
+                                , Element.column
+                                    [ Element.height <| Element.px 200
                                     , Element.width Element.fill
+                                    , Background.color <| Element.rgb255 200 200 200
                                     ]
+                                  <|
+                                    List.map Element.text shared.lastEvents
+                                ]
                             ]
                         ]
-                        |> Element.layout
+                        |> Element.layoutWith
+                            { options =
+                                [ Element.focusStyle
+                                    { borderColor = Nothing
+                                    , backgroundColor = Nothing
+                                    , shadow = Nothing
+                                    }
+                                ]
+                            }
                             [ Element.height Element.fill
                             , Element.width Element.fill
+                            , Background.color <| Element.rgb255 255 255 255
+                            , Element.scrollbarY
                             ]
                     ]
                 }

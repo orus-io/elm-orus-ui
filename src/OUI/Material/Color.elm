@@ -1,6 +1,184 @@
-module OUI.Material.Color exposing (KeyColors, Scheme, darkFromKeyColors, defaultDarkScheme, defaultKeyColors, defaultLightScheme, lightFromKeyColors)
+module OUI.Material.Color exposing
+    ( KeyColors
+    , Scheme
+    , darkFromKeyColors
+    , defaultDarkScheme
+    , defaultKeyColors
+    , defaultLightScheme
+    , focusStateLayerOpacity
+    , getColor
+    , getElementColor
+    , getOnColor
+    , getOnElementColor
+    , hoverStateLayerOpacity
+    , lightFromKeyColors
+    , pressStateLayerOpacity
+    , setAlpha
+    , toElementColor
+    , withShade
+    )
 
 import Color exposing (Color)
+import Color.Convert as Convert
+import Element
+import OUI
+
+
+hoverStateLayerOpacity : Float
+hoverStateLayerOpacity =
+    0.08
+
+
+focusStateLayerOpacity : Float
+focusStateLayerOpacity =
+    0.12
+
+
+pressStateLayerOpacity : Float
+pressStateLayerOpacity =
+    0.12
+
+
+toElementColor : Color.Color -> Element.Color
+toElementColor =
+    Color.toRgba
+        >> Element.fromRgb
+
+
+getElementColor : OUI.Color -> Scheme -> Element.Color
+getElementColor c =
+    getColor c
+        >> toElementColor
+
+
+getOnElementColor : OUI.Color -> Scheme -> Element.Color
+getOnElementColor c =
+    getOnColor c
+        >> toElementColor
+
+
+getColor : OUI.Color -> Scheme -> Color.Color
+getColor c =
+    case c of
+        OUI.Primary ->
+            .primary
+
+        OUI.PrimaryContainer ->
+            .primaryContainer
+
+        OUI.Secondary ->
+            .secondary
+
+        OUI.SecondaryContainer ->
+            .secondaryContainer
+
+        OUI.Tertiary ->
+            .tertiary
+
+        OUI.TertiaryContainer ->
+            .tertiaryContainer
+
+        OUI.Error ->
+            .error
+
+        OUI.ErrorContainer ->
+            .errorContainer
+
+
+getOnColor : OUI.Color -> Scheme -> Color.Color
+getOnColor c =
+    case c of
+        OUI.Primary ->
+            .onPrimary
+
+        OUI.PrimaryContainer ->
+            .onPrimaryContainer
+
+        OUI.Secondary ->
+            .onSecondary
+
+        OUI.SecondaryContainer ->
+            .onSecondaryContainer
+
+        OUI.Tertiary ->
+            .onTertiary
+
+        OUI.TertiaryContainer ->
+            .onTertiaryContainer
+
+        OUI.Error ->
+            .onError
+
+        OUI.ErrorContainer ->
+            .onErrorContainer
+
+
+setAlpha : Float -> Color.Color -> Color.Color
+setAlpha value color =
+    let
+        rgba =
+            Color.toRgba color
+    in
+    Color.fromRgba
+        { rgba
+            | alpha = value
+        }
+
+
+{-| Utility function to convert a color to CIELCH color space
+-}
+toCIELCH : Color -> { l : Float, c : Float, h : Float }
+toCIELCH =
+    Convert.colorToLab
+        >> (\{ l, a, b } ->
+                { l = l
+                , c = sqrt (a * a + b * b)
+                , h = atan2 b a
+                }
+           )
+
+
+{-| Utility function to convert CIELCH color space back to a color
+-}
+fromCIELCH : { l : Float, c : Float, h : Float } -> Color
+fromCIELCH =
+    (\{ l, c, h } ->
+        { l = l
+        , a = c * cos h
+        , b = c * sin h
+        }
+    )
+        >> Convert.labToColor
+
+
+{-| Simulates adding a color in front (subtractive color mixing).
+
+    --Darkens the color by 50%
+    withShade (Color.rgb255 255 255 255) 0.5
+
+    --Makes the color 50% more red
+    withShade (Color.rgb255 255 0 0) 0.5
+
+-}
+withShade : Color -> Float -> Color -> Color
+withShade c2 amount c1 =
+    let
+        alpha =
+            c1
+                |> Color.toRgba
+                |> .alpha
+
+        fun a b =
+            { l = (a.l * (1 - amount) + b.l * amount) / 1
+            , c = (a.c * (1 - amount) + b.c * amount) / 1
+            , h = (a.h * (1 - amount) + b.h * amount) / 1
+            }
+    in
+    fun (toCIELCH c1) (toCIELCH c2)
+        |> fromCIELCH
+        |> Color.toRgba
+        |> (\color -> { color | alpha = alpha })
+        |> Color.fromRgba
 
 
 type alias KeyColors =
@@ -69,7 +247,7 @@ lightFromKeyColors keyColors =
     , onErrorContainer = tone 10 keyColors.error
     , outline = tone 50 keyColors.neutralVariant
     , outlineVariant = tone 80 keyColors.neutralVariant
-    , shadow = tone 0 keyColors.neutral
+    , shadow = tone 0 keyColors.neutral |> setAlpha 0.16
     , surfaceTint = keyColors.primary
     , scrim = tone 0 keyColors.neutral
     }
@@ -111,7 +289,7 @@ darkFromKeyColors keyColors =
     , onErrorContainer = tone 90 keyColors.error
     , outline = tone 60 keyColors.neutralVariant
     , outlineVariant = tone 30 keyColors.neutralVariant
-    , shadow = tone 0 keyColors.neutral
+    , shadow = tone 0 keyColors.neutral |> setAlpha 0.16
     , surfaceTint = keyColors.primary
     , scrim = tone 0 keyColors.neutral
     }

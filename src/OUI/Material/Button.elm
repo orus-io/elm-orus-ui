@@ -1,38 +1,28 @@
 module OUI.Material.Button exposing (..)
 
 import Element exposing (Attribute, Element)
+import Element.Background as Background
 import Element.Border as Border
+import Element.Font as Font
 import Element.Input as Input
 import OUI
 import OUI.Button exposing (Button, getProperties)
-import OUI.Material exposing (Palette)
+import OUI.Material.Color
+import OUI.Material.Typography
+import OUI.Text
 
 
-defaultTheme : Theme
-defaultTheme =
-    let
-        medium =
-            { containerHeight = 40
-            , containerRadius = 20
-            , iconSize = 18
-            , leftRightPadding = 24
-            , leftPaddingWithIcon = 16
-            , rightPaddingWithIcon = 16
-            , paddingBetweenElements = 8
+defaultLayout : Layout
+defaultLayout =
+    { containerHeight = 40
+    , containerRadius = 20
+    , iconSize = 18
+    , leftRightPadding = 24
+    , leftPaddingWithIcon = 16
+    , rightPaddingWithIcon = 16
+    , paddingBetweenElements = 8
 
-            --, labelTextAlignment =
-            }
-    in
-    { small = medium
-    , medium = medium
-    , large = medium
-    }
-
-
-type alias Theme =
-    { small : Layout
-    , medium : Layout
-    , large : Layout
+    --, labelTextAlignment =
     }
 
 
@@ -49,44 +39,275 @@ type alias Layout =
     }
 
 
-borderAttrs : OUI.Button.Type -> Layout -> List (Attribute msg)
-borderAttrs btnType layout =
-    case btnType of
-        OUI.Button.Elevated ->
-            [ Border.rounded layout.containerRadius
-            , Border.shadow
+elevatedAttrs :
+    OUI.Material.Typography.Typescale
+    -> OUI.Material.Color.Scheme
+    -> Layout
+    -> OUI.Color
+    -> List (Attribute msg)
+elevatedAttrs typescale colorScheme layout color =
+    OUI.Material.Typography.attrs typescale OUI.Text.Label OUI.Text.Large
+        ++ [ Border.rounded layout.containerRadius
+           , Border.shadow
                 { offset = ( 1, 1 )
                 , size = 1
-                , blur = 0
-                , color = Element.rgb 0 0 0
+                , blur = 1
+                , color = OUI.Material.Color.toElementColor colorScheme.shadow
                 }
-            ]
+           , Background.color <| OUI.Material.Color.toElementColor colorScheme.surfaceContainerLow
+           , Font.color <| OUI.Material.Color.getElementColor color colorScheme
+           , Element.focused
+                [ colorScheme.surfaceContainerLow
+                    |> OUI.Material.Color.withShade
+                        (OUI.Material.Color.getColor color colorScheme)
+                        OUI.Material.Color.focusStateLayerOpacity
+                    |> OUI.Material.Color.toElementColor
+                    |> Background.color
+                ]
+           , Element.mouseDown
+                [ colorScheme.surfaceContainerLow
+                    |> OUI.Material.Color.withShade
+                        (OUI.Material.Color.getColor color colorScheme)
+                        OUI.Material.Color.pressStateLayerOpacity
+                    |> OUI.Material.Color.toElementColor
+                    |> Background.color
+                ]
+           , Element.mouseOver
+                [ colorScheme.surfaceContainerLow
+                    |> OUI.Material.Color.withShade
+                        (OUI.Material.Color.getColor color colorScheme)
+                        OUI.Material.Color.hoverStateLayerOpacity
+                    |> OUI.Material.Color.toElementColor
+                    |> Background.color
+                ]
+           ]
 
-        _ ->
-            []
+
+elevatedDisabledAttrs :
+    OUI.Material.Typography.Typescale
+    -> OUI.Material.Color.Scheme
+    -> Layout
+    -> List (Attribute msg)
+elevatedDisabledAttrs typescale colorScheme layout =
+    OUI.Material.Typography.attrs typescale OUI.Text.Label OUI.Text.Large
+        ++ [ Border.rounded layout.containerRadius
+           , Border.shadow
+                { offset = ( 1, 1 )
+                , size = 0
+                , blur = 1
+                , color = OUI.Material.Color.toElementColor colorScheme.shadow
+                }
+           , Background.color <|
+                OUI.Material.Color.toElementColor <|
+                    OUI.Material.Color.setAlpha 0.12 colorScheme.onSurface
+           , Font.color <|
+                OUI.Material.Color.toElementColor <|
+                    OUI.Material.Color.setAlpha 0.38 colorScheme.onSurface
+           , Element.focused
+                [ Background.color <|
+                    OUI.Material.Color.toElementColor <|
+                        OUI.Material.Color.setAlpha
+                            (0.12 + OUI.Material.Color.hoverStateLayerOpacity)
+                            colorScheme.onSurface
+                ]
+           ]
+
+
+filledAttrs :
+    OUI.Material.Typography.Typescale
+    -> OUI.Material.Color.Scheme
+    -> Layout
+    -> OUI.Color
+    -> List (Attribute msg)
+filledAttrs typescale colorScheme layout color =
+    OUI.Material.Typography.attrs typescale OUI.Text.Label OUI.Text.Large
+        ++ [ Border.rounded layout.containerRadius
+           , Background.color <| OUI.Material.Color.getElementColor color colorScheme
+           , Font.color <| OUI.Material.Color.getOnElementColor color colorScheme
+           , Element.focused
+                [ OUI.Material.Color.getColor color colorScheme
+                    |> OUI.Material.Color.withShade
+                        (OUI.Material.Color.getOnColor color colorScheme)
+                        OUI.Material.Color.focusStateLayerOpacity
+                    |> OUI.Material.Color.toElementColor
+                    |> Background.color
+                ]
+           , Element.mouseDown
+                [ OUI.Material.Color.getColor color colorScheme
+                    |> OUI.Material.Color.withShade
+                        (OUI.Material.Color.getOnColor color colorScheme)
+                        OUI.Material.Color.pressStateLayerOpacity
+                    |> OUI.Material.Color.toElementColor
+                    |> Background.color
+                ]
+           , Element.mouseOver
+                [ OUI.Material.Color.getColor color colorScheme
+                    |> OUI.Material.Color.withShade
+                        (OUI.Material.Color.getOnColor color colorScheme)
+                        OUI.Material.Color.hoverStateLayerOpacity
+                    |> OUI.Material.Color.toElementColor
+                    |> Background.color
+                ]
+           ]
+
+
+filledDisabledAttrs :
+    OUI.Material.Typography.Typescale
+    -> OUI.Material.Color.Scheme
+    -> Layout
+    -> List (Attribute msg)
+filledDisabledAttrs typescale colorScheme layout =
+    OUI.Material.Typography.attrs typescale OUI.Text.Label OUI.Text.Large
+        ++ [ Border.rounded layout.containerRadius
+           , Background.color <|
+                OUI.Material.Color.toElementColor <|
+                    OUI.Material.Color.setAlpha 0.12 colorScheme.onSurface
+           , Font.color <|
+                OUI.Material.Color.toElementColor <|
+                    OUI.Material.Color.setAlpha 0.38 colorScheme.onSurface
+           , Element.focused
+                [ Background.color <|
+                    OUI.Material.Color.toElementColor <|
+                        OUI.Material.Color.setAlpha
+                            (0.12 + OUI.Material.Color.hoverStateLayerOpacity)
+                            colorScheme.onSurface
+                ]
+           ]
+
+
+outlinedAttrs :
+    OUI.Material.Typography.Typescale
+    -> OUI.Material.Color.Scheme
+    -> Layout
+    -> OUI.Color
+    -> List (Attribute msg)
+outlinedAttrs typescale colorScheme layout color =
+    OUI.Material.Typography.attrs typescale OUI.Text.Label OUI.Text.Large
+        ++ [ Border.rounded layout.containerRadius
+           , Border.width 1
+           , Border.color <| OUI.Material.Color.toElementColor colorScheme.outline
+           , Font.color <| OUI.Material.Color.getElementColor color colorScheme
+           , Element.focused
+                [ colorScheme.surface
+                    |> OUI.Material.Color.withShade
+                        (OUI.Material.Color.getColor color colorScheme)
+                        OUI.Material.Color.focusStateLayerOpacity
+                    |> OUI.Material.Color.toElementColor
+                    |> Background.color
+                ]
+           , Element.mouseDown
+                [ colorScheme.surface
+                    |> OUI.Material.Color.withShade
+                        (OUI.Material.Color.getColor color colorScheme)
+                        OUI.Material.Color.pressStateLayerOpacity
+                    |> OUI.Material.Color.toElementColor
+                    |> Background.color
+                ]
+           , Element.mouseOver
+                [ colorScheme.surface
+                    |> OUI.Material.Color.withShade
+                        (OUI.Material.Color.getColor color colorScheme)
+                        OUI.Material.Color.hoverStateLayerOpacity
+                    |> OUI.Material.Color.toElementColor
+                    |> Background.color
+                ]
+           ]
+
+
+outlinedDisabledAttrs :
+    OUI.Material.Typography.Typescale
+    -> OUI.Material.Color.Scheme
+    -> Layout
+    -> List (Attribute msg)
+outlinedDisabledAttrs typescale colorScheme layout =
+    OUI.Material.Typography.attrs typescale OUI.Text.Label OUI.Text.Large
+        ++ [ Border.rounded layout.containerRadius
+           , Border.width 1
+           , Border.color <|
+                OUI.Material.Color.toElementColor <|
+                    OUI.Material.Color.setAlpha 0.12 colorScheme.onSurface
+           , Font.color <|
+                OUI.Material.Color.toElementColor <|
+                    OUI.Material.Color.setAlpha 0.38 colorScheme.onSurface
+           , Element.focused
+                [ Background.color <|
+                    OUI.Material.Color.toElementColor <|
+                        OUI.Material.Color.setAlpha
+                            OUI.Material.Color.hoverStateLayerOpacity
+                            colorScheme.onSurface
+                ]
+           ]
+
+
+textAttrs :
+    OUI.Material.Typography.Typescale
+    -> OUI.Material.Color.Scheme
+    -> Layout
+    -> OUI.Color
+    -> List (Attribute msg)
+textAttrs typescale colorScheme layout color =
+    OUI.Material.Typography.attrs typescale OUI.Text.Label OUI.Text.Large
+        ++ [ Border.rounded layout.containerRadius
+           , Font.color <| OUI.Material.Color.getElementColor color colorScheme
+           , Element.focused
+                [ colorScheme.surface
+                    |> OUI.Material.Color.withShade
+                        (OUI.Material.Color.getColor color colorScheme)
+                        OUI.Material.Color.focusStateLayerOpacity
+                    |> OUI.Material.Color.toElementColor
+                    |> Background.color
+                ]
+           , Element.mouseDown
+                [ colorScheme.surface
+                    |> OUI.Material.Color.withShade
+                        (OUI.Material.Color.getColor color colorScheme)
+                        OUI.Material.Color.pressStateLayerOpacity
+                    |> OUI.Material.Color.toElementColor
+                    |> Background.color
+                ]
+           , Element.mouseOver
+                [ colorScheme.surface
+                    |> OUI.Material.Color.withShade
+                        (OUI.Material.Color.getColor color colorScheme)
+                        OUI.Material.Color.hoverStateLayerOpacity
+                    |> OUI.Material.Color.toElementColor
+                    |> Background.color
+                ]
+           ]
+
+
+textDisabledAttrs :
+    OUI.Material.Typography.Typescale
+    -> OUI.Material.Color.Scheme
+    -> Layout
+    -> List (Attribute msg)
+textDisabledAttrs typescale colorScheme layout =
+    OUI.Material.Typography.attrs typescale OUI.Text.Label OUI.Text.Large
+        ++ [ Border.rounded layout.containerRadius
+           , Font.color <|
+                OUI.Material.Color.toElementColor <|
+                    OUI.Material.Color.setAlpha 0.38 colorScheme.onSurface
+           , Element.focused
+                [ Background.color <|
+                    OUI.Material.Color.toElementColor <|
+                        OUI.Material.Color.setAlpha
+                            OUI.Material.Color.hoverStateLayerOpacity
+                            colorScheme.onSurface
+                ]
+           ]
 
 
 render :
-    Theme
-    -> Palette
+    OUI.Material.Typography.Typescale
+    -> OUI.Material.Color.Scheme
+    -> Layout
     -> List (Attribute msg)
     -> Button { constraints | hasText : (), hasAction : () } msg
     -> Element msg
-render theme palette attrs button =
+render typescale colorscheme layout attrs button =
     let
         props =
             getProperties button
-
-        layout =
-            case props.size of
-                OUI.Small ->
-                    theme.small
-
-                OUI.Medium ->
-                    theme.medium
-
-                OUI.Large ->
-                    theme.large
 
         padding =
             case props.icon of
@@ -114,7 +335,40 @@ render theme palette attrs button =
         ((Element.height <| Element.px layout.containerHeight)
             :: padding
             :: attrs
-            ++ borderAttrs props.type_ layout
+            ++ (case ( props.type_, props.onClick ) of
+                    ( OUI.Button.Elevated, Just _ ) ->
+                        elevatedAttrs typescale colorscheme layout props.color
+
+                    ( OUI.Button.Elevated, Nothing ) ->
+                        elevatedDisabledAttrs typescale colorscheme layout
+
+                    ( OUI.Button.Filled, Just _ ) ->
+                        filledAttrs typescale colorscheme layout props.color
+
+                    ( OUI.Button.Filled, Nothing ) ->
+                        filledDisabledAttrs typescale colorscheme layout
+
+                    ( OUI.Button.Tonal, Just _ ) ->
+                        filledAttrs typescale colorscheme layout props.color
+
+                    ( OUI.Button.Tonal, Nothing ) ->
+                        filledDisabledAttrs typescale colorscheme layout
+
+                    ( OUI.Button.Outlined, Just _ ) ->
+                        outlinedAttrs typescale colorscheme layout props.color
+
+                    ( OUI.Button.Outlined, Nothing ) ->
+                        outlinedDisabledAttrs typescale colorscheme layout
+
+                    ( OUI.Button.Text, Just _ ) ->
+                        textAttrs typescale colorscheme layout props.color
+
+                    ( OUI.Button.Text, Nothing ) ->
+                        textDisabledAttrs typescale colorscheme layout
+
+                    _ ->
+                        textDisabledAttrs typescale colorscheme layout
+               )
         )
         { label = label
         , onPress = props.onClick

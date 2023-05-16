@@ -1,6 +1,6 @@
 module OUI.Material.Typography exposing (..)
 
-import Element exposing (Element)
+import Element exposing (Attribute, Element)
 import Element.Font as Font
 import OUI.Text
 
@@ -43,20 +43,28 @@ type alias Typescale =
     }
 
 
-renderWithTypograph : Typography -> String -> Element msg
-renderWithTypograph typography text =
+typographyAttrs : Typography -> List (Attribute msg)
+typographyAttrs typography =
     -- TODO take inspiration from Paack-UI.Text
-    Element.el
-        [ Font.family [ Font.typeface typography.font ]
-        , Font.size typography.size
-        ]
-    <|
+    [ Font.family [ Font.typeface typography.font ]
+    , Font.size typography.size
+    , if typography.weight == 500 then
+        Font.medium
+
+      else
+        Font.regular
+    ]
+
+
+renderWithTypography : Typography -> String -> Element msg
+renderWithTypography typography text =
+    Element.el (typographyAttrs typography) <|
         Element.text text
 
 
-render : Typescale -> OUI.Text.Text -> Element msg
-render typescale (OUI.Text.Text type_ size text) =
-    renderWithTypograph
+attrs : Typescale -> OUI.Text.Type -> OUI.Text.Size -> List (Attribute msg)
+attrs typescale type_ size =
+    typographyAttrs
         (typescale
             |> (case type_ of
                     OUI.Text.Display ->
@@ -85,4 +93,9 @@ render typescale (OUI.Text.Text type_ size text) =
                         .large
                )
         )
-        text
+
+
+render : Typescale -> OUI.Text.Text -> Element msg
+render typescale (OUI.Text.Text type_ size text) =
+    Element.el (attrs typescale type_ size) <|
+        Element.text text

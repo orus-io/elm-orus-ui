@@ -27,7 +27,7 @@ type Button constraints msg
     = Button (Props msg)
 
 
-new : Button { needAction : (), needText : (), hasNoIcon : () } msg
+new : Button { needOnClickOrDisabled : (), needText : (), hasNoIcon : () } msg
 new =
     Button
         { text = ""
@@ -48,28 +48,69 @@ btntype value (Button props) =
     Button { props | type_ = value }
 
 
-text :
+elevatedButton : Button a msg -> Button a msg
+elevatedButton =
+    btntype Elevated
+
+
+filledButton : Button a msg -> Button a msg
+filledButton =
+    btntype Filled
+
+
+tonalButton : Button a msg -> Button a msg
+tonalButton =
+    color SecondaryContainer
+        >> btntype Filled
+
+
+outlinedButton : Button a msg -> Button a msg
+outlinedButton =
+    btntype Outlined
+
+
+textButton : Button a msg -> Button a msg
+textButton =
+    btntype Text
+
+
+fab : Button { a | hasIcon : () } msg -> Button { a | hasIcon : () } msg
+fab =
+    btntype FAB
+
+
+extendedFAB : Button { a | hasIcon : () } msg -> Button { a | hasIcon : () } msg
+extendedFAB =
+    btntype ExtendedFAB
+
+
+iconButton : Button { a | hasIcon : () } msg -> Button { a | hasIcon : () } msg
+iconButton =
+    btntype Icon
+
+
+withText :
     String
     -> Button { a | needText : () } msg
     -> Button { a | hasText : () } msg
-text value (Button props) =
+withText value (Button props) =
     Button { props | text = value }
 
 
-icon :
+withIcon :
     String
     -> Button { a | hasNoIcon : () } msg
-    -> Button a msg
-icon value (Button props) =
+    -> Button { a | hasIcon : () } msg
+withIcon value (Button props) =
     Button { props | icon = Just value }
 
 
-onClick : msg -> Button { a | needAction : () } msg -> Button a msg
+onClick : msg -> Button { a | needOnClickOrDisabled : () } msg -> Button { a | hasAction : () } msg
 onClick msg (Button props) =
     Button { props | onClick = Just msg }
 
 
-disabled : Button { props | needAction : () } msg -> Button a msg
+disabled : Button { props | needOnClickOrDisabled : () } msg -> Button { a | hasAction : () } msg
 disabled (Button props) =
     Button props
 
