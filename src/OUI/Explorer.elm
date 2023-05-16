@@ -158,13 +158,21 @@ finalize expl =
             \_ b ->
                 { title = b.title
                 , body =
-                    [ Element.column []
+                    [ Element.column
+                        [ Element.height Element.fill
+                        , Element.width Element.fill
+                        ]
                         [ Element.el
                             [ Element.padding 15
+                            , Element.width Element.fill
                             ]
                           <|
                             Element.text "Orus UI Explorer"
-                        , Element.row []
+                        , Element.row
+                            [ Element.height Element.fill
+                            , Element.width Element.fill
+                            , Element.scrollbarY
+                            ]
                             [ categories
                                 |> List.concatMap
                                     (\( cat, books ) ->
@@ -191,11 +199,20 @@ finalize expl =
                                     [ Element.padding 10
                                     , Element.alignTop
                                     , Element.width <| Element.px 200
+                                    , Element.height Element.fill
                                     ]
                             , b.content
+                                |> Element.el
+                                    [ Element.scrollbarY
+                                    , Element.height Element.fill
+                                    , Element.width Element.fill
+                                    ]
                             ]
                         ]
-                        |> Element.layout []
+                        |> Element.layout
+                            [ Element.height Element.fill
+                            , Element.width Element.fill
+                            ]
                     ]
                 }
         }
