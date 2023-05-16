@@ -21338,6 +21338,257 @@ var $author$project$OUI$ShowCase$Colors$book = A2(
 			$author$project$OUI$Explorer$withMarkdownChapter,
 			'\n# Colors\nThe two default color schemes\n    ',
 			$author$project$OUI$Explorer$book('Colors'))));
+var $author$project$OUI$Text$Body = {$: 'Body'};
+var $author$project$OUI$Text$Large = {$: 'Large'};
+var $author$project$OUI$Text$Text = F3(
+	function (a, b, c) {
+		return {$: 'Text', a: a, b: b, c: c};
+	});
+var $author$project$OUI$Text$bodyLarge = A2($author$project$OUI$Text$Text, $author$project$OUI$Text$Body, $author$project$OUI$Text$Large);
+var $author$project$OUI$Text$Medium = {$: 'Medium'};
+var $author$project$OUI$Text$bodyMedium = A2($author$project$OUI$Text$Text, $author$project$OUI$Text$Body, $author$project$OUI$Text$Medium);
+var $author$project$OUI$Text$Small = {$: 'Small'};
+var $author$project$OUI$Text$bodySmall = A2($author$project$OUI$Text$Text, $author$project$OUI$Text$Body, $author$project$OUI$Text$Small);
+var $author$project$OUI$Material$Theme$defaultTypescale = {
+	body: {
+		large: {font: 'Roboto Medium', lineHeight: 24, size: 16, tracking: 0.5, weight: 400},
+		medium: {font: 'Roboto Regular', lineHeight: 20, size: 14, tracking: 0.25, weight: 400},
+		small: {font: 'Roboto Regular', lineHeight: 16, size: 12, tracking: 0.4, weight: 400}
+	},
+	display: {
+		large: {font: 'Roboto Regular', lineHeight: 54, size: 47, tracking: -0.125, weight: 400},
+		medium: {font: 'Roboto Regular', lineHeight: 53, size: 45, tracking: 0, weight: 400},
+		small: {font: 'Roboto Regular', lineHeight: 44, size: 36, tracking: 0, weight: 400}
+	},
+	headline: {
+		large: {font: 'Roboto Regular', lineHeight: 40, size: 32, tracking: 0, weight: 400},
+		medium: {font: 'Roboto Regular', lineHeight: 36, size: 28, tracking: 0, weight: 400},
+		small: {font: 'Roboto Regular', lineHeight: 32, size: 24, tracking: 0, weight: 400}
+	},
+	label: {
+		large: {font: 'Roboto Medium', lineHeight: 20, size: 14, tracking: 0.1, weight: 500},
+		medium: {font: 'Roboto Medium', lineHeight: 16, size: 12, tracking: 0.5, weight: 500},
+		small: {font: 'Roboto Medium', lineHeight: 16, size: 11, tracking: 0.5, weight: 500}
+	},
+	title: {
+		large: {font: 'Roboto Regular', lineHeight: 26, size: 22, tracking: 0, weight: 400},
+		medium: {font: 'Roboto Medium', lineHeight: 24, size: 16, tracking: 0.15, weight: 500},
+		small: {font: 'Roboto Medium', lineHeight: 20, size: 14, tracking: 0.1, weight: 500}
+	}
+};
+var $author$project$OUI$Material$Theme$defaultTheme = {colorscheme: $author$project$OUI$Material$Color$defaultLightScheme, typescale: $author$project$OUI$Material$Theme$defaultTypescale};
+var $author$project$OUI$Text$Display = {$: 'Display'};
+var $author$project$OUI$Text$displayLarge = A2($author$project$OUI$Text$Text, $author$project$OUI$Text$Display, $author$project$OUI$Text$Large);
+var $author$project$OUI$Text$displayMedium = A2($author$project$OUI$Text$Text, $author$project$OUI$Text$Display, $author$project$OUI$Text$Medium);
+var $author$project$OUI$Text$displaySmall = A2($author$project$OUI$Text$Text, $author$project$OUI$Text$Display, $author$project$OUI$Text$Small);
+var $author$project$OUI$Text$Headline = {$: 'Headline'};
+var $author$project$OUI$Text$headlineLarge = A2($author$project$OUI$Text$Text, $author$project$OUI$Text$Headline, $author$project$OUI$Text$Large);
+var $author$project$OUI$Text$headlineMedium = A2($author$project$OUI$Text$Text, $author$project$OUI$Text$Headline, $author$project$OUI$Text$Medium);
+var $author$project$OUI$Text$headlineSmall = A2($author$project$OUI$Text$Text, $author$project$OUI$Text$Headline, $author$project$OUI$Text$Small);
+var $author$project$OUI$Text$Label = {$: 'Label'};
+var $author$project$OUI$Text$labelLarge = A2($author$project$OUI$Text$Text, $author$project$OUI$Text$Label, $author$project$OUI$Text$Large);
+var $author$project$OUI$Text$labelMedium = A2($author$project$OUI$Text$Text, $author$project$OUI$Text$Label, $author$project$OUI$Text$Medium);
+var $author$project$OUI$Text$labelSmall = A2($author$project$OUI$Text$Text, $author$project$OUI$Text$Label, $author$project$OUI$Text$Small);
+var $mdgriffith$elm_ui$Internal$Model$FontFamily = F2(
+	function (a, b) {
+		return {$: 'FontFamily', a: a, b: b};
+	});
+var $mdgriffith$elm_ui$Internal$Flag$fontFamily = $mdgriffith$elm_ui$Internal$Flag$flag(5);
+var $mdgriffith$elm_ui$Internal$Model$renderFontClassName = F2(
+	function (font, current) {
+		return _Utils_ap(
+			current,
+			function () {
+				switch (font.$) {
+					case 'Serif':
+						return 'serif';
+					case 'SansSerif':
+						return 'sans-serif';
+					case 'Monospace':
+						return 'monospace';
+					case 'Typeface':
+						var name = font.a;
+						return A2(
+							$elm$core$String$join,
+							'-',
+							$elm$core$String$words(
+								$elm$core$String$toLower(name)));
+					case 'ImportFont':
+						var name = font.a;
+						var url = font.b;
+						return A2(
+							$elm$core$String$join,
+							'-',
+							$elm$core$String$words(
+								$elm$core$String$toLower(name)));
+					default:
+						var name = font.a.name;
+						return A2(
+							$elm$core$String$join,
+							'-',
+							$elm$core$String$words(
+								$elm$core$String$toLower(name)));
+				}
+			}());
+	});
+var $mdgriffith$elm_ui$Element$Font$family = function (families) {
+	return A2(
+		$mdgriffith$elm_ui$Internal$Model$StyleClass,
+		$mdgriffith$elm_ui$Internal$Flag$fontFamily,
+		A2(
+			$mdgriffith$elm_ui$Internal$Model$FontFamily,
+			A3($elm$core$List$foldl, $mdgriffith$elm_ui$Internal$Model$renderFontClassName, 'ff-', families),
+			families));
+};
+var $mdgriffith$elm_ui$Internal$Model$Typeface = function (a) {
+	return {$: 'Typeface', a: a};
+};
+var $mdgriffith$elm_ui$Element$Font$typeface = $mdgriffith$elm_ui$Internal$Model$Typeface;
+var $author$project$OUI$Material$Typography$renderWithTypograph = F2(
+	function (typography, text) {
+		return A2(
+			$mdgriffith$elm_ui$Element$el,
+			_List_fromArray(
+				[
+					$mdgriffith$elm_ui$Element$Font$family(
+					_List_fromArray(
+						[
+							$mdgriffith$elm_ui$Element$Font$typeface(typography.font)
+						])),
+					$mdgriffith$elm_ui$Element$Font$size(typography.size)
+				]),
+			$mdgriffith$elm_ui$Element$text(text));
+	});
+var $author$project$OUI$Material$Typography$render = F2(
+	function (typescale, _v0) {
+		var type_ = _v0.a;
+		var size = _v0.b;
+		var text = _v0.c;
+		return A2(
+			$author$project$OUI$Material$Typography$renderWithTypograph,
+			function () {
+				switch (size.$) {
+					case 'Small':
+						return function ($) {
+							return $.small;
+						};
+					case 'Medium':
+						return function ($) {
+							return $.medium;
+						};
+					default:
+						return function ($) {
+							return $.large;
+						};
+				}
+			}()(
+				function () {
+					switch (type_.$) {
+						case 'Display':
+							return function ($) {
+								return $.display;
+							};
+						case 'Headline':
+							return function ($) {
+								return $.headline;
+							};
+						case 'Title':
+							return function ($) {
+								return $.title;
+							};
+						case 'Label':
+							return function ($) {
+								return $.label;
+							};
+						default:
+							return function ($) {
+								return $.body;
+							};
+					}
+				}()(typescale)),
+			text);
+	});
+var $author$project$OUI$Material$renderText = F2(
+	function (_v0, text) {
+		var typescale = _v0.typescale;
+		return A2($author$project$OUI$Material$Typography$render, typescale, text);
+	});
+var $author$project$OUI$Text$Title = {$: 'Title'};
+var $author$project$OUI$Text$titleLarge = A2($author$project$OUI$Text$Text, $author$project$OUI$Text$Title, $author$project$OUI$Text$Large);
+var $author$project$OUI$Text$titleMedium = A2($author$project$OUI$Text$Text, $author$project$OUI$Text$Title, $author$project$OUI$Text$Medium);
+var $author$project$OUI$Text$titleSmall = A2($author$project$OUI$Text$Text, $author$project$OUI$Text$Title, $author$project$OUI$Text$Small);
+var $author$project$OUI$ShowCase$Typography$book = A2(
+	$author$project$OUI$Explorer$withStaticChapter,
+	A2(
+		$mdgriffith$elm_ui$Element$column,
+		_List_Nil,
+		_List_fromArray(
+			[
+				A2(
+				$author$project$OUI$Material$renderText,
+				$author$project$OUI$Material$Theme$defaultTheme,
+				$author$project$OUI$Text$displayLarge('Display Large')),
+				A2(
+				$author$project$OUI$Material$renderText,
+				$author$project$OUI$Material$Theme$defaultTheme,
+				$author$project$OUI$Text$displayMedium('Display Medium')),
+				A2(
+				$author$project$OUI$Material$renderText,
+				$author$project$OUI$Material$Theme$defaultTheme,
+				$author$project$OUI$Text$displaySmall('Display Small')),
+				A2(
+				$author$project$OUI$Material$renderText,
+				$author$project$OUI$Material$Theme$defaultTheme,
+				$author$project$OUI$Text$headlineLarge('Headline Large')),
+				A2(
+				$author$project$OUI$Material$renderText,
+				$author$project$OUI$Material$Theme$defaultTheme,
+				$author$project$OUI$Text$headlineMedium('Headline Medium')),
+				A2(
+				$author$project$OUI$Material$renderText,
+				$author$project$OUI$Material$Theme$defaultTheme,
+				$author$project$OUI$Text$headlineSmall('Headline Small')),
+				A2(
+				$author$project$OUI$Material$renderText,
+				$author$project$OUI$Material$Theme$defaultTheme,
+				$author$project$OUI$Text$titleLarge('Title Large')),
+				A2(
+				$author$project$OUI$Material$renderText,
+				$author$project$OUI$Material$Theme$defaultTheme,
+				$author$project$OUI$Text$titleMedium('Title Medium')),
+				A2(
+				$author$project$OUI$Material$renderText,
+				$author$project$OUI$Material$Theme$defaultTheme,
+				$author$project$OUI$Text$titleSmall('Title Small')),
+				A2(
+				$author$project$OUI$Material$renderText,
+				$author$project$OUI$Material$Theme$defaultTheme,
+				$author$project$OUI$Text$labelLarge('Label Large')),
+				A2(
+				$author$project$OUI$Material$renderText,
+				$author$project$OUI$Material$Theme$defaultTheme,
+				$author$project$OUI$Text$labelMedium('Label Medium')),
+				A2(
+				$author$project$OUI$Material$renderText,
+				$author$project$OUI$Material$Theme$defaultTheme,
+				$author$project$OUI$Text$labelSmall('Label Small')),
+				A2(
+				$author$project$OUI$Material$renderText,
+				$author$project$OUI$Material$Theme$defaultTheme,
+				$author$project$OUI$Text$bodyLarge('Body Large')),
+				A2(
+				$author$project$OUI$Material$renderText,
+				$author$project$OUI$Material$Theme$defaultTheme,
+				$author$project$OUI$Text$bodyMedium('Body Medium')),
+				A2(
+				$author$project$OUI$Material$renderText,
+				$author$project$OUI$Material$Theme$defaultTheme,
+				$author$project$OUI$Text$bodySmall('Body Small'))
+			])),
+	A2(
+		$author$project$OUI$Explorer$withMarkdownChapter,
+		'\n# Typography\n\nThe material typescale\n    ',
+		$author$project$OUI$Explorer$book('Typography')));
 var $author$project$OUI$Explorer$category = F2(
 	function (name, expl) {
 		return _Utils_update(
@@ -21352,7 +21603,10 @@ var $author$project$OUI$Explorer$category = F2(
 var $author$project$OUI$ShowCase$addPages = A2(
 	$elm$core$Basics$composeR,
 	$author$project$OUI$Explorer$category('Styles'),
-	$author$project$OUI$Explorer$addBook($author$project$OUI$ShowCase$Colors$book));
+	A2(
+		$elm$core$Basics$composeR,
+		$author$project$OUI$Explorer$addBook($author$project$OUI$ShowCase$Colors$book),
+		$author$project$OUI$Explorer$addBook($author$project$OUI$ShowCase$Typography$book)));
 var $author$project$OUI$Explorer$defaultView = {
 	content: $mdgriffith$elm_ui$Element$text('invalid view'),
 	title: 'Invalid'
@@ -22048,52 +22302,7 @@ var $mdgriffith$elm_ui$Internal$Model$renderRoot = F3(
 					_List_fromArray(
 						[child]))));
 	});
-var $mdgriffith$elm_ui$Internal$Model$FontFamily = F2(
-	function (a, b) {
-		return {$: 'FontFamily', a: a, b: b};
-	});
 var $mdgriffith$elm_ui$Internal$Model$SansSerif = {$: 'SansSerif'};
-var $mdgriffith$elm_ui$Internal$Model$Typeface = function (a) {
-	return {$: 'Typeface', a: a};
-};
-var $mdgriffith$elm_ui$Internal$Flag$fontFamily = $mdgriffith$elm_ui$Internal$Flag$flag(5);
-var $mdgriffith$elm_ui$Internal$Model$renderFontClassName = F2(
-	function (font, current) {
-		return _Utils_ap(
-			current,
-			function () {
-				switch (font.$) {
-					case 'Serif':
-						return 'serif';
-					case 'SansSerif':
-						return 'sans-serif';
-					case 'Monospace':
-						return 'monospace';
-					case 'Typeface':
-						var name = font.a;
-						return A2(
-							$elm$core$String$join,
-							'-',
-							$elm$core$String$words(
-								$elm$core$String$toLower(name)));
-					case 'ImportFont':
-						var name = font.a;
-						var url = font.b;
-						return A2(
-							$elm$core$String$join,
-							'-',
-							$elm$core$String$words(
-								$elm$core$String$toLower(name)));
-					default:
-						var name = font.a.name;
-						return A2(
-							$elm$core$String$join,
-							'-',
-							$elm$core$String$words(
-								$elm$core$String$toLower(name)));
-				}
-			}());
-	});
 var $mdgriffith$elm_ui$Internal$Model$rootStyle = function () {
 	var families = _List_fromArray(
 		[
