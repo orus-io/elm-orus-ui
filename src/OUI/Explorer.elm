@@ -233,7 +233,7 @@ finalize expl =
                 |> List.reverse
     in
     Spa.application mapView
-        { toRoute = \url -> url.path
+        { toRoute = \url -> url.fragment |> Maybe.withDefault "/"
         , init = \() _ -> ( { lastEvents = [] }, Cmd.none )
         , update =
             \msg shared ->
@@ -280,10 +280,10 @@ finalize expl =
                                                         { url =
                                                             case cat of
                                                                 "" ->
-                                                                    "/" ++ name
+                                                                    "#/" ++ name
 
                                                                 s ->
-                                                                    "/" ++ s ++ "/" ++ name
+                                                                    "#/" ++ s ++ "/" ++ name
                                                         , label = Element.text name
                                                         }
                                                 )

@@ -23761,10 +23761,10 @@ var $author$project$OUI$Explorer$finalize = function (expl) {
 																					label: $mdgriffith$elm_ui$Element$text(name),
 																					url: function () {
 																						if (cat === '') {
-																							return '/' + name;
+																							return '#/' + name;
 																						} else {
 																							var s = cat;
-																							return '/' + (s + ('/' + name));
+																							return '#/' + (s + ('/' + name));
 																						}
 																					}()
 																				});
@@ -23809,7 +23809,7 @@ var $author$project$OUI$Explorer$finalize = function (expl) {
 						};
 					}),
 				toRoute: function (url) {
-					return url.path;
+					return A2($elm$core$Maybe$withDefault, '/', url.fragment);
 				},
 				update: F2(
 					function (msg, shared) {
