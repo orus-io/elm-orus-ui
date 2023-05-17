@@ -19,7 +19,7 @@ Contains a color scheme, a typescale, and layouts for all the components
 type alias Theme =
     { colorscheme : OUI.Material.Color.Scheme
     , typescale : OUI.Material.Typography.Typescale
-    , button : OUI.Material.Button.Layout
+    , button : OUI.Material.Button.Theme
     }
 
 
@@ -29,7 +29,7 @@ defaultTheme : Theme
 defaultTheme =
     { colorscheme = OUI.Material.Color.defaultLightScheme
     , typescale = defaultTypescale
-    , button = OUI.Material.Button.defaultLayout
+    , button = OUI.Material.Button.defaultTheme
     }
 
 

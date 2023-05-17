@@ -12,17 +12,49 @@ import OUI.Material.Typography
 import OUI.Text
 
 
-defaultLayout : Layout
-defaultLayout =
-    { containerHeight = 40
-    , containerRadius = 20
-    , iconSize = 18
-    , leftRightPadding = 24
-    , leftPaddingWithIcon = 16
-    , rightPaddingWithIcon = 16
-    , paddingBetweenElements = 8
+type alias Theme =
+    { common : Layout
+    , fab :
+        { small : FABLayout
+        , medium : FABLayout
+        , large : FABLayout
+        }
+    }
 
-    --, labelTextAlignment =
+
+defaultTheme : Theme
+defaultTheme =
+    { common =
+        { containerHeight = 40
+        , containerRadius = 20
+        , iconSize = 18
+        , leftRightPadding = 24
+        , leftPaddingWithIcon = 16
+        , rightPaddingWithIcon = 16
+        , paddingBetweenElements = 8
+
+        --, labelTextAlignment =
+        }
+    , fab =
+        { small =
+            { containerHeight = 40
+            , containerShape = 12
+            , containerWidth = 40
+            , iconSize = 24
+            }
+        , medium =
+            { containerHeight = 56
+            , containerShape = 16
+            , containerWidth = 56
+            , iconSize = 24
+            }
+        , large =
+            { containerHeight = 96
+            , containerShape = 28
+            , containerWidth = 96
+            , iconSize = 36
+            }
+        }
     }
 
 
@@ -36,6 +68,14 @@ type alias Layout =
     , paddingBetweenElements : Int
 
     -- Label text alignment Center-aligned
+    }
+
+
+type alias FABLayout =
+    { containerHeight : Int
+    , containerShape : Int
+    , containerWidth : Int
+    , iconSize : Int
     }
 
 
@@ -297,14 +337,106 @@ textDisabledAttrs typescale colorScheme layout =
            ]
 
 
+fabAttrs :
+    OUI.Material.Color.Scheme
+    -> FABLayout
+    -> OUI.Color
+    -> List (Attribute msg)
+fabAttrs colorScheme layout color =
+    let
+        -- TODO The fab colors mappings are primary, secondary, tertiary and surface
+        -- so the 'OUI.Color' is not adapted here. We'll need to make things differently
+        -- for fabs
+        ( bgColor, stateLayerColor ) =
+            case color of
+                OUI.Primary ->
+                    ( colorScheme.primaryContainer, colorScheme.onPrimaryContainer )
+
+                OUI.PrimaryContainer ->
+                    ( colorScheme.primaryContainer, colorScheme.onPrimaryContainer )
+
+                OUI.Secondary ->
+                    ( colorScheme.secondaryContainer, colorScheme.onSecondaryContainer )
+
+                OUI.SecondaryContainer ->
+                    ( colorScheme.secondaryContainer, colorScheme.onSecondaryContainer )
+
+                OUI.Tertiary ->
+                    ( colorScheme.tertiaryContainer, colorScheme.onTertiaryContainer )
+
+                OUI.TertiaryContainer ->
+                    ( colorScheme.tertiaryContainer, colorScheme.onTertiaryContainer )
+
+                OUI.Error ->
+                    ( colorScheme.errorContainer, colorScheme.onErrorContainer )
+
+                OUI.ErrorContainer ->
+                    ( colorScheme.errorContainer, colorScheme.onErrorContainer )
+    in
+    [ Border.rounded layout.containerShape
+    , Element.height <| Element.px layout.containerHeight
+    , Element.width <| Element.px layout.containerWidth
+    , Border.shadow
+        { offset = ( 1, 1 )
+        , size = 1
+        , blur = 1
+        , color = OUI.Material.Color.toElementColor colorScheme.shadow
+        }
+    , Background.color <| OUI.Material.Color.toElementColor bgColor
+    , Element.focused
+        [ bgColor
+            |> OUI.Material.Color.withShade
+                stateLayerColor
+                OUI.Material.Color.focusStateLayerOpacity
+            |> OUI.Material.Color.toElementColor
+            |> Background.color
+        ]
+    , Element.mouseDown
+        [ bgColor
+            |> OUI.Material.Color.withShade
+                stateLayerColor
+                OUI.Material.Color.pressStateLayerOpacity
+            |> OUI.Material.Color.toElementColor
+            |> Background.color
+        ]
+    , Element.mouseOver
+        [ bgColor
+            |> OUI.Material.Color.withShade
+                stateLayerColor
+                OUI.Material.Color.hoverStateLayerOpacity
+            |> OUI.Material.Color.toElementColor
+            |> Background.color
+        ]
+    ]
+
+
+iconOnly : OUI.Button.Type -> Bool
+iconOnly t =
+    case t of
+        OUI.Button.Icon ->
+            True
+
+        OUI.Button.SmallFAB ->
+            True
+
+        OUI.Button.MediumFAB ->
+            True
+
+        OUI.Button.LargeFAB ->
+            True
+
+        _ ->
+            False
+
+
 render :
     OUI.Material.Typography.Typescale
     -> OUI.Material.Color.Scheme
-    -> Layout
+    -> Theme
     -> List (Attribute msg)
     -> Button { constraints | hasText : (), hasAction : () } msg
     -> Element msg
-render typescale colorscheme layout attrs button =
+render typescale colorscheme theme attrs button =
     let
         props =
             getProperties button
@@ -312,14 +444,14 @@ render typescale colorscheme layout attrs button =
         padding =
             case props.icon of
                 Nothing ->
-                    Element.paddingXY layout.leftRightPadding 0
+                    Element.paddingXY theme.common.leftRightPadding 0
 
                 Just _ ->
                     Element.paddingEach
                         { top = 0
                         , bottom = 0
-                        , left = layout.leftPaddingWithIcon
-                        , right = layout.rightPaddingWithIcon
+                        , left = theme.common.leftPaddingWithIcon
+                        , right = theme.common.rightPaddingWithIcon
                         }
 
         label =
@@ -328,46 +460,64 @@ render typescale colorscheme layout attrs button =
                     Element.text props.text
 
                 Just icon ->
-                    Element.row [ Element.spacing layout.paddingBetweenElements ]
-                        [ Element.text icon, Element.text props.text ]
+                    if iconOnly props.type_ then
+                        Element.el
+                            [ Element.centerX
+                            , Element.centerY
+                            ]
+                        <|
+                            Element.text icon
+
+                    else
+                        Element.row [ Element.spacing theme.common.paddingBetweenElements ]
+                            [ Element.text icon, Element.text props.text ]
     in
     Input.button
-        ((Element.height <| Element.px layout.containerHeight)
+        ((Element.height <| Element.px theme.common.containerHeight)
             :: padding
             :: attrs
             ++ (case ( props.type_, props.onClick ) of
                     ( OUI.Button.Elevated, Just _ ) ->
-                        elevatedAttrs typescale colorscheme layout props.color
+                        elevatedAttrs typescale colorscheme theme.common props.color
 
                     ( OUI.Button.Elevated, Nothing ) ->
-                        elevatedDisabledAttrs typescale colorscheme layout
+                        elevatedDisabledAttrs typescale colorscheme theme.common
 
                     ( OUI.Button.Filled, Just _ ) ->
-                        filledAttrs typescale colorscheme layout props.color
+                        filledAttrs typescale colorscheme theme.common props.color
 
                     ( OUI.Button.Filled, Nothing ) ->
-                        filledDisabledAttrs typescale colorscheme layout
+                        filledDisabledAttrs typescale colorscheme theme.common
 
                     ( OUI.Button.Tonal, Just _ ) ->
-                        filledAttrs typescale colorscheme layout props.color
+                        filledAttrs typescale colorscheme theme.common props.color
 
                     ( OUI.Button.Tonal, Nothing ) ->
-                        filledDisabledAttrs typescale colorscheme layout
+                        filledDisabledAttrs typescale colorscheme theme.common
 
                     ( OUI.Button.Outlined, Just _ ) ->
-                        outlinedAttrs typescale colorscheme layout props.color
+                        outlinedAttrs typescale colorscheme theme.common props.color
 
                     ( OUI.Button.Outlined, Nothing ) ->
-                        outlinedDisabledAttrs typescale colorscheme layout
+                        outlinedDisabledAttrs typescale colorscheme theme.common
 
                     ( OUI.Button.Text, Just _ ) ->
-                        textAttrs typescale colorscheme layout props.color
+                        textAttrs typescale colorscheme theme.common props.color
 
                     ( OUI.Button.Text, Nothing ) ->
-                        textDisabledAttrs typescale colorscheme layout
+                        textDisabledAttrs typescale colorscheme theme.common
+
+                    ( OUI.Button.SmallFAB, Just _ ) ->
+                        fabAttrs colorscheme theme.fab.small props.color
+
+                    ( OUI.Button.MediumFAB, Just _ ) ->
+                        fabAttrs colorscheme theme.fab.medium props.color
+
+                    ( OUI.Button.LargeFAB, Just _ ) ->
+                        fabAttrs colorscheme theme.fab.large props.color
 
                     _ ->
-                        textDisabledAttrs typescale colorscheme layout
+                        textDisabledAttrs typescale colorscheme theme.common
                )
         )
         { label = label

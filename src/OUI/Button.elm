@@ -3,7 +3,7 @@ module OUI.Button exposing
     , new
     , withText, withIcon, color
     , onClick, disabled
-    , elevatedButton, filledButton, tonalButton, outlinedButton, textButton, fab, extendedFAB, iconButton
+    , elevatedButton, filledButton, tonalButton, outlinedButton, textButton, smallFAB, mediumFAB, largeFAB, extendedFAB, iconButton
     , Props, getProperties
     )
 
@@ -29,7 +29,7 @@ module OUI.Button exposing
 
 # Button types
 
-@docs elevatedButton, filledButton, tonalButton, outlinedButton, textButton, fab, extendedFAB, iconButton
+@docs elevatedButton, filledButton, tonalButton, outlinedButton, textButton, smallFAB, mediumFAB, largeFAB, extendedFAB, iconButton
 
 
 # Internal
@@ -49,7 +49,9 @@ type Type
     | Tonal
     | Outlined
     | Text
-    | FAB
+    | SmallFAB
+    | MediumFAB
+    | LargeFAB
     | ExtendedFAB
     | Icon
 
@@ -138,16 +140,30 @@ textButton =
     btntype Text
 
 
-{-| Set the button type to 'FAB'
+{-| Set the button type to 'SmallFAB'
 -}
-fab : Button { a | hasIcon : () } msg -> Button { a | hasIcon : () } msg
-fab =
-    btntype FAB
+smallFAB : Button { a | hasIcon : () } msg -> Button { a | hasIcon : () } msg
+smallFAB =
+    btntype SmallFAB
+
+
+{-| Set the button type to 'MediumFAB'
+-}
+mediumFAB : Button { a | hasIcon : () } msg -> Button { a | hasIcon : () } msg
+mediumFAB =
+    btntype MediumFAB
+
+
+{-| Set the button type to 'LargeFAB'
+-}
+largeFAB : Button { a | hasIcon : () } msg -> Button { a | hasIcon : () } msg
+largeFAB =
+    btntype LargeFAB
 
 
 {-| Set the button type to 'ExtendedFAB'
 -}
-extendedFAB : Button { a | hasIcon : () } msg -> Button { a | hasIcon : () } msg
+extendedFAB : Button a msg -> Button a msg
 extendedFAB =
     btntype ExtendedFAB
 

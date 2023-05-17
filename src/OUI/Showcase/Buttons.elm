@@ -1,6 +1,7 @@
 module OUI.Showcase.Buttons exposing (..)
 
 import Element exposing (Element)
+import OUI
 import OUI.Button as Button
 import OUI.Explorer as Explorer
 import OUI.Material as Material
@@ -15,7 +16,8 @@ book =
 commonButtons : Element Explorer.BookMsg
 commonButtons =
     Element.column [ Element.spacing 30 ]
-        [ Element.row [ Element.spacing 30 ]
+        [ Element.text "Common buttons"
+        , Element.row [ Element.spacing 30 ]
             [ Element.column [ Element.spacing 30 ]
                 [ Button.new
                     |> Button.withText "Elevated"
@@ -87,4 +89,26 @@ commonButtons =
                     |> Material.renderButton defaultTheme [ Element.centerX ]
                 ]
             ]
+        , Element.text "FAB"
+        , Element.row [ Element.spacing 30 ]
+            (let
+                btn s =
+                    Button.new
+                        |> Button.withText (s ++ "FAB")
+                        |> Button.withIcon "X"
+                        |> Button.onClick (Explorer.event <| "Clicked " ++ s ++ " FAB")
+             in
+             [ btn "Small"
+                |> Button.smallFAB
+                |> Material.renderButton defaultTheme [ Element.centerX ]
+             , btn "Medium"
+                |> Button.mediumFAB
+                |> Button.color OUI.Secondary
+                |> Material.renderButton defaultTheme [ Element.centerX ]
+             , btn "Large"
+                |> Button.largeFAB
+                |> Button.color OUI.Tertiary
+                |> Material.renderButton defaultTheme [ Element.centerX ]
+             ]
+            )
         ]
