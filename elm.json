@@ -1,24 +1,23 @@
 {
-    "type": "package",
-    "name": "cdevienne/elm-orus-ui",
-    "summary": "A Material Design based UI Toolkit.",
-    "license": "MIT",
-    "version": "1.0.0",
-    "exposed-modules": [
-        "OUI",
-        "OUI.Explorer",
-        "OUI.Material.Color"
-    ],
-    "elm-version": "0.19.0 <= v < 0.20.0",
-    "dependencies": {
-        "avh4/elm-color": "1.0.0 <= v < 2.0.0",
-        "dillonkearns/elm-markdown": "7.0.1 <= v < 8.0.0",
-        "elm/browser": "1.0.2 <= v < 2.0.0",
-        "elm/core": "1.0.0 <= v < 2.0.0",
-        "elm/html": "1.0.0 <= v < 2.0.0",
-        "mdgriffith/elm-ui": "1.1.8 <= v < 2.0.0",
-        "noahzgordon/elm-color-extra": "1.0.2 <= v < 2.0.0",
-        "orus-io/elm-spa": "2.0.0 <= v < 3.0.0"
-    },
-    "test-dependencies": {}
+  "type": "package",
+  "name": "cdevienne/elm-orus-ui",
+  "summary": "A Material Design based UI Toolkit.",
+  "license": "MIT",
+  "version": "1.0.0",
+  "exposed-modules": [
+    "OUI",
+    "OUI.Explorer"
+  ],
+  "elm-version": "0.19.0 <= v < 0.20.0",
+  "dependencies": {
+    "avh4/elm-color": "1.0.0 <= v < 2.0.0",
+    "dillonkearns/elm-markdown": "7.0.1 <= v < 8.0.0",
+    "elm/browser": "1.0.2 <= v < 2.0.0",
+    "elm/core": "1.0.0 <= v < 2.0.0",
+    "elm/html": "1.0.0 <= v < 2.0.0",
+    "mdgriffith/elm-ui": "1.1.8 <= v < 2.0.0",
+    "noahzgordon/elm-color-extra": "1.0.2 <= v < 2.0.0",
+    "orus-io/elm-spa": "2.0.0 <= v < 3.0.0"
+  },
+  "test-dependencies": {}
 }

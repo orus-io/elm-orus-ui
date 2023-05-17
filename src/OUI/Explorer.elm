@@ -1,7 +1,19 @@
-module OUI.Explorer exposing (..)
+module OUI.Explorer exposing
+    ( BookMsg, Page, Route, Shared, SharedMsg, Explorer
+    , addBook, book, category, event, explorer, finalize
+    , withMarkdownChapter, withStaticChapter
+    )
+
+{-|
+
+@docs BookMsg, Page, Route, Shared, SharedMsg, Explorer
+@docs addBook, book, category, event, explorer, finalize
+@docs withMarkdownChapter, withStaticChapter
+
+-}
 
 import Browser
-import Effect exposing (Effect)
+import Effect
 import Element exposing (Element)
 import Element.Background as Background
 import Markdown.Parser
@@ -11,20 +23,28 @@ import Spa.Page
 import Spa.PageStack
 
 
+{-| The explorer routes are simple strings
+-}
 type alias Route =
     String
 
 
+{-| A explorer page
+-}
 type alias Page msg =
     { title : String
     , content : Element msg
     }
 
 
+{-| The shared state
+-}
 type alias Shared =
     { lastEvents : List String }
 
 
+{-| Shared state message
+-}
 type SharedMsg
     = Event String
 
@@ -43,12 +63,15 @@ mapView mapper abook =
     }
 
 
+{-| -}
 type alias Explorer shared sharedMsg current previous currentMsg previousMsg =
     { app : Spa.Builder Route () shared sharedMsg (Page (Spa.PageStack.Msg Route currentMsg previousMsg)) current previous currentMsg previousMsg
     , categories : List ( String, List String )
     }
 
 
+{-| creates an empty Explorer
+-}
 explorer : Explorer shared sharedMsg () () () ()
 explorer =
     { app =
@@ -60,6 +83,12 @@ explorer =
     }
 
 
+{-| Add a category to a Explorer
+
+All subsequent books will be added to this category, until a new category is
+added.
+
+-}
 category :
     String
     -> Explorer shared sharedMsg current previous currentMsg previousMsg
@@ -70,6 +99,12 @@ category name expl =
     }
 
 
+{-| Add a book to the current category
+-}
+addBook :
+    Book BookMsg
+    -> Explorer Shared SharedMsg current previous currentMsg previousMsg
+    -> Explorer Shared SharedMsg () (Spa.PageStack.Model Spa.SetupError current previous) BookMsg (Spa.PageStack.Msg Route currentMsg previousMsg)
 addBook b expl =
     let
         catPrefix =
@@ -115,21 +150,32 @@ addBook b expl =
     }
 
 
+{-| A stateless book
+-}
 type alias Book msg =
     { title : String
     , chapters : List (Element msg)
     }
 
 
+{-| A stateless book message
+-}
 type BookMsg
     = SharedMsg SharedMsg
 
 
+{-| A simple event
+
+The passed string will be logged in the event window
+
+-}
 event : String -> BookMsg
 event value =
     SharedMsg <| Event value
 
 
+{-| Creates a new empty book
+-}
 book : String -> Book msg
 book title =
     { title = title
@@ -137,6 +183,8 @@ book title =
     }
 
 
+{-| Add a mardown chapter to a book
+-}
 withMarkdownChapter : String -> Book msg -> Book msg
 withMarkdownChapter markdown b =
     { b
@@ -159,6 +207,8 @@ withMarkdownChapter markdown b =
     }
 
 
+{-| Add a static content chapter to a book
+-}
 withStaticChapter : Element msg -> Book msg -> Book msg
 withStaticChapter body b =
     { b
@@ -166,6 +216,15 @@ withStaticChapter body b =
     }
 
 
+{-| Finalize a explorer and returns Program
+-}
+finalize :
+    Explorer Shared SharedMsg current previous currentMsg previousMsg
+    ->
+        Platform.Program
+            ()
+            (Spa.Model String Shared current previous)
+            (Spa.Msg SharedMsg (Spa.PageStack.Msg String currentMsg previousMsg))
 finalize expl =
     let
         categories =

@@ -1,6 +1,14 @@
 module OUI exposing (Color(..))
 
+{-|
 
+@docs Color
+
+-}
+
+
+{-| Colors
+-}
 type Color
     = Primary
     | PrimaryContainer
