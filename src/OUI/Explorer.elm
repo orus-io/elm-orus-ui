@@ -1,12 +1,12 @@
 module OUI.Explorer exposing
-    ( BookMsg, Page, Route, Shared, SharedMsg, Explorer
+    ( Book, BookMsg, Page, Route, Shared, SharedMsg, Explorer
     , addBook, book, category, event, explorer, finalize
     , withMarkdownChapter, withStaticChapter
     )
 
 {-|
 
-@docs BookMsg, Page, Route, Shared, SharedMsg, Explorer
+@docs Book, BookMsg, Page, Route, Shared, SharedMsg, Explorer
 @docs addBook, book, category, event, explorer, finalize
 @docs withMarkdownChapter, withStaticChapter
 

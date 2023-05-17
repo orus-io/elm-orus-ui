@@ -4735,6 +4735,9 @@ var $elm$core$Set$toList = function (_v0) {
 var $elm$core$Basics$EQ = {$: 'EQ'};
 var $elm$core$Basics$GT = {$: 'GT'};
 var $elm$core$Basics$LT = {$: 'LT'};
+var $icidasset$elm_material_icons$Material$Icons$Types$Color = function (a) {
+	return {$: 'Color', a: a};
+};
 var $elm$core$Maybe$Just = function (a) {
 	return {$: 'Just', a: a};
 };
@@ -23028,6 +23031,204 @@ var $author$project$OUI$Showcase$addPages = A2(
 				$elm$core$Basics$composeR,
 				$author$project$OUI$Explorer$category('Basics'),
 				$author$project$OUI$Explorer$addBook($author$project$OUI$Showcase$Buttons$book)))));
+var $elm$svg$Svg$Attributes$enableBackground = _VirtualDom_attribute('enable-background');
+var $icidasset$elm_material_icons$Material$Icons$Internal$b = $elm$svg$Svg$Attributes$enableBackground;
+var $elm$svg$Svg$Attributes$d = _VirtualDom_attribute('d');
+var $elm$svg$Svg$Attributes$fill = _VirtualDom_attribute('fill');
+var $icidasset$elm_material_icons$Material$Icons$Internal$f = $elm$svg$Svg$Attributes$fill;
+var $elm$svg$Svg$trustedNode = _VirtualDom_nodeNS('http://www.w3.org/2000/svg');
+var $elm$svg$Svg$g = $elm$svg$Svg$trustedNode('g');
+var $elm$svg$Svg$Attributes$height = _VirtualDom_attribute('height');
+var $elm$svg$Svg$svg = $elm$svg$Svg$trustedNode('svg');
+var $avh4$elm_color$Color$toCssString = function (_v0) {
+	var r = _v0.a;
+	var g = _v0.b;
+	var b = _v0.c;
+	var a = _v0.d;
+	var roundTo = function (x) {
+		return $elm$core$Basics$round(x * 1000) / 1000;
+	};
+	var pct = function (x) {
+		return $elm$core$Basics$round(x * 10000) / 100;
+	};
+	return $elm$core$String$concat(
+		_List_fromArray(
+			[
+				'rgba(',
+				$elm$core$String$fromFloat(
+				pct(r)),
+				'%,',
+				$elm$core$String$fromFloat(
+				pct(g)),
+				'%,',
+				$elm$core$String$fromFloat(
+				pct(b)),
+				'%,',
+				$elm$core$String$fromFloat(
+				roundTo(a)),
+				')'
+			]));
+};
+var $elm$svg$Svg$Attributes$width = _VirtualDom_attribute('width');
+var $icidasset$elm_material_icons$Material$Icons$Internal$icon = F4(
+	function (attributes, nodes, size, coloring) {
+		var sizeAsString = $elm$core$String$fromInt(size);
+		return A2(
+			$elm$svg$Svg$svg,
+			_Utils_ap(
+				attributes,
+				_List_fromArray(
+					[
+						$elm$svg$Svg$Attributes$height(sizeAsString),
+						$elm$svg$Svg$Attributes$width(sizeAsString)
+					])),
+			_List_fromArray(
+				[
+					A2(
+					$elm$svg$Svg$g,
+					_List_fromArray(
+						[
+							function () {
+							if (coloring.$ === 'Color') {
+								var color = coloring.a;
+								return $elm$svg$Svg$Attributes$fill(
+									$avh4$elm_color$Color$toCssString(color));
+							} else {
+								return $elm$svg$Svg$Attributes$fill('currentColor');
+							}
+						}()
+						]),
+					nodes)
+				]));
+	});
+var $elm$svg$Svg$path = $elm$svg$Svg$trustedNode('path');
+var $icidasset$elm_material_icons$Material$Icons$Internal$p = $elm$svg$Svg$path;
+var $elm$svg$Svg$rect = $elm$svg$Svg$trustedNode('rect');
+var $elm$svg$Svg$Attributes$viewBox = _VirtualDom_attribute('viewBox');
+var $icidasset$elm_material_icons$Material$Icons$Internal$v = $elm$svg$Svg$Attributes$viewBox;
+var $icidasset$elm_material_icons$Material$Icons$Outlined$anchor = A2(
+	$icidasset$elm_material_icons$Material$Icons$Internal$icon,
+	_List_fromArray(
+		[
+			$icidasset$elm_material_icons$Material$Icons$Internal$b('new 0 0 24 24'),
+			$icidasset$elm_material_icons$Material$Icons$Internal$v('0 0 24 24')
+		]),
+	_List_fromArray(
+		[
+			A2(
+			$elm$svg$Svg$g,
+			_List_Nil,
+			_List_fromArray(
+				[
+					A2(
+					$elm$svg$Svg$rect,
+					_List_fromArray(
+						[
+							$icidasset$elm_material_icons$Material$Icons$Internal$f('none')
+						]),
+					_List_Nil),
+					A2(
+					$icidasset$elm_material_icons$Material$Icons$Internal$p,
+					_List_fromArray(
+						[
+							$elm$svg$Svg$Attributes$d('M17,15l1.55,1.55c-0.96,1.69-3.33,3.04-5.55,3.37V11h3V9h-3V7.82C14.16,7.4,15,6.3,15,5c0-1.65-1.35-3-3-3S9,3.35,9,5 c0,1.3,0.84,2.4,2,2.82V9H8v2h3v8.92c-2.22-0.33-4.59-1.68-5.55-3.37L7,15l-4-3v3c0,3.88,4.92,7,9,7s9-3.12,9-7v-3L17,15z M12,4 c0.55,0,1,0.45,1,1s-0.45,1-1,1s-1-0.45-1-1S11.45,4,12,4z')
+						]),
+					_List_Nil)
+				]))
+		]));
+var $author$project$OUI$Material$Icon$render = F3(
+	function (colorscheme, attrs, icon) {
+		var size = A2($elm$core$Maybe$withDefault, 24, icon.size);
+		var color = A2(
+			$author$project$OUI$Material$Color$getColor,
+			A2($elm$core$Maybe$withDefault, $author$project$OUI$Primary, icon.color),
+			colorscheme);
+		return A2(
+			$mdgriffith$elm_ui$Element$el,
+			attrs,
+			function () {
+				var _v0 = icon.renderer;
+				if (_v0.$ === 'Html') {
+					var renderHtml = _v0.a;
+					return A2(
+						$mdgriffith$elm_ui$Element$map,
+						$elm$core$Basics$never,
+						$mdgriffith$elm_ui$Element$html(
+							A2(renderHtml, size, color)));
+				} else {
+					var renderSvg = _v0.a;
+					return A2(
+						$mdgriffith$elm_ui$Element$map,
+						$elm$core$Basics$never,
+						$mdgriffith$elm_ui$Element$html(
+							A2(
+								$elm$svg$Svg$svg,
+								_List_Nil,
+								$elm$core$List$singleton(
+									A2(renderSvg, size, color)))));
+				}
+			}());
+	});
+var $author$project$OUI$Material$renderIcon = function (_v0) {
+	var colorscheme = _v0.colorscheme;
+	return $author$project$OUI$Material$Icon$render(colorscheme);
+};
+var $author$project$OUI$Showcase$Icons$book = F2(
+	function (title, iconList) {
+		return A2(
+			$author$project$OUI$Explorer$withStaticChapter,
+			A2(
+				$mdgriffith$elm_ui$Element$row,
+				_List_fromArray(
+					[
+						$mdgriffith$elm_ui$Element$spacing(20)
+					]),
+				A2(
+					$elm$core$List$map,
+					function (_v0) {
+						var label = _v0.a;
+						var icon = _v0.b;
+						return A2(
+							$mdgriffith$elm_ui$Element$column,
+							_List_fromArray(
+								[
+									$mdgriffith$elm_ui$Element$spacing(10)
+								]),
+							_List_fromArray(
+								[
+									A3(
+									$author$project$OUI$Material$renderIcon,
+									$author$project$OUI$Material$Theme$defaultTheme,
+									_List_fromArray(
+										[$mdgriffith$elm_ui$Element$centerX]),
+									icon),
+									$mdgriffith$elm_ui$Element$text(label)
+								]));
+					},
+					iconList)),
+			A2(
+				$author$project$OUI$Explorer$withStaticChapter,
+				$mdgriffith$elm_ui$Element$text(title),
+				$author$project$OUI$Explorer$book(title)));
+	});
+var $author$project$OUI$Icon$Html = function (a) {
+	return {$: 'Html', a: a};
+};
+var $author$project$OUI$Icon$fromRenderer = function (renderer) {
+	return {color: $elm$core$Maybe$Nothing, renderer: renderer, size: $elm$core$Maybe$Nothing};
+};
+var $author$project$OUI$Icon$elmMaterialIcons = F2(
+	function (wrapper, fun) {
+		return $author$project$OUI$Icon$fromRenderer(
+			$author$project$OUI$Icon$Html(
+				F2(
+					function (size, color) {
+						return A2(
+							fun,
+							size,
+							wrapper(color));
+					})));
+	});
 var $author$project$OUI$Explorer$defaultView = {
 	content: $mdgriffith$elm_ui$Element$text('invalid view'),
 	title: 'Invalid'
@@ -23068,6 +23269,30 @@ var $author$project$OUI$Explorer$explorer = {
 		}),
 	categories: _List_Nil
 };
+var $icidasset$elm_material_icons$Material$Icons$Outlined$face = A2(
+	$icidasset$elm_material_icons$Material$Icons$Internal$icon,
+	_List_fromArray(
+		[
+			$icidasset$elm_material_icons$Material$Icons$Internal$v('0 0 24 24')
+		]),
+	_List_fromArray(
+		[
+			A2(
+			$icidasset$elm_material_icons$Material$Icons$Internal$p,
+			_List_fromArray(
+				[
+					$elm$svg$Svg$Attributes$d('M0 0h24v24H0V0z'),
+					$icidasset$elm_material_icons$Material$Icons$Internal$f('none')
+				]),
+			_List_Nil),
+			A2(
+			$icidasset$elm_material_icons$Material$Icons$Internal$p,
+			_List_fromArray(
+				[
+					$elm$svg$Svg$Attributes$d('M10.25 13c0 .69-.56 1.25-1.25 1.25S7.75 13.69 7.75 13s.56-1.25 1.25-1.25 1.25.56 1.25 1.25zM15 11.75c-.69 0-1.25.56-1.25 1.25s.56 1.25 1.25 1.25 1.25-.56 1.25-1.25-.56-1.25-1.25-1.25zm7 .25c0 5.52-4.48 10-10 10S2 17.52 2 12 6.48 2 12 2s10 4.48 10 10zM10.66 4.12C12.06 6.44 14.6 8 17.5 8c.46 0 .91-.05 1.34-.12C17.44 5.56 14.9 4 12 4c-.46 0-.91.05-1.34.12zM4.42 9.47c1.71-.97 3.03-2.55 3.66-4.44C6.37 6 5.05 7.58 4.42 9.47zM20 12c0-.78-.12-1.53-.33-2.24-.7.15-1.42.24-2.17.24-3.13 0-5.92-1.44-7.76-3.69C8.69 8.87 6.6 10.88 4 11.86c.01.04 0 .09 0 .14 0 4.41 3.59 8 8 8s8-3.59 8-8z')
+				]),
+			_List_Nil)
+		]));
 var $elm$browser$Browser$External = function (a) {
 	return {$: 'External', a: a};
 };
@@ -23985,6 +24210,20 @@ var $author$project$OUI$Explorer$finalize = function (expl) {
 			expl.app));
 };
 var $author$project$Main$main = $author$project$OUI$Explorer$finalize(
-	$author$project$OUI$Showcase$addPages($author$project$OUI$Explorer$explorer));
+	A2(
+		$author$project$OUI$Explorer$addBook,
+		A2(
+			$author$project$OUI$Showcase$Icons$book,
+			'icidasset_elm-material-icons',
+			_List_fromArray(
+				[
+					_Utils_Tuple2(
+					'anchor',
+					A2($author$project$OUI$Icon$elmMaterialIcons, $icidasset$elm_material_icons$Material$Icons$Types$Color, $icidasset$elm_material_icons$Material$Icons$Outlined$anchor)),
+					_Utils_Tuple2(
+					'face',
+					A2($author$project$OUI$Icon$elmMaterialIcons, $icidasset$elm_material_icons$Material$Icons$Types$Color, $icidasset$elm_material_icons$Material$Icons$Outlined$face))
+				])),
+		$author$project$OUI$Showcase$addPages($author$project$OUI$Explorer$explorer)));
 _Platform_export({'Main':{'init':$author$project$Main$main(
 	$elm$json$Json$Decode$succeed(_Utils_Tuple0))(0)}});}(this));
