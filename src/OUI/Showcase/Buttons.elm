@@ -1,4 +1,4 @@
-module OUI.ShowCase.Buttons exposing (..)
+module OUI.Showcase.Buttons exposing (..)
 
 import Element exposing (Element)
 import OUI.Button as Button

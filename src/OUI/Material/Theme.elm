@@ -1,10 +1,21 @@
-module OUI.Material.Theme exposing (..)
+module OUI.Material.Theme exposing (Theme, defaultTheme, defaultTypescale)
+
+{-|
+
+@docs Theme, defaultTheme, defaultTypescale
+
+-}
 
 import OUI.Material.Button
 import OUI.Material.Color
 import OUI.Material.Typography
 
 
+{-| A material theme
+
+Contains a color scheme, a typescale, and layouts for all the components
+
+-}
 type alias Theme =
     { colorscheme : OUI.Material.Color.Scheme
     , typescale : OUI.Material.Typography.Typescale
@@ -12,6 +23,8 @@ type alias Theme =
     }
 
 
+{-| The default Material 3 theme
+-}
 defaultTheme : Theme
 defaultTheme =
     { colorscheme = OUI.Material.Color.defaultLightScheme
@@ -20,6 +33,8 @@ defaultTheme =
     }
 
 
+{-| The default Material 3 Typescale
+-}
 defaultTypescale : OUI.Material.Typography.Typescale
 defaultTypescale =
     { display =

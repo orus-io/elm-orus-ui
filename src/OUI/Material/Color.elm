@@ -1,22 +1,21 @@
 module OUI.Material.Color exposing
-    ( KeyColors
-    , Scheme
-    , darkFromKeyColors
-    , defaultDarkScheme
-    , defaultKeyColors
-    , defaultLightScheme
-    , focusStateLayerOpacity
-    , getColor
-    , getElementColor
-    , getOnColor
-    , getOnElementColor
-    , hoverStateLayerOpacity
-    , lightFromKeyColors
-    , pressStateLayerOpacity
-    , setAlpha
-    , toElementColor
-    , withShade
+    ( KeyColors, Scheme, defaultKeyColors, defaultLightScheme, defaultDarkScheme, lightFromKeyColors, darkFromKeyColors
+    , getColor, getOnColor, getElementColor, getOnElementColor, toElementColor
+    , hoverStateLayerOpacity, focusStateLayerOpacity, pressStateLayerOpacity
+    , setAlpha, withShade
     )
+
+{-| Material 3 color utilities and scheme
+
+@docs KeyColors, Scheme, defaultKeyColors, defaultLightScheme, defaultDarkScheme, lightFromKeyColors, darkFromKeyColors
+
+@docs getColor, getOnColor, getElementColor, getOnElementColor, toElementColor
+
+@docs hoverStateLayerOpacity, focusStateLayerOpacity, pressStateLayerOpacity
+
+@docs setAlpha, withShade
+
+-}
 
 import Color exposing (Color)
 import Color.Convert as Convert
@@ -24,39 +23,53 @@ import Element
 import OUI
 
 
+{-| The "hover" state layer opacity
+-}
 hoverStateLayerOpacity : Float
 hoverStateLayerOpacity =
     0.08
 
 
+{-| The "focus" state layer opacity
+-}
 focusStateLayerOpacity : Float
 focusStateLayerOpacity =
     0.12
 
 
+{-| The "press" state layer opacity
+-}
 pressStateLayerOpacity : Float
 pressStateLayerOpacity =
     0.12
 
 
+{-| Convert a Color to Element.Color
+-}
 toElementColor : Color.Color -> Element.Color
 toElementColor =
     Color.toRgba
         >> Element.fromRgb
 
 
+{-| Get a color of a scheme directly as a 'Element.Color'
+-}
 getElementColor : OUI.Color -> Scheme -> Element.Color
 getElementColor c =
     getColor c
         >> toElementColor
 
 
+{-| Get a "on" color of a scheme directly as a 'Element.Color'
+-}
 getOnElementColor : OUI.Color -> Scheme -> Element.Color
 getOnElementColor c =
     getOnColor c
         >> toElementColor
 
 
+{-| Get a color of a scheme
+-}
 getColor : OUI.Color -> Scheme -> Color.Color
 getColor c =
     case c of
@@ -85,6 +98,8 @@ getColor c =
             .errorContainer
 
 
+{-| Get a "on" color of a scheme
+-}
 getOnColor : OUI.Color -> Scheme -> Color.Color
 getOnColor c =
     case c of
@@ -113,6 +128,8 @@ getOnColor c =
             .onErrorContainer
 
 
+{-| set the opacity of a color
+-}
 setAlpha : Float -> Color.Color -> Color.Color
 setAlpha value color =
     let
@@ -181,6 +198,8 @@ withShade c2 amount c1 =
         |> Color.fromRgba
 
 
+{-| A set of colors suitable for generating a color scheme
+-}
 type alias KeyColors =
     { primary : Color
     , secondary : Color
@@ -191,6 +210,9 @@ type alias KeyColors =
     }
 
 
+{-| The default Material 3 key colors
+-}
+defaultKeyColors : KeyColors
 defaultKeyColors =
     { primary = Color.rgb255 0x67 0x50 0xA4
     , secondary = Color.rgb255 0x62 0x5B 0x71
@@ -201,16 +223,22 @@ defaultKeyColors =
     }
 
 
+{-| The default Material 3 light theme based on the default key colors
+-}
 defaultLightScheme : Scheme
 defaultLightScheme =
     lightFromKeyColors defaultKeyColors
 
 
+{-| The default Material 3 dark theme based on the default key colors
+-}
 defaultDarkScheme : Scheme
 defaultDarkScheme =
     darkFromKeyColors defaultKeyColors
 
 
+{-| Create a light color scheme from key colors
+-}
 lightFromKeyColors : KeyColors -> Scheme
 lightFromKeyColors keyColors =
     { primary = tone 40 keyColors.primary
@@ -253,6 +281,8 @@ lightFromKeyColors keyColors =
     }
 
 
+{-| Create a dark color scheme from key colors
+-}
 darkFromKeyColors : KeyColors -> Scheme
 darkFromKeyColors keyColors =
     { primary = tone 80 keyColors.primary
@@ -317,6 +347,8 @@ tone light color =
         }
 
 
+{-| A Material 3 color scheme
+-}
 type alias Scheme =
     { primary : Color
     , primaryContainer : Color

@@ -1,4 +1,15 @@
-module OUI.Material exposing (..)
+module OUI.Material exposing
+    ( renderText, renderButton
+    , toElementColor
+    )
+
+{-| A elm-ui based renderer API
+
+@docs renderText, renderButton
+
+@docs toElementColor
+
+-}
 
 import Color
 import Element exposing (Attribute, Element)
@@ -9,17 +20,23 @@ import OUI.Material.Typography
 import OUI.Text
 
 
+{-| Convert a color to a Element.color
+-}
 toElementColor : Color.Color -> Element.Color
 toElementColor =
     Color.toRgba
         >> Element.fromRgb
 
 
+{-| Render a text
+-}
 renderText : Theme -> OUI.Text.Text -> Element msg
 renderText { typescale } text =
     OUI.Material.Typography.render typescale text
 
 
+{-| Render a button
+-}
 renderButton :
     Theme
     -> List (Attribute msg)

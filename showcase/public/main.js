@@ -12856,7 +12856,7 @@ var $author$project$OUI$Button$withText = F2(
 				props,
 				{text: value}));
 	});
-var $author$project$OUI$ShowCase$Buttons$commonButtons = A2(
+var $author$project$OUI$Showcase$Buttons$commonButtons = A2(
 	$mdgriffith$elm_ui$Element$column,
 	_List_fromArray(
 		[
@@ -13047,9 +13047,9 @@ var $author$project$OUI$Explorer$withStaticChapter = F2(
 				chapters: A2($elm$core$List$cons, body, b.chapters)
 			});
 	});
-var $author$project$OUI$ShowCase$Buttons$book = A2(
+var $author$project$OUI$Showcase$Buttons$book = A2(
 	$author$project$OUI$Explorer$withStaticChapter,
-	$author$project$OUI$ShowCase$Buttons$commonButtons,
+	$author$project$OUI$Showcase$Buttons$commonButtons,
 	$author$project$OUI$Explorer$book('Buttons'));
 var $author$project$OUI$Material$Color$darkFromKeyColors = function (keyColors) {
 	return {
@@ -13133,7 +13133,7 @@ var $mdgriffith$elm_ui$Element$padding = function (x) {
 			f));
 };
 var $author$project$OUI$Material$toElementColor = A2($elm$core$Basics$composeR, $avh4$elm_color$Color$toRgba, $mdgriffith$elm_ui$Element$fromRgb);
-var $author$project$OUI$ShowCase$Colors$colorCell = F4(
+var $author$project$OUI$Showcase$Colors$colorCell = F4(
 	function (name, color, onColor, height) {
 		return A2(
 			$mdgriffith$elm_ui$Element$row,
@@ -13157,7 +13157,7 @@ var $author$project$OUI$ShowCase$Colors$colorCell = F4(
 					$mdgriffith$elm_ui$Element$text(name))
 				]));
 	});
-var $author$project$OUI$ShowCase$Colors$showColorScheme = F2(
+var $author$project$OUI$Showcase$Colors$showColorScheme = F2(
 	function (title, scheme) {
 		return A2(
 			$mdgriffith$elm_ui$Element$column,
@@ -13197,8 +13197,8 @@ var $author$project$OUI$ShowCase$Colors$showColorScheme = F2(
 										]),
 									_List_fromArray(
 										[
-											A4($author$project$OUI$ShowCase$Colors$colorCell, 'Primary', scheme.primary, scheme.onPrimary, 100),
-											A4($author$project$OUI$ShowCase$Colors$colorCell, 'On Primary', scheme.onPrimary, scheme.primary, 40)
+											A4($author$project$OUI$Showcase$Colors$colorCell, 'Primary', scheme.primary, scheme.onPrimary, 100),
+											A4($author$project$OUI$Showcase$Colors$colorCell, 'On Primary', scheme.onPrimary, scheme.primary, 40)
 										])),
 									A2(
 									$mdgriffith$elm_ui$Element$column,
@@ -13208,8 +13208,8 @@ var $author$project$OUI$ShowCase$Colors$showColorScheme = F2(
 										]),
 									_List_fromArray(
 										[
-											A4($author$project$OUI$ShowCase$Colors$colorCell, 'Primary Container', scheme.primaryContainer, scheme.onPrimaryContainer, 100),
-											A4($author$project$OUI$ShowCase$Colors$colorCell, 'On Primary Container', scheme.onPrimaryContainer, scheme.primaryContainer, 40)
+											A4($author$project$OUI$Showcase$Colors$colorCell, 'Primary Container', scheme.primaryContainer, scheme.onPrimaryContainer, 100),
+											A4($author$project$OUI$Showcase$Colors$colorCell, 'On Primary Container', scheme.onPrimaryContainer, scheme.primaryContainer, 40)
 										]))
 								])),
 							A2(
@@ -13229,8 +13229,8 @@ var $author$project$OUI$ShowCase$Colors$showColorScheme = F2(
 										]),
 									_List_fromArray(
 										[
-											A4($author$project$OUI$ShowCase$Colors$colorCell, 'Secondary', scheme.secondary, scheme.onSecondary, 100),
-											A4($author$project$OUI$ShowCase$Colors$colorCell, 'On Secondary', scheme.onSecondary, scheme.secondary, 40)
+											A4($author$project$OUI$Showcase$Colors$colorCell, 'Secondary', scheme.secondary, scheme.onSecondary, 100),
+											A4($author$project$OUI$Showcase$Colors$colorCell, 'On Secondary', scheme.onSecondary, scheme.secondary, 40)
 										])),
 									A2(
 									$mdgriffith$elm_ui$Element$column,
@@ -13240,8 +13240,8 @@ var $author$project$OUI$ShowCase$Colors$showColorScheme = F2(
 										]),
 									_List_fromArray(
 										[
-											A4($author$project$OUI$ShowCase$Colors$colorCell, 'Secondary Container', scheme.secondaryContainer, scheme.onSecondaryContainer, 100),
-											A4($author$project$OUI$ShowCase$Colors$colorCell, 'On Secondary Container', scheme.onSecondaryContainer, scheme.secondaryContainer, 40)
+											A4($author$project$OUI$Showcase$Colors$colorCell, 'Secondary Container', scheme.secondaryContainer, scheme.onSecondaryContainer, 100),
+											A4($author$project$OUI$Showcase$Colors$colorCell, 'On Secondary Container', scheme.onSecondaryContainer, scheme.secondaryContainer, 40)
 										]))
 								])),
 							A2(
@@ -13261,8 +13261,8 @@ var $author$project$OUI$ShowCase$Colors$showColorScheme = F2(
 										]),
 									_List_fromArray(
 										[
-											A4($author$project$OUI$ShowCase$Colors$colorCell, 'Tertiary', scheme.tertiary, scheme.onTertiary, 100),
-											A4($author$project$OUI$ShowCase$Colors$colorCell, 'On Tertiary', scheme.onTertiary, scheme.tertiary, 40)
+											A4($author$project$OUI$Showcase$Colors$colorCell, 'Tertiary', scheme.tertiary, scheme.onTertiary, 100),
+											A4($author$project$OUI$Showcase$Colors$colorCell, 'On Tertiary', scheme.onTertiary, scheme.tertiary, 40)
 										])),
 									A2(
 									$mdgriffith$elm_ui$Element$column,
@@ -13272,8 +13272,8 @@ var $author$project$OUI$ShowCase$Colors$showColorScheme = F2(
 										]),
 									_List_fromArray(
 										[
-											A4($author$project$OUI$ShowCase$Colors$colorCell, 'Tertiary Container', scheme.tertiaryContainer, scheme.onTertiaryContainer, 100),
-											A4($author$project$OUI$ShowCase$Colors$colorCell, 'On Tertiary Container', scheme.onTertiaryContainer, scheme.tertiaryContainer, 40)
+											A4($author$project$OUI$Showcase$Colors$colorCell, 'Tertiary Container', scheme.tertiaryContainer, scheme.onTertiaryContainer, 100),
+											A4($author$project$OUI$Showcase$Colors$colorCell, 'On Tertiary Container', scheme.onTertiaryContainer, scheme.tertiaryContainer, 40)
 										]))
 								])),
 							A2(
@@ -13295,8 +13295,8 @@ var $author$project$OUI$ShowCase$Colors$showColorScheme = F2(
 										]),
 									_List_fromArray(
 										[
-											A4($author$project$OUI$ShowCase$Colors$colorCell, 'Error', scheme.error, scheme.onError, 100),
-											A4($author$project$OUI$ShowCase$Colors$colorCell, 'On Error', scheme.onError, scheme.error, 40)
+											A4($author$project$OUI$Showcase$Colors$colorCell, 'Error', scheme.error, scheme.onError, 100),
+											A4($author$project$OUI$Showcase$Colors$colorCell, 'On Error', scheme.onError, scheme.error, 40)
 										])),
 									A2(
 									$mdgriffith$elm_ui$Element$column,
@@ -13306,8 +13306,8 @@ var $author$project$OUI$ShowCase$Colors$showColorScheme = F2(
 										]),
 									_List_fromArray(
 										[
-											A4($author$project$OUI$ShowCase$Colors$colorCell, 'Error Container', scheme.errorContainer, scheme.onErrorContainer, 100),
-											A4($author$project$OUI$ShowCase$Colors$colorCell, 'On Error Container', scheme.onErrorContainer, scheme.errorContainer, 40)
+											A4($author$project$OUI$Showcase$Colors$colorCell, 'Error Container', scheme.errorContainer, scheme.onErrorContainer, 100),
+											A4($author$project$OUI$Showcase$Colors$colorCell, 'On Error Container', scheme.onErrorContainer, scheme.errorContainer, 40)
 										]))
 								]))
 						])),
@@ -13321,9 +13321,9 @@ var $author$project$OUI$ShowCase$Colors$showColorScheme = F2(
 						]),
 					_List_fromArray(
 						[
-							A4($author$project$OUI$ShowCase$Colors$colorCell, 'Surface Dim', scheme.surfaceDim, scheme.onSurface, 100),
-							A4($author$project$OUI$ShowCase$Colors$colorCell, 'Surface', scheme.surface, scheme.onSurface, 100),
-							A4($author$project$OUI$ShowCase$Colors$colorCell, 'Surface Bright', scheme.surfaceBright, scheme.onSurface, 100)
+							A4($author$project$OUI$Showcase$Colors$colorCell, 'Surface Dim', scheme.surfaceDim, scheme.onSurface, 100),
+							A4($author$project$OUI$Showcase$Colors$colorCell, 'Surface', scheme.surface, scheme.onSurface, 100),
+							A4($author$project$OUI$Showcase$Colors$colorCell, 'Surface Bright', scheme.surfaceBright, scheme.onSurface, 100)
 						])),
 					A2(
 					$mdgriffith$elm_ui$Element$row,
@@ -13333,11 +13333,11 @@ var $author$project$OUI$ShowCase$Colors$showColorScheme = F2(
 						]),
 					_List_fromArray(
 						[
-							A4($author$project$OUI$ShowCase$Colors$colorCell, 'Surface Container Lowest', scheme.surfaceContainerLowest, scheme.onSurface, 100),
-							A4($author$project$OUI$ShowCase$Colors$colorCell, 'Surface Container Low', scheme.surfaceContainerLow, scheme.onSurface, 100),
-							A4($author$project$OUI$ShowCase$Colors$colorCell, 'Surface Container', scheme.surfaceContainer, scheme.onSurface, 100),
-							A4($author$project$OUI$ShowCase$Colors$colorCell, 'Surface Container High', scheme.surfaceContainerHigh, scheme.onSurface, 100),
-							A4($author$project$OUI$ShowCase$Colors$colorCell, 'Surface Container Highest', scheme.surfaceContainerHighest, scheme.onSurface, 100)
+							A4($author$project$OUI$Showcase$Colors$colorCell, 'Surface Container Lowest', scheme.surfaceContainerLowest, scheme.onSurface, 100),
+							A4($author$project$OUI$Showcase$Colors$colorCell, 'Surface Container Low', scheme.surfaceContainerLow, scheme.onSurface, 100),
+							A4($author$project$OUI$Showcase$Colors$colorCell, 'Surface Container', scheme.surfaceContainer, scheme.onSurface, 100),
+							A4($author$project$OUI$Showcase$Colors$colorCell, 'Surface Container High', scheme.surfaceContainerHigh, scheme.onSurface, 100),
+							A4($author$project$OUI$Showcase$Colors$colorCell, 'Surface Container Highest', scheme.surfaceContainerHighest, scheme.onSurface, 100)
 						])),
 					A2(
 					$mdgriffith$elm_ui$Element$row,
@@ -13347,10 +13347,10 @@ var $author$project$OUI$ShowCase$Colors$showColorScheme = F2(
 						]),
 					_List_fromArray(
 						[
-							A4($author$project$OUI$ShowCase$Colors$colorCell, 'On Surface', scheme.onSurface, scheme.surface, 40),
-							A4($author$project$OUI$ShowCase$Colors$colorCell, 'On Surface Variant', scheme.onSurfaceVariant, scheme.surfaceVariant, 40),
-							A4($author$project$OUI$ShowCase$Colors$colorCell, 'Outline', scheme.outline, scheme.surface, 40),
-							A4($author$project$OUI$ShowCase$Colors$colorCell, 'Outline Variant', scheme.outlineVariant, scheme.onSurface, 40)
+							A4($author$project$OUI$Showcase$Colors$colorCell, 'On Surface', scheme.onSurface, scheme.surface, 40),
+							A4($author$project$OUI$Showcase$Colors$colorCell, 'On Surface Variant', scheme.onSurfaceVariant, scheme.surfaceVariant, 40),
+							A4($author$project$OUI$Showcase$Colors$colorCell, 'Outline', scheme.outline, scheme.surface, 40),
+							A4($author$project$OUI$Showcase$Colors$colorCell, 'Outline Variant', scheme.outlineVariant, scheme.onSurface, 40)
 						]))
 				]));
 	});
@@ -22726,12 +22726,12 @@ var $author$project$OUI$Explorer$withMarkdownChapter = F2(
 					b.chapters)
 			});
 	});
-var $author$project$OUI$ShowCase$Colors$book = A2(
+var $author$project$OUI$Showcase$Colors$book = A2(
 	$author$project$OUI$Explorer$withStaticChapter,
-	A2($author$project$OUI$ShowCase$Colors$showColorScheme, 'Dark Scheme', $author$project$OUI$Material$Color$defaultDarkScheme),
+	A2($author$project$OUI$Showcase$Colors$showColorScheme, 'Dark Scheme', $author$project$OUI$Material$Color$defaultDarkScheme),
 	A2(
 		$author$project$OUI$Explorer$withStaticChapter,
-		A2($author$project$OUI$ShowCase$Colors$showColorScheme, 'Light Scheme', $author$project$OUI$Material$Color$defaultLightScheme),
+		A2($author$project$OUI$Showcase$Colors$showColorScheme, 'Light Scheme', $author$project$OUI$Material$Color$defaultLightScheme),
 		A2(
 			$author$project$OUI$Explorer$withMarkdownChapter,
 			'\n# Colors\nThe two default color schemes\n    ',
@@ -22776,7 +22776,7 @@ var $author$project$OUI$Text$Title = {$: 'Title'};
 var $author$project$OUI$Text$titleLarge = A2($author$project$OUI$Text$Text, $author$project$OUI$Text$Title, $author$project$OUI$Text$Large);
 var $author$project$OUI$Text$titleMedium = A2($author$project$OUI$Text$Text, $author$project$OUI$Text$Title, $author$project$OUI$Text$Medium);
 var $author$project$OUI$Text$titleSmall = A2($author$project$OUI$Text$Text, $author$project$OUI$Text$Title, $author$project$OUI$Text$Small);
-var $author$project$OUI$ShowCase$Typography$book = A2(
+var $author$project$OUI$Showcase$Typography$book = A2(
 	$author$project$OUI$Explorer$withStaticChapter,
 	A2(
 		$mdgriffith$elm_ui$Element$column,
@@ -22859,19 +22859,19 @@ var $author$project$OUI$Explorer$category = F2(
 					expl.categories)
 			});
 	});
-var $author$project$OUI$ShowCase$addPages = A2(
+var $author$project$OUI$Showcase$addPages = A2(
 	$elm$core$Basics$composeR,
 	$author$project$OUI$Explorer$category('Styles'),
 	A2(
 		$elm$core$Basics$composeR,
-		$author$project$OUI$Explorer$addBook($author$project$OUI$ShowCase$Colors$book),
+		$author$project$OUI$Explorer$addBook($author$project$OUI$Showcase$Colors$book),
 		A2(
 			$elm$core$Basics$composeR,
-			$author$project$OUI$Explorer$addBook($author$project$OUI$ShowCase$Typography$book),
+			$author$project$OUI$Explorer$addBook($author$project$OUI$Showcase$Typography$book),
 			A2(
 				$elm$core$Basics$composeR,
 				$author$project$OUI$Explorer$category('Basics'),
-				$author$project$OUI$Explorer$addBook($author$project$OUI$ShowCase$Buttons$book)))));
+				$author$project$OUI$Explorer$addBook($author$project$OUI$Showcase$Buttons$book)))));
 var $author$project$OUI$Explorer$defaultView = {
 	content: $mdgriffith$elm_ui$Element$text('invalid view'),
 	title: 'Invalid'
@@ -23828,8 +23828,7 @@ var $author$project$OUI$Explorer$finalize = function (expl) {
 			},
 			expl.app));
 };
-var $author$project$OUI$ShowCase$main = $author$project$OUI$Explorer$finalize(
-	$author$project$OUI$ShowCase$addPages($author$project$OUI$Explorer$explorer));
-var $author$project$Main$main = $author$project$OUI$ShowCase$main;
+var $author$project$Main$main = $author$project$OUI$Explorer$finalize(
+	$author$project$OUI$Showcase$addPages($author$project$OUI$Explorer$explorer));
 _Platform_export({'Main':{'init':$author$project$Main$main(
 	$elm$json$Json$Decode$succeed(_Utils_Tuple0))(0)}});}(this));

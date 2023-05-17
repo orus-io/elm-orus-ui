@@ -1,7 +1,10 @@
 module Main exposing (..)
 
-import OUI.ShowCase
+import OUI.Explorer as Explorer
+import OUI.Showcase as Showcase
 
 
 main =
-    OUI.ShowCase.main
+    Explorer.explorer
+        |> Showcase.addPages
+        |> Explorer.finalize

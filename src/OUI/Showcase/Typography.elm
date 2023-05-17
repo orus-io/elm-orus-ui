@@ -1,4 +1,4 @@
-module OUI.ShowCase.Typography exposing (..)
+module OUI.Showcase.Typography exposing (..)
 
 import Element exposing (Element)
 import OUI.Explorer as Explorer

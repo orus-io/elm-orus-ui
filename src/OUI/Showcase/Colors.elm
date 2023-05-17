@@ -1,4 +1,4 @@
-module OUI.ShowCase.Colors exposing (book)
+module OUI.Showcase.Colors exposing (book)
 
 import Color exposing (Color)
 import Element exposing (Element)
