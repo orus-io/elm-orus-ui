@@ -1,7 +1,7 @@
 module OUI.Icon exposing
     ( Icon, withSize, withColor
     , elmMaterialIcons, materialIcons
-    , Renderer(..)
+    , Renderer(..), properties
     )
 
 {-|
@@ -19,7 +19,7 @@ module OUI.Icon exposing
 
 # Internals
 
-@docs Renderer
+@docs Renderer, properties
 
 -}
 
@@ -38,15 +38,15 @@ OUI.Material.renderIcon for instance).
 When used inside other components, like buttons, the color & size will most
 probably be ignored.
 
-A future version may separated icons with size/color from raw icons, and
-put most details in internal hidden types
+A future version may separated icons with size/color from raw icons
 
 -}
-type alias Icon =
-    { size : Maybe Int
-    , color : Maybe OUI.Color
-    , renderer : Renderer
-    }
+type Icon
+    = Icon
+        { size : Maybe Int
+        , color : Maybe OUI.Color
+        , renderer : Renderer
+        }
 
 
 {-| -}
@@ -58,23 +58,24 @@ type Renderer
 {-| set the icon size
 -}
 withSize : Int -> Icon -> Icon
-withSize value icon =
-    { icon | size = Just value }
+withSize value (Icon icon) =
+    Icon { icon | size = Just value }
 
 
 {-| set the icon color
 -}
 withColor : OUI.Color -> Icon -> Icon
-withColor value icon =
-    { icon | color = Just value }
+withColor value (Icon icon) =
+    Icon { icon | color = Just value }
 
 
 fromRenderer : Renderer -> Icon
 fromRenderer renderer =
-    { size = Nothing
-    , color = Nothing
-    , renderer = renderer
-    }
+    Icon
+        { size = Nothing
+        , color = Nothing
+        , renderer = renderer
+        }
 
 
 {-| For using [icidasset/elm-material-icons](https://dark.elm.dmy.fr/packages/icidasset/elm-material-icons/latest/)
@@ -121,3 +122,16 @@ materialIcons fun =
                         , Svg.Attributes.height <| String.fromInt size
                         ]
             )
+
+
+{-| returns the properties of an icon
+-}
+properties :
+    Icon
+    ->
+        { size : Maybe Int
+        , color : Maybe OUI.Color
+        , renderer : Renderer
+        }
+properties (Icon props) =
+    props

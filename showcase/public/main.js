@@ -23136,18 +23136,23 @@ var $icidasset$elm_material_icons$Material$Icons$Outlined$anchor = A2(
 					_List_Nil)
 				]))
 		]));
+var $author$project$OUI$Icon$properties = function (_v0) {
+	var props = _v0.a;
+	return props;
+};
 var $author$project$OUI$Material$Icon$render = F3(
 	function (colorscheme, attrs, icon) {
-		var size = A2($elm$core$Maybe$withDefault, 24, icon.size);
+		var properties = $author$project$OUI$Icon$properties(icon);
+		var size = A2($elm$core$Maybe$withDefault, 24, properties.size);
 		var color = A2(
 			$author$project$OUI$Material$Color$getColor,
-			A2($elm$core$Maybe$withDefault, $author$project$OUI$Primary, icon.color),
+			A2($elm$core$Maybe$withDefault, $author$project$OUI$Primary, properties.color),
 			colorscheme);
 		return A2(
 			$mdgriffith$elm_ui$Element$el,
 			attrs,
 			function () {
-				var _v0 = icon.renderer;
+				var _v0 = properties.renderer;
 				if (_v0.$ === 'Html') {
 					var renderHtml = _v0.a;
 					return A2(
@@ -23214,8 +23219,12 @@ var $author$project$OUI$Showcase$Icons$book = F2(
 var $author$project$OUI$Icon$Html = function (a) {
 	return {$: 'Html', a: a};
 };
+var $author$project$OUI$Icon$Icon = function (a) {
+	return {$: 'Icon', a: a};
+};
 var $author$project$OUI$Icon$fromRenderer = function (renderer) {
-	return {color: $elm$core$Maybe$Nothing, renderer: renderer, size: $elm$core$Maybe$Nothing};
+	return $author$project$OUI$Icon$Icon(
+		{color: $elm$core$Maybe$Nothing, renderer: renderer, size: $elm$core$Maybe$Nothing});
 };
 var $author$project$OUI$Icon$elmMaterialIcons = F2(
 	function (wrapper, fun) {

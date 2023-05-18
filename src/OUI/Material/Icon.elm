@@ -10,15 +10,18 @@ import Svg
 render : OUI.Material.Color.Scheme -> List (Attribute msg) -> Icon -> Element msg
 render colorscheme attrs icon =
     let
+        properties =
+            OUI.Icon.properties icon
+
         size =
-            icon.size |> Maybe.withDefault 24
+            properties.size |> Maybe.withDefault 24
 
         color =
             OUI.Material.Color.getColor
-                (icon.color |> Maybe.withDefault OUI.Primary)
+                (properties.color |> Maybe.withDefault OUI.Primary)
                 colorscheme
     in
-    (case icon.renderer of
+    (case properties.renderer of
         OUI.Icon.Html renderHtml ->
             renderHtml size color
                 |> Element.html
