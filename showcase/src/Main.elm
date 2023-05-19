@@ -12,7 +12,7 @@ main =
     Explorer.explorer
         |> Showcase.addPages
         |> Explorer.addBook
-            (Icons.book "icidasset_elm-material-icons"
+            (Icons.book "Material Icons"
                 [ ( "anchor", OUI.Icon.elmMaterialIcons Color Outlined.anchor )
                 , ( "face", OUI.Icon.elmMaterialIcons Color Outlined.face )
                 ]

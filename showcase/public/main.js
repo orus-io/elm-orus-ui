@@ -5562,6 +5562,21 @@ var $orus_io$elm_spa$Spa$addPublicPage = F3(
 			matchRoute,
 			A2($elm$core$Basics$composeR, page, $elm$core$Result$Ok));
 	});
+var $elm$core$String$replace = F3(
+	function (before, after, string) {
+		return A2(
+			$elm$core$String$join,
+			after,
+			A2($elm$core$String$split, before, string));
+	});
+var $author$project$OUI$Explorer$bookPath = F2(
+	function (cat, title) {
+		return A3(
+			$elm$core$String$replace,
+			' ',
+			'_',
+			'/' + (((cat === '') ? '' : (A3($elm$core$String$replace, '/', '_', cat) + '/')) + A3($elm$core$String$replace, '/', '_', title)));
+	});
 var $mdgriffith$elm_ui$Internal$Model$Unkeyed = function (a) {
 	return {$: 'Unkeyed', a: a};
 };
@@ -11239,6 +11254,15 @@ var $orus_io$elm_spa$Spa$Page$element = function (_v0) {
 		{init: init, onNewFlags: $elm$core$Maybe$Nothing, subscriptions: subscriptions, update: update, view: view});
 };
 var $orus_io$elm_spa$Effect$fromShared = $orus_io$elm_spa$Effect$Shared;
+var $elm$core$List$head = function (list) {
+	if (list.b) {
+		var x = list.a;
+		var xs = list.b;
+		return $elm$core$Maybe$Just(x);
+	} else {
+		return $elm$core$Maybe$Nothing;
+	}
+};
 var $mdgriffith$elm_ui$Internal$Model$Empty = {$: 'Empty'};
 var $mdgriffith$elm_ui$Internal$Model$Text = function (a) {
 	return {$: 'Text', a: a};
@@ -11312,16 +11336,13 @@ var $mdgriffith$elm_ui$Element$spacing = function (x) {
 };
 var $author$project$OUI$Explorer$addBook = F2(
 	function (b, expl) {
-		var catPrefix = function () {
-			var _v8 = expl.categories;
-			if (!_v8.b) {
-				return '/';
-			} else {
-				var _v9 = _v8.a;
-				var cat = _v9.a;
-				return '/' + (cat + '/');
-			}
-		}();
+		var cat = A2(
+			$elm$core$Maybe$withDefault,
+			'',
+			A2(
+				$elm$core$Maybe$map,
+				$elm$core$Tuple$first,
+				$elm$core$List$head(expl.categories)));
 		return {
 			app: A4(
 				$orus_io$elm_spa$Spa$addPublicPage,
@@ -11329,7 +11350,7 @@ var $author$project$OUI$Explorer$addBook = F2(
 				function (route) {
 					return _Utils_eq(
 						route,
-						_Utils_ap(catPrefix, b.title)) ? $elm$core$Maybe$Just(route) : $elm$core$Maybe$Nothing;
+						A2($author$project$OUI$Explorer$bookPath, cat, b.title)) ? $elm$core$Maybe$Just(route) : $elm$core$Maybe$Nothing;
 				},
 				function (_v0) {
 					return $orus_io$elm_spa$Spa$Page$element(
@@ -11366,13 +11387,13 @@ var $author$project$OUI$Explorer$addBook = F2(
 				var _v6 = expl.categories;
 				if (_v6.b) {
 					var _v7 = _v6.a;
-					var cat = _v7.a;
+					var cat_ = _v7.a;
 					var pages = _v7.b;
 					var tail = _v6.b;
 					return A2(
 						$elm$core$List$cons,
 						_Utils_Tuple2(
-							cat,
+							cat_,
 							A2($elm$core$List$cons, b.title, pages)),
 						tail);
 				} else {
@@ -17636,15 +17657,6 @@ var $dillonkearns$elm_markdown$Markdown$InlineParser$autolinkToMatch = function 
 		$dillonkearns$elm_markdown$Markdown$InlineParser$Match(match));
 };
 var $elm$regex$Regex$findAtMost = _Regex_findAtMost;
-var $elm$core$List$head = function (list) {
-	if (list.b) {
-		var x = list.a;
-		var xs = list.b;
-		return $elm$core$Maybe$Just(x);
-	} else {
-		return $elm$core$Maybe$Nothing;
-	}
-};
 var $dillonkearns$elm_markdown$Markdown$Helpers$insideSquareBracketRegex = '[^\\[\\]\\\\]*(?:\\\\.[^\\[\\]\\\\]*)*';
 var $dillonkearns$elm_markdown$Markdown$InlineParser$refLabelRegex = A2(
 	$elm$core$Maybe$withDefault,
@@ -24260,14 +24272,7 @@ var $author$project$OUI$Explorer$finalize = function (expl) {
 																					]),
 																				{
 																					label: $mdgriffith$elm_ui$Element$text(name),
-																					url: function () {
-																						if (cat === '') {
-																							return '#/' + name;
-																						} else {
-																							var s = cat;
-																							return '#/' + (s + ('/' + name));
-																						}
-																					}()
+																					url: '#' + A2($author$project$OUI$Explorer$bookPath, cat, name)
 																				});
 																		},
 																		books));
@@ -24334,7 +24339,7 @@ var $author$project$Main$main = $author$project$OUI$Explorer$finalize(
 		$author$project$OUI$Explorer$addBook,
 		A2(
 			$author$project$OUI$Showcase$Icons$book,
-			'icidasset_elm-material-icons',
+			'Material Icons',
 			_List_fromArray(
 				[
 					_Utils_Tuple2(

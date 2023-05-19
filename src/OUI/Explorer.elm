@@ -107,19 +107,17 @@ addBook :
     -> Explorer Shared SharedMsg () (Spa.PageStack.Model Spa.SetupError current previous) BookMsg (Spa.PageStack.Msg Route currentMsg previousMsg)
 addBook b expl =
     let
-        catPrefix =
-            case expl.categories of
-                [] ->
-                    "/"
-
-                ( cat, _ ) :: _ ->
-                    "/" ++ cat ++ "/"
+        cat =
+            expl.categories
+                |> List.head
+                |> Maybe.map Tuple.first
+                |> Maybe.withDefault ""
     in
     { app =
         expl.app
             |> Spa.addPublicPage ( mapView, mapView )
                 (\route ->
-                    if route == catPrefix ++ b.title then
+                    if route == bookPath cat b.title then
                         Just route
 
                     else
@@ -142,8 +140,8 @@ addBook b expl =
                 )
     , categories =
         case expl.categories of
-            ( cat, pages ) :: tail ->
-                ( cat, b.title :: pages ) :: tail
+            ( cat_, pages ) :: tail ->
+                ( cat_, b.title :: pages ) :: tail
 
             [] ->
                 [ ( "", [ b.title ] ) ]
@@ -216,6 +214,19 @@ withStaticChapter body b =
     }
 
 
+bookPath : String -> String -> String
+bookPath cat title =
+    "/"
+        ++ (if cat == "" then
+                ""
+
+            else
+                String.replace "/" "_" cat ++ "/"
+           )
+        ++ String.replace "/" "_" title
+        |> String.replace " " "_"
+
+
 {-| Finalize a explorer and returns Program
 -}
 finalize :
@@ -277,13 +288,7 @@ finalize expl =
                                                         [ Element.padding 10
                                                         , Element.width Element.fill
                                                         ]
-                                                        { url =
-                                                            case cat of
-                                                                "" ->
-                                                                    "#/" ++ name
-
-                                                                s ->
-                                                                    "#/" ++ s ++ "/" ++ name
+                                                        { url = "#" ++ bookPath cat name
                                                         , label = Element.text name
                                                         }
                                                 )
