@@ -11411,6 +11411,7 @@ var $author$project$OUI$Explorer$addBook = F2(
 var $author$project$OUI$Explorer$book = function (title) {
 	return {chapters: _List_Nil, title: title};
 };
+var $author$project$OUI$Primary = {$: 'Primary'};
 var $author$project$OUI$Secondary = {$: 'Secondary'};
 var $author$project$OUI$Tertiary = {$: 'Tertiary'};
 var $mdgriffith$elm_ui$Internal$Model$AlignX = function (a) {
@@ -11666,7 +11667,8 @@ var $author$project$OUI$Material$Button$defaultTheme = {
 		large: {containerHeight: 96, containerShape: 28, containerWidth: 96, iconSize: 36},
 		medium: {containerHeight: 56, containerShape: 16, containerWidth: 56, iconSize: 24},
 		small: {containerHeight: 40, containerShape: 12, containerWidth: 40, iconSize: 24}
-	}
+	},
+	icon: {containerSize: 40, iconSize: 24}
 };
 var $author$project$OUI$Material$Theme$defaultTypescale = {
 	body: {
@@ -11722,11 +11724,14 @@ var $author$project$OUI$Explorer$event = function (value) {
 };
 var $author$project$OUI$Button$Filled = {$: 'Filled'};
 var $author$project$OUI$Button$filledButton = $author$project$OUI$Button$btntype($author$project$OUI$Button$Filled);
+var $author$project$OUI$Button$FilledIcon = {$: 'FilledIcon'};
+var $author$project$OUI$Button$filledIconButton = $author$project$OUI$Button$btntype($author$project$OUI$Button$FilledIcon);
+var $author$project$OUI$Button$Icon = {$: 'Icon'};
+var $author$project$OUI$Button$iconButton = $author$project$OUI$Button$btntype($author$project$OUI$Button$Icon);
 var $author$project$OUI$Button$LargeFAB = {$: 'LargeFAB'};
 var $author$project$OUI$Button$largeFAB = $author$project$OUI$Button$btntype($author$project$OUI$Button$LargeFAB);
 var $author$project$OUI$Button$MediumFAB = {$: 'MediumFAB'};
 var $author$project$OUI$Button$mediumFAB = $author$project$OUI$Button$btntype($author$project$OUI$Button$MediumFAB);
-var $author$project$OUI$Primary = {$: 'Primary'};
 var $author$project$OUI$Button$new = $author$project$OUI$Button$Button(
 	{color: $author$project$OUI$Primary, icon: $elm$core$Maybe$Nothing, onClick: $elm$core$Maybe$Nothing, text: '', type_: $author$project$OUI$Button$Elevated});
 var $author$project$OUI$Button$onClick = F2(
@@ -11741,6 +11746,8 @@ var $author$project$OUI$Button$onClick = F2(
 	});
 var $author$project$OUI$Button$Outlined = {$: 'Outlined'};
 var $author$project$OUI$Button$outlinedButton = $author$project$OUI$Button$btntype($author$project$OUI$Button$Outlined);
+var $author$project$OUI$Button$OutlinedIcon = {$: 'OutlinedIcon'};
+var $author$project$OUI$Button$outlinedIconButton = $author$project$OUI$Button$btntype($author$project$OUI$Button$OutlinedIcon);
 var $mdgriffith$elm_ui$Internal$Model$Button = {$: 'Button'};
 var $mdgriffith$elm_ui$Internal$Model$Describe = function (a) {
 	return {$: 'Describe', a: a};
@@ -12026,6 +12033,97 @@ var $author$project$OUI$Material$Typography$attrs = F3(
 					}
 				}()(typescale)));
 	});
+var $mdgriffith$elm_ui$Internal$Model$PaddingStyle = F5(
+	function (a, b, c, d, e) {
+		return {$: 'PaddingStyle', a: a, b: b, c: c, d: d, e: e};
+	});
+var $mdgriffith$elm_ui$Internal$Flag$padding = $mdgriffith$elm_ui$Internal$Flag$flag(2);
+var $mdgriffith$elm_ui$Internal$Model$paddingName = F4(
+	function (top, right, bottom, left) {
+		return 'pad-' + ($elm$core$String$fromInt(top) + ('-' + ($elm$core$String$fromInt(right) + ('-' + ($elm$core$String$fromInt(bottom) + ('-' + $elm$core$String$fromInt(left)))))));
+	});
+var $mdgriffith$elm_ui$Element$paddingEach = function (_v0) {
+	var top = _v0.top;
+	var right = _v0.right;
+	var bottom = _v0.bottom;
+	var left = _v0.left;
+	if (_Utils_eq(top, right) && (_Utils_eq(top, bottom) && _Utils_eq(top, left))) {
+		var topFloat = top;
+		return A2(
+			$mdgriffith$elm_ui$Internal$Model$StyleClass,
+			$mdgriffith$elm_ui$Internal$Flag$padding,
+			A5(
+				$mdgriffith$elm_ui$Internal$Model$PaddingStyle,
+				'p-' + $elm$core$String$fromInt(top),
+				topFloat,
+				topFloat,
+				topFloat,
+				topFloat));
+	} else {
+		return A2(
+			$mdgriffith$elm_ui$Internal$Model$StyleClass,
+			$mdgriffith$elm_ui$Internal$Flag$padding,
+			A5(
+				$mdgriffith$elm_ui$Internal$Model$PaddingStyle,
+				A4($mdgriffith$elm_ui$Internal$Model$paddingName, top, right, bottom, left),
+				top,
+				right,
+				bottom,
+				left));
+	}
+};
+var $mdgriffith$elm_ui$Element$paddingXY = F2(
+	function (x, y) {
+		if (_Utils_eq(x, y)) {
+			var f = x;
+			return A2(
+				$mdgriffith$elm_ui$Internal$Model$StyleClass,
+				$mdgriffith$elm_ui$Internal$Flag$padding,
+				A5(
+					$mdgriffith$elm_ui$Internal$Model$PaddingStyle,
+					'p-' + $elm$core$String$fromInt(x),
+					f,
+					f,
+					f,
+					f));
+		} else {
+			var yFloat = y;
+			var xFloat = x;
+			return A2(
+				$mdgriffith$elm_ui$Internal$Model$StyleClass,
+				$mdgriffith$elm_ui$Internal$Flag$padding,
+				A5(
+					$mdgriffith$elm_ui$Internal$Model$PaddingStyle,
+					'p-' + ($elm$core$String$fromInt(x) + ('-' + $elm$core$String$fromInt(y))),
+					yFloat,
+					xFloat,
+					yFloat,
+					xFloat));
+		}
+	});
+var $mdgriffith$elm_ui$Internal$Flag$borderRound = $mdgriffith$elm_ui$Internal$Flag$flag(17);
+var $mdgriffith$elm_ui$Element$Border$rounded = function (radius) {
+	return A2(
+		$mdgriffith$elm_ui$Internal$Model$StyleClass,
+		$mdgriffith$elm_ui$Internal$Flag$borderRound,
+		A3(
+			$mdgriffith$elm_ui$Internal$Model$Single,
+			'br-' + $elm$core$String$fromInt(radius),
+			'border-radius',
+			$elm$core$String$fromInt(radius) + 'px'));
+};
+var $author$project$OUI$Material$Button$commonButtonAttrs = F4(
+	function (typescale, colorscheme, layout, hasIcon) {
+		var padding = hasIcon ? $mdgriffith$elm_ui$Element$paddingEach(
+			{bottom: 0, left: layout.leftPaddingWithIcon, right: layout.rightPaddingWithIcon, top: 0}) : A2($mdgriffith$elm_ui$Element$paddingXY, layout.leftRightPadding, 0);
+		return _Utils_ap(
+			A3($author$project$OUI$Material$Typography$attrs, typescale, $author$project$OUI$Text$Label, $author$project$OUI$Text$Large),
+			_List_fromArray(
+				[
+					$mdgriffith$elm_ui$Element$Border$rounded(layout.containerRadius),
+					padding
+				]));
+	});
 var $author$project$OUI$Material$Color$getColor = function (c) {
 	switch (c.$) {
 		case 'Primary':
@@ -12099,28 +12197,33 @@ var $author$project$OUI$Material$Color$getOnColor = function (c) {
 	}
 };
 var $author$project$OUI$Material$Button$btnColors = F4(
-	function (colorScheme, type_, color, disabled) {
+	function (colorscheme, type_, color, disabled) {
 		var _v0 = _Utils_Tuple2(type_, disabled);
 		if (_v0.b) {
 			return _Utils_Tuple2(
-				A2($author$project$OUI$Material$Color$setAlpha, 0.38, colorScheme.onSurface),
-				A2($author$project$OUI$Material$Color$setAlpha, 0.12, colorScheme.onSurface));
+				A2($author$project$OUI$Material$Color$setAlpha, 0.38, colorscheme.onSurface),
+				A2($author$project$OUI$Material$Color$setAlpha, 0.12, colorscheme.onSurface));
 		} else {
 			switch (_v0.a.$) {
 				case 'Elevated':
 					var _v1 = _v0.a;
 					return _Utils_Tuple2(
-						A2($author$project$OUI$Material$Color$getColor, color, colorScheme),
-						colorScheme.surfaceContainerLow);
+						A2($author$project$OUI$Material$Color$getColor, color, colorscheme),
+						colorscheme.surfaceContainerLow);
 				case 'Filled':
 					var _v2 = _v0.a;
 					return _Utils_Tuple2(
-						A2($author$project$OUI$Material$Color$getOnColor, color, colorScheme),
-						A2($author$project$OUI$Material$Color$getColor, color, colorScheme));
+						A2($author$project$OUI$Material$Color$getOnColor, color, colorscheme),
+						A2($author$project$OUI$Material$Color$getColor, color, colorscheme));
+				case 'FilledIcon':
+					var _v3 = _v0.a;
+					return _Utils_Tuple2(
+						A2($author$project$OUI$Material$Color$getOnColor, color, colorscheme),
+						A2($author$project$OUI$Material$Color$getColor, color, colorscheme));
 				default:
 					return _Utils_Tuple2(
-						A2($author$project$OUI$Material$Color$getColor, color, colorScheme),
-						colorScheme.surfaceContainerLow);
+						A2($author$project$OUI$Material$Color$getColor, color, colorscheme),
+						colorscheme.surfaceContainerLow);
 			}
 		}
 	});
@@ -12297,17 +12400,6 @@ var $mdgriffith$elm_ui$Element$mouseOver = function (decs) {
 			$mdgriffith$elm_ui$Internal$Model$unwrapDecorations(decs)));
 };
 var $author$project$OUI$Material$Color$pressStateLayerOpacity = 0.12;
-var $mdgriffith$elm_ui$Internal$Flag$borderRound = $mdgriffith$elm_ui$Internal$Flag$flag(17);
-var $mdgriffith$elm_ui$Element$Border$rounded = function (radius) {
-	return A2(
-		$mdgriffith$elm_ui$Internal$Model$StyleClass,
-		$mdgriffith$elm_ui$Internal$Flag$borderRound,
-		A3(
-			$mdgriffith$elm_ui$Internal$Model$Single,
-			'br-' + $elm$core$String$fromInt(radius),
-			'border-radius',
-			$elm$core$String$fromInt(radius) + 'px'));
-};
 var $mdgriffith$elm_ui$Internal$Model$boxShadowClass = function (shadow) {
 	return $elm$core$String$concat(
 		_List_fromArray(
@@ -12463,108 +12555,102 @@ var $author$project$OUI$Material$Color$withShade = F3(
 							$author$project$OUI$Material$Color$toCIELCH(c2))))));
 	});
 var $author$project$OUI$Material$Button$elevatedAttrs = F4(
-	function (typescale, colorScheme, layout, color) {
-		var _v0 = A4($author$project$OUI$Material$Button$btnColors, colorScheme, $author$project$OUI$Button$Elevated, color, false);
+	function (typescale, colorscheme, layout, color) {
+		var _v0 = A4($author$project$OUI$Material$Button$btnColors, colorscheme, $author$project$OUI$Button$Elevated, color, false);
 		var frontColor = _v0.a;
 		var backColor = _v0.b;
-		return _Utils_ap(
-			A3($author$project$OUI$Material$Typography$attrs, typescale, $author$project$OUI$Text$Label, $author$project$OUI$Text$Large),
-			_List_fromArray(
-				[
-					$mdgriffith$elm_ui$Element$Border$rounded(layout.containerRadius),
-					$mdgriffith$elm_ui$Element$Border$shadow(
-					{
-						blur: 1,
-						color: $author$project$OUI$Material$Color$toElementColor(colorScheme.shadow),
-						offset: _Utils_Tuple2(1, 1),
-						size: 1
-					}),
-					$mdgriffith$elm_ui$Element$Background$color(
-					$author$project$OUI$Material$Color$toElementColor(backColor)),
-					$mdgriffith$elm_ui$Element$Font$color(
-					$author$project$OUI$Material$Color$toElementColor(frontColor)),
-					$mdgriffith$elm_ui$Element$focused(
-					_List_fromArray(
-						[
-							$mdgriffith$elm_ui$Element$Background$color(
-							$author$project$OUI$Material$Color$toElementColor(
-								A3(
-									$author$project$OUI$Material$Color$withShade,
-									A2($author$project$OUI$Material$Color$getColor, color, colorScheme),
-									$author$project$OUI$Material$Color$focusStateLayerOpacity,
-									colorScheme.surfaceContainerLow)))
-						])),
-					$mdgriffith$elm_ui$Element$mouseDown(
-					_List_fromArray(
-						[
-							$mdgriffith$elm_ui$Element$Background$color(
-							$author$project$OUI$Material$Color$toElementColor(
-								A3(
-									$author$project$OUI$Material$Color$withShade,
-									A2($author$project$OUI$Material$Color$getColor, color, colorScheme),
-									$author$project$OUI$Material$Color$pressStateLayerOpacity,
-									colorScheme.surfaceContainerLow)))
-						])),
-					$mdgriffith$elm_ui$Element$mouseOver(
-					_List_fromArray(
-						[
-							$mdgriffith$elm_ui$Element$Background$color(
-							$author$project$OUI$Material$Color$toElementColor(
-								A3(
-									$author$project$OUI$Material$Color$withShade,
-									A2($author$project$OUI$Material$Color$getColor, color, colorScheme),
-									$author$project$OUI$Material$Color$hoverStateLayerOpacity,
-									colorScheme.surfaceContainerLow)))
-						]))
-				]));
+		return _List_fromArray(
+			[
+				$mdgriffith$elm_ui$Element$Border$shadow(
+				{
+					blur: 1,
+					color: $author$project$OUI$Material$Color$toElementColor(colorscheme.shadow),
+					offset: _Utils_Tuple2(1, 1),
+					size: 1
+				}),
+				$mdgriffith$elm_ui$Element$Background$color(
+				$author$project$OUI$Material$Color$toElementColor(backColor)),
+				$mdgriffith$elm_ui$Element$Font$color(
+				$author$project$OUI$Material$Color$toElementColor(frontColor)),
+				$mdgriffith$elm_ui$Element$focused(
+				_List_fromArray(
+					[
+						$mdgriffith$elm_ui$Element$Background$color(
+						$author$project$OUI$Material$Color$toElementColor(
+							A3(
+								$author$project$OUI$Material$Color$withShade,
+								A2($author$project$OUI$Material$Color$getColor, color, colorscheme),
+								$author$project$OUI$Material$Color$focusStateLayerOpacity,
+								colorscheme.surfaceContainerLow)))
+					])),
+				$mdgriffith$elm_ui$Element$mouseDown(
+				_List_fromArray(
+					[
+						$mdgriffith$elm_ui$Element$Background$color(
+						$author$project$OUI$Material$Color$toElementColor(
+							A3(
+								$author$project$OUI$Material$Color$withShade,
+								A2($author$project$OUI$Material$Color$getColor, color, colorscheme),
+								$author$project$OUI$Material$Color$pressStateLayerOpacity,
+								colorscheme.surfaceContainerLow)))
+					])),
+				$mdgriffith$elm_ui$Element$mouseOver(
+				_List_fromArray(
+					[
+						$mdgriffith$elm_ui$Element$Background$color(
+						$author$project$OUI$Material$Color$toElementColor(
+							A3(
+								$author$project$OUI$Material$Color$withShade,
+								A2($author$project$OUI$Material$Color$getColor, color, colorscheme),
+								$author$project$OUI$Material$Color$hoverStateLayerOpacity,
+								colorscheme.surfaceContainerLow)))
+					]))
+			]);
 	});
 var $author$project$OUI$Material$Button$elevatedDisabledAttrs = F3(
-	function (typescale, colorScheme, layout) {
-		var _v0 = A4($author$project$OUI$Material$Button$btnColors, colorScheme, $author$project$OUI$Button$Elevated, $author$project$OUI$Primary, true);
+	function (typescale, colorscheme, layout) {
+		var _v0 = A4($author$project$OUI$Material$Button$btnColors, colorscheme, $author$project$OUI$Button$Elevated, $author$project$OUI$Primary, true);
 		var frontColor = _v0.a;
 		var backColor = _v0.b;
-		return _Utils_ap(
-			A3($author$project$OUI$Material$Typography$attrs, typescale, $author$project$OUI$Text$Label, $author$project$OUI$Text$Large),
-			_List_fromArray(
-				[
-					$mdgriffith$elm_ui$Element$Border$rounded(layout.containerRadius),
-					$mdgriffith$elm_ui$Element$Background$color(
-					$author$project$OUI$Material$Color$toElementColor(backColor)),
-					$mdgriffith$elm_ui$Element$Font$color(
-					$author$project$OUI$Material$Color$toElementColor(frontColor)),
-					$mdgriffith$elm_ui$Element$focused(
-					_List_fromArray(
-						[
-							$mdgriffith$elm_ui$Element$Background$color(
-							$author$project$OUI$Material$Color$toElementColor(
-								A2($author$project$OUI$Material$Color$setAlpha, 0.12 + $author$project$OUI$Material$Color$hoverStateLayerOpacity, colorScheme.onSurface)))
-						]))
-				]));
+		return _List_fromArray(
+			[
+				$mdgriffith$elm_ui$Element$Background$color(
+				$author$project$OUI$Material$Color$toElementColor(backColor)),
+				$mdgriffith$elm_ui$Element$Font$color(
+				$author$project$OUI$Material$Color$toElementColor(frontColor)),
+				$mdgriffith$elm_ui$Element$focused(
+				_List_fromArray(
+					[
+						$mdgriffith$elm_ui$Element$Background$color(
+						$author$project$OUI$Material$Color$toElementColor(
+							A2($author$project$OUI$Material$Color$setAlpha, 0.12 + $author$project$OUI$Material$Color$hoverStateLayerOpacity, colorscheme.onSurface)))
+					]))
+			]);
 	});
 var $mdgriffith$elm_ui$Internal$Model$Px = function (a) {
 	return {$: 'Px', a: a};
 };
 var $mdgriffith$elm_ui$Element$px = $mdgriffith$elm_ui$Internal$Model$Px;
 var $author$project$OUI$Material$Button$fabAttrs = F3(
-	function (colorScheme, layout, color) {
+	function (colorscheme, layout, color) {
 		var _v0 = function () {
 			switch (color.$) {
 				case 'Primary':
-					return _Utils_Tuple2(colorScheme.primaryContainer, colorScheme.onPrimaryContainer);
+					return _Utils_Tuple2(colorscheme.primaryContainer, colorscheme.onPrimaryContainer);
 				case 'PrimaryContainer':
-					return _Utils_Tuple2(colorScheme.primaryContainer, colorScheme.onPrimaryContainer);
+					return _Utils_Tuple2(colorscheme.primaryContainer, colorscheme.onPrimaryContainer);
 				case 'Secondary':
-					return _Utils_Tuple2(colorScheme.secondaryContainer, colorScheme.onSecondaryContainer);
+					return _Utils_Tuple2(colorscheme.secondaryContainer, colorscheme.onSecondaryContainer);
 				case 'SecondaryContainer':
-					return _Utils_Tuple2(colorScheme.secondaryContainer, colorScheme.onSecondaryContainer);
+					return _Utils_Tuple2(colorscheme.secondaryContainer, colorscheme.onSecondaryContainer);
 				case 'Tertiary':
-					return _Utils_Tuple2(colorScheme.tertiaryContainer, colorScheme.onTertiaryContainer);
+					return _Utils_Tuple2(colorscheme.tertiaryContainer, colorscheme.onTertiaryContainer);
 				case 'TertiaryContainer':
-					return _Utils_Tuple2(colorScheme.tertiaryContainer, colorScheme.onTertiaryContainer);
+					return _Utils_Tuple2(colorscheme.tertiaryContainer, colorscheme.onTertiaryContainer);
 				case 'Error':
-					return _Utils_Tuple2(colorScheme.errorContainer, colorScheme.onErrorContainer);
+					return _Utils_Tuple2(colorscheme.errorContainer, colorscheme.onErrorContainer);
 				default:
-					return _Utils_Tuple2(colorScheme.errorContainer, colorScheme.onErrorContainer);
+					return _Utils_Tuple2(colorscheme.errorContainer, colorscheme.onErrorContainer);
 			}
 		}();
 		var bgColor = _v0.a;
@@ -12579,7 +12665,7 @@ var $author$project$OUI$Material$Button$fabAttrs = F3(
 				$mdgriffith$elm_ui$Element$Border$shadow(
 				{
 					blur: 1,
-					color: $author$project$OUI$Material$Color$toElementColor(colorScheme.shadow),
+					color: $author$project$OUI$Material$Color$toElementColor(colorscheme.shadow),
 					offset: _Utils_Tuple2(1, 1),
 					size: 1
 				}),
@@ -12609,80 +12695,88 @@ var $author$project$OUI$Material$Button$fabAttrs = F3(
 			]);
 	});
 var $author$project$OUI$Material$Button$filledAttrs = F4(
-	function (typescale, colorScheme, layout, color) {
-		var _v0 = A4($author$project$OUI$Material$Button$btnColors, colorScheme, $author$project$OUI$Button$Filled, color, false);
+	function (typescale, colorscheme, layout, color) {
+		var _v0 = A4($author$project$OUI$Material$Button$btnColors, colorscheme, $author$project$OUI$Button$Filled, color, false);
 		var frontColor = _v0.a;
 		var backColor = _v0.b;
-		return _Utils_ap(
-			A3($author$project$OUI$Material$Typography$attrs, typescale, $author$project$OUI$Text$Label, $author$project$OUI$Text$Large),
-			_List_fromArray(
-				[
-					$mdgriffith$elm_ui$Element$Border$rounded(layout.containerRadius),
-					$mdgriffith$elm_ui$Element$Background$color(
-					$author$project$OUI$Material$Color$toElementColor(backColor)),
-					$mdgriffith$elm_ui$Element$Font$color(
-					$author$project$OUI$Material$Color$toElementColor(frontColor)),
-					$mdgriffith$elm_ui$Element$focused(
-					_List_fromArray(
-						[
-							$mdgriffith$elm_ui$Element$Background$color(
-							$author$project$OUI$Material$Color$toElementColor(
-								A3(
-									$author$project$OUI$Material$Color$withShade,
-									A2($author$project$OUI$Material$Color$getOnColor, color, colorScheme),
-									$author$project$OUI$Material$Color$focusStateLayerOpacity,
-									A2($author$project$OUI$Material$Color$getColor, color, colorScheme))))
-						])),
-					$mdgriffith$elm_ui$Element$mouseDown(
-					_List_fromArray(
-						[
-							$mdgriffith$elm_ui$Element$Background$color(
-							$author$project$OUI$Material$Color$toElementColor(
-								A3(
-									$author$project$OUI$Material$Color$withShade,
-									A2($author$project$OUI$Material$Color$getOnColor, color, colorScheme),
-									$author$project$OUI$Material$Color$pressStateLayerOpacity,
-									A2($author$project$OUI$Material$Color$getColor, color, colorScheme))))
-						])),
-					$mdgriffith$elm_ui$Element$mouseOver(
-					_List_fromArray(
-						[
-							$mdgriffith$elm_ui$Element$Background$color(
-							$author$project$OUI$Material$Color$toElementColor(
-								A3(
-									$author$project$OUI$Material$Color$withShade,
-									A2($author$project$OUI$Material$Color$getOnColor, color, colorScheme),
-									$author$project$OUI$Material$Color$hoverStateLayerOpacity,
-									A2($author$project$OUI$Material$Color$getColor, color, colorScheme))))
-						]))
-				]));
+		return _List_fromArray(
+			[
+				$mdgriffith$elm_ui$Element$Background$color(
+				$author$project$OUI$Material$Color$toElementColor(backColor)),
+				$mdgriffith$elm_ui$Element$Font$color(
+				$author$project$OUI$Material$Color$toElementColor(frontColor)),
+				$mdgriffith$elm_ui$Element$focused(
+				_List_fromArray(
+					[
+						$mdgriffith$elm_ui$Element$Background$color(
+						$author$project$OUI$Material$Color$toElementColor(
+							A3(
+								$author$project$OUI$Material$Color$withShade,
+								A2($author$project$OUI$Material$Color$getOnColor, color, colorscheme),
+								$author$project$OUI$Material$Color$focusStateLayerOpacity,
+								A2($author$project$OUI$Material$Color$getColor, color, colorscheme))))
+					])),
+				$mdgriffith$elm_ui$Element$mouseDown(
+				_List_fromArray(
+					[
+						$mdgriffith$elm_ui$Element$Background$color(
+						$author$project$OUI$Material$Color$toElementColor(
+							A3(
+								$author$project$OUI$Material$Color$withShade,
+								A2($author$project$OUI$Material$Color$getOnColor, color, colorscheme),
+								$author$project$OUI$Material$Color$pressStateLayerOpacity,
+								A2($author$project$OUI$Material$Color$getColor, color, colorscheme))))
+					])),
+				$mdgriffith$elm_ui$Element$mouseOver(
+				_List_fromArray(
+					[
+						$mdgriffith$elm_ui$Element$Background$color(
+						$author$project$OUI$Material$Color$toElementColor(
+							A3(
+								$author$project$OUI$Material$Color$withShade,
+								A2($author$project$OUI$Material$Color$getOnColor, color, colorscheme),
+								$author$project$OUI$Material$Color$hoverStateLayerOpacity,
+								A2($author$project$OUI$Material$Color$getColor, color, colorscheme))))
+					]))
+			]);
 	});
 var $author$project$OUI$Material$Button$filledDisabledAttrs = F3(
-	function (typescale, colorScheme, layout) {
-		var _v0 = A4($author$project$OUI$Material$Button$btnColors, colorScheme, $author$project$OUI$Button$Filled, $author$project$OUI$Primary, true);
+	function (typescale, colorscheme, layout) {
+		var _v0 = A4($author$project$OUI$Material$Button$btnColors, colorscheme, $author$project$OUI$Button$Filled, $author$project$OUI$Primary, true);
 		var frontColor = _v0.a;
 		var backColor = _v0.b;
-		return _Utils_ap(
-			A3($author$project$OUI$Material$Typography$attrs, typescale, $author$project$OUI$Text$Label, $author$project$OUI$Text$Large),
-			_List_fromArray(
-				[
-					$mdgriffith$elm_ui$Element$Border$rounded(layout.containerRadius),
-					$mdgriffith$elm_ui$Element$Background$color(
-					$author$project$OUI$Material$Color$toElementColor(backColor)),
-					$mdgriffith$elm_ui$Element$Font$color(
-					$author$project$OUI$Material$Color$toElementColor(frontColor)),
-					$mdgriffith$elm_ui$Element$focused(
-					_List_fromArray(
-						[
-							$mdgriffith$elm_ui$Element$Background$color(
-							$author$project$OUI$Material$Color$toElementColor(
-								A2($author$project$OUI$Material$Color$setAlpha, 0.12 + $author$project$OUI$Material$Color$hoverStateLayerOpacity, colorScheme.onSurface)))
-						]))
-				]));
+		return _List_fromArray(
+			[
+				$mdgriffith$elm_ui$Element$Background$color(
+				$author$project$OUI$Material$Color$toElementColor(backColor)),
+				$mdgriffith$elm_ui$Element$Font$color(
+				$author$project$OUI$Material$Color$toElementColor(frontColor)),
+				$mdgriffith$elm_ui$Element$focused(
+				_List_fromArray(
+					[
+						$mdgriffith$elm_ui$Element$Background$color(
+						$author$project$OUI$Material$Color$toElementColor(
+							A2($author$project$OUI$Material$Color$setAlpha, 0.12 + $author$project$OUI$Material$Color$hoverStateLayerOpacity, colorscheme.onSurface)))
+					]))
+			]);
 	});
+var $author$project$OUI$Material$Button$iconButtonAttrs = function (layout) {
+	return _List_fromArray(
+		[
+			$mdgriffith$elm_ui$Element$width(
+			$mdgriffith$elm_ui$Element$px(layout.containerSize)),
+			$mdgriffith$elm_ui$Element$height(
+			$mdgriffith$elm_ui$Element$px(layout.containerSize)),
+			$mdgriffith$elm_ui$Element$Border$rounded((layout.containerSize / 2) | 0)
+		]);
+};
 var $author$project$OUI$Material$Button$iconOnly = function (t) {
 	switch (t.$) {
 		case 'Icon':
+			return true;
+		case 'FilledIcon':
+			return true;
+		case 'OutlinedIcon':
 			return true;
 		case 'SmallFAB':
 			return true;
@@ -12705,6 +12799,12 @@ var $author$project$OUI$Material$Button$iconSizeColor = F5(
 				return _Utils_Tuple2(theme.fab.medium.iconSize, frontColor);
 			case 'LargeFAB':
 				return _Utils_Tuple2(theme.fab.large.iconSize, frontColor);
+			case 'Icon':
+				return _Utils_Tuple2(theme.icon.iconSize, frontColor);
+			case 'FilledIcon':
+				return _Utils_Tuple2(theme.icon.iconSize, frontColor);
+			case 'OutlinedIcon':
+				return _Utils_Tuple2(theme.icon.iconSize, frontColor);
 			default:
 				return _Utils_Tuple2(theme.common.iconSize, frontColor);
 		}
@@ -12743,142 +12843,68 @@ var $mdgriffith$elm_ui$Element$Border$width = function (v) {
 			v));
 };
 var $author$project$OUI$Material$Button$outlinedAttrs = F4(
-	function (typescale, colorScheme, layout, color) {
-		return _Utils_ap(
-			A3($author$project$OUI$Material$Typography$attrs, typescale, $author$project$OUI$Text$Label, $author$project$OUI$Text$Large),
-			_List_fromArray(
-				[
-					$mdgriffith$elm_ui$Element$Border$rounded(layout.containerRadius),
-					$mdgriffith$elm_ui$Element$Border$width(1),
-					$mdgriffith$elm_ui$Element$Border$color(
-					$author$project$OUI$Material$Color$toElementColor(colorScheme.outline)),
-					$mdgriffith$elm_ui$Element$Font$color(
-					A2($author$project$OUI$Material$Color$getElementColor, color, colorScheme)),
-					$mdgriffith$elm_ui$Element$focused(
-					_List_fromArray(
-						[
-							$mdgriffith$elm_ui$Element$Background$color(
-							$author$project$OUI$Material$Color$toElementColor(
-								A3(
-									$author$project$OUI$Material$Color$withShade,
-									A2($author$project$OUI$Material$Color$getColor, color, colorScheme),
-									$author$project$OUI$Material$Color$focusStateLayerOpacity,
-									colorScheme.surface)))
-						])),
-					$mdgriffith$elm_ui$Element$mouseDown(
-					_List_fromArray(
-						[
-							$mdgriffith$elm_ui$Element$Background$color(
-							$author$project$OUI$Material$Color$toElementColor(
-								A3(
-									$author$project$OUI$Material$Color$withShade,
-									A2($author$project$OUI$Material$Color$getColor, color, colorScheme),
-									$author$project$OUI$Material$Color$pressStateLayerOpacity,
-									colorScheme.surface)))
-						])),
-					$mdgriffith$elm_ui$Element$mouseOver(
-					_List_fromArray(
-						[
-							$mdgriffith$elm_ui$Element$Background$color(
-							$author$project$OUI$Material$Color$toElementColor(
-								A3(
-									$author$project$OUI$Material$Color$withShade,
-									A2($author$project$OUI$Material$Color$getColor, color, colorScheme),
-									$author$project$OUI$Material$Color$hoverStateLayerOpacity,
-									colorScheme.surface)))
-						]))
-				]));
+	function (typescale, colorscheme, layout, color) {
+		return _List_fromArray(
+			[
+				$mdgriffith$elm_ui$Element$Border$width(1),
+				$mdgriffith$elm_ui$Element$Border$color(
+				$author$project$OUI$Material$Color$toElementColor(colorscheme.outline)),
+				$mdgriffith$elm_ui$Element$Font$color(
+				A2($author$project$OUI$Material$Color$getElementColor, color, colorscheme)),
+				$mdgriffith$elm_ui$Element$focused(
+				_List_fromArray(
+					[
+						$mdgriffith$elm_ui$Element$Background$color(
+						$author$project$OUI$Material$Color$toElementColor(
+							A3(
+								$author$project$OUI$Material$Color$withShade,
+								A2($author$project$OUI$Material$Color$getColor, color, colorscheme),
+								$author$project$OUI$Material$Color$focusStateLayerOpacity,
+								colorscheme.surface)))
+					])),
+				$mdgriffith$elm_ui$Element$mouseDown(
+				_List_fromArray(
+					[
+						$mdgriffith$elm_ui$Element$Background$color(
+						$author$project$OUI$Material$Color$toElementColor(
+							A3(
+								$author$project$OUI$Material$Color$withShade,
+								A2($author$project$OUI$Material$Color$getColor, color, colorscheme),
+								$author$project$OUI$Material$Color$pressStateLayerOpacity,
+								colorscheme.surface)))
+					])),
+				$mdgriffith$elm_ui$Element$mouseOver(
+				_List_fromArray(
+					[
+						$mdgriffith$elm_ui$Element$Background$color(
+						$author$project$OUI$Material$Color$toElementColor(
+							A3(
+								$author$project$OUI$Material$Color$withShade,
+								A2($author$project$OUI$Material$Color$getColor, color, colorscheme),
+								$author$project$OUI$Material$Color$hoverStateLayerOpacity,
+								colorscheme.surface)))
+					]))
+			]);
 	});
 var $author$project$OUI$Material$Button$outlinedDisabledAttrs = F3(
-	function (typescale, colorScheme, layout) {
-		return _Utils_ap(
-			A3($author$project$OUI$Material$Typography$attrs, typescale, $author$project$OUI$Text$Label, $author$project$OUI$Text$Large),
-			_List_fromArray(
-				[
-					$mdgriffith$elm_ui$Element$Border$rounded(layout.containerRadius),
-					$mdgriffith$elm_ui$Element$Border$width(1),
-					$mdgriffith$elm_ui$Element$Border$color(
-					$author$project$OUI$Material$Color$toElementColor(
-						A2($author$project$OUI$Material$Color$setAlpha, 0.12, colorScheme.onSurface))),
-					$mdgriffith$elm_ui$Element$Font$color(
-					$author$project$OUI$Material$Color$toElementColor(
-						A2($author$project$OUI$Material$Color$setAlpha, 0.38, colorScheme.onSurface))),
-					$mdgriffith$elm_ui$Element$focused(
-					_List_fromArray(
-						[
-							$mdgriffith$elm_ui$Element$Background$color(
-							$author$project$OUI$Material$Color$toElementColor(
-								A2($author$project$OUI$Material$Color$setAlpha, $author$project$OUI$Material$Color$hoverStateLayerOpacity, colorScheme.onSurface)))
-						]))
-				]));
-	});
-var $mdgriffith$elm_ui$Internal$Model$PaddingStyle = F5(
-	function (a, b, c, d, e) {
-		return {$: 'PaddingStyle', a: a, b: b, c: c, d: d, e: e};
-	});
-var $mdgriffith$elm_ui$Internal$Flag$padding = $mdgriffith$elm_ui$Internal$Flag$flag(2);
-var $mdgriffith$elm_ui$Internal$Model$paddingName = F4(
-	function (top, right, bottom, left) {
-		return 'pad-' + ($elm$core$String$fromInt(top) + ('-' + ($elm$core$String$fromInt(right) + ('-' + ($elm$core$String$fromInt(bottom) + ('-' + $elm$core$String$fromInt(left)))))));
-	});
-var $mdgriffith$elm_ui$Element$paddingEach = function (_v0) {
-	var top = _v0.top;
-	var right = _v0.right;
-	var bottom = _v0.bottom;
-	var left = _v0.left;
-	if (_Utils_eq(top, right) && (_Utils_eq(top, bottom) && _Utils_eq(top, left))) {
-		var topFloat = top;
-		return A2(
-			$mdgriffith$elm_ui$Internal$Model$StyleClass,
-			$mdgriffith$elm_ui$Internal$Flag$padding,
-			A5(
-				$mdgriffith$elm_ui$Internal$Model$PaddingStyle,
-				'p-' + $elm$core$String$fromInt(top),
-				topFloat,
-				topFloat,
-				topFloat,
-				topFloat));
-	} else {
-		return A2(
-			$mdgriffith$elm_ui$Internal$Model$StyleClass,
-			$mdgriffith$elm_ui$Internal$Flag$padding,
-			A5(
-				$mdgriffith$elm_ui$Internal$Model$PaddingStyle,
-				A4($mdgriffith$elm_ui$Internal$Model$paddingName, top, right, bottom, left),
-				top,
-				right,
-				bottom,
-				left));
-	}
-};
-var $mdgriffith$elm_ui$Element$paddingXY = F2(
-	function (x, y) {
-		if (_Utils_eq(x, y)) {
-			var f = x;
-			return A2(
-				$mdgriffith$elm_ui$Internal$Model$StyleClass,
-				$mdgriffith$elm_ui$Internal$Flag$padding,
-				A5(
-					$mdgriffith$elm_ui$Internal$Model$PaddingStyle,
-					'p-' + $elm$core$String$fromInt(x),
-					f,
-					f,
-					f,
-					f));
-		} else {
-			var yFloat = y;
-			var xFloat = x;
-			return A2(
-				$mdgriffith$elm_ui$Internal$Model$StyleClass,
-				$mdgriffith$elm_ui$Internal$Flag$padding,
-				A5(
-					$mdgriffith$elm_ui$Internal$Model$PaddingStyle,
-					'p-' + ($elm$core$String$fromInt(x) + ('-' + $elm$core$String$fromInt(y))),
-					yFloat,
-					xFloat,
-					yFloat,
-					xFloat));
-		}
+	function (typescale, colorscheme, layout) {
+		return _List_fromArray(
+			[
+				$mdgriffith$elm_ui$Element$Border$width(1),
+				$mdgriffith$elm_ui$Element$Border$color(
+				$author$project$OUI$Material$Color$toElementColor(
+					A2($author$project$OUI$Material$Color$setAlpha, 0.12, colorscheme.onSurface))),
+				$mdgriffith$elm_ui$Element$Font$color(
+				$author$project$OUI$Material$Color$toElementColor(
+					A2($author$project$OUI$Material$Color$setAlpha, 0.38, colorscheme.onSurface))),
+				$mdgriffith$elm_ui$Element$focused(
+				_List_fromArray(
+					[
+						$mdgriffith$elm_ui$Element$Background$color(
+						$author$project$OUI$Material$Color$toElementColor(
+							A2($author$project$OUI$Material$Color$setAlpha, $author$project$OUI$Material$Color$hoverStateLayerOpacity, colorscheme.onSurface)))
+					]))
+			]);
 	});
 var $author$project$OUI$Button$properties = function (_v0) {
 	var props = _v0.a;
@@ -12976,95 +13002,80 @@ var $mdgriffith$elm_ui$Element$text = function (content) {
 	return $mdgriffith$elm_ui$Internal$Model$Text(content);
 };
 var $author$project$OUI$Material$Button$textAttrs = F4(
-	function (typescale, colorScheme, layout, color) {
-		return _Utils_ap(
-			A3($author$project$OUI$Material$Typography$attrs, typescale, $author$project$OUI$Text$Label, $author$project$OUI$Text$Large),
-			_List_fromArray(
-				[
-					$mdgriffith$elm_ui$Element$Border$rounded(layout.containerRadius),
-					$mdgriffith$elm_ui$Element$Font$color(
-					A2($author$project$OUI$Material$Color$getElementColor, color, colorScheme)),
-					$mdgriffith$elm_ui$Element$focused(
-					_List_fromArray(
-						[
-							$mdgriffith$elm_ui$Element$Background$color(
-							$author$project$OUI$Material$Color$toElementColor(
-								A3(
-									$author$project$OUI$Material$Color$withShade,
-									A2($author$project$OUI$Material$Color$getColor, color, colorScheme),
-									$author$project$OUI$Material$Color$focusStateLayerOpacity,
-									colorScheme.surface)))
-						])),
-					$mdgriffith$elm_ui$Element$mouseDown(
-					_List_fromArray(
-						[
-							$mdgriffith$elm_ui$Element$Background$color(
-							$author$project$OUI$Material$Color$toElementColor(
-								A3(
-									$author$project$OUI$Material$Color$withShade,
-									A2($author$project$OUI$Material$Color$getColor, color, colorScheme),
-									$author$project$OUI$Material$Color$pressStateLayerOpacity,
-									colorScheme.surface)))
-						])),
-					$mdgriffith$elm_ui$Element$mouseOver(
-					_List_fromArray(
-						[
-							$mdgriffith$elm_ui$Element$Background$color(
-							$author$project$OUI$Material$Color$toElementColor(
-								A3(
-									$author$project$OUI$Material$Color$withShade,
-									A2($author$project$OUI$Material$Color$getColor, color, colorScheme),
-									$author$project$OUI$Material$Color$hoverStateLayerOpacity,
-									colorScheme.surface)))
-						]))
-				]));
+	function (typescale, colorscheme, layout, color) {
+		return _List_fromArray(
+			[
+				$mdgriffith$elm_ui$Element$Font$color(
+				A2($author$project$OUI$Material$Color$getElementColor, color, colorscheme)),
+				$mdgriffith$elm_ui$Element$focused(
+				_List_fromArray(
+					[
+						$mdgriffith$elm_ui$Element$Background$color(
+						$author$project$OUI$Material$Color$toElementColor(
+							A3(
+								$author$project$OUI$Material$Color$withShade,
+								A2($author$project$OUI$Material$Color$getColor, color, colorscheme),
+								$author$project$OUI$Material$Color$focusStateLayerOpacity,
+								colorscheme.surface)))
+					])),
+				$mdgriffith$elm_ui$Element$mouseDown(
+				_List_fromArray(
+					[
+						$mdgriffith$elm_ui$Element$Background$color(
+						$author$project$OUI$Material$Color$toElementColor(
+							A3(
+								$author$project$OUI$Material$Color$withShade,
+								A2($author$project$OUI$Material$Color$getColor, color, colorscheme),
+								$author$project$OUI$Material$Color$pressStateLayerOpacity,
+								colorscheme.surface)))
+					])),
+				$mdgriffith$elm_ui$Element$mouseOver(
+				_List_fromArray(
+					[
+						$mdgriffith$elm_ui$Element$Background$color(
+						$author$project$OUI$Material$Color$toElementColor(
+							A3(
+								$author$project$OUI$Material$Color$withShade,
+								A2($author$project$OUI$Material$Color$getColor, color, colorscheme),
+								$author$project$OUI$Material$Color$hoverStateLayerOpacity,
+								colorscheme.surface)))
+					]))
+			]);
 	});
 var $author$project$OUI$Material$Button$textDisabledAttrs = F3(
-	function (typescale, colorScheme, layout) {
-		return _Utils_ap(
-			A3($author$project$OUI$Material$Typography$attrs, typescale, $author$project$OUI$Text$Label, $author$project$OUI$Text$Large),
-			_List_fromArray(
-				[
-					$mdgriffith$elm_ui$Element$Border$rounded(layout.containerRadius),
-					$mdgriffith$elm_ui$Element$Font$color(
-					$author$project$OUI$Material$Color$toElementColor(
-						A2($author$project$OUI$Material$Color$setAlpha, 0.38, colorScheme.onSurface))),
-					$mdgriffith$elm_ui$Element$focused(
-					_List_fromArray(
-						[
-							$mdgriffith$elm_ui$Element$Background$color(
-							$author$project$OUI$Material$Color$toElementColor(
-								A2($author$project$OUI$Material$Color$setAlpha, $author$project$OUI$Material$Color$hoverStateLayerOpacity, colorScheme.onSurface)))
-						]))
-				]));
+	function (typescale, colorscheme, layout) {
+		return _List_fromArray(
+			[
+				$mdgriffith$elm_ui$Element$Font$color(
+				$author$project$OUI$Material$Color$toElementColor(
+					A2($author$project$OUI$Material$Color$setAlpha, 0.38, colorscheme.onSurface))),
+				$mdgriffith$elm_ui$Element$focused(
+				_List_fromArray(
+					[
+						$mdgriffith$elm_ui$Element$Background$color(
+						$author$project$OUI$Material$Color$toElementColor(
+							A2($author$project$OUI$Material$Color$setAlpha, $author$project$OUI$Material$Color$hoverStateLayerOpacity, colorscheme.onSurface)))
+					]))
+			]);
 	});
 var $author$project$OUI$Material$Button$render = F5(
 	function (typescale, colorscheme, theme, attrs, button) {
 		var props = $author$project$OUI$Button$properties(button);
-		var padding = function () {
-			var _v21 = props.icon;
-			if (_v21.$ === 'Nothing') {
-				return A2($mdgriffith$elm_ui$Element$paddingXY, theme.common.leftRightPadding, 0);
-			} else {
-				return $mdgriffith$elm_ui$Element$paddingEach(
-					{bottom: 0, left: theme.common.leftPaddingWithIcon, right: theme.common.rightPaddingWithIcon, top: 0});
-			}
-		}();
 		var label = function () {
-			var _v19 = props.icon;
-			if (_v19.$ === 'Nothing') {
+			var _v28 = props.icon;
+			if (_v28.$ === 'Nothing') {
 				return $mdgriffith$elm_ui$Element$text(props.text);
 			} else {
-				var icon = _v19.a;
-				var _v20 = A5(
+				var icon = _v28.a;
+				var _v29 = A5(
 					$author$project$OUI$Material$Button$iconSizeColor,
 					colorscheme,
 					theme,
 					props.type_,
 					props.color,
 					_Utils_eq(props.onClick, $elm$core$Maybe$Nothing));
-				var size = _v20.a;
-				var color = _v20.b;
+				var size = _v29.a;
+				var color = _v29.b;
 				return $author$project$OUI$Material$Button$iconOnly(props.type_) ? A4(
 					$author$project$OUI$Material$Icon$renderWithSizeColor,
 					size,
@@ -13090,79 +13101,130 @@ var $author$project$OUI$Material$Button$render = F5(
 						]));
 			}
 		}();
+		var hasIcon = !_Utils_eq(props.icon, $elm$core$Maybe$Nothing);
 		return A2(
 			$mdgriffith$elm_ui$Element$Input$button,
 			A2(
 				$elm$core$List$cons,
 				$mdgriffith$elm_ui$Element$height(
 					$mdgriffith$elm_ui$Element$px(theme.common.containerHeight)),
-				A2(
-					$elm$core$List$cons,
-					padding,
-					_Utils_ap(
-						attrs,
-						function () {
-							var _v0 = _Utils_Tuple2(props.type_, props.onClick);
-							_v0$13:
-							while (true) {
-								if (_v0.b.$ === 'Nothing') {
-									switch (_v0.a.$) {
-										case 'Elevated':
-											var _v2 = _v0.a;
-											var _v3 = _v0.b;
-											return A3($author$project$OUI$Material$Button$elevatedDisabledAttrs, typescale, colorscheme, theme.common);
-										case 'Filled':
-											var _v5 = _v0.a;
-											var _v6 = _v0.b;
-											return A3($author$project$OUI$Material$Button$filledDisabledAttrs, typescale, colorscheme, theme.common);
-										case 'Tonal':
-											var _v8 = _v0.a;
-											var _v9 = _v0.b;
-											return A3($author$project$OUI$Material$Button$filledDisabledAttrs, typescale, colorscheme, theme.common);
-										case 'Outlined':
-											var _v11 = _v0.a;
-											var _v12 = _v0.b;
-											return A3($author$project$OUI$Material$Button$outlinedDisabledAttrs, typescale, colorscheme, theme.common);
-										case 'Text':
-											var _v14 = _v0.a;
-											var _v15 = _v0.b;
-											return A3($author$project$OUI$Material$Button$textDisabledAttrs, typescale, colorscheme, theme.common);
-										default:
-											break _v0$13;
-									}
-								} else {
-									switch (_v0.a.$) {
-										case 'Elevated':
-											var _v1 = _v0.a;
-											return A4($author$project$OUI$Material$Button$elevatedAttrs, typescale, colorscheme, theme.common, props.color);
-										case 'Filled':
-											var _v4 = _v0.a;
-											return A4($author$project$OUI$Material$Button$filledAttrs, typescale, colorscheme, theme.common, props.color);
-										case 'Tonal':
-											var _v7 = _v0.a;
-											return A4($author$project$OUI$Material$Button$filledAttrs, typescale, colorscheme, theme.common, props.color);
-										case 'Outlined':
-											var _v10 = _v0.a;
-											return A4($author$project$OUI$Material$Button$outlinedAttrs, typescale, colorscheme, theme.common, props.color);
-										case 'Text':
-											var _v13 = _v0.a;
-											return A4($author$project$OUI$Material$Button$textAttrs, typescale, colorscheme, theme.common, props.color);
-										case 'SmallFAB':
-											var _v16 = _v0.a;
-											return A3($author$project$OUI$Material$Button$fabAttrs, colorscheme, theme.fab.small, props.color);
-										case 'MediumFAB':
-											var _v17 = _v0.a;
-											return A3($author$project$OUI$Material$Button$fabAttrs, colorscheme, theme.fab.medium, props.color);
-										case 'LargeFAB':
-											var _v18 = _v0.a;
-											return A3($author$project$OUI$Material$Button$fabAttrs, colorscheme, theme.fab.large, props.color);
-										default:
-											break _v0$13;
-									}
+				_Utils_ap(
+					attrs,
+					function () {
+						var _v0 = _Utils_Tuple2(props.type_, props.onClick);
+						_v0$19:
+						while (true) {
+							if (_v0.b.$ === 'Nothing') {
+								switch (_v0.a.$) {
+									case 'Elevated':
+										var _v2 = _v0.a;
+										var _v3 = _v0.b;
+										return _Utils_ap(
+											A4($author$project$OUI$Material$Button$commonButtonAttrs, typescale, colorscheme, theme.common, hasIcon),
+											A3($author$project$OUI$Material$Button$elevatedDisabledAttrs, typescale, colorscheme, theme.common));
+									case 'Filled':
+										var _v5 = _v0.a;
+										var _v6 = _v0.b;
+										return _Utils_ap(
+											A4($author$project$OUI$Material$Button$commonButtonAttrs, typescale, colorscheme, theme.common, hasIcon),
+											A3($author$project$OUI$Material$Button$filledDisabledAttrs, typescale, colorscheme, theme.common));
+									case 'FilledIcon':
+										var _v8 = _v0.a;
+										var _v9 = _v0.b;
+										return _Utils_ap(
+											$author$project$OUI$Material$Button$iconButtonAttrs(theme.icon),
+											A3($author$project$OUI$Material$Button$filledDisabledAttrs, typescale, colorscheme, theme.common));
+									case 'Tonal':
+										var _v11 = _v0.a;
+										var _v12 = _v0.b;
+										return _Utils_ap(
+											A4($author$project$OUI$Material$Button$commonButtonAttrs, typescale, colorscheme, theme.common, hasIcon),
+											A3($author$project$OUI$Material$Button$filledDisabledAttrs, typescale, colorscheme, theme.common));
+									case 'Outlined':
+										var _v14 = _v0.a;
+										var _v15 = _v0.b;
+										return _Utils_ap(
+											A4($author$project$OUI$Material$Button$commonButtonAttrs, typescale, colorscheme, theme.common, hasIcon),
+											A3($author$project$OUI$Material$Button$outlinedDisabledAttrs, typescale, colorscheme, theme.common));
+									case 'OutlinedIcon':
+										var _v17 = _v0.a;
+										var _v18 = _v0.b;
+										return _Utils_ap(
+											$author$project$OUI$Material$Button$iconButtonAttrs(theme.icon),
+											A3($author$project$OUI$Material$Button$outlinedDisabledAttrs, typescale, colorscheme, theme.common));
+									case 'Text':
+										var _v20 = _v0.a;
+										var _v21 = _v0.b;
+										return _Utils_ap(
+											A4($author$project$OUI$Material$Button$commonButtonAttrs, typescale, colorscheme, theme.common, hasIcon),
+											A3($author$project$OUI$Material$Button$textDisabledAttrs, typescale, colorscheme, theme.common));
+									case 'Icon':
+										var _v23 = _v0.a;
+										var _v24 = _v0.b;
+										return _Utils_ap(
+											$author$project$OUI$Material$Button$iconButtonAttrs(theme.icon),
+											A3($author$project$OUI$Material$Button$textDisabledAttrs, typescale, colorscheme, theme.common));
+									default:
+										break _v0$19;
+								}
+							} else {
+								switch (_v0.a.$) {
+									case 'Elevated':
+										var _v1 = _v0.a;
+										return _Utils_ap(
+											A4($author$project$OUI$Material$Button$commonButtonAttrs, typescale, colorscheme, theme.common, hasIcon),
+											A4($author$project$OUI$Material$Button$elevatedAttrs, typescale, colorscheme, theme.common, props.color));
+									case 'Filled':
+										var _v4 = _v0.a;
+										return _Utils_ap(
+											A4($author$project$OUI$Material$Button$commonButtonAttrs, typescale, colorscheme, theme.common, hasIcon),
+											A4($author$project$OUI$Material$Button$filledAttrs, typescale, colorscheme, theme.common, props.color));
+									case 'FilledIcon':
+										var _v7 = _v0.a;
+										return _Utils_ap(
+											$author$project$OUI$Material$Button$iconButtonAttrs(theme.icon),
+											A4($author$project$OUI$Material$Button$filledAttrs, typescale, colorscheme, theme.common, props.color));
+									case 'Tonal':
+										var _v10 = _v0.a;
+										return _Utils_ap(
+											A4($author$project$OUI$Material$Button$commonButtonAttrs, typescale, colorscheme, theme.common, hasIcon),
+											A4($author$project$OUI$Material$Button$filledAttrs, typescale, colorscheme, theme.common, props.color));
+									case 'Outlined':
+										var _v13 = _v0.a;
+										return _Utils_ap(
+											A4($author$project$OUI$Material$Button$commonButtonAttrs, typescale, colorscheme, theme.common, hasIcon),
+											A4($author$project$OUI$Material$Button$outlinedAttrs, typescale, colorscheme, theme.common, props.color));
+									case 'OutlinedIcon':
+										var _v16 = _v0.a;
+										return _Utils_ap(
+											$author$project$OUI$Material$Button$iconButtonAttrs(theme.icon),
+											A4($author$project$OUI$Material$Button$outlinedAttrs, typescale, colorscheme, theme.common, props.color));
+									case 'Text':
+										var _v19 = _v0.a;
+										return _Utils_ap(
+											A4($author$project$OUI$Material$Button$commonButtonAttrs, typescale, colorscheme, theme.common, hasIcon),
+											A4($author$project$OUI$Material$Button$textAttrs, typescale, colorscheme, theme.common, props.color));
+									case 'Icon':
+										var _v22 = _v0.a;
+										return _Utils_ap(
+											$author$project$OUI$Material$Button$iconButtonAttrs(theme.icon),
+											A4($author$project$OUI$Material$Button$textAttrs, typescale, colorscheme, theme.common, props.color));
+									case 'SmallFAB':
+										var _v25 = _v0.a;
+										return A3($author$project$OUI$Material$Button$fabAttrs, colorscheme, theme.fab.small, props.color);
+									case 'MediumFAB':
+										var _v26 = _v0.a;
+										return A3($author$project$OUI$Material$Button$fabAttrs, colorscheme, theme.fab.medium, props.color);
+									case 'LargeFAB':
+										var _v27 = _v0.a;
+										return A3($author$project$OUI$Material$Button$fabAttrs, colorscheme, theme.fab.large, props.color);
+									default:
+										break _v0$19;
 								}
 							}
-							return A3($author$project$OUI$Material$Button$textDisabledAttrs, typescale, colorscheme, theme.common);
-						}()))),
+						}
+						return A3($author$project$OUI$Material$Button$textDisabledAttrs, typescale, colorscheme, theme.common);
+					}())),
 			{label: label, onPress: props.onClick});
 	});
 var $author$project$OUI$Material$renderButton = function (_v0) {
@@ -13427,6 +13489,54 @@ var $author$project$OUI$Showcase$Buttons$commonButtons = A2(
 							$author$project$OUI$Tertiary,
 							$author$project$OUI$Button$largeFAB(
 								btn('Large'))))
+					]);
+			}()),
+			$mdgriffith$elm_ui$Element$text('Icon Buttons'),
+			A2(
+			$mdgriffith$elm_ui$Element$row,
+			_List_fromArray(
+				[
+					$mdgriffith$elm_ui$Element$spacing(30)
+				]),
+			function () {
+				var btn = function (s) {
+					return A2(
+						$author$project$OUI$Button$onClick,
+						$author$project$OUI$Explorer$event('Clicked ' + (s + ' Icon')),
+						A2(
+							$author$project$OUI$Button$withIcon,
+							$author$project$OUI$Icon$clear,
+							A2($author$project$OUI$Button$withText, s + ' Icon', $author$project$OUI$Button$new)));
+				};
+				return _List_fromArray(
+					[
+						A3(
+						$author$project$OUI$Material$renderButton,
+						$author$project$OUI$Material$Theme$defaultTheme,
+						_List_fromArray(
+							[$mdgriffith$elm_ui$Element$centerX]),
+						$author$project$OUI$Button$iconButton(
+							btn('Standard'))),
+						A3(
+						$author$project$OUI$Material$renderButton,
+						$author$project$OUI$Material$Theme$defaultTheme,
+						_List_fromArray(
+							[$mdgriffith$elm_ui$Element$centerX]),
+						A2(
+							$author$project$OUI$Button$color,
+							$author$project$OUI$Primary,
+							$author$project$OUI$Button$filledIconButton(
+								btn('Filled')))),
+						A3(
+						$author$project$OUI$Material$renderButton,
+						$author$project$OUI$Material$Theme$defaultTheme,
+						_List_fromArray(
+							[$mdgriffith$elm_ui$Element$centerX]),
+						A2(
+							$author$project$OUI$Button$color,
+							$author$project$OUI$Primary,
+							$author$project$OUI$Button$outlinedIconButton(
+								btn('Outlined'))))
 					]);
 			}())
 		]));

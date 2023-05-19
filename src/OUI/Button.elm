@@ -3,7 +3,7 @@ module OUI.Button exposing
     , new
     , withText, withIcon, color
     , onClick, disabled
-    , elevatedButton, filledButton, tonalButton, outlinedButton, textButton, smallFAB, mediumFAB, largeFAB, extendedFAB, iconButton
+    , elevatedButton, filledButton, tonalButton, outlinedButton, textButton, smallFAB, mediumFAB, largeFAB, extendedFAB, iconButton, filledIconButton, outlinedIconButton
     , properties
     )
 
@@ -29,7 +29,7 @@ module OUI.Button exposing
 
 # Button types
 
-@docs elevatedButton, filledButton, tonalButton, outlinedButton, textButton, smallFAB, mediumFAB, largeFAB, extendedFAB, iconButton
+@docs elevatedButton, filledButton, tonalButton, outlinedButton, textButton, smallFAB, mediumFAB, largeFAB, extendedFAB, iconButton, filledIconButton, outlinedIconButton
 
 
 # Internal
@@ -54,6 +54,8 @@ type Type
     | MediumFAB
     | LargeFAB
     | ExtendedFAB
+    | FilledIcon
+    | OutlinedIcon
     | Icon
 
 
@@ -169,7 +171,21 @@ extendedFAB =
     btntype ExtendedFAB
 
 
-{-| Set the button type to 'iconButton'
+{-| Set the button type to 'FilledIconButton'
+-}
+filledIconButton : Button { a | hasIcon : () } msg -> Button { a | hasIcon : () } msg
+filledIconButton =
+    btntype FilledIcon
+
+
+{-| Set the button type to 'OutlinedIconButton'
+-}
+outlinedIconButton : Button { a | hasIcon : () } msg -> Button { a | hasIcon : () } msg
+outlinedIconButton =
+    btntype OutlinedIcon
+
+
+{-| Set the button type to 'IconButton'
 -}
 iconButton : Button { a | hasIcon : () } msg -> Button { a | hasIcon : () } msg
 iconButton =

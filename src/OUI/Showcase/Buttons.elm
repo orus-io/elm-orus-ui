@@ -112,4 +112,26 @@ commonButtons =
                 |> Material.renderButton defaultTheme [ Element.centerX ]
              ]
             )
+        , Element.text "Icon Buttons"
+        , Element.row [ Element.spacing 30 ]
+            (let
+                btn s =
+                    Button.new
+                        |> Button.withText (s ++ " Icon")
+                        |> Button.withIcon clear
+                        |> Button.onClick (Explorer.event <| "Clicked " ++ s ++ " Icon")
+             in
+             [ btn "Standard"
+                |> Button.iconButton
+                |> Material.renderButton defaultTheme [ Element.centerX ]
+             , btn "Filled"
+                |> Button.filledIconButton
+                |> Button.color OUI.Primary
+                |> Material.renderButton defaultTheme [ Element.centerX ]
+             , btn "Outlined"
+                |> Button.outlinedIconButton
+                |> Button.color OUI.Primary
+                |> Material.renderButton defaultTheme [ Element.centerX ]
+             ]
+            )
         ]
