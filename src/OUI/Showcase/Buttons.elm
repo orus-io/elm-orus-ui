@@ -4,6 +4,7 @@ import Element exposing (Element)
 import OUI
 import OUI.Button as Button
 import OUI.Explorer as Explorer
+import OUI.Icon exposing (clear)
 import OUI.Material as Material
 import OUI.Material.Theme exposing (defaultTheme)
 
@@ -21,13 +22,13 @@ commonButtons =
             [ Element.column [ Element.spacing 30 ]
                 [ Button.new
                     |> Button.withText "Elevated"
-                    |> Button.withIcon "+"
+                    |> Button.withIcon clear
                     |> Button.onClick (Explorer.event "Clicked Elevated")
                     |> Button.elevatedButton
                     |> Material.renderButton defaultTheme [ Element.centerX ]
                 , Button.new
                     |> Button.withText "Elevated"
-                    |> Button.withIcon "+"
+                    |> Button.withIcon clear
                     |> Button.disabled
                     |> Button.elevatedButton
                     |> Material.renderButton defaultTheme [ Element.centerX ]
@@ -35,13 +36,13 @@ commonButtons =
             , Element.column [ Element.spacing 30 ]
                 [ Button.new
                     |> Button.withText "Filled"
-                    |> Button.withIcon "+"
+                    |> Button.withIcon clear
                     |> Button.onClick (Explorer.event "Clicked Filled")
                     |> Button.filledButton
                     |> Material.renderButton defaultTheme [ Element.centerX ]
                 , Button.new
                     |> Button.withText "Filled"
-                    |> Button.withIcon "+"
+                    |> Button.withIcon clear
                     |> Button.disabled
                     |> Button.filledButton
                     |> Material.renderButton defaultTheme [ Element.centerX ]
@@ -49,13 +50,13 @@ commonButtons =
             , Element.column [ Element.spacing 30 ]
                 [ Button.new
                     |> Button.withText "Tonal"
-                    |> Button.withIcon "+"
+                    |> Button.withIcon clear
                     |> Button.onClick (Explorer.event "Clicked Tonal")
                     |> Button.tonalButton
                     |> Material.renderButton defaultTheme [ Element.centerX ]
                 , Button.new
                     |> Button.withText "Tonal"
-                    |> Button.withIcon "+"
+                    |> Button.withIcon clear
                     |> Button.disabled
                     |> Button.tonalButton
                     |> Material.renderButton defaultTheme [ Element.centerX ]
@@ -63,13 +64,13 @@ commonButtons =
             , Element.column [ Element.spacing 30 ]
                 [ Button.new
                     |> Button.withText "Outlined"
-                    |> Button.withIcon "+"
+                    |> Button.withIcon clear
                     |> Button.onClick (Explorer.event "Clicked Outlined")
                     |> Button.outlinedButton
                     |> Material.renderButton defaultTheme [ Element.centerX ]
                 , Button.new
                     |> Button.withText "Outlined"
-                    |> Button.withIcon "+"
+                    |> Button.withIcon clear
                     |> Button.disabled
                     |> Button.outlinedButton
                     |> Material.renderButton defaultTheme [ Element.centerX ]
@@ -77,13 +78,13 @@ commonButtons =
             , Element.column [ Element.spacing 30 ]
                 [ Button.new
                     |> Button.withText "Text"
-                    |> Button.withIcon "+"
+                    |> Button.withIcon clear
                     |> Button.onClick (Explorer.event "Clicked Text")
                     |> Button.textButton
                     |> Material.renderButton defaultTheme [ Element.centerX ]
                 , Button.new
                     |> Button.withText "Text"
-                    |> Button.withIcon "+"
+                    |> Button.withIcon clear
                     |> Button.disabled
                     |> Button.textButton
                     |> Material.renderButton defaultTheme [ Element.centerX ]
@@ -95,7 +96,7 @@ commonButtons =
                 btn s =
                     Button.new
                         |> Button.withText (s ++ "FAB")
-                        |> Button.withIcon "X"
+                        |> Button.withIcon clear
                         |> Button.onClick (Explorer.event <| "Clicked " ++ s ++ " FAB")
              in
              [ btn "Small"

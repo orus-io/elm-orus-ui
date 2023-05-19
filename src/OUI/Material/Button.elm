@@ -1,13 +1,15 @@
 module OUI.Material.Button exposing (..)
 
+import Color
 import Element exposing (Attribute, Element)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
 import Element.Input as Input
 import OUI
-import OUI.Button exposing (Button, getProperties)
-import OUI.Material.Color
+import OUI.Button exposing (Button, properties)
+import OUI.Material.Color exposing (getOnColor)
+import OUI.Material.Icon as Icon
 import OUI.Material.Typography
 import OUI.Text
 
@@ -79,6 +81,37 @@ type alias FABLayout =
     }
 
 
+{-| returns the front & back colors of a button
+-}
+btnColors :
+    OUI.Material.Color.Scheme
+    -> OUI.Button.Type
+    -> OUI.Color
+    -> Bool
+    -> ( Color.Color, Color.Color )
+btnColors colorScheme type_ color disabled =
+    case ( type_, disabled ) of
+        ( OUI.Button.Elevated, False ) ->
+            ( OUI.Material.Color.getColor color colorScheme
+            , colorScheme.surfaceContainerLow
+            )
+
+        ( OUI.Button.Filled, False ) ->
+            ( OUI.Material.Color.getOnColor color colorScheme
+            , OUI.Material.Color.getColor color colorScheme
+            )
+
+        ( _, True ) ->
+            ( OUI.Material.Color.setAlpha 0.38 colorScheme.onSurface
+            , OUI.Material.Color.setAlpha 0.12 colorScheme.onSurface
+            )
+
+        ( _, False ) ->
+            ( OUI.Material.Color.getColor color colorScheme
+            , colorScheme.surfaceContainerLow
+            )
+
+
 elevatedAttrs :
     OUI.Material.Typography.Typescale
     -> OUI.Material.Color.Scheme
@@ -86,6 +119,10 @@ elevatedAttrs :
     -> OUI.Color
     -> List (Attribute msg)
 elevatedAttrs typescale colorScheme layout color =
+    let
+        ( frontColor, backColor ) =
+            btnColors colorScheme OUI.Button.Elevated color False
+    in
     OUI.Material.Typography.attrs typescale OUI.Text.Label OUI.Text.Large
         ++ [ Border.rounded layout.containerRadius
            , Border.shadow
@@ -94,8 +131,8 @@ elevatedAttrs typescale colorScheme layout color =
                 , blur = 1
                 , color = OUI.Material.Color.toElementColor colorScheme.shadow
                 }
-           , Background.color <| OUI.Material.Color.toElementColor colorScheme.surfaceContainerLow
-           , Font.color <| OUI.Material.Color.getElementColor color colorScheme
+           , Background.color <| OUI.Material.Color.toElementColor backColor
+           , Font.color <| OUI.Material.Color.toElementColor frontColor
            , Element.focused
                 [ colorScheme.surfaceContainerLow
                     |> OUI.Material.Color.withShade
@@ -129,20 +166,14 @@ elevatedDisabledAttrs :
     -> Layout
     -> List (Attribute msg)
 elevatedDisabledAttrs typescale colorScheme layout =
+    let
+        ( frontColor, backColor ) =
+            btnColors colorScheme OUI.Button.Elevated OUI.Primary True
+    in
     OUI.Material.Typography.attrs typescale OUI.Text.Label OUI.Text.Large
         ++ [ Border.rounded layout.containerRadius
-           , Border.shadow
-                { offset = ( 1, 1 )
-                , size = 0
-                , blur = 1
-                , color = OUI.Material.Color.toElementColor colorScheme.shadow
-                }
-           , Background.color <|
-                OUI.Material.Color.toElementColor <|
-                    OUI.Material.Color.setAlpha 0.12 colorScheme.onSurface
-           , Font.color <|
-                OUI.Material.Color.toElementColor <|
-                    OUI.Material.Color.setAlpha 0.38 colorScheme.onSurface
+           , Background.color <| OUI.Material.Color.toElementColor backColor
+           , Font.color <| OUI.Material.Color.toElementColor frontColor
            , Element.focused
                 [ Background.color <|
                     OUI.Material.Color.toElementColor <|
@@ -160,10 +191,14 @@ filledAttrs :
     -> OUI.Color
     -> List (Attribute msg)
 filledAttrs typescale colorScheme layout color =
+    let
+        ( frontColor, backColor ) =
+            btnColors colorScheme OUI.Button.Filled color False
+    in
     OUI.Material.Typography.attrs typescale OUI.Text.Label OUI.Text.Large
         ++ [ Border.rounded layout.containerRadius
-           , Background.color <| OUI.Material.Color.getElementColor color colorScheme
-           , Font.color <| OUI.Material.Color.getOnElementColor color colorScheme
+           , Background.color <| OUI.Material.Color.toElementColor backColor
+           , Font.color <| OUI.Material.Color.toElementColor frontColor
            , Element.focused
                 [ OUI.Material.Color.getColor color colorScheme
                     |> OUI.Material.Color.withShade
@@ -197,14 +232,14 @@ filledDisabledAttrs :
     -> Layout
     -> List (Attribute msg)
 filledDisabledAttrs typescale colorScheme layout =
+    let
+        ( frontColor, backColor ) =
+            btnColors colorScheme OUI.Button.Filled OUI.Primary True
+    in
     OUI.Material.Typography.attrs typescale OUI.Text.Label OUI.Text.Large
         ++ [ Border.rounded layout.containerRadius
-           , Background.color <|
-                OUI.Material.Color.toElementColor <|
-                    OUI.Material.Color.setAlpha 0.12 colorScheme.onSurface
-           , Font.color <|
-                OUI.Material.Color.toElementColor <|
-                    OUI.Material.Color.setAlpha 0.38 colorScheme.onSurface
+           , Background.color <| OUI.Material.Color.toElementColor backColor
+           , Font.color <| OUI.Material.Color.toElementColor frontColor
            , Element.focused
                 [ Background.color <|
                     OUI.Material.Color.toElementColor <|
@@ -429,6 +464,26 @@ iconOnly t =
             False
 
 
+iconSizeColor : OUI.Material.Color.Scheme -> Theme -> OUI.Button.Type -> OUI.Color -> Bool -> ( Int, Color.Color )
+iconSizeColor colorscheme theme type_ color disabled =
+    let
+        ( frontColor, _ ) =
+            btnColors colorscheme type_ color disabled
+    in
+    case type_ of
+        OUI.Button.SmallFAB ->
+            ( theme.fab.small.iconSize, frontColor )
+
+        OUI.Button.MediumFAB ->
+            ( theme.fab.medium.iconSize, frontColor )
+
+        OUI.Button.LargeFAB ->
+            ( theme.fab.large.iconSize, frontColor )
+
+        _ ->
+            ( theme.common.iconSize, frontColor )
+
+
 render :
     OUI.Material.Typography.Typescale
     -> OUI.Material.Color.Scheme
@@ -439,7 +494,7 @@ render :
 render typescale colorscheme theme attrs button =
     let
         props =
-            getProperties button
+            properties button
 
         padding =
             case props.icon of
@@ -460,17 +515,28 @@ render typescale colorscheme theme attrs button =
                     Element.text props.text
 
                 Just icon ->
+                    let
+                        ( size, color ) =
+                            iconSizeColor colorscheme theme props.type_ props.color (props.onClick == Nothing)
+                    in
                     if iconOnly props.type_ then
-                        Element.el
+                        Icon.renderWithSizeColor size
+                            color
                             [ Element.centerX
                             , Element.centerY
                             ]
-                        <|
-                            Element.text icon
+                            icon
 
                     else
                         Element.row [ Element.spacing theme.common.paddingBetweenElements ]
-                            [ Element.text icon, Element.text props.text ]
+                            [ Icon.renderWithSizeColor size
+                                color
+                                [ Element.centerX
+                                , Element.centerY
+                                ]
+                                icon
+                            , Element.text props.text
+                            ]
     in
     Input.button
         ((Element.height <| Element.px theme.common.containerHeight)

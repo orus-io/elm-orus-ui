@@ -11397,6 +11397,96 @@ var $mdgriffith$elm_ui$Internal$Model$AlignX = function (a) {
 };
 var $mdgriffith$elm_ui$Internal$Model$CenterX = {$: 'CenterX'};
 var $mdgriffith$elm_ui$Element$centerX = $mdgriffith$elm_ui$Internal$Model$AlignX($mdgriffith$elm_ui$Internal$Model$CenterX);
+var $author$project$OUI$Icon$Svg = function (a) {
+	return {$: 'Svg', a: a};
+};
+var $elm$svg$Svg$Attributes$d = _VirtualDom_attribute('d');
+var $elm$svg$Svg$Attributes$fill = _VirtualDom_attribute('fill');
+var $author$project$OUI$Icon$Icon = function (a) {
+	return {$: 'Icon', a: a};
+};
+var $author$project$OUI$Icon$fromRenderer = function (renderer) {
+	return $author$project$OUI$Icon$Icon(
+		{color: $elm$core$Maybe$Nothing, renderer: renderer, size: $elm$core$Maybe$Nothing});
+};
+var $elm$svg$Svg$trustedNode = _VirtualDom_nodeNS('http://www.w3.org/2000/svg');
+var $elm$svg$Svg$g = $elm$svg$Svg$trustedNode('g');
+var $elm$svg$Svg$Attributes$height = _VirtualDom_attribute('height');
+var $elm$svg$Svg$path = $elm$svg$Svg$trustedNode('path');
+var $elm$svg$Svg$svg = $elm$svg$Svg$trustedNode('svg');
+var $avh4$elm_color$Color$toCssString = function (_v0) {
+	var r = _v0.a;
+	var g = _v0.b;
+	var b = _v0.c;
+	var a = _v0.d;
+	var roundTo = function (x) {
+		return $elm$core$Basics$round(x * 1000) / 1000;
+	};
+	var pct = function (x) {
+		return $elm$core$Basics$round(x * 10000) / 100;
+	};
+	return $elm$core$String$concat(
+		_List_fromArray(
+			[
+				'rgba(',
+				$elm$core$String$fromFloat(
+				pct(r)),
+				'%,',
+				$elm$core$String$fromFloat(
+				pct(g)),
+				'%,',
+				$elm$core$String$fromFloat(
+				pct(b)),
+				'%,',
+				$elm$core$String$fromFloat(
+				roundTo(a)),
+				')'
+			]));
+};
+var $elm$svg$Svg$Attributes$viewBox = _VirtualDom_attribute('viewBox');
+var $elm$svg$Svg$Attributes$width = _VirtualDom_attribute('width');
+var $author$project$OUI$Icon$clear = $author$project$OUI$Icon$fromRenderer(
+	$author$project$OUI$Icon$Svg(
+		F2(
+			function (size, color) {
+				var sizeAsString = $elm$core$String$fromInt(size);
+				return A2(
+					$elm$svg$Svg$svg,
+					_List_fromArray(
+						[
+							$elm$svg$Svg$Attributes$viewBox('0 0 24 24'),
+							$elm$svg$Svg$Attributes$height(sizeAsString),
+							$elm$svg$Svg$Attributes$width(sizeAsString)
+						]),
+					_List_fromArray(
+						[
+							A2(
+							$elm$svg$Svg$g,
+							_List_fromArray(
+								[
+									$elm$svg$Svg$Attributes$fill(
+									$avh4$elm_color$Color$toCssString(color))
+								]),
+							_List_fromArray(
+								[
+									A2(
+									$elm$svg$Svg$path,
+									_List_fromArray(
+										[
+											$elm$svg$Svg$Attributes$d('M0 0h24v24H0V0z'),
+											$elm$svg$Svg$Attributes$fill('none')
+										]),
+									_List_Nil),
+									A2(
+									$elm$svg$Svg$path,
+									_List_fromArray(
+										[
+											$elm$svg$Svg$Attributes$d('M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z')
+										]),
+									_List_Nil)
+								]))
+						]));
+			})));
 var $author$project$OUI$Button$Button = function (a) {
 	return {$: 'Button', a: a};
 };
@@ -11787,23 +11877,6 @@ var $mdgriffith$elm_ui$Internal$Model$AlignY = function (a) {
 };
 var $mdgriffith$elm_ui$Internal$Model$CenterY = {$: 'CenterY'};
 var $mdgriffith$elm_ui$Element$centerY = $mdgriffith$elm_ui$Internal$Model$AlignY($mdgriffith$elm_ui$Internal$Model$CenterY);
-var $mdgriffith$elm_ui$Element$el = F2(
-	function (attrs, child) {
-		return A4(
-			$mdgriffith$elm_ui$Internal$Model$element,
-			$mdgriffith$elm_ui$Internal$Model$asEl,
-			$mdgriffith$elm_ui$Internal$Model$div,
-			A2(
-				$elm$core$List$cons,
-				$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$shrink),
-				A2(
-					$elm$core$List$cons,
-					$mdgriffith$elm_ui$Element$height($mdgriffith$elm_ui$Element$shrink),
-					attrs)),
-			$mdgriffith$elm_ui$Internal$Model$Unkeyed(
-				_List_fromArray(
-					[child])));
-	});
 var $author$project$OUI$Text$Label = {$: 'Label'};
 var $author$project$OUI$Text$Large = {$: 'Large'};
 var $mdgriffith$elm_ui$Internal$Model$FontFamily = F2(
@@ -11931,6 +12004,104 @@ var $author$project$OUI$Material$Typography$attrs = F3(
 							};
 					}
 				}()(typescale)));
+	});
+var $author$project$OUI$Material$Color$getColor = function (c) {
+	switch (c.$) {
+		case 'Primary':
+			return function ($) {
+				return $.primary;
+			};
+		case 'PrimaryContainer':
+			return function ($) {
+				return $.primaryContainer;
+			};
+		case 'Secondary':
+			return function ($) {
+				return $.secondary;
+			};
+		case 'SecondaryContainer':
+			return function ($) {
+				return $.secondaryContainer;
+			};
+		case 'Tertiary':
+			return function ($) {
+				return $.tertiary;
+			};
+		case 'TertiaryContainer':
+			return function ($) {
+				return $.tertiaryContainer;
+			};
+		case 'Error':
+			return function ($) {
+				return $.error;
+			};
+		default:
+			return function ($) {
+				return $.errorContainer;
+			};
+	}
+};
+var $author$project$OUI$Material$Color$getOnColor = function (c) {
+	switch (c.$) {
+		case 'Primary':
+			return function ($) {
+				return $.onPrimary;
+			};
+		case 'PrimaryContainer':
+			return function ($) {
+				return $.onPrimaryContainer;
+			};
+		case 'Secondary':
+			return function ($) {
+				return $.onSecondary;
+			};
+		case 'SecondaryContainer':
+			return function ($) {
+				return $.onSecondaryContainer;
+			};
+		case 'Tertiary':
+			return function ($) {
+				return $.onTertiary;
+			};
+		case 'TertiaryContainer':
+			return function ($) {
+				return $.onTertiaryContainer;
+			};
+		case 'Error':
+			return function ($) {
+				return $.onError;
+			};
+		default:
+			return function ($) {
+				return $.onErrorContainer;
+			};
+	}
+};
+var $author$project$OUI$Material$Button$btnColors = F4(
+	function (colorScheme, type_, color, disabled) {
+		var _v0 = _Utils_Tuple2(type_, disabled);
+		if (_v0.b) {
+			return _Utils_Tuple2(
+				A2($author$project$OUI$Material$Color$setAlpha, 0.38, colorScheme.onSurface),
+				A2($author$project$OUI$Material$Color$setAlpha, 0.12, colorScheme.onSurface));
+		} else {
+			switch (_v0.a.$) {
+				case 'Elevated':
+					var _v1 = _v0.a;
+					return _Utils_Tuple2(
+						A2($author$project$OUI$Material$Color$getColor, color, colorScheme),
+						colorScheme.surfaceContainerLow);
+				case 'Filled':
+					var _v2 = _v0.a;
+					return _Utils_Tuple2(
+						A2($author$project$OUI$Material$Color$getOnColor, color, colorScheme),
+						A2($author$project$OUI$Material$Color$getColor, color, colorScheme));
+				default:
+					return _Utils_Tuple2(
+						A2($author$project$OUI$Material$Color$getColor, color, colorScheme),
+						colorScheme.surfaceContainerLow);
+			}
+		}
 	});
 var $mdgriffith$elm_ui$Internal$Model$Colored = F3(
 	function (a, b, c) {
@@ -12081,56 +12252,6 @@ var $mdgriffith$elm_ui$Element$focused = function (decs) {
 			$mdgriffith$elm_ui$Internal$Model$Focus,
 			$mdgriffith$elm_ui$Internal$Model$unwrapDecorations(decs)));
 };
-var $author$project$OUI$Material$Color$getColor = function (c) {
-	switch (c.$) {
-		case 'Primary':
-			return function ($) {
-				return $.primary;
-			};
-		case 'PrimaryContainer':
-			return function ($) {
-				return $.primaryContainer;
-			};
-		case 'Secondary':
-			return function ($) {
-				return $.secondary;
-			};
-		case 'SecondaryContainer':
-			return function ($) {
-				return $.secondaryContainer;
-			};
-		case 'Tertiary':
-			return function ($) {
-				return $.tertiary;
-			};
-		case 'TertiaryContainer':
-			return function ($) {
-				return $.tertiaryContainer;
-			};
-		case 'Error':
-			return function ($) {
-				return $.error;
-			};
-		default:
-			return function ($) {
-				return $.errorContainer;
-			};
-	}
-};
-var $mdgriffith$elm_ui$Internal$Model$Rgba = F4(
-	function (a, b, c, d) {
-		return {$: 'Rgba', a: a, b: b, c: c, d: d};
-	});
-var $mdgriffith$elm_ui$Element$fromRgb = function (clr) {
-	return A4($mdgriffith$elm_ui$Internal$Model$Rgba, clr.red, clr.green, clr.blue, clr.alpha);
-};
-var $author$project$OUI$Material$Color$toElementColor = A2($elm$core$Basics$composeR, $avh4$elm_color$Color$toRgba, $mdgriffith$elm_ui$Element$fromRgb);
-var $author$project$OUI$Material$Color$getElementColor = function (c) {
-	return A2(
-		$elm$core$Basics$composeR,
-		$author$project$OUI$Material$Color$getColor(c),
-		$author$project$OUI$Material$Color$toElementColor);
-};
 var $author$project$OUI$Material$Color$hoverStateLayerOpacity = 0.08;
 var $mdgriffith$elm_ui$Internal$Model$Active = {$: 'Active'};
 var $mdgriffith$elm_ui$Internal$Flag$active = $mdgriffith$elm_ui$Internal$Flag$flag(32);
@@ -12190,6 +12311,14 @@ var $mdgriffith$elm_ui$Element$Border$shadow = function (almostShade) {
 			'box-shadow',
 			$mdgriffith$elm_ui$Internal$Model$formatBoxShadow(shade)));
 };
+var $mdgriffith$elm_ui$Internal$Model$Rgba = F4(
+	function (a, b, c, d) {
+		return {$: 'Rgba', a: a, b: b, c: c, d: d};
+	});
+var $mdgriffith$elm_ui$Element$fromRgb = function (clr) {
+	return A4($mdgriffith$elm_ui$Internal$Model$Rgba, clr.red, clr.green, clr.blue, clr.alpha);
+};
+var $author$project$OUI$Material$Color$toElementColor = A2($elm$core$Basics$composeR, $avh4$elm_color$Color$toRgba, $mdgriffith$elm_ui$Element$fromRgb);
 var $elm$core$Basics$cos = _Basics_cos;
 var $noahzgordon$elm_color_extra$Color$Convert$labToXyz = function (_v0) {
 	var l = _v0.l;
@@ -12314,6 +12443,9 @@ var $author$project$OUI$Material$Color$withShade = F3(
 	});
 var $author$project$OUI$Material$Button$elevatedAttrs = F4(
 	function (typescale, colorScheme, layout, color) {
+		var _v0 = A4($author$project$OUI$Material$Button$btnColors, colorScheme, $author$project$OUI$Button$Elevated, color, false);
+		var frontColor = _v0.a;
+		var backColor = _v0.b;
 		return _Utils_ap(
 			A3($author$project$OUI$Material$Typography$attrs, typescale, $author$project$OUI$Text$Label, $author$project$OUI$Text$Large),
 			_List_fromArray(
@@ -12327,9 +12459,9 @@ var $author$project$OUI$Material$Button$elevatedAttrs = F4(
 						size: 1
 					}),
 					$mdgriffith$elm_ui$Element$Background$color(
-					$author$project$OUI$Material$Color$toElementColor(colorScheme.surfaceContainerLow)),
+					$author$project$OUI$Material$Color$toElementColor(backColor)),
 					$mdgriffith$elm_ui$Element$Font$color(
-					A2($author$project$OUI$Material$Color$getElementColor, color, colorScheme)),
+					$author$project$OUI$Material$Color$toElementColor(frontColor)),
 					$mdgriffith$elm_ui$Element$focused(
 					_List_fromArray(
 						[
@@ -12367,24 +12499,18 @@ var $author$project$OUI$Material$Button$elevatedAttrs = F4(
 	});
 var $author$project$OUI$Material$Button$elevatedDisabledAttrs = F3(
 	function (typescale, colorScheme, layout) {
+		var _v0 = A4($author$project$OUI$Material$Button$btnColors, colorScheme, $author$project$OUI$Button$Elevated, $author$project$OUI$Primary, true);
+		var frontColor = _v0.a;
+		var backColor = _v0.b;
 		return _Utils_ap(
 			A3($author$project$OUI$Material$Typography$attrs, typescale, $author$project$OUI$Text$Label, $author$project$OUI$Text$Large),
 			_List_fromArray(
 				[
 					$mdgriffith$elm_ui$Element$Border$rounded(layout.containerRadius),
-					$mdgriffith$elm_ui$Element$Border$shadow(
-					{
-						blur: 1,
-						color: $author$project$OUI$Material$Color$toElementColor(colorScheme.shadow),
-						offset: _Utils_Tuple2(1, 1),
-						size: 0
-					}),
 					$mdgriffith$elm_ui$Element$Background$color(
-					$author$project$OUI$Material$Color$toElementColor(
-						A2($author$project$OUI$Material$Color$setAlpha, 0.12, colorScheme.onSurface))),
+					$author$project$OUI$Material$Color$toElementColor(backColor)),
 					$mdgriffith$elm_ui$Element$Font$color(
-					$author$project$OUI$Material$Color$toElementColor(
-						A2($author$project$OUI$Material$Color$setAlpha, 0.38, colorScheme.onSurface))),
+					$author$project$OUI$Material$Color$toElementColor(frontColor)),
 					$mdgriffith$elm_ui$Element$focused(
 					_List_fromArray(
 						[
@@ -12461,59 +12587,20 @@ var $author$project$OUI$Material$Button$fabAttrs = F3(
 					]))
 			]);
 	});
-var $author$project$OUI$Material$Color$getOnColor = function (c) {
-	switch (c.$) {
-		case 'Primary':
-			return function ($) {
-				return $.onPrimary;
-			};
-		case 'PrimaryContainer':
-			return function ($) {
-				return $.onPrimaryContainer;
-			};
-		case 'Secondary':
-			return function ($) {
-				return $.onSecondary;
-			};
-		case 'SecondaryContainer':
-			return function ($) {
-				return $.onSecondaryContainer;
-			};
-		case 'Tertiary':
-			return function ($) {
-				return $.onTertiary;
-			};
-		case 'TertiaryContainer':
-			return function ($) {
-				return $.onTertiaryContainer;
-			};
-		case 'Error':
-			return function ($) {
-				return $.onError;
-			};
-		default:
-			return function ($) {
-				return $.onErrorContainer;
-			};
-	}
-};
-var $author$project$OUI$Material$Color$getOnElementColor = function (c) {
-	return A2(
-		$elm$core$Basics$composeR,
-		$author$project$OUI$Material$Color$getOnColor(c),
-		$author$project$OUI$Material$Color$toElementColor);
-};
 var $author$project$OUI$Material$Button$filledAttrs = F4(
 	function (typescale, colorScheme, layout, color) {
+		var _v0 = A4($author$project$OUI$Material$Button$btnColors, colorScheme, $author$project$OUI$Button$Filled, color, false);
+		var frontColor = _v0.a;
+		var backColor = _v0.b;
 		return _Utils_ap(
 			A3($author$project$OUI$Material$Typography$attrs, typescale, $author$project$OUI$Text$Label, $author$project$OUI$Text$Large),
 			_List_fromArray(
 				[
 					$mdgriffith$elm_ui$Element$Border$rounded(layout.containerRadius),
 					$mdgriffith$elm_ui$Element$Background$color(
-					A2($author$project$OUI$Material$Color$getElementColor, color, colorScheme)),
+					$author$project$OUI$Material$Color$toElementColor(backColor)),
 					$mdgriffith$elm_ui$Element$Font$color(
-					A2($author$project$OUI$Material$Color$getOnElementColor, color, colorScheme)),
+					$author$project$OUI$Material$Color$toElementColor(frontColor)),
 					$mdgriffith$elm_ui$Element$focused(
 					_List_fromArray(
 						[
@@ -12551,17 +12638,18 @@ var $author$project$OUI$Material$Button$filledAttrs = F4(
 	});
 var $author$project$OUI$Material$Button$filledDisabledAttrs = F3(
 	function (typescale, colorScheme, layout) {
+		var _v0 = A4($author$project$OUI$Material$Button$btnColors, colorScheme, $author$project$OUI$Button$Filled, $author$project$OUI$Primary, true);
+		var frontColor = _v0.a;
+		var backColor = _v0.b;
 		return _Utils_ap(
 			A3($author$project$OUI$Material$Typography$attrs, typescale, $author$project$OUI$Text$Label, $author$project$OUI$Text$Large),
 			_List_fromArray(
 				[
 					$mdgriffith$elm_ui$Element$Border$rounded(layout.containerRadius),
 					$mdgriffith$elm_ui$Element$Background$color(
-					$author$project$OUI$Material$Color$toElementColor(
-						A2($author$project$OUI$Material$Color$setAlpha, 0.12, colorScheme.onSurface))),
+					$author$project$OUI$Material$Color$toElementColor(backColor)),
 					$mdgriffith$elm_ui$Element$Font$color(
-					$author$project$OUI$Material$Color$toElementColor(
-						A2($author$project$OUI$Material$Color$setAlpha, 0.38, colorScheme.onSurface))),
+					$author$project$OUI$Material$Color$toElementColor(frontColor)),
 					$mdgriffith$elm_ui$Element$focused(
 					_List_fromArray(
 						[
@@ -12571,10 +12659,6 @@ var $author$project$OUI$Material$Button$filledDisabledAttrs = F3(
 						]))
 				]));
 	});
-var $author$project$OUI$Button$getProperties = function (_v0) {
-	var props = _v0.a;
-	return props;
-};
 var $author$project$OUI$Material$Button$iconOnly = function (t) {
 	switch (t.$) {
 		case 'Icon':
@@ -12589,6 +12673,21 @@ var $author$project$OUI$Material$Button$iconOnly = function (t) {
 			return false;
 	}
 };
+var $author$project$OUI$Material$Button$iconSizeColor = F5(
+	function (colorscheme, theme, type_, color, disabled) {
+		var _v0 = A4($author$project$OUI$Material$Button$btnColors, colorscheme, type_, color, disabled);
+		var frontColor = _v0.a;
+		switch (type_.$) {
+			case 'SmallFAB':
+				return _Utils_Tuple2(theme.fab.small.iconSize, frontColor);
+			case 'MediumFAB':
+				return _Utils_Tuple2(theme.fab.medium.iconSize, frontColor);
+			case 'LargeFAB':
+				return _Utils_Tuple2(theme.fab.large.iconSize, frontColor);
+			default:
+				return _Utils_Tuple2(theme.common.iconSize, frontColor);
+		}
+	});
 var $mdgriffith$elm_ui$Internal$Flag$borderColor = $mdgriffith$elm_ui$Internal$Flag$flag(28);
 var $mdgriffith$elm_ui$Element$Border$color = function (clr) {
 	return A2(
@@ -12599,6 +12698,12 @@ var $mdgriffith$elm_ui$Element$Border$color = function (clr) {
 			'bc-' + $mdgriffith$elm_ui$Internal$Model$formatColorClass(clr),
 			'border-color',
 			clr));
+};
+var $author$project$OUI$Material$Color$getElementColor = function (c) {
+	return A2(
+		$elm$core$Basics$composeR,
+		$author$project$OUI$Material$Color$getColor(c),
+		$author$project$OUI$Material$Color$toElementColor);
 };
 var $mdgriffith$elm_ui$Internal$Model$BorderWidth = F5(
 	function (a, b, c, d, e) {
@@ -12754,6 +12859,78 @@ var $mdgriffith$elm_ui$Element$paddingXY = F2(
 					xFloat));
 		}
 	});
+var $author$project$OUI$Button$properties = function (_v0) {
+	var props = _v0.a;
+	return props;
+};
+var $mdgriffith$elm_ui$Element$el = F2(
+	function (attrs, child) {
+		return A4(
+			$mdgriffith$elm_ui$Internal$Model$element,
+			$mdgriffith$elm_ui$Internal$Model$asEl,
+			$mdgriffith$elm_ui$Internal$Model$div,
+			A2(
+				$elm$core$List$cons,
+				$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$shrink),
+				A2(
+					$elm$core$List$cons,
+					$mdgriffith$elm_ui$Element$height($mdgriffith$elm_ui$Element$shrink),
+					attrs)),
+			$mdgriffith$elm_ui$Internal$Model$Unkeyed(
+				_List_fromArray(
+					[child])));
+	});
+var $elm$core$Basics$always = F2(
+	function (a, _v0) {
+		return a;
+	});
+var $mdgriffith$elm_ui$Internal$Model$unstyled = A2($elm$core$Basics$composeL, $mdgriffith$elm_ui$Internal$Model$Unstyled, $elm$core$Basics$always);
+var $mdgriffith$elm_ui$Element$html = $mdgriffith$elm_ui$Internal$Model$unstyled;
+var $author$project$OUI$Icon$properties = function (_v0) {
+	var props = _v0.a;
+	return props;
+};
+var $elm$core$List$singleton = function (value) {
+	return _List_fromArray(
+		[value]);
+};
+var $author$project$OUI$Material$Icon$renderWithSizeColor = F4(
+	function (size, color, attrs, icon) {
+		var properties = $author$project$OUI$Icon$properties(icon);
+		return A2(
+			$mdgriffith$elm_ui$Element$el,
+			A2(
+				$elm$core$List$cons,
+				$mdgriffith$elm_ui$Element$width(
+					$mdgriffith$elm_ui$Element$px(size)),
+				A2(
+					$elm$core$List$cons,
+					$mdgriffith$elm_ui$Element$height(
+						$mdgriffith$elm_ui$Element$px(size)),
+					attrs)),
+			function () {
+				var _v0 = properties.renderer;
+				if (_v0.$ === 'Html') {
+					var renderHtml = _v0.a;
+					return A2(
+						$mdgriffith$elm_ui$Element$map,
+						$elm$core$Basics$never,
+						$mdgriffith$elm_ui$Element$html(
+							A2(renderHtml, size, color)));
+				} else {
+					var renderSvg = _v0.a;
+					return A2(
+						$mdgriffith$elm_ui$Element$map,
+						$elm$core$Basics$never,
+						$mdgriffith$elm_ui$Element$html(
+							A2(
+								$elm$svg$Svg$svg,
+								_List_Nil,
+								$elm$core$List$singleton(
+									A2(renderSvg, size, color)))));
+				}
+			}());
+	});
 var $mdgriffith$elm_ui$Internal$Model$AsRow = {$: 'AsRow'};
 var $mdgriffith$elm_ui$Internal$Model$asRow = $mdgriffith$elm_ui$Internal$Model$AsRow;
 var $mdgriffith$elm_ui$Element$row = F2(
@@ -12842,10 +13019,10 @@ var $author$project$OUI$Material$Button$textDisabledAttrs = F3(
 	});
 var $author$project$OUI$Material$Button$render = F5(
 	function (typescale, colorscheme, theme, attrs, button) {
-		var props = $author$project$OUI$Button$getProperties(button);
+		var props = $author$project$OUI$Button$properties(button);
 		var padding = function () {
-			var _v20 = props.icon;
-			if (_v20.$ === 'Nothing') {
+			var _v21 = props.icon;
+			if (_v21.$ === 'Nothing') {
 				return A2($mdgriffith$elm_ui$Element$paddingXY, theme.common.leftRightPadding, 0);
 			} else {
 				return $mdgriffith$elm_ui$Element$paddingEach(
@@ -12858,11 +13035,22 @@ var $author$project$OUI$Material$Button$render = F5(
 				return $mdgriffith$elm_ui$Element$text(props.text);
 			} else {
 				var icon = _v19.a;
-				return $author$project$OUI$Material$Button$iconOnly(props.type_) ? A2(
-					$mdgriffith$elm_ui$Element$el,
+				var _v20 = A5(
+					$author$project$OUI$Material$Button$iconSizeColor,
+					colorscheme,
+					theme,
+					props.type_,
+					props.color,
+					_Utils_eq(props.onClick, $elm$core$Maybe$Nothing));
+				var size = _v20.a;
+				var color = _v20.b;
+				return $author$project$OUI$Material$Button$iconOnly(props.type_) ? A4(
+					$author$project$OUI$Material$Icon$renderWithSizeColor,
+					size,
+					color,
 					_List_fromArray(
 						[$mdgriffith$elm_ui$Element$centerX, $mdgriffith$elm_ui$Element$centerY]),
-					$mdgriffith$elm_ui$Element$text(icon)) : A2(
+					icon) : A2(
 					$mdgriffith$elm_ui$Element$row,
 					_List_fromArray(
 						[
@@ -12870,7 +13058,13 @@ var $author$project$OUI$Material$Button$render = F5(
 						]),
 					_List_fromArray(
 						[
-							$mdgriffith$elm_ui$Element$text(icon),
+							A4(
+							$author$project$OUI$Material$Icon$renderWithSizeColor,
+							size,
+							color,
+							_List_fromArray(
+								[$mdgriffith$elm_ui$Element$centerX, $mdgriffith$elm_ui$Element$centerY]),
+							icon),
 							$mdgriffith$elm_ui$Element$text(props.text)
 						]));
 			}
@@ -13019,7 +13213,7 @@ var $author$project$OUI$Showcase$Buttons$commonButtons = A2(
 									$author$project$OUI$Explorer$event('Clicked Elevated'),
 									A2(
 										$author$project$OUI$Button$withIcon,
-										'+',
+										$author$project$OUI$Icon$clear,
 										A2($author$project$OUI$Button$withText, 'Elevated', $author$project$OUI$Button$new))))),
 							A3(
 							$author$project$OUI$Material$renderButton,
@@ -13030,7 +13224,7 @@ var $author$project$OUI$Showcase$Buttons$commonButtons = A2(
 								$author$project$OUI$Button$disabled(
 									A2(
 										$author$project$OUI$Button$withIcon,
-										'+',
+										$author$project$OUI$Icon$clear,
 										A2($author$project$OUI$Button$withText, 'Elevated', $author$project$OUI$Button$new)))))
 						])),
 					A2(
@@ -13052,7 +13246,7 @@ var $author$project$OUI$Showcase$Buttons$commonButtons = A2(
 									$author$project$OUI$Explorer$event('Clicked Filled'),
 									A2(
 										$author$project$OUI$Button$withIcon,
-										'+',
+										$author$project$OUI$Icon$clear,
 										A2($author$project$OUI$Button$withText, 'Filled', $author$project$OUI$Button$new))))),
 							A3(
 							$author$project$OUI$Material$renderButton,
@@ -13063,7 +13257,7 @@ var $author$project$OUI$Showcase$Buttons$commonButtons = A2(
 								$author$project$OUI$Button$disabled(
 									A2(
 										$author$project$OUI$Button$withIcon,
-										'+',
+										$author$project$OUI$Icon$clear,
 										A2($author$project$OUI$Button$withText, 'Filled', $author$project$OUI$Button$new)))))
 						])),
 					A2(
@@ -13085,7 +13279,7 @@ var $author$project$OUI$Showcase$Buttons$commonButtons = A2(
 									$author$project$OUI$Explorer$event('Clicked Tonal'),
 									A2(
 										$author$project$OUI$Button$withIcon,
-										'+',
+										$author$project$OUI$Icon$clear,
 										A2($author$project$OUI$Button$withText, 'Tonal', $author$project$OUI$Button$new))))),
 							A3(
 							$author$project$OUI$Material$renderButton,
@@ -13096,7 +13290,7 @@ var $author$project$OUI$Showcase$Buttons$commonButtons = A2(
 								$author$project$OUI$Button$disabled(
 									A2(
 										$author$project$OUI$Button$withIcon,
-										'+',
+										$author$project$OUI$Icon$clear,
 										A2($author$project$OUI$Button$withText, 'Tonal', $author$project$OUI$Button$new)))))
 						])),
 					A2(
@@ -13118,7 +13312,7 @@ var $author$project$OUI$Showcase$Buttons$commonButtons = A2(
 									$author$project$OUI$Explorer$event('Clicked Outlined'),
 									A2(
 										$author$project$OUI$Button$withIcon,
-										'+',
+										$author$project$OUI$Icon$clear,
 										A2($author$project$OUI$Button$withText, 'Outlined', $author$project$OUI$Button$new))))),
 							A3(
 							$author$project$OUI$Material$renderButton,
@@ -13129,7 +13323,7 @@ var $author$project$OUI$Showcase$Buttons$commonButtons = A2(
 								$author$project$OUI$Button$disabled(
 									A2(
 										$author$project$OUI$Button$withIcon,
-										'+',
+										$author$project$OUI$Icon$clear,
 										A2($author$project$OUI$Button$withText, 'Outlined', $author$project$OUI$Button$new)))))
 						])),
 					A2(
@@ -13151,7 +13345,7 @@ var $author$project$OUI$Showcase$Buttons$commonButtons = A2(
 									$author$project$OUI$Explorer$event('Clicked Text'),
 									A2(
 										$author$project$OUI$Button$withIcon,
-										'+',
+										$author$project$OUI$Icon$clear,
 										A2($author$project$OUI$Button$withText, 'Text', $author$project$OUI$Button$new))))),
 							A3(
 							$author$project$OUI$Material$renderButton,
@@ -13162,7 +13356,7 @@ var $author$project$OUI$Showcase$Buttons$commonButtons = A2(
 								$author$project$OUI$Button$disabled(
 									A2(
 										$author$project$OUI$Button$withIcon,
-										'+',
+										$author$project$OUI$Icon$clear,
 										A2($author$project$OUI$Button$withText, 'Text', $author$project$OUI$Button$new)))))
 						]))
 				])),
@@ -13180,7 +13374,7 @@ var $author$project$OUI$Showcase$Buttons$commonButtons = A2(
 						$author$project$OUI$Explorer$event('Clicked ' + (s + ' FAB')),
 						A2(
 							$author$project$OUI$Button$withIcon,
-							'X',
+							$author$project$OUI$Icon$clear,
 							A2($author$project$OUI$Button$withText, s + 'FAB', $author$project$OUI$Button$new)));
 				};
 				return _List_fromArray(
@@ -13693,10 +13887,6 @@ var $dillonkearns$elm_markdown$Markdown$Html$oneOf = function (decoders) {
 			unwrappedDecoders));
 };
 var $elm$html$Html$pre = _VirtualDom_node('pre');
-var $elm$core$List$singleton = function (value) {
-	return _List_fromArray(
-		[value]);
-};
 var $elm$html$Html$Attributes$src = function (url) {
 	return A2(
 		$elm$html$Html$Attributes$stringProperty,
@@ -13957,12 +14147,6 @@ var $dillonkearns$elm_markdown$Markdown$Renderer$defaultHtmlRenderer = {
 				items));
 	}
 };
-var $elm$core$Basics$always = F2(
-	function (a, _v0) {
-		return a;
-	});
-var $mdgriffith$elm_ui$Internal$Model$unstyled = A2($elm$core$Basics$composeL, $mdgriffith$elm_ui$Internal$Model$Unstyled, $elm$core$Basics$always);
-var $mdgriffith$elm_ui$Element$html = $mdgriffith$elm_ui$Internal$Model$unstyled;
 var $dillonkearns$elm_markdown$Markdown$RawBlock$BlankLine = {$: 'BlankLine'};
 var $dillonkearns$elm_markdown$Markdown$Block$BlockQuote = function (a) {
 	return {$: 'BlockQuote', a: a};
@@ -23033,43 +23217,7 @@ var $author$project$OUI$Showcase$addPages = A2(
 				$author$project$OUI$Explorer$addBook($author$project$OUI$Showcase$Buttons$book)))));
 var $elm$svg$Svg$Attributes$enableBackground = _VirtualDom_attribute('enable-background');
 var $icidasset$elm_material_icons$Material$Icons$Internal$b = $elm$svg$Svg$Attributes$enableBackground;
-var $elm$svg$Svg$Attributes$d = _VirtualDom_attribute('d');
-var $elm$svg$Svg$Attributes$fill = _VirtualDom_attribute('fill');
 var $icidasset$elm_material_icons$Material$Icons$Internal$f = $elm$svg$Svg$Attributes$fill;
-var $elm$svg$Svg$trustedNode = _VirtualDom_nodeNS('http://www.w3.org/2000/svg');
-var $elm$svg$Svg$g = $elm$svg$Svg$trustedNode('g');
-var $elm$svg$Svg$Attributes$height = _VirtualDom_attribute('height');
-var $elm$svg$Svg$svg = $elm$svg$Svg$trustedNode('svg');
-var $avh4$elm_color$Color$toCssString = function (_v0) {
-	var r = _v0.a;
-	var g = _v0.b;
-	var b = _v0.c;
-	var a = _v0.d;
-	var roundTo = function (x) {
-		return $elm$core$Basics$round(x * 1000) / 1000;
-	};
-	var pct = function (x) {
-		return $elm$core$Basics$round(x * 10000) / 100;
-	};
-	return $elm$core$String$concat(
-		_List_fromArray(
-			[
-				'rgba(',
-				$elm$core$String$fromFloat(
-				pct(r)),
-				'%,',
-				$elm$core$String$fromFloat(
-				pct(g)),
-				'%,',
-				$elm$core$String$fromFloat(
-				pct(b)),
-				'%,',
-				$elm$core$String$fromFloat(
-				roundTo(a)),
-				')'
-			]));
-};
-var $elm$svg$Svg$Attributes$width = _VirtualDom_attribute('width');
 var $icidasset$elm_material_icons$Material$Icons$Internal$icon = F4(
 	function (attributes, nodes, size, coloring) {
 		var sizeAsString = $elm$core$String$fromInt(size);
@@ -23101,10 +23249,8 @@ var $icidasset$elm_material_icons$Material$Icons$Internal$icon = F4(
 					nodes)
 				]));
 	});
-var $elm$svg$Svg$path = $elm$svg$Svg$trustedNode('path');
 var $icidasset$elm_material_icons$Material$Icons$Internal$p = $elm$svg$Svg$path;
 var $elm$svg$Svg$rect = $elm$svg$Svg$trustedNode('rect');
-var $elm$svg$Svg$Attributes$viewBox = _VirtualDom_attribute('viewBox');
 var $icidasset$elm_material_icons$Material$Icons$Internal$v = $elm$svg$Svg$Attributes$viewBox;
 var $icidasset$elm_material_icons$Material$Icons$Outlined$anchor = A2(
 	$icidasset$elm_material_icons$Material$Icons$Internal$icon,
@@ -23136,10 +23282,6 @@ var $icidasset$elm_material_icons$Material$Icons$Outlined$anchor = A2(
 					_List_Nil)
 				]))
 		]));
-var $author$project$OUI$Icon$properties = function (_v0) {
-	var props = _v0.a;
-	return props;
-};
 var $author$project$OUI$Material$Icon$render = F3(
 	function (colorscheme, attrs, icon) {
 		var properties = $author$project$OUI$Icon$properties(icon);
@@ -23148,31 +23290,7 @@ var $author$project$OUI$Material$Icon$render = F3(
 			$author$project$OUI$Material$Color$getColor,
 			A2($elm$core$Maybe$withDefault, $author$project$OUI$Primary, properties.color),
 			colorscheme);
-		return A2(
-			$mdgriffith$elm_ui$Element$el,
-			attrs,
-			function () {
-				var _v0 = properties.renderer;
-				if (_v0.$ === 'Html') {
-					var renderHtml = _v0.a;
-					return A2(
-						$mdgriffith$elm_ui$Element$map,
-						$elm$core$Basics$never,
-						$mdgriffith$elm_ui$Element$html(
-							A2(renderHtml, size, color)));
-				} else {
-					var renderSvg = _v0.a;
-					return A2(
-						$mdgriffith$elm_ui$Element$map,
-						$elm$core$Basics$never,
-						$mdgriffith$elm_ui$Element$html(
-							A2(
-								$elm$svg$Svg$svg,
-								_List_Nil,
-								$elm$core$List$singleton(
-									A2(renderSvg, size, color)))));
-				}
-			}());
+		return A4($author$project$OUI$Material$Icon$renderWithSizeColor, size, color, attrs, icon);
 	});
 var $author$project$OUI$Material$renderIcon = function (_v0) {
 	var colorscheme = _v0.colorscheme;
@@ -23218,13 +23336,6 @@ var $author$project$OUI$Showcase$Icons$book = F2(
 	});
 var $author$project$OUI$Icon$Html = function (a) {
 	return {$: 'Html', a: a};
-};
-var $author$project$OUI$Icon$Icon = function (a) {
-	return {$: 'Icon', a: a};
-};
-var $author$project$OUI$Icon$fromRenderer = function (renderer) {
-	return $author$project$OUI$Icon$Icon(
-		{color: $elm$core$Maybe$Nothing, renderer: renderer, size: $elm$core$Maybe$Nothing});
 };
 var $author$project$OUI$Icon$elmMaterialIcons = F2(
 	function (wrapper, fun) {

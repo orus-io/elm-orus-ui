@@ -4,7 +4,7 @@ module OUI.Button exposing
     , withText, withIcon, color
     , onClick, disabled
     , elevatedButton, filledButton, tonalButton, outlinedButton, textButton, smallFAB, mediumFAB, largeFAB, extendedFAB, iconButton
-    , Props, getProperties
+    , properties
     )
 
 {-| A button creation API
@@ -34,11 +34,12 @@ module OUI.Button exposing
 
 # Internal
 
-@docs Props, getProperties
+@docs properties
 
 -}
 
 import OUI exposing (Color(..))
+import OUI.Icon exposing (Icon)
 
 
 {-| A button type
@@ -60,7 +61,7 @@ type Type
 -}
 type alias Props msg =
     { text : String
-    , icon : Maybe String
+    , icon : Maybe Icon
     , onClick : Maybe msg
     , color : Color
     , type_ : Type
@@ -194,7 +195,7 @@ Can only be called once
 
 -}
 withIcon :
-    String
+    Icon
     -> Button { a | hasNoIcon : () } msg
     -> Button { a | hasIcon : () } msg
 withIcon value (Button props) =
@@ -222,14 +223,14 @@ disabled (Button props) =
 
 
 {-| -}
-getProperties :
+properties :
     Button { constraints | hasText : (), hasAction : () } msg
     ->
         { text : String
-        , icon : Maybe String
+        , icon : Maybe Icon
         , onClick : Maybe msg
         , color : Color
         , type_ : Type
         }
-getProperties (Button props) =
+properties (Button props) =
     props
