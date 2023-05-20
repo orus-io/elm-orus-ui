@@ -6,7 +6,6 @@ import OUI.Checkbox as Checkbox
 import OUI.Explorer as Explorer
 import OUI.Icon exposing (clear)
 import OUI.Material as Material
-import OUI.Material.Theme exposing (defaultTheme)
 
 
 book =
@@ -27,41 +26,41 @@ onChange name checked =
                )
 
 
-checkbox : Element Explorer.BookMsg
-checkbox =
+checkbox : Explorer.Shared -> Element Explorer.BookMsg
+checkbox { theme } =
     Element.column [ Element.spacing 30 ]
         [ Element.text "Checkbox"
         , Element.row [ Element.spacing 30 ]
             [ Checkbox.new
                 |> Checkbox.onChange (onChange "unchecked")
                 |> Checkbox.withChecked False
-                |> Material.renderCheckbox defaultTheme []
+                |> Material.renderCheckbox theme []
             , Checkbox.new
                 |> Checkbox.onChange (onChange "checked")
                 |> Checkbox.withChecked True
-                |> Material.renderCheckbox defaultTheme []
+                |> Material.renderCheckbox theme []
             , Checkbox.new
                 |> Checkbox.disabled
                 |> Checkbox.withChecked False
-                |> Material.renderCheckbox defaultTheme []
+                |> Material.renderCheckbox theme []
             , Checkbox.new
                 |> Checkbox.disabled
                 |> Checkbox.withChecked True
-                |> Material.renderCheckbox defaultTheme []
+                |> Material.renderCheckbox theme []
             , Checkbox.new
                 |> Checkbox.onChange (onChange "custom icon")
                 |> Checkbox.withChecked True
                 |> Checkbox.withIcon clear
-                |> Material.renderCheckbox defaultTheme []
+                |> Material.renderCheckbox theme []
             , Checkbox.new
                 |> Checkbox.onChange (onChange "unchecked error")
                 |> Checkbox.withChecked False
                 |> Checkbox.withColor OUI.Error
-                |> Material.renderCheckbox defaultTheme []
+                |> Material.renderCheckbox theme []
             , Checkbox.new
                 |> Checkbox.onChange (onChange "checked error")
                 |> Checkbox.withChecked True
                 |> Checkbox.withColor OUI.Error
-                |> Material.renderCheckbox defaultTheme []
+                |> Material.renderCheckbox theme []
             ]
         ]

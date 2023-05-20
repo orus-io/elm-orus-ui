@@ -16,8 +16,13 @@ import Browser
 import Effect
 import Element exposing (Element)
 import Element.Background as Background
+import Element.Font as Font
 import Markdown.Parser
 import Markdown.Renderer
+import OUI.Button as Button
+import OUI.Material as Material
+import OUI.Material.Color as Color
+import OUI.Material.Theme as Theme exposing (Theme)
 import Spa
 import Spa.Page
 import Spa.PageStack
@@ -37,16 +42,36 @@ type alias Page msg =
     }
 
 
+type ColorSchemeType
+    = Light
+    | Dark
+
+
+invertColorSchemeType : ColorSchemeType -> ColorSchemeType
+invertColorSchemeType t =
+    case t of
+        Light ->
+            Dark
+
+        Dark ->
+            Light
+
+
 {-| The shared state
 -}
 type alias Shared =
-    { lastEvents : List String }
+    { lastEvents : List String
+    , theme : Theme
+    , colorSchemeList : List ( Color.Scheme, Color.Scheme )
+    , selectedColorScheme : ( Int, ColorSchemeType )
+    }
 
 
 {-| Shared state message
 -}
 type SharedMsg
     = Event String
+    | SelectColorScheme Int ColorSchemeType
 
 
 defaultView : Page msg
@@ -123,7 +148,7 @@ addBook b expl =
                     else
                         Nothing
                 )
-                (\_ ->
+                (\shared ->
                     Spa.Page.element
                         { init = \_ -> ( (), Effect.none )
                         , update = \(SharedMsg msg) () -> ( (), Effect.fromShared msg )
@@ -133,6 +158,7 @@ addBook b expl =
                                 , content =
                                     b.chapters
                                         |> List.reverse
+                                        |> List.map (\v -> v shared)
                                         |> Element.column [ Element.spacing 20 ]
                                 }
                         , subscriptions = \_ -> Sub.none
@@ -152,7 +178,7 @@ addBook b expl =
 -}
 type alias Book msg =
     { title : String
-    , chapters : List (Element msg)
+    , chapters : List (Shared -> Element msg)
     }
 
 
@@ -187,19 +213,20 @@ withMarkdownChapter : String -> Book msg -> Book msg
 withMarkdownChapter markdown b =
     { b
         | chapters =
-            (case
-                Markdown.Parser.parse markdown
-                    |> Result.mapError (List.map Markdown.Parser.deadEndToString >> String.join ", ")
-                    |> Result.andThen
-                        (Markdown.Renderer.render Markdown.Renderer.defaultHtmlRenderer)
-             of
-                Ok value ->
-                    value
-                        |> List.map Element.html
-                        |> Element.column []
+            (\_ ->
+                case
+                    Markdown.Parser.parse markdown
+                        |> Result.mapError (List.map Markdown.Parser.deadEndToString >> String.join ", ")
+                        |> Result.andThen
+                            (Markdown.Renderer.render Markdown.Renderer.defaultHtmlRenderer)
+                of
+                    Ok value ->
+                        value
+                            |> List.map Element.html
+                            |> Element.column []
 
-                Err err ->
-                    Element.text <| "Error rendering markdown: " ++ err
+                    Err err ->
+                        Element.text <| "Error rendering markdown: " ++ err
             )
                 :: b.chapters
     }
@@ -207,7 +234,7 @@ withMarkdownChapter markdown b =
 
 {-| Add a static content chapter to a book
 -}
-withStaticChapter : Element msg -> Book msg -> Book msg
+withStaticChapter : (Shared -> Element msg) -> Book msg -> Book msg
 withStaticChapter body b =
     { b
         | chapters = body :: b.chapters
@@ -245,7 +272,15 @@ finalize expl =
     in
     Spa.application mapView
         { toRoute = \url -> url.fragment |> Maybe.withDefault "/"
-        , init = \() _ -> ( { lastEvents = [] }, Cmd.none )
+        , init =
+            \() _ ->
+                ( { lastEvents = []
+                  , theme = Theme.defaultTheme
+                  , colorSchemeList = [ ( Color.defaultLightScheme, Color.defaultDarkScheme ) ]
+                  , selectedColorScheme = ( 0, Light )
+                  }
+                , Cmd.none
+                )
         , update =
             \msg shared ->
                 case msg of
@@ -255,6 +290,51 @@ finalize expl =
                                 value
                                     :: shared.lastEvents
                                     |> List.take 10
+                          }
+                        , Cmd.none
+                        )
+
+                    SelectColorScheme index type_ ->
+                        let
+                            realIndex =
+                                if index < 0 then
+                                    0
+
+                                else if index >= List.length shared.colorSchemeList then
+                                    List.length shared.colorSchemeList - 1
+
+                                else
+                                    index
+
+                            colorScheme =
+                                shared.colorSchemeList
+                                    |> (if realIndex > 0 then
+                                            List.take realIndex
+
+                                        else
+                                            identity
+                                       )
+                                    |> List.head
+                                    |> Maybe.map
+                                        (\( light, dark ) ->
+                                            case type_ of
+                                                Light ->
+                                                    light
+
+                                                Dark ->
+                                                    dark
+                                        )
+                                    |> Maybe.withDefault Color.defaultLightScheme
+
+                            theme =
+                                shared.theme
+                        in
+                        ( { shared
+                            | theme =
+                                { theme
+                                    | colorscheme = colorScheme
+                                }
+                            , selectedColorScheme = ( realIndex, type_ )
                           }
                         , Cmd.none
                         )
@@ -278,22 +358,37 @@ finalize expl =
                             [ Element.height Element.fill
                             , Element.width Element.fill
                             ]
-                            [ categories
-                                |> List.concatMap
-                                    (\( cat, books ) ->
-                                        Element.text cat
-                                            :: List.map
-                                                (\name ->
-                                                    Element.link
-                                                        [ Element.padding 10
-                                                        , Element.width Element.fill
-                                                        ]
-                                                        { url = "#" ++ bookPath cat name
-                                                        , label = Element.text name
-                                                        }
+                            [ ([ Button.new
+                                    |> Button.onClick
+                                        (Spa.mapSharedMsg
+                                            (SelectColorScheme
+                                                (Tuple.first shared.selectedColorScheme)
+                                                (Tuple.second shared.selectedColorScheme
+                                                    |> invertColorSchemeType
                                                 )
-                                                books
-                                    )
+                                            )
+                                        )
+                                    |> Button.withText "Dark/Light"
+                                    |> Material.renderButton shared.theme []
+                               ]
+                                ++ (categories
+                                        |> List.concatMap
+                                            (\( cat, books ) ->
+                                                Element.text cat
+                                                    :: List.map
+                                                        (\name ->
+                                                            Element.link
+                                                                [ Element.padding 10
+                                                                , Element.width Element.fill
+                                                                ]
+                                                                { url = "#" ++ bookPath cat name
+                                                                , label = Element.text name
+                                                                }
+                                                        )
+                                                        books
+                                            )
+                                   )
+                              )
                                 |> Element.column
                                     [ Element.padding 10
                                     , Element.alignTop
@@ -313,7 +408,7 @@ finalize expl =
                                 , Element.column
                                     [ Element.height <| Element.px 200
                                     , Element.width Element.fill
-                                    , Background.color <| Element.rgb255 200 200 200
+                                    , Background.color <| Color.toElementColor shared.theme.colorscheme.surfaceContainerLow
                                     ]
                                   <|
                                     List.map Element.text shared.lastEvents
@@ -331,7 +426,8 @@ finalize expl =
                             }
                             [ Element.height Element.fill
                             , Element.width Element.fill
-                            , Background.color <| Element.rgb255 255 255 255
+                            , Background.color <| Color.toElementColor shared.theme.colorscheme.surface
+                            , Font.color <| Color.toElementColor shared.theme.colorscheme.onSurface
                             , Element.scrollbarY
                             ]
                     ]

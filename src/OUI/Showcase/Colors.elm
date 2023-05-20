@@ -112,6 +112,6 @@ book =
 The two default color schemes
     """
         |> Explorer.withStaticChapter
-            (showColorScheme "Light Scheme" OUI.Material.Color.defaultLightScheme)
+            (\_ -> showColorScheme "Light Scheme" OUI.Material.Color.defaultLightScheme)
         |> Explorer.withStaticChapter
-            (showColorScheme "Dark Scheme" OUI.Material.Color.defaultDarkScheme)
+            (\_ -> showColorScheme "Dark Scheme" OUI.Material.Color.defaultDarkScheme)

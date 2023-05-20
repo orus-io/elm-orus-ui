@@ -11352,23 +11352,23 @@ var $author$project$OUI$Explorer$addBook = F2(
 						route,
 						A2($author$project$OUI$Explorer$bookPath, cat, b.title)) ? $elm$core$Maybe$Just(route) : $elm$core$Maybe$Nothing;
 				},
-				function (_v0) {
+				function (shared) {
 					return $orus_io$elm_spa$Spa$Page$element(
 						{
-							init: function (_v1) {
+							init: function (_v0) {
 								return _Utils_Tuple2(_Utils_Tuple0, $orus_io$elm_spa$Effect$none);
 							},
-							subscriptions: function (_v2) {
+							subscriptions: function (_v1) {
 								return $elm$core$Platform$Sub$none;
 							},
 							update: F2(
-								function (_v3, _v4) {
-									var msg = _v3.a;
+								function (_v2, _v3) {
+									var msg = _v2.a;
 									return _Utils_Tuple2(
 										_Utils_Tuple0,
 										$orus_io$elm_spa$Effect$fromShared(msg));
 								}),
-							view: function (_v5) {
+							view: function (_v4) {
 								return {
 									content: A2(
 										$mdgriffith$elm_ui$Element$column,
@@ -11376,7 +11376,12 @@ var $author$project$OUI$Explorer$addBook = F2(
 											[
 												$mdgriffith$elm_ui$Element$spacing(20)
 											]),
-										$elm$core$List$reverse(b.chapters)),
+										A2(
+											$elm$core$List$map,
+											function (v) {
+												return v(shared);
+											},
+											$elm$core$List$reverse(b.chapters))),
 									title: b.title
 								};
 							}
@@ -11384,12 +11389,12 @@ var $author$project$OUI$Explorer$addBook = F2(
 				},
 				expl.app),
 			categories: function () {
-				var _v6 = expl.categories;
-				if (_v6.b) {
-					var _v7 = _v6.a;
-					var cat_ = _v7.a;
-					var pages = _v7.b;
-					var tail = _v6.b;
+				var _v5 = expl.categories;
+				if (_v5.b) {
+					var _v6 = _v5.a;
+					var cat_ = _v6.a;
+					var pages = _v6.b;
+					var tail = _v5.b;
 					return A2(
 						$elm$core$List$cons,
 						_Utils_Tuple2(
@@ -11520,185 +11525,6 @@ var $author$project$OUI$Button$color = F2(
 				props,
 				{color: value}));
 	});
-var $avh4$elm_color$Color$RgbaSpace = F4(
-	function (a, b, c, d) {
-		return {$: 'RgbaSpace', a: a, b: b, c: c, d: d};
-	});
-var $avh4$elm_color$Color$scaleFrom255 = function (c) {
-	return c / 255;
-};
-var $avh4$elm_color$Color$rgb255 = F3(
-	function (r, g, b) {
-		return A4(
-			$avh4$elm_color$Color$RgbaSpace,
-			$avh4$elm_color$Color$scaleFrom255(r),
-			$avh4$elm_color$Color$scaleFrom255(g),
-			$avh4$elm_color$Color$scaleFrom255(b),
-			1.0);
-	});
-var $author$project$OUI$Material$Color$defaultKeyColors = {
-	error: A3($avh4$elm_color$Color$rgb255, 179, 38, 30),
-	neutral: A3($avh4$elm_color$Color$rgb255, 64, 64, 64),
-	neutralVariant: A3($avh4$elm_color$Color$rgb255, 64, 64, 64),
-	primary: A3($avh4$elm_color$Color$rgb255, 103, 80, 164),
-	secondary: A3($avh4$elm_color$Color$rgb255, 98, 91, 113),
-	tertiary: A3($avh4$elm_color$Color$rgb255, 125, 82, 96)
-};
-var $avh4$elm_color$Color$fromRgba = function (components) {
-	return A4($avh4$elm_color$Color$RgbaSpace, components.red, components.green, components.blue, components.alpha);
-};
-var $avh4$elm_color$Color$toRgba = function (_v0) {
-	var r = _v0.a;
-	var g = _v0.b;
-	var b = _v0.c;
-	var a = _v0.d;
-	return {alpha: a, blue: b, green: g, red: r};
-};
-var $author$project$OUI$Material$Color$setAlpha = F2(
-	function (value, color) {
-		var rgba = $avh4$elm_color$Color$toRgba(color);
-		return $avh4$elm_color$Color$fromRgba(
-			_Utils_update(
-				rgba,
-				{alpha: value}));
-	});
-var $avh4$elm_color$Color$hsla = F4(
-	function (hue, sat, light, alpha) {
-		var _v0 = _Utils_Tuple3(hue, sat, light);
-		var h = _v0.a;
-		var s = _v0.b;
-		var l = _v0.c;
-		var m2 = (l <= 0.5) ? (l * (s + 1)) : ((l + s) - (l * s));
-		var m1 = (l * 2) - m2;
-		var hueToRgb = function (h__) {
-			var h_ = (h__ < 0) ? (h__ + 1) : ((h__ > 1) ? (h__ - 1) : h__);
-			return ((h_ * 6) < 1) ? (m1 + (((m2 - m1) * h_) * 6)) : (((h_ * 2) < 1) ? m2 : (((h_ * 3) < 2) ? (m1 + (((m2 - m1) * ((2 / 3) - h_)) * 6)) : m1));
-		};
-		var b = hueToRgb(h - (1 / 3));
-		var g = hueToRgb(h);
-		var r = hueToRgb(h + (1 / 3));
-		return A4($avh4$elm_color$Color$RgbaSpace, r, g, b, alpha);
-	});
-var $avh4$elm_color$Color$fromHsla = function (_v0) {
-	var hue = _v0.hue;
-	var saturation = _v0.saturation;
-	var lightness = _v0.lightness;
-	var alpha = _v0.alpha;
-	return A4($avh4$elm_color$Color$hsla, hue, saturation, lightness, alpha);
-};
-var $elm$core$Basics$isNaN = _Basics_isNaN;
-var $avh4$elm_color$Color$toHsla = function (_v0) {
-	var r = _v0.a;
-	var g = _v0.b;
-	var b = _v0.c;
-	var a = _v0.d;
-	var minColor = A2(
-		$elm$core$Basics$min,
-		r,
-		A2($elm$core$Basics$min, g, b));
-	var maxColor = A2(
-		$elm$core$Basics$max,
-		r,
-		A2($elm$core$Basics$max, g, b));
-	var l = (minColor + maxColor) / 2;
-	var s = _Utils_eq(minColor, maxColor) ? 0 : ((l < 0.5) ? ((maxColor - minColor) / (maxColor + minColor)) : ((maxColor - minColor) / ((2 - maxColor) - minColor)));
-	var h1 = _Utils_eq(maxColor, r) ? ((g - b) / (maxColor - minColor)) : (_Utils_eq(maxColor, g) ? (2 + ((b - r) / (maxColor - minColor))) : (4 + ((r - g) / (maxColor - minColor))));
-	var h2 = h1 * (1 / 6);
-	var h3 = $elm$core$Basics$isNaN(h2) ? 0 : ((h2 < 0) ? (h2 + 1) : h2);
-	return {alpha: a, hue: h3, lightness: l, saturation: s};
-};
-var $author$project$OUI$Material$Color$tone = F2(
-	function (light, color) {
-		var hsla = $avh4$elm_color$Color$toHsla(color);
-		var fLight = (light <= 0) ? 0.0 : ((light >= 100) ? 1.0 : (light / 100));
-		return $avh4$elm_color$Color$fromHsla(
-			_Utils_update(
-				hsla,
-				{lightness: fLight}));
-	});
-var $author$project$OUI$Material$Color$lightFromKeyColors = function (keyColors) {
-	return {
-		background: A2($author$project$OUI$Material$Color$tone, 98, keyColors.neutral),
-		error: A2($author$project$OUI$Material$Color$tone, 40, keyColors.error),
-		errorContainer: A2($author$project$OUI$Material$Color$tone, 90, keyColors.error),
-		inverseOnSurface: A2($author$project$OUI$Material$Color$tone, 95, keyColors.neutral),
-		inversePrimary: A2($author$project$OUI$Material$Color$tone, 80, keyColors.primary),
-		inverseSurface: A2($author$project$OUI$Material$Color$tone, 20, keyColors.neutral),
-		onBackground: A2($author$project$OUI$Material$Color$tone, 10, keyColors.neutral),
-		onError: A2($author$project$OUI$Material$Color$tone, 100, keyColors.error),
-		onErrorContainer: A2($author$project$OUI$Material$Color$tone, 10, keyColors.error),
-		onPrimary: A2($author$project$OUI$Material$Color$tone, 100, keyColors.primary),
-		onPrimaryContainer: A2($author$project$OUI$Material$Color$tone, 10, keyColors.primary),
-		onSecondary: A2($author$project$OUI$Material$Color$tone, 100, keyColors.secondary),
-		onSecondaryContainer: A2($author$project$OUI$Material$Color$tone, 10, keyColors.primary),
-		onSurface: A2($author$project$OUI$Material$Color$tone, 10, keyColors.neutral),
-		onSurfaceVariant: A2($author$project$OUI$Material$Color$tone, 30, keyColors.neutralVariant),
-		onTertiary: A2($author$project$OUI$Material$Color$tone, 100, keyColors.tertiary),
-		onTertiaryContainer: A2($author$project$OUI$Material$Color$tone, 10, keyColors.tertiary),
-		outline: A2($author$project$OUI$Material$Color$tone, 50, keyColors.neutralVariant),
-		outlineVariant: A2($author$project$OUI$Material$Color$tone, 80, keyColors.neutralVariant),
-		primary: A2($author$project$OUI$Material$Color$tone, 40, keyColors.primary),
-		primaryContainer: A2($author$project$OUI$Material$Color$tone, 90, keyColors.primary),
-		scrim: A2($author$project$OUI$Material$Color$tone, 0, keyColors.neutral),
-		secondary: A2($author$project$OUI$Material$Color$tone, 40, keyColors.secondary),
-		secondaryContainer: A2($author$project$OUI$Material$Color$tone, 90, keyColors.secondary),
-		shadow: A2(
-			$author$project$OUI$Material$Color$setAlpha,
-			0.16,
-			A2($author$project$OUI$Material$Color$tone, 0, keyColors.neutral)),
-		surface: A2($author$project$OUI$Material$Color$tone, 98, keyColors.neutral),
-		surfaceBright: A2($author$project$OUI$Material$Color$tone, 98, keyColors.neutral),
-		surfaceContainer: A2($author$project$OUI$Material$Color$tone, 94, keyColors.neutral),
-		surfaceContainerHigh: A2($author$project$OUI$Material$Color$tone, 92, keyColors.neutral),
-		surfaceContainerHighest: A2($author$project$OUI$Material$Color$tone, 90, keyColors.neutral),
-		surfaceContainerLow: A2($author$project$OUI$Material$Color$tone, 96, keyColors.neutral),
-		surfaceContainerLowest: A2($author$project$OUI$Material$Color$tone, 100, keyColors.neutral),
-		surfaceDim: A2($author$project$OUI$Material$Color$tone, 87, keyColors.neutral),
-		surfaceTint: keyColors.primary,
-		surfaceVariant: A2($author$project$OUI$Material$Color$tone, 90, keyColors.neutralVariant),
-		tertiary: A2($author$project$OUI$Material$Color$tone, 40, keyColors.tertiary),
-		tertiaryContainer: A2($author$project$OUI$Material$Color$tone, 90, keyColors.tertiary)
-	};
-};
-var $author$project$OUI$Material$Color$defaultLightScheme = $author$project$OUI$Material$Color$lightFromKeyColors($author$project$OUI$Material$Color$defaultKeyColors);
-var $author$project$OUI$Material$Button$defaultTheme = {
-	common: {containerHeight: 40, containerRadius: 20, iconSize: 18, leftPaddingWithIcon: 16, leftRightPadding: 24, paddingBetweenElements: 8, rightPaddingWithIcon: 16},
-	fab: {
-		large: {containerHeight: 96, containerShape: 28, containerWidth: 96, iconSize: 36},
-		medium: {containerHeight: 56, containerShape: 16, containerWidth: 56, iconSize: 24},
-		small: {containerHeight: 40, containerShape: 12, containerWidth: 40, iconSize: 24}
-	},
-	icon: {containerSize: 40, iconSize: 24}
-};
-var $author$project$OUI$Material$Checkbox$defaultTheme = {containerHeight: 18, containerShape: 2, containerWidth: 18, iconSize: 18, stateLayerSize: 40};
-var $author$project$OUI$Material$Theme$defaultTypescale = {
-	body: {
-		large: {font: 'Roboto', lineHeight: 24, size: 16, tracking: 0.5, weight: 400},
-		medium: {font: 'Roboto', lineHeight: 20, size: 14, tracking: 0.25, weight: 400},
-		small: {font: 'Roboto', lineHeight: 16, size: 12, tracking: 0.4, weight: 400}
-	},
-	display: {
-		large: {font: 'Roboto', lineHeight: 54, size: 47, tracking: -0.125, weight: 400},
-		medium: {font: 'Roboto', lineHeight: 53, size: 45, tracking: 0, weight: 400},
-		small: {font: 'Roboto', lineHeight: 44, size: 36, tracking: 0, weight: 400}
-	},
-	headline: {
-		large: {font: 'Roboto', lineHeight: 40, size: 32, tracking: 0, weight: 400},
-		medium: {font: 'Roboto', lineHeight: 36, size: 28, tracking: 0, weight: 400},
-		small: {font: 'Roboto', lineHeight: 32, size: 24, tracking: 0, weight: 400}
-	},
-	label: {
-		large: {font: 'Roboto', lineHeight: 20, size: 14, tracking: 0.1, weight: 500},
-		medium: {font: 'Roboto', lineHeight: 16, size: 12, tracking: 0.5, weight: 500},
-		small: {font: 'Roboto', lineHeight: 16, size: 11, tracking: 0.5, weight: 500}
-	},
-	title: {
-		large: {font: 'Roboto', lineHeight: 26, size: 22, tracking: 0, weight: 400},
-		medium: {font: 'Roboto', lineHeight: 24, size: 16, tracking: 0.15, weight: 500},
-		small: {font: 'Roboto', lineHeight: 20, size: 14, tracking: 0.1, weight: 500}
-	}
-};
-var $author$project$OUI$Material$Theme$defaultTheme = {button: $author$project$OUI$Material$Button$defaultTheme, checkbox: $author$project$OUI$Material$Checkbox$defaultTheme, colorscheme: $author$project$OUI$Material$Color$defaultLightScheme, typescale: $author$project$OUI$Material$Theme$defaultTypescale};
 var $author$project$OUI$Button$disabled = function (_v0) {
 	var props = _v0.a;
 	return $author$project$OUI$Button$Button(props);
@@ -12197,6 +12023,28 @@ var $author$project$OUI$Material$Color$getOnColor = function (c) {
 			};
 	}
 };
+var $avh4$elm_color$Color$RgbaSpace = F4(
+	function (a, b, c, d) {
+		return {$: 'RgbaSpace', a: a, b: b, c: c, d: d};
+	});
+var $avh4$elm_color$Color$fromRgba = function (components) {
+	return A4($avh4$elm_color$Color$RgbaSpace, components.red, components.green, components.blue, components.alpha);
+};
+var $avh4$elm_color$Color$toRgba = function (_v0) {
+	var r = _v0.a;
+	var g = _v0.b;
+	var b = _v0.c;
+	var a = _v0.d;
+	return {alpha: a, blue: b, green: g, red: r};
+};
+var $author$project$OUI$Material$Color$setAlpha = F2(
+	function (value, color) {
+		var rgba = $avh4$elm_color$Color$toRgba(color);
+		return $avh4$elm_color$Color$fromRgba(
+			_Utils_update(
+				rgba,
+				{alpha: value}));
+	});
 var $author$project$OUI$Material$Button$btnColors = F4(
 	function (colorscheme, type_, color, disabled) {
 		var _v0 = _Utils_Tuple2(type_, disabled);
@@ -13261,286 +13109,289 @@ var $author$project$OUI$Button$withText = F2(
 				props,
 				{text: value}));
 	});
-var $author$project$OUI$Showcase$Buttons$commonButtons = A2(
-	$mdgriffith$elm_ui$Element$column,
-	_List_fromArray(
-		[
-			$mdgriffith$elm_ui$Element$spacing(30)
-		]),
-	_List_fromArray(
-		[
-			$mdgriffith$elm_ui$Element$text('Common buttons'),
-			A2(
-			$mdgriffith$elm_ui$Element$row,
-			_List_fromArray(
-				[
-					$mdgriffith$elm_ui$Element$spacing(30)
-				]),
-			_List_fromArray(
-				[
-					A2(
-					$mdgriffith$elm_ui$Element$column,
-					_List_fromArray(
-						[
-							$mdgriffith$elm_ui$Element$spacing(30)
-						]),
-					_List_fromArray(
-						[
-							A3(
-							$author$project$OUI$Material$renderButton,
-							$author$project$OUI$Material$Theme$defaultTheme,
-							_List_fromArray(
-								[$mdgriffith$elm_ui$Element$centerX]),
-							$author$project$OUI$Button$elevatedButton(
-								A2(
-									$author$project$OUI$Button$onClick,
-									$author$project$OUI$Explorer$event('Clicked Elevated'),
-									A2(
-										$author$project$OUI$Button$withIcon,
-										$author$project$OUI$Icon$clear,
-										A2($author$project$OUI$Button$withText, 'Elevated', $author$project$OUI$Button$new))))),
-							A3(
-							$author$project$OUI$Material$renderButton,
-							$author$project$OUI$Material$Theme$defaultTheme,
-							_List_fromArray(
-								[$mdgriffith$elm_ui$Element$centerX]),
-							$author$project$OUI$Button$elevatedButton(
-								$author$project$OUI$Button$disabled(
-									A2(
-										$author$project$OUI$Button$withIcon,
-										$author$project$OUI$Icon$clear,
-										A2($author$project$OUI$Button$withText, 'Elevated', $author$project$OUI$Button$new)))))
-						])),
-					A2(
-					$mdgriffith$elm_ui$Element$column,
-					_List_fromArray(
-						[
-							$mdgriffith$elm_ui$Element$spacing(30)
-						]),
-					_List_fromArray(
-						[
-							A3(
-							$author$project$OUI$Material$renderButton,
-							$author$project$OUI$Material$Theme$defaultTheme,
-							_List_fromArray(
-								[$mdgriffith$elm_ui$Element$centerX]),
-							$author$project$OUI$Button$filledButton(
-								A2(
-									$author$project$OUI$Button$onClick,
-									$author$project$OUI$Explorer$event('Clicked Filled'),
-									A2(
-										$author$project$OUI$Button$withIcon,
-										$author$project$OUI$Icon$clear,
-										A2($author$project$OUI$Button$withText, 'Filled', $author$project$OUI$Button$new))))),
-							A3(
-							$author$project$OUI$Material$renderButton,
-							$author$project$OUI$Material$Theme$defaultTheme,
-							_List_fromArray(
-								[$mdgriffith$elm_ui$Element$centerX]),
-							$author$project$OUI$Button$filledButton(
-								$author$project$OUI$Button$disabled(
-									A2(
-										$author$project$OUI$Button$withIcon,
-										$author$project$OUI$Icon$clear,
-										A2($author$project$OUI$Button$withText, 'Filled', $author$project$OUI$Button$new)))))
-						])),
-					A2(
-					$mdgriffith$elm_ui$Element$column,
-					_List_fromArray(
-						[
-							$mdgriffith$elm_ui$Element$spacing(30)
-						]),
-					_List_fromArray(
-						[
-							A3(
-							$author$project$OUI$Material$renderButton,
-							$author$project$OUI$Material$Theme$defaultTheme,
-							_List_fromArray(
-								[$mdgriffith$elm_ui$Element$centerX]),
-							$author$project$OUI$Button$tonalButton(
-								A2(
-									$author$project$OUI$Button$onClick,
-									$author$project$OUI$Explorer$event('Clicked Tonal'),
-									A2(
-										$author$project$OUI$Button$withIcon,
-										$author$project$OUI$Icon$clear,
-										A2($author$project$OUI$Button$withText, 'Tonal', $author$project$OUI$Button$new))))),
-							A3(
-							$author$project$OUI$Material$renderButton,
-							$author$project$OUI$Material$Theme$defaultTheme,
-							_List_fromArray(
-								[$mdgriffith$elm_ui$Element$centerX]),
-							$author$project$OUI$Button$tonalButton(
-								$author$project$OUI$Button$disabled(
-									A2(
-										$author$project$OUI$Button$withIcon,
-										$author$project$OUI$Icon$clear,
-										A2($author$project$OUI$Button$withText, 'Tonal', $author$project$OUI$Button$new)))))
-						])),
-					A2(
-					$mdgriffith$elm_ui$Element$column,
-					_List_fromArray(
-						[
-							$mdgriffith$elm_ui$Element$spacing(30)
-						]),
-					_List_fromArray(
-						[
-							A3(
-							$author$project$OUI$Material$renderButton,
-							$author$project$OUI$Material$Theme$defaultTheme,
-							_List_fromArray(
-								[$mdgriffith$elm_ui$Element$centerX]),
-							$author$project$OUI$Button$outlinedButton(
-								A2(
-									$author$project$OUI$Button$onClick,
-									$author$project$OUI$Explorer$event('Clicked Outlined'),
-									A2(
-										$author$project$OUI$Button$withIcon,
-										$author$project$OUI$Icon$clear,
-										A2($author$project$OUI$Button$withText, 'Outlined', $author$project$OUI$Button$new))))),
-							A3(
-							$author$project$OUI$Material$renderButton,
-							$author$project$OUI$Material$Theme$defaultTheme,
-							_List_fromArray(
-								[$mdgriffith$elm_ui$Element$centerX]),
-							$author$project$OUI$Button$outlinedButton(
-								$author$project$OUI$Button$disabled(
-									A2(
-										$author$project$OUI$Button$withIcon,
-										$author$project$OUI$Icon$clear,
-										A2($author$project$OUI$Button$withText, 'Outlined', $author$project$OUI$Button$new)))))
-						])),
-					A2(
-					$mdgriffith$elm_ui$Element$column,
-					_List_fromArray(
-						[
-							$mdgriffith$elm_ui$Element$spacing(30)
-						]),
-					_List_fromArray(
-						[
-							A3(
-							$author$project$OUI$Material$renderButton,
-							$author$project$OUI$Material$Theme$defaultTheme,
-							_List_fromArray(
-								[$mdgriffith$elm_ui$Element$centerX]),
-							$author$project$OUI$Button$textButton(
-								A2(
-									$author$project$OUI$Button$onClick,
-									$author$project$OUI$Explorer$event('Clicked Text'),
-									A2(
-										$author$project$OUI$Button$withIcon,
-										$author$project$OUI$Icon$clear,
-										A2($author$project$OUI$Button$withText, 'Text', $author$project$OUI$Button$new))))),
-							A3(
-							$author$project$OUI$Material$renderButton,
-							$author$project$OUI$Material$Theme$defaultTheme,
-							_List_fromArray(
-								[$mdgriffith$elm_ui$Element$centerX]),
-							$author$project$OUI$Button$textButton(
-								$author$project$OUI$Button$disabled(
-									A2(
-										$author$project$OUI$Button$withIcon,
-										$author$project$OUI$Icon$clear,
-										A2($author$project$OUI$Button$withText, 'Text', $author$project$OUI$Button$new)))))
-						]))
-				])),
-			$mdgriffith$elm_ui$Element$text('FAB'),
-			A2(
-			$mdgriffith$elm_ui$Element$row,
-			_List_fromArray(
-				[
-					$mdgriffith$elm_ui$Element$spacing(30)
-				]),
-			function () {
-				var btn = function (s) {
-					return A2(
-						$author$project$OUI$Button$onClick,
-						$author$project$OUI$Explorer$event('Clicked ' + (s + ' FAB')),
-						A2(
-							$author$project$OUI$Button$withIcon,
-							$author$project$OUI$Icon$clear,
-							A2($author$project$OUI$Button$withText, s + 'FAB', $author$project$OUI$Button$new)));
-				};
-				return _List_fromArray(
+var $author$project$OUI$Showcase$Buttons$commonButtons = function (_v0) {
+	var theme = _v0.theme;
+	return A2(
+		$mdgriffith$elm_ui$Element$column,
+		_List_fromArray(
+			[
+				$mdgriffith$elm_ui$Element$spacing(30)
+			]),
+		_List_fromArray(
+			[
+				$mdgriffith$elm_ui$Element$text('Common buttons'),
+				A2(
+				$mdgriffith$elm_ui$Element$row,
+				_List_fromArray(
 					[
-						A3(
-						$author$project$OUI$Material$renderButton,
-						$author$project$OUI$Material$Theme$defaultTheme,
-						_List_fromArray(
-							[$mdgriffith$elm_ui$Element$centerX]),
-						$author$project$OUI$Button$smallFAB(
-							btn('Small'))),
-						A3(
-						$author$project$OUI$Material$renderButton,
-						$author$project$OUI$Material$Theme$defaultTheme,
-						_List_fromArray(
-							[$mdgriffith$elm_ui$Element$centerX]),
-						A2(
-							$author$project$OUI$Button$color,
-							$author$project$OUI$Secondary,
-							$author$project$OUI$Button$mediumFAB(
-								btn('Medium')))),
-						A3(
-						$author$project$OUI$Material$renderButton,
-						$author$project$OUI$Material$Theme$defaultTheme,
-						_List_fromArray(
-							[$mdgriffith$elm_ui$Element$centerX]),
-						A2(
-							$author$project$OUI$Button$color,
-							$author$project$OUI$Tertiary,
-							$author$project$OUI$Button$largeFAB(
-								btn('Large'))))
-					]);
-			}()),
-			$mdgriffith$elm_ui$Element$text('Icon Buttons'),
-			A2(
-			$mdgriffith$elm_ui$Element$row,
-			_List_fromArray(
-				[
-					$mdgriffith$elm_ui$Element$spacing(30)
-				]),
-			function () {
-				var btn = function (s) {
-					return A2(
-						$author$project$OUI$Button$onClick,
-						$author$project$OUI$Explorer$event('Clicked ' + (s + ' Icon')),
-						A2(
-							$author$project$OUI$Button$withIcon,
-							$author$project$OUI$Icon$clear,
-							A2($author$project$OUI$Button$withText, s + ' Icon', $author$project$OUI$Button$new)));
-				};
-				return _List_fromArray(
+						$mdgriffith$elm_ui$Element$spacing(30)
+					]),
+				_List_fromArray(
 					[
-						A3(
-						$author$project$OUI$Material$renderButton,
-						$author$project$OUI$Material$Theme$defaultTheme,
-						_List_fromArray(
-							[$mdgriffith$elm_ui$Element$centerX]),
-						$author$project$OUI$Button$iconButton(
-							btn('Standard'))),
-						A3(
-						$author$project$OUI$Material$renderButton,
-						$author$project$OUI$Material$Theme$defaultTheme,
-						_List_fromArray(
-							[$mdgriffith$elm_ui$Element$centerX]),
 						A2(
-							$author$project$OUI$Button$color,
-							$author$project$OUI$Primary,
-							$author$project$OUI$Button$filledIconButton(
-								btn('Filled')))),
-						A3(
-						$author$project$OUI$Material$renderButton,
-						$author$project$OUI$Material$Theme$defaultTheme,
+						$mdgriffith$elm_ui$Element$column,
 						_List_fromArray(
-							[$mdgriffith$elm_ui$Element$centerX]),
+							[
+								$mdgriffith$elm_ui$Element$spacing(30)
+							]),
+						_List_fromArray(
+							[
+								A3(
+								$author$project$OUI$Material$renderButton,
+								theme,
+								_List_fromArray(
+									[$mdgriffith$elm_ui$Element$centerX]),
+								$author$project$OUI$Button$elevatedButton(
+									A2(
+										$author$project$OUI$Button$onClick,
+										$author$project$OUI$Explorer$event('Clicked Elevated'),
+										A2(
+											$author$project$OUI$Button$withIcon,
+											$author$project$OUI$Icon$clear,
+											A2($author$project$OUI$Button$withText, 'Elevated', $author$project$OUI$Button$new))))),
+								A3(
+								$author$project$OUI$Material$renderButton,
+								theme,
+								_List_fromArray(
+									[$mdgriffith$elm_ui$Element$centerX]),
+								$author$project$OUI$Button$elevatedButton(
+									$author$project$OUI$Button$disabled(
+										A2(
+											$author$project$OUI$Button$withIcon,
+											$author$project$OUI$Icon$clear,
+											A2($author$project$OUI$Button$withText, 'Elevated', $author$project$OUI$Button$new)))))
+							])),
 						A2(
-							$author$project$OUI$Button$color,
-							$author$project$OUI$Primary,
-							$author$project$OUI$Button$outlinedIconButton(
-								btn('Outlined'))))
-					]);
-			}())
-		]));
+						$mdgriffith$elm_ui$Element$column,
+						_List_fromArray(
+							[
+								$mdgriffith$elm_ui$Element$spacing(30)
+							]),
+						_List_fromArray(
+							[
+								A3(
+								$author$project$OUI$Material$renderButton,
+								theme,
+								_List_fromArray(
+									[$mdgriffith$elm_ui$Element$centerX]),
+								$author$project$OUI$Button$filledButton(
+									A2(
+										$author$project$OUI$Button$onClick,
+										$author$project$OUI$Explorer$event('Clicked Filled'),
+										A2(
+											$author$project$OUI$Button$withIcon,
+											$author$project$OUI$Icon$clear,
+											A2($author$project$OUI$Button$withText, 'Filled', $author$project$OUI$Button$new))))),
+								A3(
+								$author$project$OUI$Material$renderButton,
+								theme,
+								_List_fromArray(
+									[$mdgriffith$elm_ui$Element$centerX]),
+								$author$project$OUI$Button$filledButton(
+									$author$project$OUI$Button$disabled(
+										A2(
+											$author$project$OUI$Button$withIcon,
+											$author$project$OUI$Icon$clear,
+											A2($author$project$OUI$Button$withText, 'Filled', $author$project$OUI$Button$new)))))
+							])),
+						A2(
+						$mdgriffith$elm_ui$Element$column,
+						_List_fromArray(
+							[
+								$mdgriffith$elm_ui$Element$spacing(30)
+							]),
+						_List_fromArray(
+							[
+								A3(
+								$author$project$OUI$Material$renderButton,
+								theme,
+								_List_fromArray(
+									[$mdgriffith$elm_ui$Element$centerX]),
+								$author$project$OUI$Button$tonalButton(
+									A2(
+										$author$project$OUI$Button$onClick,
+										$author$project$OUI$Explorer$event('Clicked Tonal'),
+										A2(
+											$author$project$OUI$Button$withIcon,
+											$author$project$OUI$Icon$clear,
+											A2($author$project$OUI$Button$withText, 'Tonal', $author$project$OUI$Button$new))))),
+								A3(
+								$author$project$OUI$Material$renderButton,
+								theme,
+								_List_fromArray(
+									[$mdgriffith$elm_ui$Element$centerX]),
+								$author$project$OUI$Button$tonalButton(
+									$author$project$OUI$Button$disabled(
+										A2(
+											$author$project$OUI$Button$withIcon,
+											$author$project$OUI$Icon$clear,
+											A2($author$project$OUI$Button$withText, 'Tonal', $author$project$OUI$Button$new)))))
+							])),
+						A2(
+						$mdgriffith$elm_ui$Element$column,
+						_List_fromArray(
+							[
+								$mdgriffith$elm_ui$Element$spacing(30)
+							]),
+						_List_fromArray(
+							[
+								A3(
+								$author$project$OUI$Material$renderButton,
+								theme,
+								_List_fromArray(
+									[$mdgriffith$elm_ui$Element$centerX]),
+								$author$project$OUI$Button$outlinedButton(
+									A2(
+										$author$project$OUI$Button$onClick,
+										$author$project$OUI$Explorer$event('Clicked Outlined'),
+										A2(
+											$author$project$OUI$Button$withIcon,
+											$author$project$OUI$Icon$clear,
+											A2($author$project$OUI$Button$withText, 'Outlined', $author$project$OUI$Button$new))))),
+								A3(
+								$author$project$OUI$Material$renderButton,
+								theme,
+								_List_fromArray(
+									[$mdgriffith$elm_ui$Element$centerX]),
+								$author$project$OUI$Button$outlinedButton(
+									$author$project$OUI$Button$disabled(
+										A2(
+											$author$project$OUI$Button$withIcon,
+											$author$project$OUI$Icon$clear,
+											A2($author$project$OUI$Button$withText, 'Outlined', $author$project$OUI$Button$new)))))
+							])),
+						A2(
+						$mdgriffith$elm_ui$Element$column,
+						_List_fromArray(
+							[
+								$mdgriffith$elm_ui$Element$spacing(30)
+							]),
+						_List_fromArray(
+							[
+								A3(
+								$author$project$OUI$Material$renderButton,
+								theme,
+								_List_fromArray(
+									[$mdgriffith$elm_ui$Element$centerX]),
+								$author$project$OUI$Button$textButton(
+									A2(
+										$author$project$OUI$Button$onClick,
+										$author$project$OUI$Explorer$event('Clicked Text'),
+										A2(
+											$author$project$OUI$Button$withIcon,
+											$author$project$OUI$Icon$clear,
+											A2($author$project$OUI$Button$withText, 'Text', $author$project$OUI$Button$new))))),
+								A3(
+								$author$project$OUI$Material$renderButton,
+								theme,
+								_List_fromArray(
+									[$mdgriffith$elm_ui$Element$centerX]),
+								$author$project$OUI$Button$textButton(
+									$author$project$OUI$Button$disabled(
+										A2(
+											$author$project$OUI$Button$withIcon,
+											$author$project$OUI$Icon$clear,
+											A2($author$project$OUI$Button$withText, 'Text', $author$project$OUI$Button$new)))))
+							]))
+					])),
+				$mdgriffith$elm_ui$Element$text('FAB'),
+				A2(
+				$mdgriffith$elm_ui$Element$row,
+				_List_fromArray(
+					[
+						$mdgriffith$elm_ui$Element$spacing(30)
+					]),
+				function () {
+					var btn = function (s) {
+						return A2(
+							$author$project$OUI$Button$onClick,
+							$author$project$OUI$Explorer$event('Clicked ' + (s + ' FAB')),
+							A2(
+								$author$project$OUI$Button$withIcon,
+								$author$project$OUI$Icon$clear,
+								A2($author$project$OUI$Button$withText, s + 'FAB', $author$project$OUI$Button$new)));
+					};
+					return _List_fromArray(
+						[
+							A3(
+							$author$project$OUI$Material$renderButton,
+							theme,
+							_List_fromArray(
+								[$mdgriffith$elm_ui$Element$centerX]),
+							$author$project$OUI$Button$smallFAB(
+								btn('Small'))),
+							A3(
+							$author$project$OUI$Material$renderButton,
+							theme,
+							_List_fromArray(
+								[$mdgriffith$elm_ui$Element$centerX]),
+							A2(
+								$author$project$OUI$Button$color,
+								$author$project$OUI$Secondary,
+								$author$project$OUI$Button$mediumFAB(
+									btn('Medium')))),
+							A3(
+							$author$project$OUI$Material$renderButton,
+							theme,
+							_List_fromArray(
+								[$mdgriffith$elm_ui$Element$centerX]),
+							A2(
+								$author$project$OUI$Button$color,
+								$author$project$OUI$Tertiary,
+								$author$project$OUI$Button$largeFAB(
+									btn('Large'))))
+						]);
+				}()),
+				$mdgriffith$elm_ui$Element$text('Icon Buttons'),
+				A2(
+				$mdgriffith$elm_ui$Element$row,
+				_List_fromArray(
+					[
+						$mdgriffith$elm_ui$Element$spacing(30)
+					]),
+				function () {
+					var btn = function (s) {
+						return A2(
+							$author$project$OUI$Button$onClick,
+							$author$project$OUI$Explorer$event('Clicked ' + (s + ' Icon')),
+							A2(
+								$author$project$OUI$Button$withIcon,
+								$author$project$OUI$Icon$clear,
+								A2($author$project$OUI$Button$withText, s + ' Icon', $author$project$OUI$Button$new)));
+					};
+					return _List_fromArray(
+						[
+							A3(
+							$author$project$OUI$Material$renderButton,
+							theme,
+							_List_fromArray(
+								[$mdgriffith$elm_ui$Element$centerX]),
+							$author$project$OUI$Button$iconButton(
+								btn('Standard'))),
+							A3(
+							$author$project$OUI$Material$renderButton,
+							theme,
+							_List_fromArray(
+								[$mdgriffith$elm_ui$Element$centerX]),
+							A2(
+								$author$project$OUI$Button$color,
+								$author$project$OUI$Primary,
+								$author$project$OUI$Button$filledIconButton(
+									btn('Filled')))),
+							A3(
+							$author$project$OUI$Material$renderButton,
+							theme,
+							_List_fromArray(
+								[$mdgriffith$elm_ui$Element$centerX]),
+							A2(
+								$author$project$OUI$Button$color,
+								$author$project$OUI$Primary,
+								$author$project$OUI$Button$outlinedIconButton(
+									btn('Outlined'))))
+						]);
+				}())
+			]));
+};
 var $author$project$OUI$Explorer$withStaticChapter = F2(
 	function (body, b) {
 		return _Utils_update(
@@ -13767,109 +13618,166 @@ var $author$project$OUI$Checkbox$withIcon = F2(
 				props,
 				{icon: icon}));
 	});
-var $author$project$OUI$Showcase$Checkbox$checkbox = A2(
-	$mdgriffith$elm_ui$Element$column,
-	_List_fromArray(
-		[
-			$mdgriffith$elm_ui$Element$spacing(30)
-		]),
-	_List_fromArray(
-		[
-			$mdgriffith$elm_ui$Element$text('Checkbox'),
-			A2(
-			$mdgriffith$elm_ui$Element$row,
-			_List_fromArray(
-				[
-					$mdgriffith$elm_ui$Element$spacing(30)
-				]),
-			_List_fromArray(
-				[
-					A3(
-					$author$project$OUI$Material$renderCheckbox,
-					$author$project$OUI$Material$Theme$defaultTheme,
-					_List_Nil,
-					A2(
-						$author$project$OUI$Checkbox$withChecked,
-						false,
-						A2(
-							$author$project$OUI$Checkbox$onChange,
-							$author$project$OUI$Showcase$Checkbox$onChange('unchecked'),
-							$author$project$OUI$Checkbox$new))),
-					A3(
-					$author$project$OUI$Material$renderCheckbox,
-					$author$project$OUI$Material$Theme$defaultTheme,
-					_List_Nil,
-					A2(
-						$author$project$OUI$Checkbox$withChecked,
-						true,
-						A2(
-							$author$project$OUI$Checkbox$onChange,
-							$author$project$OUI$Showcase$Checkbox$onChange('checked'),
-							$author$project$OUI$Checkbox$new))),
-					A3(
-					$author$project$OUI$Material$renderCheckbox,
-					$author$project$OUI$Material$Theme$defaultTheme,
-					_List_Nil,
-					A2(
-						$author$project$OUI$Checkbox$withChecked,
-						false,
-						$author$project$OUI$Checkbox$disabled($author$project$OUI$Checkbox$new))),
-					A3(
-					$author$project$OUI$Material$renderCheckbox,
-					$author$project$OUI$Material$Theme$defaultTheme,
-					_List_Nil,
-					A2(
-						$author$project$OUI$Checkbox$withChecked,
-						true,
-						$author$project$OUI$Checkbox$disabled($author$project$OUI$Checkbox$new))),
-					A3(
-					$author$project$OUI$Material$renderCheckbox,
-					$author$project$OUI$Material$Theme$defaultTheme,
-					_List_Nil,
-					A2(
-						$author$project$OUI$Checkbox$withIcon,
-						$author$project$OUI$Icon$clear,
-						A2(
-							$author$project$OUI$Checkbox$withChecked,
-							true,
-							A2(
-								$author$project$OUI$Checkbox$onChange,
-								$author$project$OUI$Showcase$Checkbox$onChange('custom icon'),
-								$author$project$OUI$Checkbox$new)))),
-					A3(
-					$author$project$OUI$Material$renderCheckbox,
-					$author$project$OUI$Material$Theme$defaultTheme,
-					_List_Nil,
-					A2(
-						$author$project$OUI$Checkbox$withColor,
-						$author$project$OUI$Error,
+var $author$project$OUI$Showcase$Checkbox$checkbox = function (_v0) {
+	var theme = _v0.theme;
+	return A2(
+		$mdgriffith$elm_ui$Element$column,
+		_List_fromArray(
+			[
+				$mdgriffith$elm_ui$Element$spacing(30)
+			]),
+		_List_fromArray(
+			[
+				$mdgriffith$elm_ui$Element$text('Checkbox'),
+				A2(
+				$mdgriffith$elm_ui$Element$row,
+				_List_fromArray(
+					[
+						$mdgriffith$elm_ui$Element$spacing(30)
+					]),
+				_List_fromArray(
+					[
+						A3(
+						$author$project$OUI$Material$renderCheckbox,
+						theme,
+						_List_Nil,
 						A2(
 							$author$project$OUI$Checkbox$withChecked,
 							false,
 							A2(
 								$author$project$OUI$Checkbox$onChange,
-								$author$project$OUI$Showcase$Checkbox$onChange('unchecked error'),
-								$author$project$OUI$Checkbox$new)))),
-					A3(
-					$author$project$OUI$Material$renderCheckbox,
-					$author$project$OUI$Material$Theme$defaultTheme,
-					_List_Nil,
-					A2(
-						$author$project$OUI$Checkbox$withColor,
-						$author$project$OUI$Error,
+								$author$project$OUI$Showcase$Checkbox$onChange('unchecked'),
+								$author$project$OUI$Checkbox$new))),
+						A3(
+						$author$project$OUI$Material$renderCheckbox,
+						theme,
+						_List_Nil,
 						A2(
 							$author$project$OUI$Checkbox$withChecked,
 							true,
 							A2(
 								$author$project$OUI$Checkbox$onChange,
-								$author$project$OUI$Showcase$Checkbox$onChange('checked error'),
-								$author$project$OUI$Checkbox$new))))
-				]))
-		]));
+								$author$project$OUI$Showcase$Checkbox$onChange('checked'),
+								$author$project$OUI$Checkbox$new))),
+						A3(
+						$author$project$OUI$Material$renderCheckbox,
+						theme,
+						_List_Nil,
+						A2(
+							$author$project$OUI$Checkbox$withChecked,
+							false,
+							$author$project$OUI$Checkbox$disabled($author$project$OUI$Checkbox$new))),
+						A3(
+						$author$project$OUI$Material$renderCheckbox,
+						theme,
+						_List_Nil,
+						A2(
+							$author$project$OUI$Checkbox$withChecked,
+							true,
+							$author$project$OUI$Checkbox$disabled($author$project$OUI$Checkbox$new))),
+						A3(
+						$author$project$OUI$Material$renderCheckbox,
+						theme,
+						_List_Nil,
+						A2(
+							$author$project$OUI$Checkbox$withIcon,
+							$author$project$OUI$Icon$clear,
+							A2(
+								$author$project$OUI$Checkbox$withChecked,
+								true,
+								A2(
+									$author$project$OUI$Checkbox$onChange,
+									$author$project$OUI$Showcase$Checkbox$onChange('custom icon'),
+									$author$project$OUI$Checkbox$new)))),
+						A3(
+						$author$project$OUI$Material$renderCheckbox,
+						theme,
+						_List_Nil,
+						A2(
+							$author$project$OUI$Checkbox$withColor,
+							$author$project$OUI$Error,
+							A2(
+								$author$project$OUI$Checkbox$withChecked,
+								false,
+								A2(
+									$author$project$OUI$Checkbox$onChange,
+									$author$project$OUI$Showcase$Checkbox$onChange('unchecked error'),
+									$author$project$OUI$Checkbox$new)))),
+						A3(
+						$author$project$OUI$Material$renderCheckbox,
+						theme,
+						_List_Nil,
+						A2(
+							$author$project$OUI$Checkbox$withColor,
+							$author$project$OUI$Error,
+							A2(
+								$author$project$OUI$Checkbox$withChecked,
+								true,
+								A2(
+									$author$project$OUI$Checkbox$onChange,
+									$author$project$OUI$Showcase$Checkbox$onChange('checked error'),
+									$author$project$OUI$Checkbox$new))))
+					]))
+			]));
+};
 var $author$project$OUI$Showcase$Checkbox$book = A2(
 	$author$project$OUI$Explorer$withStaticChapter,
 	$author$project$OUI$Showcase$Checkbox$checkbox,
 	$author$project$OUI$Explorer$book('Checkbox'));
+var $avh4$elm_color$Color$hsla = F4(
+	function (hue, sat, light, alpha) {
+		var _v0 = _Utils_Tuple3(hue, sat, light);
+		var h = _v0.a;
+		var s = _v0.b;
+		var l = _v0.c;
+		var m2 = (l <= 0.5) ? (l * (s + 1)) : ((l + s) - (l * s));
+		var m1 = (l * 2) - m2;
+		var hueToRgb = function (h__) {
+			var h_ = (h__ < 0) ? (h__ + 1) : ((h__ > 1) ? (h__ - 1) : h__);
+			return ((h_ * 6) < 1) ? (m1 + (((m2 - m1) * h_) * 6)) : (((h_ * 2) < 1) ? m2 : (((h_ * 3) < 2) ? (m1 + (((m2 - m1) * ((2 / 3) - h_)) * 6)) : m1));
+		};
+		var b = hueToRgb(h - (1 / 3));
+		var g = hueToRgb(h);
+		var r = hueToRgb(h + (1 / 3));
+		return A4($avh4$elm_color$Color$RgbaSpace, r, g, b, alpha);
+	});
+var $avh4$elm_color$Color$fromHsla = function (_v0) {
+	var hue = _v0.hue;
+	var saturation = _v0.saturation;
+	var lightness = _v0.lightness;
+	var alpha = _v0.alpha;
+	return A4($avh4$elm_color$Color$hsla, hue, saturation, lightness, alpha);
+};
+var $elm$core$Basics$isNaN = _Basics_isNaN;
+var $avh4$elm_color$Color$toHsla = function (_v0) {
+	var r = _v0.a;
+	var g = _v0.b;
+	var b = _v0.c;
+	var a = _v0.d;
+	var minColor = A2(
+		$elm$core$Basics$min,
+		r,
+		A2($elm$core$Basics$min, g, b));
+	var maxColor = A2(
+		$elm$core$Basics$max,
+		r,
+		A2($elm$core$Basics$max, g, b));
+	var l = (minColor + maxColor) / 2;
+	var s = _Utils_eq(minColor, maxColor) ? 0 : ((l < 0.5) ? ((maxColor - minColor) / (maxColor + minColor)) : ((maxColor - minColor) / ((2 - maxColor) - minColor)));
+	var h1 = _Utils_eq(maxColor, r) ? ((g - b) / (maxColor - minColor)) : (_Utils_eq(maxColor, g) ? (2 + ((b - r) / (maxColor - minColor))) : (4 + ((r - g) / (maxColor - minColor))));
+	var h2 = h1 * (1 / 6);
+	var h3 = $elm$core$Basics$isNaN(h2) ? 0 : ((h2 < 0) ? (h2 + 1) : h2);
+	return {alpha: a, hue: h3, lightness: l, saturation: s};
+};
+var $author$project$OUI$Material$Color$tone = F2(
+	function (light, color) {
+		var hsla = $avh4$elm_color$Color$toHsla(color);
+		var fLight = (light <= 0) ? 0.0 : ((light >= 100) ? 1.0 : (light / 100));
+		return $avh4$elm_color$Color$fromHsla(
+			_Utils_update(
+				hsla,
+				{lightness: fLight}));
+	});
 var $author$project$OUI$Material$Color$darkFromKeyColors = function (keyColors) {
 	return {
 		background: A2($author$project$OUI$Material$Color$tone, 6, keyColors.neutral),
@@ -13914,7 +13822,72 @@ var $author$project$OUI$Material$Color$darkFromKeyColors = function (keyColors) 
 		tertiaryContainer: A2($author$project$OUI$Material$Color$tone, 30, keyColors.tertiary)
 	};
 };
+var $avh4$elm_color$Color$scaleFrom255 = function (c) {
+	return c / 255;
+};
+var $avh4$elm_color$Color$rgb255 = F3(
+	function (r, g, b) {
+		return A4(
+			$avh4$elm_color$Color$RgbaSpace,
+			$avh4$elm_color$Color$scaleFrom255(r),
+			$avh4$elm_color$Color$scaleFrom255(g),
+			$avh4$elm_color$Color$scaleFrom255(b),
+			1.0);
+	});
+var $author$project$OUI$Material$Color$defaultKeyColors = {
+	error: A3($avh4$elm_color$Color$rgb255, 179, 38, 30),
+	neutral: A3($avh4$elm_color$Color$rgb255, 64, 64, 64),
+	neutralVariant: A3($avh4$elm_color$Color$rgb255, 64, 64, 64),
+	primary: A3($avh4$elm_color$Color$rgb255, 103, 80, 164),
+	secondary: A3($avh4$elm_color$Color$rgb255, 98, 91, 113),
+	tertiary: A3($avh4$elm_color$Color$rgb255, 125, 82, 96)
+};
 var $author$project$OUI$Material$Color$defaultDarkScheme = $author$project$OUI$Material$Color$darkFromKeyColors($author$project$OUI$Material$Color$defaultKeyColors);
+var $author$project$OUI$Material$Color$lightFromKeyColors = function (keyColors) {
+	return {
+		background: A2($author$project$OUI$Material$Color$tone, 98, keyColors.neutral),
+		error: A2($author$project$OUI$Material$Color$tone, 40, keyColors.error),
+		errorContainer: A2($author$project$OUI$Material$Color$tone, 90, keyColors.error),
+		inverseOnSurface: A2($author$project$OUI$Material$Color$tone, 95, keyColors.neutral),
+		inversePrimary: A2($author$project$OUI$Material$Color$tone, 80, keyColors.primary),
+		inverseSurface: A2($author$project$OUI$Material$Color$tone, 20, keyColors.neutral),
+		onBackground: A2($author$project$OUI$Material$Color$tone, 10, keyColors.neutral),
+		onError: A2($author$project$OUI$Material$Color$tone, 100, keyColors.error),
+		onErrorContainer: A2($author$project$OUI$Material$Color$tone, 10, keyColors.error),
+		onPrimary: A2($author$project$OUI$Material$Color$tone, 100, keyColors.primary),
+		onPrimaryContainer: A2($author$project$OUI$Material$Color$tone, 10, keyColors.primary),
+		onSecondary: A2($author$project$OUI$Material$Color$tone, 100, keyColors.secondary),
+		onSecondaryContainer: A2($author$project$OUI$Material$Color$tone, 10, keyColors.primary),
+		onSurface: A2($author$project$OUI$Material$Color$tone, 10, keyColors.neutral),
+		onSurfaceVariant: A2($author$project$OUI$Material$Color$tone, 30, keyColors.neutralVariant),
+		onTertiary: A2($author$project$OUI$Material$Color$tone, 100, keyColors.tertiary),
+		onTertiaryContainer: A2($author$project$OUI$Material$Color$tone, 10, keyColors.tertiary),
+		outline: A2($author$project$OUI$Material$Color$tone, 50, keyColors.neutralVariant),
+		outlineVariant: A2($author$project$OUI$Material$Color$tone, 80, keyColors.neutralVariant),
+		primary: A2($author$project$OUI$Material$Color$tone, 40, keyColors.primary),
+		primaryContainer: A2($author$project$OUI$Material$Color$tone, 90, keyColors.primary),
+		scrim: A2($author$project$OUI$Material$Color$tone, 0, keyColors.neutral),
+		secondary: A2($author$project$OUI$Material$Color$tone, 40, keyColors.secondary),
+		secondaryContainer: A2($author$project$OUI$Material$Color$tone, 90, keyColors.secondary),
+		shadow: A2(
+			$author$project$OUI$Material$Color$setAlpha,
+			0.16,
+			A2($author$project$OUI$Material$Color$tone, 0, keyColors.neutral)),
+		surface: A2($author$project$OUI$Material$Color$tone, 98, keyColors.neutral),
+		surfaceBright: A2($author$project$OUI$Material$Color$tone, 98, keyColors.neutral),
+		surfaceContainer: A2($author$project$OUI$Material$Color$tone, 94, keyColors.neutral),
+		surfaceContainerHigh: A2($author$project$OUI$Material$Color$tone, 92, keyColors.neutral),
+		surfaceContainerHighest: A2($author$project$OUI$Material$Color$tone, 90, keyColors.neutral),
+		surfaceContainerLow: A2($author$project$OUI$Material$Color$tone, 96, keyColors.neutral),
+		surfaceContainerLowest: A2($author$project$OUI$Material$Color$tone, 100, keyColors.neutral),
+		surfaceDim: A2($author$project$OUI$Material$Color$tone, 87, keyColors.neutral),
+		surfaceTint: keyColors.primary,
+		surfaceVariant: A2($author$project$OUI$Material$Color$tone, 90, keyColors.neutralVariant),
+		tertiary: A2($author$project$OUI$Material$Color$tone, 40, keyColors.tertiary),
+		tertiaryContainer: A2($author$project$OUI$Material$Color$tone, 90, keyColors.tertiary)
+	};
+};
+var $author$project$OUI$Material$Color$defaultLightScheme = $author$project$OUI$Material$Color$lightFromKeyColors($author$project$OUI$Material$Color$defaultKeyColors);
 var $mdgriffith$elm_ui$Internal$Model$Top = {$: 'Top'};
 var $mdgriffith$elm_ui$Element$alignTop = $mdgriffith$elm_ui$Internal$Model$AlignY($mdgriffith$elm_ui$Internal$Model$Top);
 var $mdgriffith$elm_ui$Internal$Model$Fill = function (a) {
@@ -23484,8 +23457,8 @@ var $author$project$OUI$Explorer$withMarkdownChapter = F2(
 			{
 				chapters: A2(
 					$elm$core$List$cons,
-					function () {
-						var _v0 = A2(
+					function (_v0) {
+						var _v1 = A2(
 							$elm$core$Result$andThen,
 							$dillonkearns$elm_markdown$Markdown$Renderer$render($dillonkearns$elm_markdown$Markdown$Renderer$defaultHtmlRenderer),
 							A2(
@@ -23495,26 +23468,30 @@ var $author$project$OUI$Explorer$withMarkdownChapter = F2(
 									$elm$core$List$map($dillonkearns$elm_markdown$Markdown$Parser$deadEndToString),
 									$elm$core$String$join(', ')),
 								$dillonkearns$elm_markdown$Markdown$Parser$parse(markdown)));
-						if (_v0.$ === 'Ok') {
-							var value = _v0.a;
+						if (_v1.$ === 'Ok') {
+							var value = _v1.a;
 							return A2(
 								$mdgriffith$elm_ui$Element$column,
 								_List_Nil,
 								A2($elm$core$List$map, $mdgriffith$elm_ui$Element$html, value));
 						} else {
-							var err = _v0.a;
+							var err = _v1.a;
 							return $mdgriffith$elm_ui$Element$text('Error rendering markdown: ' + err);
 						}
-					}(),
+					},
 					b.chapters)
 			});
 	});
 var $author$project$OUI$Showcase$Colors$book = A2(
 	$author$project$OUI$Explorer$withStaticChapter,
-	A2($author$project$OUI$Showcase$Colors$showColorScheme, 'Dark Scheme', $author$project$OUI$Material$Color$defaultDarkScheme),
+	function (_v1) {
+		return A2($author$project$OUI$Showcase$Colors$showColorScheme, 'Dark Scheme', $author$project$OUI$Material$Color$defaultDarkScheme);
+	},
 	A2(
 		$author$project$OUI$Explorer$withStaticChapter,
-		A2($author$project$OUI$Showcase$Colors$showColorScheme, 'Light Scheme', $author$project$OUI$Material$Color$defaultLightScheme),
+		function (_v0) {
+			return A2($author$project$OUI$Showcase$Colors$showColorScheme, 'Light Scheme', $author$project$OUI$Material$Color$defaultLightScheme);
+		},
 		A2(
 			$author$project$OUI$Explorer$withMarkdownChapter,
 			'\n# Colors\nThe two default color schemes\n    ',
@@ -23561,72 +23538,75 @@ var $author$project$OUI$Text$titleMedium = A2($author$project$OUI$Text$Text, $au
 var $author$project$OUI$Text$titleSmall = A2($author$project$OUI$Text$Text, $author$project$OUI$Text$Title, $author$project$OUI$Text$Small);
 var $author$project$OUI$Showcase$Typography$book = A2(
 	$author$project$OUI$Explorer$withStaticChapter,
-	A2(
-		$mdgriffith$elm_ui$Element$column,
-		_List_Nil,
-		_List_fromArray(
-			[
-				A2(
-				$author$project$OUI$Material$renderText,
-				$author$project$OUI$Material$Theme$defaultTheme,
-				$author$project$OUI$Text$displayLarge('Display Large')),
-				A2(
-				$author$project$OUI$Material$renderText,
-				$author$project$OUI$Material$Theme$defaultTheme,
-				$author$project$OUI$Text$displayMedium('Display Medium')),
-				A2(
-				$author$project$OUI$Material$renderText,
-				$author$project$OUI$Material$Theme$defaultTheme,
-				$author$project$OUI$Text$displaySmall('Display Small')),
-				A2(
-				$author$project$OUI$Material$renderText,
-				$author$project$OUI$Material$Theme$defaultTheme,
-				$author$project$OUI$Text$headlineLarge('Headline Large')),
-				A2(
-				$author$project$OUI$Material$renderText,
-				$author$project$OUI$Material$Theme$defaultTheme,
-				$author$project$OUI$Text$headlineMedium('Headline Medium')),
-				A2(
-				$author$project$OUI$Material$renderText,
-				$author$project$OUI$Material$Theme$defaultTheme,
-				$author$project$OUI$Text$headlineSmall('Headline Small')),
-				A2(
-				$author$project$OUI$Material$renderText,
-				$author$project$OUI$Material$Theme$defaultTheme,
-				$author$project$OUI$Text$titleLarge('Title Large')),
-				A2(
-				$author$project$OUI$Material$renderText,
-				$author$project$OUI$Material$Theme$defaultTheme,
-				$author$project$OUI$Text$titleMedium('Title Medium')),
-				A2(
-				$author$project$OUI$Material$renderText,
-				$author$project$OUI$Material$Theme$defaultTheme,
-				$author$project$OUI$Text$titleSmall('Title Small')),
-				A2(
-				$author$project$OUI$Material$renderText,
-				$author$project$OUI$Material$Theme$defaultTheme,
-				$author$project$OUI$Text$labelLarge('Label Large')),
-				A2(
-				$author$project$OUI$Material$renderText,
-				$author$project$OUI$Material$Theme$defaultTheme,
-				$author$project$OUI$Text$labelMedium('Label Medium')),
-				A2(
-				$author$project$OUI$Material$renderText,
-				$author$project$OUI$Material$Theme$defaultTheme,
-				$author$project$OUI$Text$labelSmall('Label Small')),
-				A2(
-				$author$project$OUI$Material$renderText,
-				$author$project$OUI$Material$Theme$defaultTheme,
-				$author$project$OUI$Text$bodyLarge('Body Large')),
-				A2(
-				$author$project$OUI$Material$renderText,
-				$author$project$OUI$Material$Theme$defaultTheme,
-				$author$project$OUI$Text$bodyMedium('Body Medium')),
-				A2(
-				$author$project$OUI$Material$renderText,
-				$author$project$OUI$Material$Theme$defaultTheme,
-				$author$project$OUI$Text$bodySmall('Body Small'))
-			])),
+	function (_v0) {
+		var theme = _v0.theme;
+		return A2(
+			$mdgriffith$elm_ui$Element$column,
+			_List_Nil,
+			_List_fromArray(
+				[
+					A2(
+					$author$project$OUI$Material$renderText,
+					theme,
+					$author$project$OUI$Text$displayLarge('Display Large')),
+					A2(
+					$author$project$OUI$Material$renderText,
+					theme,
+					$author$project$OUI$Text$displayMedium('Display Medium')),
+					A2(
+					$author$project$OUI$Material$renderText,
+					theme,
+					$author$project$OUI$Text$displaySmall('Display Small')),
+					A2(
+					$author$project$OUI$Material$renderText,
+					theme,
+					$author$project$OUI$Text$headlineLarge('Headline Large')),
+					A2(
+					$author$project$OUI$Material$renderText,
+					theme,
+					$author$project$OUI$Text$headlineMedium('Headline Medium')),
+					A2(
+					$author$project$OUI$Material$renderText,
+					theme,
+					$author$project$OUI$Text$headlineSmall('Headline Small')),
+					A2(
+					$author$project$OUI$Material$renderText,
+					theme,
+					$author$project$OUI$Text$titleLarge('Title Large')),
+					A2(
+					$author$project$OUI$Material$renderText,
+					theme,
+					$author$project$OUI$Text$titleMedium('Title Medium')),
+					A2(
+					$author$project$OUI$Material$renderText,
+					theme,
+					$author$project$OUI$Text$titleSmall('Title Small')),
+					A2(
+					$author$project$OUI$Material$renderText,
+					theme,
+					$author$project$OUI$Text$labelLarge('Label Large')),
+					A2(
+					$author$project$OUI$Material$renderText,
+					theme,
+					$author$project$OUI$Text$labelMedium('Label Medium')),
+					A2(
+					$author$project$OUI$Material$renderText,
+					theme,
+					$author$project$OUI$Text$labelSmall('Label Small')),
+					A2(
+					$author$project$OUI$Material$renderText,
+					theme,
+					$author$project$OUI$Text$bodyLarge('Body Large')),
+					A2(
+					$author$project$OUI$Material$renderText,
+					theme,
+					$author$project$OUI$Text$bodyMedium('Body Medium')),
+					A2(
+					$author$project$OUI$Material$renderText,
+					theme,
+					$author$project$OUI$Text$bodySmall('Body Small'))
+				]));
+	},
 	A2(
 		$author$project$OUI$Explorer$withMarkdownChapter,
 		'\n# Typography\n\nThe material typescale\n    ',
@@ -23743,38 +23723,43 @@ var $author$project$OUI$Showcase$Icons$book = F2(
 	function (title, iconList) {
 		return A2(
 			$author$project$OUI$Explorer$withStaticChapter,
-			A2(
-				$mdgriffith$elm_ui$Element$row,
-				_List_fromArray(
-					[
-						$mdgriffith$elm_ui$Element$spacing(20)
-					]),
-				A2(
-					$elm$core$List$map,
-					function (_v0) {
-						var label = _v0.a;
-						var icon = _v0.b;
-						return A2(
-							$mdgriffith$elm_ui$Element$column,
-							_List_fromArray(
-								[
-									$mdgriffith$elm_ui$Element$spacing(10)
-								]),
-							_List_fromArray(
-								[
-									A3(
-									$author$project$OUI$Material$renderIcon,
-									$author$project$OUI$Material$Theme$defaultTheme,
-									_List_fromArray(
-										[$mdgriffith$elm_ui$Element$centerX]),
-									icon),
-									$mdgriffith$elm_ui$Element$text(label)
-								]));
-					},
-					iconList)),
+			function (_v1) {
+				var theme = _v1.theme;
+				return A2(
+					$mdgriffith$elm_ui$Element$row,
+					_List_fromArray(
+						[
+							$mdgriffith$elm_ui$Element$spacing(20)
+						]),
+					A2(
+						$elm$core$List$map,
+						function (_v2) {
+							var label = _v2.a;
+							var icon = _v2.b;
+							return A2(
+								$mdgriffith$elm_ui$Element$column,
+								_List_fromArray(
+									[
+										$mdgriffith$elm_ui$Element$spacing(10)
+									]),
+								_List_fromArray(
+									[
+										A3(
+										$author$project$OUI$Material$renderIcon,
+										theme,
+										_List_fromArray(
+											[$mdgriffith$elm_ui$Element$centerX]),
+										icon),
+										$mdgriffith$elm_ui$Element$text(label)
+									]));
+						},
+						iconList));
+			},
 			A2(
 				$author$project$OUI$Explorer$withStaticChapter,
-				$mdgriffith$elm_ui$Element$text(title),
+				function (_v0) {
+					return $mdgriffith$elm_ui$Element$text(title);
+				},
 				$author$project$OUI$Explorer$book(title)));
 	});
 var $author$project$OUI$Icon$Html = function (a) {
@@ -23856,6 +23841,11 @@ var $icidasset$elm_material_icons$Material$Icons$Outlined$face = A2(
 				]),
 			_List_Nil)
 		]));
+var $author$project$OUI$Explorer$Light = {$: 'Light'};
+var $author$project$OUI$Explorer$SelectColorScheme = F2(
+	function (a, b) {
+		return {$: 'SelectColorScheme', a: a, b: b};
+	});
 var $elm$browser$Browser$External = function (a) {
 	return {$: 'External', a: a};
 };
@@ -24358,10 +24348,56 @@ var $orus_io$elm_spa$Spa$application = F3(
 			}
 		};
 	});
+var $author$project$OUI$Material$Button$defaultTheme = {
+	common: {containerHeight: 40, containerRadius: 20, iconSize: 18, leftPaddingWithIcon: 16, leftRightPadding: 24, paddingBetweenElements: 8, rightPaddingWithIcon: 16},
+	fab: {
+		large: {containerHeight: 96, containerShape: 28, containerWidth: 96, iconSize: 36},
+		medium: {containerHeight: 56, containerShape: 16, containerWidth: 56, iconSize: 24},
+		small: {containerHeight: 40, containerShape: 12, containerWidth: 40, iconSize: 24}
+	},
+	icon: {containerSize: 40, iconSize: 24}
+};
+var $author$project$OUI$Material$Checkbox$defaultTheme = {containerHeight: 18, containerShape: 2, containerWidth: 18, iconSize: 18, stateLayerSize: 40};
+var $author$project$OUI$Material$Theme$defaultTypescale = {
+	body: {
+		large: {font: 'Roboto', lineHeight: 24, size: 16, tracking: 0.5, weight: 400},
+		medium: {font: 'Roboto', lineHeight: 20, size: 14, tracking: 0.25, weight: 400},
+		small: {font: 'Roboto', lineHeight: 16, size: 12, tracking: 0.4, weight: 400}
+	},
+	display: {
+		large: {font: 'Roboto', lineHeight: 54, size: 47, tracking: -0.125, weight: 400},
+		medium: {font: 'Roboto', lineHeight: 53, size: 45, tracking: 0, weight: 400},
+		small: {font: 'Roboto', lineHeight: 44, size: 36, tracking: 0, weight: 400}
+	},
+	headline: {
+		large: {font: 'Roboto', lineHeight: 40, size: 32, tracking: 0, weight: 400},
+		medium: {font: 'Roboto', lineHeight: 36, size: 28, tracking: 0, weight: 400},
+		small: {font: 'Roboto', lineHeight: 32, size: 24, tracking: 0, weight: 400}
+	},
+	label: {
+		large: {font: 'Roboto', lineHeight: 20, size: 14, tracking: 0.1, weight: 500},
+		medium: {font: 'Roboto', lineHeight: 16, size: 12, tracking: 0.5, weight: 500},
+		small: {font: 'Roboto', lineHeight: 16, size: 11, tracking: 0.5, weight: 500}
+	},
+	title: {
+		large: {font: 'Roboto', lineHeight: 26, size: 22, tracking: 0, weight: 400},
+		medium: {font: 'Roboto', lineHeight: 24, size: 16, tracking: 0.15, weight: 500},
+		small: {font: 'Roboto', lineHeight: 20, size: 14, tracking: 0.1, weight: 500}
+	}
+};
+var $author$project$OUI$Material$Theme$defaultTheme = {button: $author$project$OUI$Material$Button$defaultTheme, checkbox: $author$project$OUI$Material$Checkbox$defaultTheme, colorscheme: $author$project$OUI$Material$Color$defaultLightScheme, typescale: $author$project$OUI$Material$Theme$defaultTypescale};
 var $mdgriffith$elm_ui$Internal$Model$FocusStyleOption = function (a) {
 	return {$: 'FocusStyleOption', a: a};
 };
 var $mdgriffith$elm_ui$Element$focusStyle = $mdgriffith$elm_ui$Internal$Model$FocusStyleOption;
+var $author$project$OUI$Explorer$Dark = {$: 'Dark'};
+var $author$project$OUI$Explorer$invertColorSchemeType = function (t) {
+	if (t.$ === 'Light') {
+		return $author$project$OUI$Explorer$Dark;
+	} else {
+		return $author$project$OUI$Explorer$Light;
+	}
+};
 var $mdgriffith$elm_ui$Internal$Model$OnlyDynamic = F2(
 	function (a, b) {
 		return {$: 'OnlyDynamic', a: a, b: b};
@@ -24596,10 +24632,7 @@ var $mdgriffith$elm_ui$Element$link = F2(
 				_List_fromArray(
 					[label])));
 	});
-var $mdgriffith$elm_ui$Element$rgb255 = F3(
-	function (red, green, blue) {
-		return A4($mdgriffith$elm_ui$Internal$Model$Rgba, red / 255, green / 255, blue / 255, 1);
-	});
+var $orus_io$elm_spa$Spa$mapSharedMsg = $orus_io$elm_spa$Spa$SharedMsg;
 var $mdgriffith$elm_ui$Internal$Flag$overflow = $mdgriffith$elm_ui$Internal$Flag$flag(20);
 var $mdgriffith$elm_ui$Element$scrollbarY = A2($mdgriffith$elm_ui$Internal$Model$Class, $mdgriffith$elm_ui$Internal$Flag$overflow, $mdgriffith$elm_ui$Internal$Style$classes.scrollbarsY);
 var $author$project$OUI$Explorer$finalize = function (expl) {
@@ -24616,7 +24649,15 @@ var $author$project$OUI$Explorer$finalize = function (expl) {
 				init: F2(
 					function (_v0, _v1) {
 						return _Utils_Tuple2(
-							{lastEvents: _List_Nil},
+							{
+								colorSchemeList: _List_fromArray(
+									[
+										_Utils_Tuple2($author$project$OUI$Material$Color$defaultLightScheme, $author$project$OUI$Material$Color$defaultDarkScheme)
+									]),
+								lastEvents: _List_Nil,
+								selectedColorScheme: _Utils_Tuple2(0, $author$project$OUI$Explorer$Light),
+								theme: $author$project$OUI$Material$Theme$defaultTheme
+							},
 							$elm$core$Platform$Cmd$none);
 					}),
 				protectPage: function (s) {
@@ -24644,7 +24685,9 @@ var $author$project$OUI$Explorer$finalize = function (expl) {
 											$mdgriffith$elm_ui$Element$height($mdgriffith$elm_ui$Element$fill),
 											$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
 											$mdgriffith$elm_ui$Element$Background$color(
-											A3($mdgriffith$elm_ui$Element$rgb255, 255, 255, 255)),
+											$author$project$OUI$Material$Color$toElementColor(shared.theme.colorscheme.surface)),
+											$mdgriffith$elm_ui$Element$Font$color(
+											$author$project$OUI$Material$Color$toElementColor(shared.theme.colorscheme.onSurface)),
 											$mdgriffith$elm_ui$Element$scrollbarY
 										]),
 									A2(
@@ -24683,32 +24726,51 @@ var $author$project$OUI$Explorer$finalize = function (expl) {
 																$mdgriffith$elm_ui$Element$px(200)),
 																$mdgriffith$elm_ui$Element$height($mdgriffith$elm_ui$Element$fill)
 															]),
-														A2(
-															$elm$core$List$concatMap,
-															function (_v3) {
-																var cat = _v3.a;
-																var books = _v3.b;
-																return A2(
-																	$elm$core$List$cons,
-																	$mdgriffith$elm_ui$Element$text(cat),
+														_Utils_ap(
+															_List_fromArray(
+																[
+																	A3(
+																	$author$project$OUI$Material$renderButton,
+																	shared.theme,
+																	_List_Nil,
 																	A2(
-																		$elm$core$List$map,
-																		function (name) {
-																			return A2(
-																				$mdgriffith$elm_ui$Element$link,
-																				_List_fromArray(
-																					[
-																						$mdgriffith$elm_ui$Element$padding(10),
-																						$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill)
-																					]),
-																				{
-																					label: $mdgriffith$elm_ui$Element$text(name),
-																					url: '#' + A2($author$project$OUI$Explorer$bookPath, cat, name)
-																				});
-																		},
-																		books));
-															},
-															categories)),
+																		$author$project$OUI$Button$withText,
+																		'Dark/Light',
+																		A2(
+																			$author$project$OUI$Button$onClick,
+																			$orus_io$elm_spa$Spa$mapSharedMsg(
+																				A2(
+																					$author$project$OUI$Explorer$SelectColorScheme,
+																					shared.selectedColorScheme.a,
+																					$author$project$OUI$Explorer$invertColorSchemeType(shared.selectedColorScheme.b))),
+																			$author$project$OUI$Button$new)))
+																]),
+															A2(
+																$elm$core$List$concatMap,
+																function (_v3) {
+																	var cat = _v3.a;
+																	var books = _v3.b;
+																	return A2(
+																		$elm$core$List$cons,
+																		$mdgriffith$elm_ui$Element$text(cat),
+																		A2(
+																			$elm$core$List$map,
+																			function (name) {
+																				return A2(
+																					$mdgriffith$elm_ui$Element$link,
+																					_List_fromArray(
+																						[
+																							$mdgriffith$elm_ui$Element$padding(10),
+																							$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill)
+																						]),
+																					{
+																						label: $mdgriffith$elm_ui$Element$text(name),
+																						url: '#' + A2($author$project$OUI$Explorer$bookPath, cat, name)
+																					});
+																			},
+																			books));
+																},
+																categories))),
 														A2(
 														$mdgriffith$elm_ui$Element$column,
 														_List_fromArray(
@@ -24735,7 +24797,7 @@ var $author$project$OUI$Explorer$finalize = function (expl) {
 																		$mdgriffith$elm_ui$Element$px(200)),
 																		$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
 																		$mdgriffith$elm_ui$Element$Background$color(
-																		A3($mdgriffith$elm_ui$Element$rgb255, 200, 200, 200))
+																		$author$project$OUI$Material$Color$toElementColor(shared.theme.colorscheme.surfaceContainerLow))
 																	]),
 																A2($elm$core$List$map, $mdgriffith$elm_ui$Element$text, shared.lastEvents))
 															]))
@@ -24750,17 +24812,52 @@ var $author$project$OUI$Explorer$finalize = function (expl) {
 				},
 				update: F2(
 					function (msg, shared) {
-						var value = msg.a;
-						return _Utils_Tuple2(
-							_Utils_update(
-								shared,
-								{
-									lastEvents: A2(
-										$elm$core$List$take,
-										10,
-										A2($elm$core$List$cons, value, shared.lastEvents))
-								}),
-							$elm$core$Platform$Cmd$none);
+						if (msg.$ === 'Event') {
+							var value = msg.a;
+							return _Utils_Tuple2(
+								_Utils_update(
+									shared,
+									{
+										lastEvents: A2(
+											$elm$core$List$take,
+											10,
+											A2($elm$core$List$cons, value, shared.lastEvents))
+									}),
+								$elm$core$Platform$Cmd$none);
+						} else {
+							var index = msg.a;
+							var type_ = msg.b;
+							var theme = shared.theme;
+							var realIndex = (index < 0) ? 0 : ((_Utils_cmp(
+								index,
+								$elm$core$List$length(shared.colorSchemeList)) > -1) ? ($elm$core$List$length(shared.colorSchemeList) - 1) : index);
+							var colorScheme = A2(
+								$elm$core$Maybe$withDefault,
+								$author$project$OUI$Material$Color$defaultLightScheme,
+								A2(
+									$elm$core$Maybe$map,
+									function (_v5) {
+										var light = _v5.a;
+										var dark = _v5.b;
+										if (type_.$ === 'Light') {
+											return light;
+										} else {
+											return dark;
+										}
+									},
+									$elm$core$List$head(
+										((realIndex > 0) ? $elm$core$List$take(realIndex) : $elm$core$Basics$identity)(shared.colorSchemeList))));
+							return _Utils_Tuple2(
+								_Utils_update(
+									shared,
+									{
+										selectedColorScheme: _Utils_Tuple2(realIndex, type_),
+										theme: _Utils_update(
+											theme,
+											{colorscheme: colorScheme})
+									}),
+								$elm$core$Platform$Cmd$none);
+						}
 					})
 			},
 			expl.app));

@@ -11,15 +11,16 @@ book : String -> List ( String, Icon ) -> Explorer.Book Explorer.BookMsg
 book title iconList =
     Explorer.book title
         |> Explorer.withStaticChapter
-            (Element.text title)
+            (\_ -> Element.text title)
         |> Explorer.withStaticChapter
-            (iconList
-                |> List.map
-                    (\( label, icon ) ->
-                        Element.column [ Element.spacing 10 ]
-                            [ Material.renderIcon Theme.defaultTheme [ Element.centerX ] icon
-                            , Element.text label
-                            ]
-                    )
-                |> Element.row [ Element.spacing 20 ]
+            (\{ theme } ->
+                iconList
+                    |> List.map
+                        (\( label, icon ) ->
+                            Element.column [ Element.spacing 10 ]
+                                [ Material.renderIcon theme [ Element.centerX ] icon
+                                , Element.text label
+                                ]
+                        )
+                    |> Element.row [ Element.spacing 20 ]
             )
