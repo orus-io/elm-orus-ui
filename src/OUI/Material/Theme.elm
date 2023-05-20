@@ -7,6 +7,7 @@ module OUI.Material.Theme exposing (Theme, defaultTheme, defaultTypescale)
 -}
 
 import OUI.Material.Button
+import OUI.Material.Checkbox
 import OUI.Material.Color
 import OUI.Material.Typography
 
@@ -20,6 +21,7 @@ type alias Theme =
     { colorscheme : OUI.Material.Color.Scheme
     , typescale : OUI.Material.Typography.Typescale
     , button : OUI.Material.Button.Theme
+    , checkbox : OUI.Material.Checkbox.Theme
     }
 
 
@@ -30,6 +32,7 @@ defaultTheme =
     { colorscheme = OUI.Material.Color.defaultLightScheme
     , typescale = defaultTypescale
     , button = OUI.Material.Button.defaultTheme
+    , checkbox = OUI.Material.Checkbox.defaultTheme
     }
 
 

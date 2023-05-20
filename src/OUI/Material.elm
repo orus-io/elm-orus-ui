@@ -1,11 +1,11 @@
 module OUI.Material exposing
-    ( renderText, renderButton, renderIcon
+    ( renderText, renderButton, renderCheckbox, renderIcon
     , toElementColor
     )
 
 {-| A elm-ui based renderer API
 
-@docs renderText, renderButton, renderIcon
+@docs renderText, renderButton, renderCheckbox, renderIcon
 
 @docs toElementColor
 
@@ -13,10 +13,11 @@ module OUI.Material exposing
 
 import Color
 import Element exposing (Attribute, Element)
-import OUI
 import OUI.Button
+import OUI.Checkbox
 import OUI.Icon exposing (Icon)
 import OUI.Material.Button
+import OUI.Material.Checkbox
 import OUI.Material.Icon
 import OUI.Material.Theme exposing (Theme)
 import OUI.Material.Typography
@@ -54,3 +55,10 @@ renderButton { typescale, colorscheme, button } =
 renderIcon : Theme -> List (Attribute msg) -> Icon -> Element msg
 renderIcon { colorscheme } =
     OUI.Material.Icon.render colorscheme
+
+
+{-| Render a checkbox
+-}
+renderCheckbox : Theme -> List (Attribute msg) -> OUI.Checkbox.Checkbox { hasAction : (), withChecked : () } msg -> Element msg
+renderCheckbox { colorscheme, checkbox } =
+    OUI.Material.Checkbox.render colorscheme checkbox

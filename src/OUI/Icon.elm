@@ -1,6 +1,6 @@
 module OUI.Icon exposing
     ( Icon, withSize, withColor
-    , clear
+    , check, clear
     , elmMaterialIcons, materialIcons
     , Renderer(..), properties
     )
@@ -12,7 +12,7 @@ module OUI.Icon exposing
 
 @docs Icon, withSize, withColor
 
-@docs clear
+@docs check, clear
 
 
 # Adapters
@@ -79,6 +79,35 @@ fromRenderer renderer =
         , color = Nothing
         , renderer = renderer
         }
+
+
+{-| The 'check' icon, taken from icidasset/elm-material-icons
+-}
+check : Icon
+check =
+    fromRenderer <|
+        Svg
+            (\size color ->
+                let
+                    sizeAsString =
+                        String.fromInt size
+                in
+                Svg.svg
+                    [ Svg.Attributes.viewBox "0 0 24 24"
+                    , Svg.Attributes.height sizeAsString
+                    , Svg.Attributes.width sizeAsString
+                    ]
+                    [ Svg.g
+                        [ Svg.Attributes.fill (Color.toCssString color) ]
+                        [ Svg.path
+                            [ Svg.Attributes.d "M0 0h24v24H0V0z", Svg.Attributes.fill "none" ]
+                            []
+                        , Svg.path
+                            [ Svg.Attributes.d "M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" ]
+                            []
+                        ]
+                    ]
+            )
 
 
 {-| A simple 'clear' icon, taken from icidasset/elm-material-icons

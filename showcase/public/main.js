@@ -11670,6 +11670,7 @@ var $author$project$OUI$Material$Button$defaultTheme = {
 	},
 	icon: {containerSize: 40, iconSize: 24}
 };
+var $author$project$OUI$Material$Checkbox$defaultTheme = {containerHeight: 18, containerShape: 2, containerWidth: 18, iconSize: 18, stateLayerSize: 40};
 var $author$project$OUI$Material$Theme$defaultTypescale = {
 	body: {
 		large: {font: 'Roboto', lineHeight: 24, size: 16, tracking: 0.5, weight: 400},
@@ -11697,7 +11698,7 @@ var $author$project$OUI$Material$Theme$defaultTypescale = {
 		small: {font: 'Roboto', lineHeight: 20, size: 14, tracking: 0.1, weight: 500}
 	}
 };
-var $author$project$OUI$Material$Theme$defaultTheme = {button: $author$project$OUI$Material$Button$defaultTheme, colorscheme: $author$project$OUI$Material$Color$defaultLightScheme, typescale: $author$project$OUI$Material$Theme$defaultTypescale};
+var $author$project$OUI$Material$Theme$defaultTheme = {button: $author$project$OUI$Material$Button$defaultTheme, checkbox: $author$project$OUI$Material$Checkbox$defaultTheme, colorscheme: $author$project$OUI$Material$Color$defaultLightScheme, typescale: $author$project$OUI$Material$Theme$defaultTypescale};
 var $author$project$OUI$Button$disabled = function (_v0) {
 	var props = _v0.a;
 	return $author$project$OUI$Button$Button(props);
@@ -13552,6 +13553,323 @@ var $author$project$OUI$Showcase$Buttons$book = A2(
 	$author$project$OUI$Explorer$withStaticChapter,
 	$author$project$OUI$Showcase$Buttons$commonButtons,
 	$author$project$OUI$Explorer$book('Buttons'));
+var $author$project$OUI$Error = {$: 'Error'};
+var $author$project$OUI$Checkbox$Checkbox = function (a) {
+	return {$: 'Checkbox', a: a};
+};
+var $author$project$OUI$Checkbox$disabled = function (_v0) {
+	var props = _v0.a;
+	return $author$project$OUI$Checkbox$Checkbox(props);
+};
+var $author$project$OUI$Icon$check = $author$project$OUI$Icon$fromRenderer(
+	$author$project$OUI$Icon$Svg(
+		F2(
+			function (size, color) {
+				var sizeAsString = $elm$core$String$fromInt(size);
+				return A2(
+					$elm$svg$Svg$svg,
+					_List_fromArray(
+						[
+							$elm$svg$Svg$Attributes$viewBox('0 0 24 24'),
+							$elm$svg$Svg$Attributes$height(sizeAsString),
+							$elm$svg$Svg$Attributes$width(sizeAsString)
+						]),
+					_List_fromArray(
+						[
+							A2(
+							$elm$svg$Svg$g,
+							_List_fromArray(
+								[
+									$elm$svg$Svg$Attributes$fill(
+									$avh4$elm_color$Color$toCssString(color))
+								]),
+							_List_fromArray(
+								[
+									A2(
+									$elm$svg$Svg$path,
+									_List_fromArray(
+										[
+											$elm$svg$Svg$Attributes$d('M0 0h24v24H0V0z'),
+											$elm$svg$Svg$Attributes$fill('none')
+										]),
+									_List_Nil),
+									A2(
+									$elm$svg$Svg$path,
+									_List_fromArray(
+										[
+											$elm$svg$Svg$Attributes$d('M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z')
+										]),
+									_List_Nil)
+								]))
+						]));
+			})));
+var $author$project$OUI$Checkbox$new = $author$project$OUI$Checkbox$Checkbox(
+	{checked: false, color: $author$project$OUI$Primary, icon: $author$project$OUI$Icon$check, onChange: $elm$core$Maybe$Nothing});
+var $author$project$OUI$Checkbox$onChange = F2(
+	function (msg, _v0) {
+		var props = _v0.a;
+		return $author$project$OUI$Checkbox$Checkbox(
+			_Utils_update(
+				props,
+				{
+					onChange: $elm$core$Maybe$Just(msg)
+				}));
+	});
+var $author$project$OUI$Showcase$Checkbox$onChange = F2(
+	function (name, checked) {
+		return $author$project$OUI$Explorer$event(
+			name + (' changes to ' + (checked ? '\'checked\'' : '\'unchecked\'')));
+	});
+var $mdgriffith$elm_ui$Element$htmlAttribute = $mdgriffith$elm_ui$Internal$Model$Attr;
+var $mdgriffith$elm_ui$Element$none = $mdgriffith$elm_ui$Internal$Model$Empty;
+var $author$project$OUI$Checkbox$properties = function (_v0) {
+	var props = _v0.a;
+	return props;
+};
+var $author$project$OUI$Material$Checkbox$render = F4(
+	function (colorscheme, theme, attrs, checkbox) {
+		var properties = $author$project$OUI$Checkbox$properties(checkbox);
+		var _v0 = function () {
+			var _v1 = _Utils_Tuple2(properties.onChange, properties.color);
+			if (_v1.a.$ === 'Just') {
+				if (_v1.b.$ === 'Error') {
+					var _v2 = _v1.b;
+					return _Utils_Tuple3(
+						A2($author$project$OUI$Material$Color$getOnColor, properties.color, colorscheme),
+						A2($author$project$OUI$Material$Color$getColor, properties.color, colorscheme),
+						colorscheme.error);
+				} else {
+					return _Utils_Tuple3(
+						A2($author$project$OUI$Material$Color$getOnColor, properties.color, colorscheme),
+						A2($author$project$OUI$Material$Color$getColor, properties.color, colorscheme),
+						colorscheme.onSurface);
+				}
+			} else {
+				var _v3 = _v1.a;
+				return _Utils_Tuple3(
+					colorscheme.surface,
+					A2($author$project$OUI$Material$Color$setAlpha, 0.38, colorscheme.onSurface),
+					A2($author$project$OUI$Material$Color$setAlpha, 0.38, colorscheme.onSurface));
+			}
+		}();
+		var frontColor = _v0.a;
+		var backColor = _v0.b;
+		var borderColor = _v0.c;
+		return A2(
+			$mdgriffith$elm_ui$Element$el,
+			_Utils_ap(
+				_List_fromArray(
+					[
+						$mdgriffith$elm_ui$Element$width(
+						$mdgriffith$elm_ui$Element$px(theme.stateLayerSize)),
+						$mdgriffith$elm_ui$Element$height(
+						$mdgriffith$elm_ui$Element$px(theme.stateLayerSize)),
+						$mdgriffith$elm_ui$Element$Border$rounded((theme.stateLayerSize / 2) | 0),
+						$mdgriffith$elm_ui$Element$htmlAttribute(
+						$elm$html$Html$Attributes$tabindex(0)),
+						$mdgriffith$elm_ui$Element$focused(
+						_List_fromArray(
+							[
+								$mdgriffith$elm_ui$Element$Background$color(
+								$author$project$OUI$Material$Color$toElementColor(
+									A2($author$project$OUI$Material$Color$setAlpha, $author$project$OUI$Material$Color$focusStateLayerOpacity, colorscheme.onSurface)))
+							])),
+						$mdgriffith$elm_ui$Element$mouseDown(
+						_List_fromArray(
+							[
+								$mdgriffith$elm_ui$Element$Background$color(
+								$author$project$OUI$Material$Color$toElementColor(
+									A2($author$project$OUI$Material$Color$setAlpha, $author$project$OUI$Material$Color$pressStateLayerOpacity, colorscheme.onSurface)))
+							])),
+						$mdgriffith$elm_ui$Element$mouseOver(
+						_List_fromArray(
+							[
+								$mdgriffith$elm_ui$Element$Background$color(
+								$author$project$OUI$Material$Color$toElementColor(
+									A2($author$project$OUI$Material$Color$setAlpha, $author$project$OUI$Material$Color$hoverStateLayerOpacity, colorscheme.onSurface)))
+							]))
+					]),
+				function () {
+					var _v4 = properties.onChange;
+					if (_v4.$ === 'Just') {
+						var msg = _v4.a;
+						return _List_fromArray(
+							[
+								$mdgriffith$elm_ui$Element$Events$onClick(
+								msg(!properties.checked))
+							]);
+					} else {
+						return _List_Nil;
+					}
+				}()),
+			A2(
+				$mdgriffith$elm_ui$Element$el,
+				_List_fromArray(
+					[
+						$mdgriffith$elm_ui$Element$width(
+						$mdgriffith$elm_ui$Element$px(theme.containerWidth)),
+						$mdgriffith$elm_ui$Element$height(
+						$mdgriffith$elm_ui$Element$px(theme.containerHeight)),
+						$mdgriffith$elm_ui$Element$centerX,
+						$mdgriffith$elm_ui$Element$centerY
+					]),
+				properties.checked ? A4(
+					$author$project$OUI$Material$Icon$renderWithSizeColor,
+					theme.iconSize,
+					frontColor,
+					_List_fromArray(
+						[
+							$mdgriffith$elm_ui$Element$Background$color(
+							$author$project$OUI$Material$Color$toElementColor(backColor)),
+							$mdgriffith$elm_ui$Element$Border$rounded(theme.containerShape)
+						]),
+					properties.icon) : A2(
+					$mdgriffith$elm_ui$Element$el,
+					_List_fromArray(
+						[
+							$mdgriffith$elm_ui$Element$width(
+							$mdgriffith$elm_ui$Element$px(theme.iconSize)),
+							$mdgriffith$elm_ui$Element$height(
+							$mdgriffith$elm_ui$Element$px(theme.iconSize)),
+							$mdgriffith$elm_ui$Element$Border$width(2),
+							$mdgriffith$elm_ui$Element$Border$rounded(theme.containerShape),
+							$mdgriffith$elm_ui$Element$Border$color(
+							$author$project$OUI$Material$Color$toElementColor(borderColor))
+						]),
+					$mdgriffith$elm_ui$Element$none)));
+	});
+var $author$project$OUI$Material$renderCheckbox = function (_v0) {
+	var colorscheme = _v0.colorscheme;
+	var checkbox = _v0.checkbox;
+	return A2($author$project$OUI$Material$Checkbox$render, colorscheme, checkbox);
+};
+var $author$project$OUI$Checkbox$withChecked = F2(
+	function (checked, _v0) {
+		var props = _v0.a;
+		return $author$project$OUI$Checkbox$Checkbox(
+			_Utils_update(
+				props,
+				{checked: checked}));
+	});
+var $author$project$OUI$Checkbox$withColor = F2(
+	function (color, _v0) {
+		var props = _v0.a;
+		return $author$project$OUI$Checkbox$Checkbox(
+			_Utils_update(
+				props,
+				{color: color}));
+	});
+var $author$project$OUI$Checkbox$withIcon = F2(
+	function (icon, _v0) {
+		var props = _v0.a;
+		return $author$project$OUI$Checkbox$Checkbox(
+			_Utils_update(
+				props,
+				{icon: icon}));
+	});
+var $author$project$OUI$Showcase$Checkbox$checkbox = A2(
+	$mdgriffith$elm_ui$Element$column,
+	_List_fromArray(
+		[
+			$mdgriffith$elm_ui$Element$spacing(30)
+		]),
+	_List_fromArray(
+		[
+			$mdgriffith$elm_ui$Element$text('Checkbox'),
+			A2(
+			$mdgriffith$elm_ui$Element$row,
+			_List_fromArray(
+				[
+					$mdgriffith$elm_ui$Element$spacing(30)
+				]),
+			_List_fromArray(
+				[
+					A3(
+					$author$project$OUI$Material$renderCheckbox,
+					$author$project$OUI$Material$Theme$defaultTheme,
+					_List_Nil,
+					A2(
+						$author$project$OUI$Checkbox$withChecked,
+						false,
+						A2(
+							$author$project$OUI$Checkbox$onChange,
+							$author$project$OUI$Showcase$Checkbox$onChange('unchecked'),
+							$author$project$OUI$Checkbox$new))),
+					A3(
+					$author$project$OUI$Material$renderCheckbox,
+					$author$project$OUI$Material$Theme$defaultTheme,
+					_List_Nil,
+					A2(
+						$author$project$OUI$Checkbox$withChecked,
+						true,
+						A2(
+							$author$project$OUI$Checkbox$onChange,
+							$author$project$OUI$Showcase$Checkbox$onChange('checked'),
+							$author$project$OUI$Checkbox$new))),
+					A3(
+					$author$project$OUI$Material$renderCheckbox,
+					$author$project$OUI$Material$Theme$defaultTheme,
+					_List_Nil,
+					A2(
+						$author$project$OUI$Checkbox$withChecked,
+						false,
+						$author$project$OUI$Checkbox$disabled($author$project$OUI$Checkbox$new))),
+					A3(
+					$author$project$OUI$Material$renderCheckbox,
+					$author$project$OUI$Material$Theme$defaultTheme,
+					_List_Nil,
+					A2(
+						$author$project$OUI$Checkbox$withChecked,
+						true,
+						$author$project$OUI$Checkbox$disabled($author$project$OUI$Checkbox$new))),
+					A3(
+					$author$project$OUI$Material$renderCheckbox,
+					$author$project$OUI$Material$Theme$defaultTheme,
+					_List_Nil,
+					A2(
+						$author$project$OUI$Checkbox$withIcon,
+						$author$project$OUI$Icon$clear,
+						A2(
+							$author$project$OUI$Checkbox$withChecked,
+							true,
+							A2(
+								$author$project$OUI$Checkbox$onChange,
+								$author$project$OUI$Showcase$Checkbox$onChange('custom icon'),
+								$author$project$OUI$Checkbox$new)))),
+					A3(
+					$author$project$OUI$Material$renderCheckbox,
+					$author$project$OUI$Material$Theme$defaultTheme,
+					_List_Nil,
+					A2(
+						$author$project$OUI$Checkbox$withColor,
+						$author$project$OUI$Error,
+						A2(
+							$author$project$OUI$Checkbox$withChecked,
+							false,
+							A2(
+								$author$project$OUI$Checkbox$onChange,
+								$author$project$OUI$Showcase$Checkbox$onChange('unchecked error'),
+								$author$project$OUI$Checkbox$new)))),
+					A3(
+					$author$project$OUI$Material$renderCheckbox,
+					$author$project$OUI$Material$Theme$defaultTheme,
+					_List_Nil,
+					A2(
+						$author$project$OUI$Checkbox$withColor,
+						$author$project$OUI$Error,
+						A2(
+							$author$project$OUI$Checkbox$withChecked,
+							true,
+							A2(
+								$author$project$OUI$Checkbox$onChange,
+								$author$project$OUI$Showcase$Checkbox$onChange('checked error'),
+								$author$project$OUI$Checkbox$new))))
+				]))
+		]));
+var $author$project$OUI$Showcase$Checkbox$book = A2(
+	$author$project$OUI$Explorer$withStaticChapter,
+	$author$project$OUI$Showcase$Checkbox$checkbox,
+	$author$project$OUI$Explorer$book('Checkbox'));
 var $author$project$OUI$Material$Color$darkFromKeyColors = function (keyColors) {
 	return {
 		background: A2($author$project$OUI$Material$Color$tone, 6, keyColors.neutral),
@@ -23336,7 +23654,10 @@ var $author$project$OUI$Showcase$addPages = A2(
 			A2(
 				$elm$core$Basics$composeR,
 				$author$project$OUI$Explorer$category('Basics'),
-				$author$project$OUI$Explorer$addBook($author$project$OUI$Showcase$Buttons$book)))));
+				A2(
+					$elm$core$Basics$composeR,
+					$author$project$OUI$Explorer$addBook($author$project$OUI$Showcase$Buttons$book),
+					$author$project$OUI$Explorer$addBook($author$project$OUI$Showcase$Checkbox$book))))));
 var $elm$svg$Svg$Attributes$enableBackground = _VirtualDom_attribute('enable-background');
 var $icidasset$elm_material_icons$Material$Icons$Internal$b = $elm$svg$Svg$Attributes$enableBackground;
 var $icidasset$elm_material_icons$Material$Icons$Internal$f = $elm$svg$Svg$Attributes$fill;
