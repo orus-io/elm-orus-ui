@@ -213,7 +213,7 @@ render colorscheme theme attrs switch =
                 )
             ]
     in
-    Input.button trackAttrs
+    Input.button (trackAttrs ++ attrs)
         { onPress = onChange |> Maybe.map (\msg -> msg <| not selected)
         , label =
             Element.el thumbAttrs icon

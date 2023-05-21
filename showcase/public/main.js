@@ -23734,7 +23734,7 @@ var $author$project$OUI$Material$Switch$render = F4(
 			]);
 		return A2(
 			$mdgriffith$elm_ui$Element$Input$button,
-			trackAttrs,
+			_Utils_ap(trackAttrs, attrs),
 			{
 				label: A2($mdgriffith$elm_ui$Element$el, thumbAttrs, icon),
 				onPress: A2(
@@ -24248,6 +24248,7 @@ var $icidasset$elm_material_icons$Material$Icons$Outlined$face = A2(
 				]),
 			_List_Nil)
 		]));
+var $author$project$OUI$Explorer$Dark = {$: 'Dark'};
 var $author$project$OUI$Explorer$Light = {$: 'Light'};
 var $author$project$OUI$Explorer$SelectColorScheme = F2(
 	function (a, b) {
@@ -24755,6 +24756,48 @@ var $orus_io$elm_spa$Spa$application = F3(
 			}
 		};
 	});
+var $author$project$OUI$Icon$dark_mode = $author$project$OUI$Icon$fromRenderer(
+	$author$project$OUI$Icon$Svg(
+		F2(
+			function (size, color) {
+				var sizeAsString = $elm$core$String$fromInt(size);
+				return A2(
+					$elm$svg$Svg$svg,
+					_List_fromArray(
+						[
+							$elm$svg$Svg$Attributes$viewBox('0 0 24 24'),
+							$elm$svg$Svg$Attributes$enableBackground('new 0 0 24 24'),
+							$elm$svg$Svg$Attributes$height(sizeAsString),
+							$elm$svg$Svg$Attributes$width(sizeAsString)
+						]),
+					_List_fromArray(
+						[
+							A2(
+							$elm$svg$Svg$rect,
+							_List_fromArray(
+								[
+									$elm$svg$Svg$Attributes$fill('none')
+								]),
+							_List_Nil),
+							A2(
+							$elm$svg$Svg$g,
+							_List_fromArray(
+								[
+									$elm$svg$Svg$Attributes$fill(
+									$avh4$elm_color$Color$toCssString(color))
+								]),
+							_List_fromArray(
+								[
+									A2(
+									$elm$svg$Svg$path,
+									_List_fromArray(
+										[
+											$elm$svg$Svg$Attributes$d('M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z')
+										]),
+									_List_Nil)
+								]))
+						]));
+			})));
 var $author$project$OUI$Material$Button$defaultTheme = {
 	common: {containerHeight: 40, containerRadius: 20, iconSize: 18, leftPaddingWithIcon: 16, leftRightPadding: 24, paddingBetweenElements: 8, rightPaddingWithIcon: 16},
 	fab: {
@@ -24805,14 +24848,6 @@ var $mdgriffith$elm_ui$Internal$Model$FocusStyleOption = function (a) {
 	return {$: 'FocusStyleOption', a: a};
 };
 var $mdgriffith$elm_ui$Element$focusStyle = $mdgriffith$elm_ui$Internal$Model$FocusStyleOption;
-var $author$project$OUI$Explorer$Dark = {$: 'Dark'};
-var $author$project$OUI$Explorer$invertColorSchemeType = function (t) {
-	if (t.$ === 'Light') {
-		return $author$project$OUI$Explorer$Dark;
-	} else {
-		return $author$project$OUI$Explorer$Light;
-	}
-};
 var $mdgriffith$elm_ui$Internal$Model$OnlyDynamic = F2(
 	function (a, b) {
 		return {$: 'OnlyDynamic', a: a, b: b};
@@ -25016,6 +25051,48 @@ var $mdgriffith$elm_ui$Element$layoutWith = F3(
 				_Utils_ap($mdgriffith$elm_ui$Internal$Model$rootStyle, attrs)),
 			child);
 	});
+var $author$project$OUI$Icon$light_mode = $author$project$OUI$Icon$fromRenderer(
+	$author$project$OUI$Icon$Svg(
+		F2(
+			function (size, color) {
+				var sizeAsString = $elm$core$String$fromInt(size);
+				return A2(
+					$elm$svg$Svg$svg,
+					_List_fromArray(
+						[
+							$elm$svg$Svg$Attributes$viewBox('0 0 24 24'),
+							$elm$svg$Svg$Attributes$enableBackground('new 0 0 24 24'),
+							$elm$svg$Svg$Attributes$height(sizeAsString),
+							$elm$svg$Svg$Attributes$width(sizeAsString)
+						]),
+					_List_fromArray(
+						[
+							A2(
+							$elm$svg$Svg$rect,
+							_List_fromArray(
+								[
+									$elm$svg$Svg$Attributes$fill('none')
+								]),
+							_List_Nil),
+							A2(
+							$elm$svg$Svg$g,
+							_List_fromArray(
+								[
+									$elm$svg$Svg$Attributes$fill(
+									$avh4$elm_color$Color$toCssString(color))
+								]),
+							_List_fromArray(
+								[
+									A2(
+									$elm$svg$Svg$path,
+									_List_fromArray(
+										[
+											$elm$svg$Svg$Attributes$d('M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z')
+										]),
+									_List_Nil)
+								]))
+						]));
+			})));
 var $elm$html$Html$Attributes$rel = _VirtualDom_attribute('rel');
 var $mdgriffith$elm_ui$Element$link = F2(
 	function (attrs, _v0) {
@@ -25141,25 +25218,42 @@ var $author$project$OUI$Explorer$finalize = function (expl) {
 																$mdgriffith$elm_ui$Element$px(200)),
 																$mdgriffith$elm_ui$Element$height($mdgriffith$elm_ui$Element$fill)
 															]),
-														_Utils_ap(
-															_List_fromArray(
-																[
-																	A3(
-																	$author$project$OUI$Material$renderButton,
-																	shared.theme,
-																	_List_Nil,
-																	A2(
-																		$author$project$OUI$Button$withText,
-																		'Dark/Light',
+														A2(
+															$elm$core$List$cons,
+															A2(
+																$mdgriffith$elm_ui$Element$row,
+																_List_fromArray(
+																	[
+																		$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill)
+																	]),
+																_List_fromArray(
+																	[
+																		$mdgriffith$elm_ui$Element$text('Light/Dark'),
+																		A3(
+																		$author$project$OUI$Material$renderSwitch,
+																		shared.theme,
+																		_List_fromArray(
+																			[$mdgriffith$elm_ui$Element$alignRight]),
 																		A2(
-																			$author$project$OUI$Button$onClick,
-																			$orus_io$elm_spa$Spa$mapSharedMsg(
+																			$author$project$OUI$Switch$withIconUnselected,
+																			$author$project$OUI$Icon$light_mode,
+																			A2(
+																				$author$project$OUI$Switch$withIconSelected,
+																				$author$project$OUI$Icon$dark_mode,
 																				A2(
-																					$author$project$OUI$Explorer$SelectColorScheme,
-																					shared.selectedColorScheme.a,
-																					$author$project$OUI$Explorer$invertColorSchemeType(shared.selectedColorScheme.b))),
-																			$author$project$OUI$Button$new)))
-																]),
+																					$author$project$OUI$Switch$withSelected,
+																					_Utils_eq(shared.selectedColorScheme.b, $author$project$OUI$Explorer$Dark),
+																					A2(
+																						$author$project$OUI$Switch$onChange,
+																						function (dark) {
+																							return $orus_io$elm_spa$Spa$mapSharedMsg(
+																								A2(
+																									$author$project$OUI$Explorer$SelectColorScheme,
+																									shared.selectedColorScheme.a,
+																									dark ? $author$project$OUI$Explorer$Dark : $author$project$OUI$Explorer$Light));
+																						},
+																						$author$project$OUI$Switch$new)))))
+																	])),
 															A2(
 																$elm$core$List$concatMap,
 																function (_v3) {

@@ -19,10 +19,11 @@ import Element.Background as Background
 import Element.Font as Font
 import Markdown.Parser
 import Markdown.Renderer
-import OUI.Button as Button
+import OUI.Icon as Icon
 import OUI.Material as Material
 import OUI.Material.Color as Color
 import OUI.Material.Theme as Theme exposing (Theme)
+import OUI.Switch as Switch
 import Spa
 import Spa.Page
 import Spa.PageStack
@@ -358,20 +359,34 @@ finalize expl =
                             [ Element.height Element.fill
                             , Element.width Element.fill
                             ]
-                            [ ([ Button.new
-                                    |> Button.onClick
-                                        (Spa.mapSharedMsg
-                                            (SelectColorScheme
+                            [ Element.row
+                                [ Element.width Element.fill
+                                ]
+                                [ Element.text "Light/Dark"
+                                , Switch.new
+                                    |> Switch.onChange
+                                        (\dark ->
+                                            SelectColorScheme
                                                 (Tuple.first shared.selectedColorScheme)
-                                                (Tuple.second shared.selectedColorScheme
-                                                    |> invertColorSchemeType
+                                                (if dark then
+                                                    Dark
+
+                                                 else
+                                                    Light
                                                 )
-                                            )
+                                                |> Spa.mapSharedMsg
                                         )
-                                    |> Button.withText "Dark/Light"
-                                    |> Material.renderButton shared.theme []
-                               ]
-                                ++ (categories
+                                    |> Switch.withSelected
+                                        (Tuple.second shared.selectedColorScheme
+                                            == Dark
+                                        )
+                                    |> Switch.withIconSelected Icon.dark_mode
+                                    |> Switch.withIconUnselected Icon.light_mode
+                                    |> Material.renderSwitch shared.theme
+                                        [ Element.alignRight
+                                        ]
+                                ]
+                                :: (categories
                                         |> List.concatMap
                                             (\( cat, books ) ->
                                                 Element.text cat
@@ -388,7 +403,6 @@ finalize expl =
                                                         books
                                             )
                                    )
-                              )
                                 |> Element.column
                                     [ Element.padding 10
                                     , Element.alignTop
