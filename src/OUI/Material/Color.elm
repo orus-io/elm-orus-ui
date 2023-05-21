@@ -1,19 +1,19 @@
 module OUI.Material.Color exposing
     ( KeyColors, Scheme, defaultKeyColors, defaultLightScheme, defaultDarkScheme, lightFromKeyColors, darkFromKeyColors
-    , getColor, getOnColor, getElementColor, getOnElementColor, toElementColor
+    , getColor, getOnColor, getElementColor, getContainerColor, getOnContainerColor, getOnElementColor, toElementColor, getContainerElementColor, getOnContainerElementColor
     , hoverStateLayerOpacity, focusStateLayerOpacity, pressStateLayerOpacity
-    , setAlpha, withShade
+    , setAlpha, withShade, isError
     )
 
 {-| Material 3 color utilities and scheme
 
 @docs KeyColors, Scheme, defaultKeyColors, defaultLightScheme, defaultDarkScheme, lightFromKeyColors, darkFromKeyColors
 
-@docs getColor, getOnColor, getElementColor, getOnElementColor, toElementColor
+@docs getColor, getOnColor, getElementColor, getContainerColor, getOnContainerColor, getOnElementColor, toElementColor, getContainerElementColor, getOnContainerElementColor
 
 @docs hoverStateLayerOpacity, focusStateLayerOpacity, pressStateLayerOpacity
 
-@docs setAlpha, withShade
+@docs setAlpha, withShade, isError
 
 -}
 
@@ -21,6 +21,21 @@ import Color exposing (Color)
 import Color.Convert as Convert
 import Element
 import OUI
+
+
+{-| returns true if the given color is a error color
+-}
+isError : OUI.Color -> Bool
+isError c =
+    case c of
+        OUI.Error ->
+            True
+
+        OUI.ErrorContainer ->
+            True
+
+        _ ->
+            False
 
 
 {-| The "hover" state layer opacity
@@ -65,6 +80,22 @@ getElementColor c =
 getOnElementColor : OUI.Color -> Scheme -> Element.Color
 getOnElementColor c =
     getOnColor c
+        >> toElementColor
+
+
+{-| get a "container" color directly as a 'Element.color'
+-}
+getContainerElementColor : OUI.Color -> Scheme -> Element.Color
+getContainerElementColor c =
+    getContainerColor c
+        >> toElementColor
+
+
+{-| get a "on container" color directly as a 'Element.color'
+-}
+getOnContainerElementColor : OUI.Color -> Scheme -> Element.Color
+getOnContainerElementColor c =
+    getOnContainerColor c
         >> toElementColor
 
 
@@ -123,6 +154,66 @@ getOnColor c =
 
         OUI.Error ->
             .onError
+
+        OUI.ErrorContainer ->
+            .onErrorContainer
+
+
+{-| get a container color
+-}
+getContainerColor : OUI.Color -> Scheme -> Color.Color
+getContainerColor c =
+    case c of
+        OUI.Primary ->
+            .primaryContainer
+
+        OUI.PrimaryContainer ->
+            .primaryContainer
+
+        OUI.Secondary ->
+            .secondaryContainer
+
+        OUI.SecondaryContainer ->
+            .secondaryContainer
+
+        OUI.Tertiary ->
+            .tertiaryContainer
+
+        OUI.TertiaryContainer ->
+            .tertiaryContainer
+
+        OUI.Error ->
+            .errorContainer
+
+        OUI.ErrorContainer ->
+            .errorContainer
+
+
+{-| get a "on container" color
+-}
+getOnContainerColor : OUI.Color -> Scheme -> Color.Color
+getOnContainerColor c =
+    case c of
+        OUI.Primary ->
+            .onPrimaryContainer
+
+        OUI.PrimaryContainer ->
+            .onPrimaryContainer
+
+        OUI.Secondary ->
+            .onSecondaryContainer
+
+        OUI.SecondaryContainer ->
+            .onSecondaryContainer
+
+        OUI.Tertiary ->
+            .onTertiaryContainer
+
+        OUI.TertiaryContainer ->
+            .onTertiaryContainer
+
+        OUI.Error ->
+            .onErrorContainer
 
         OUI.ErrorContainer ->
             .onErrorContainer

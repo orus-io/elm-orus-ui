@@ -11,6 +11,7 @@
     "OUI.Explorer",
     "OUI.Icon",
     "OUI.Text",
+    "OUI.Switch",
     "OUI.Material",
     "OUI.Material.Color",
     "OUI.Material.Theme",

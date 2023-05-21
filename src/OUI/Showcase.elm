@@ -10,6 +10,7 @@ import OUI.Explorer as Explorer exposing (Explorer)
 import OUI.Showcase.Buttons as Buttons
 import OUI.Showcase.Checkbox as Checkbox
 import OUI.Showcase.Colors as Colors
+import OUI.Showcase.Switch as Switch
 import OUI.Showcase.Typography as Typography
 import Spa
 import Spa.PageStack
@@ -33,7 +34,11 @@ addPages :
                     (Spa.PageStack.Model
                         Spa.SetupError
                         ()
-                        (Spa.PageStack.Model Spa.SetupError current previous)
+                        (Spa.PageStack.Model
+                            Spa.SetupError
+                            ()
+                            (Spa.PageStack.Model Spa.SetupError current previous)
+                        )
                     )
                 )
             )
@@ -47,7 +52,15 @@ addPages :
                     (Spa.PageStack.Msg
                         Explorer.Route
                         Explorer.BookMsg
-                        (Spa.PageStack.Msg Explorer.Route currentMsg previousMsg)
+                        (Spa.PageStack.Msg
+                            Explorer.Route
+                            Explorer.BookMsg
+                            (Spa.PageStack.Msg
+                                Explorer.Route
+                                currentMsg
+                                previousMsg
+                            )
+                        )
                     )
                 )
             )
@@ -58,3 +71,4 @@ addPages =
         >> Explorer.category "Basics"
         >> Explorer.addBook Buttons.book
         >> Explorer.addBook Checkbox.book
+        >> Explorer.addBook Switch.book

@@ -23496,6 +23496,416 @@ var $author$project$OUI$Showcase$Colors$book = A2(
 			$author$project$OUI$Explorer$withMarkdownChapter,
 			'\n# Colors\nThe two default color schemes\n    ',
 			$author$project$OUI$Explorer$book('Colors'))));
+var $author$project$OUI$Switch$Switch = function (a) {
+	return {$: 'Switch', a: a};
+};
+var $author$project$OUI$Switch$new = $author$project$OUI$Switch$Switch(
+	{color: $author$project$OUI$Primary, iconSelected: $elm$core$Maybe$Nothing, iconUnselected: $elm$core$Maybe$Nothing, onChange: $elm$core$Maybe$Nothing, selected: false});
+var $author$project$OUI$Showcase$Switch$onChange = F2(
+	function (name, selected) {
+		return $author$project$OUI$Explorer$event(
+			name + (' changes to ' + (selected ? '\'selected\'' : '\'unselected\'')));
+	});
+var $author$project$OUI$Switch$onChange = F2(
+	function (msg, _v0) {
+		var _switch = _v0.a;
+		return $author$project$OUI$Switch$Switch(
+			{
+				color: _switch.color,
+				iconSelected: _switch.iconSelected,
+				iconUnselected: _switch.iconUnselected,
+				onChange: $elm$core$Maybe$Just(msg),
+				selected: _switch.selected
+			});
+	});
+var $mdgriffith$elm_ui$Internal$Model$Left = {$: 'Left'};
+var $mdgriffith$elm_ui$Element$alignLeft = $mdgriffith$elm_ui$Internal$Model$AlignX($mdgriffith$elm_ui$Internal$Model$Left);
+var $mdgriffith$elm_ui$Internal$Model$Right = {$: 'Right'};
+var $mdgriffith$elm_ui$Element$alignRight = $mdgriffith$elm_ui$Internal$Model$AlignX($mdgriffith$elm_ui$Internal$Model$Right);
+var $author$project$OUI$Material$Color$getOnContainerColor = function (c) {
+	switch (c.$) {
+		case 'Primary':
+			return function ($) {
+				return $.onPrimaryContainer;
+			};
+		case 'PrimaryContainer':
+			return function ($) {
+				return $.onPrimaryContainer;
+			};
+		case 'Secondary':
+			return function ($) {
+				return $.onSecondaryContainer;
+			};
+		case 'SecondaryContainer':
+			return function ($) {
+				return $.onSecondaryContainer;
+			};
+		case 'Tertiary':
+			return function ($) {
+				return $.onTertiaryContainer;
+			};
+		case 'TertiaryContainer':
+			return function ($) {
+				return $.onTertiaryContainer;
+			};
+		case 'Error':
+			return function ($) {
+				return $.onErrorContainer;
+			};
+		default:
+			return function ($) {
+				return $.onErrorContainer;
+			};
+	}
+};
+var $author$project$OUI$Material$Color$getOnElementColor = function (c) {
+	return A2(
+		$elm$core$Basics$composeR,
+		$author$project$OUI$Material$Color$getOnColor(c),
+		$author$project$OUI$Material$Color$toElementColor);
+};
+var $mdgriffith$elm_ui$Internal$Model$InFront = {$: 'InFront'};
+var $mdgriffith$elm_ui$Element$createNearby = F2(
+	function (loc, element) {
+		if (element.$ === 'Empty') {
+			return $mdgriffith$elm_ui$Internal$Model$NoAttribute;
+		} else {
+			return A2($mdgriffith$elm_ui$Internal$Model$Nearby, loc, element);
+		}
+	});
+var $mdgriffith$elm_ui$Element$inFront = function (element) {
+	return A2($mdgriffith$elm_ui$Element$createNearby, $mdgriffith$elm_ui$Internal$Model$InFront, element);
+};
+var $author$project$OUI$Material$Color$isError = function (c) {
+	switch (c.$) {
+		case 'Error':
+			return true;
+		case 'ErrorContainer':
+			return true;
+		default:
+			return false;
+	}
+};
+var $mdgriffith$elm_ui$Internal$Model$MoveY = function (a) {
+	return {$: 'MoveY', a: a};
+};
+var $mdgriffith$elm_ui$Internal$Flag$moveY = $mdgriffith$elm_ui$Internal$Flag$flag(26);
+var $mdgriffith$elm_ui$Element$moveUp = function (y) {
+	return A2(
+		$mdgriffith$elm_ui$Internal$Model$TransformComponent,
+		$mdgriffith$elm_ui$Internal$Flag$moveY,
+		$mdgriffith$elm_ui$Internal$Model$MoveY(-y));
+};
+var $author$project$OUI$Switch$properties = function (_v0) {
+	var _switch = _v0.a;
+	return _switch;
+};
+var $author$project$OUI$Material$Switch$render = F4(
+	function (colorscheme, theme, attrs, _switch) {
+		var _v0 = $author$project$OUI$Switch$properties(_switch);
+		var onChange = _v0.onChange;
+		var selected = _v0.selected;
+		var color = _v0.color;
+		var iconSelected = _v0.iconSelected;
+		var iconUnselected = _v0.iconUnselected;
+		var withIcon = (selected && (!_Utils_eq(iconSelected, $elm$core$Maybe$Nothing))) || ((!selected) && (!_Utils_eq(iconUnselected, $elm$core$Maybe$Nothing)));
+		var thumbSize = (withIcon ? function ($) {
+			return $.withIcon;
+		} : (selected ? function ($) {
+			return $.selected;
+		} : function ($) {
+			return $.unselected;
+		}))(theme.thumb.size);
+		var _v1 = function () {
+			var _v2 = _Utils_Tuple2(
+				!_Utils_eq(onChange, $elm$core$Maybe$Nothing),
+				selected);
+			if (_v2.a) {
+				if (_v2.b) {
+					return {
+						bgColor: A2($author$project$OUI$Material$Color$getElementColor, color, colorscheme),
+						iconColor: A2($author$project$OUI$Material$Color$getOnContainerColor, color, colorscheme),
+						outlineColor: A2($author$project$OUI$Material$Color$getElementColor, color, colorscheme),
+						thumbColor: A2($author$project$OUI$Material$Color$getOnElementColor, color, colorscheme)
+					};
+				} else {
+					return {
+						bgColor: $author$project$OUI$Material$Color$toElementColor(colorscheme.surfaceContainerHighest),
+						iconColor: colorscheme.surfaceContainerHighest,
+						outlineColor: $author$project$OUI$Material$Color$isError(color) ? A2($author$project$OUI$Material$Color$getElementColor, color, colorscheme) : $author$project$OUI$Material$Color$toElementColor(colorscheme.outline),
+						thumbColor: $author$project$OUI$Material$Color$toElementColor(colorscheme.outline)
+					};
+				}
+			} else {
+				if (_v2.b) {
+					return {
+						bgColor: $author$project$OUI$Material$Color$toElementColor(
+							A3($author$project$OUI$Material$Color$withShade, colorscheme.onSurface, 0.12, colorscheme.surface)),
+						iconColor: A3($author$project$OUI$Material$Color$withShade, colorscheme.onSurface, 0.38, colorscheme.surface),
+						outlineColor: $author$project$OUI$Material$Color$toElementColor(
+							A3($author$project$OUI$Material$Color$withShade, colorscheme.onSurface, 0.12, colorscheme.surface)),
+						thumbColor: $author$project$OUI$Material$Color$toElementColor(colorscheme.surface)
+					};
+				} else {
+					return {
+						bgColor: $author$project$OUI$Material$Color$toElementColor(
+							A3($author$project$OUI$Material$Color$withShade, colorscheme.surfaceContainerHighest, 0.12, colorscheme.surface)),
+						iconColor: A3($author$project$OUI$Material$Color$withShade, colorscheme.surfaceContainerHighest, 0.38, colorscheme.surface),
+						outlineColor: $author$project$OUI$Material$Color$toElementColor(
+							A3($author$project$OUI$Material$Color$withShade, colorscheme.onSurface, 0.12, colorscheme.surface)),
+						thumbColor: $author$project$OUI$Material$Color$toElementColor(
+							A3($author$project$OUI$Material$Color$withShade, colorscheme.onSurface, 0.38, colorscheme.surface))
+					};
+				}
+			}
+		}();
+		var bgColor = _v1.bgColor;
+		var outlineColor = _v1.outlineColor;
+		var thumbColor = _v1.thumbColor;
+		var iconColor = _v1.iconColor;
+		var icon = A2(
+			$elm$core$Maybe$withDefault,
+			$mdgriffith$elm_ui$Element$none,
+			A2(
+				$elm$core$Maybe$map,
+				A3(
+					$author$project$OUI$Material$Icon$renderWithSizeColor,
+					selected ? theme.icon.sizeSelected : theme.icon.sizeUnselected,
+					iconColor,
+					_List_fromArray(
+						[$mdgriffith$elm_ui$Element$centerX, $mdgriffith$elm_ui$Element$centerY])),
+				selected ? iconSelected : iconUnselected));
+		var trackAttrs = _List_fromArray(
+			[
+				$mdgriffith$elm_ui$Element$width(
+				$mdgriffith$elm_ui$Element$px(theme.track.width)),
+				$mdgriffith$elm_ui$Element$height(
+				$mdgriffith$elm_ui$Element$px(theme.track.height)),
+				$mdgriffith$elm_ui$Element$Border$width(theme.track.outlineWidth),
+				$mdgriffith$elm_ui$Element$Border$rounded(theme.track.corner),
+				$mdgriffith$elm_ui$Element$Border$color(outlineColor),
+				$mdgriffith$elm_ui$Element$Background$color(bgColor)
+			]);
+		var thumbAttrs = _List_fromArray(
+			[
+				$mdgriffith$elm_ui$Element$height(
+				$mdgriffith$elm_ui$Element$px(theme.thumb.size.pressed)),
+				$mdgriffith$elm_ui$Element$width(
+				$mdgriffith$elm_ui$Element$px(theme.thumb.size.pressed)),
+				$mdgriffith$elm_ui$Element$Background$color(thumbColor),
+				$mdgriffith$elm_ui$Element$Border$rounded((theme.thumb.size.pressed / 2) | 0),
+				$mdgriffith$elm_ui$Element$Border$color(bgColor),
+				$mdgriffith$elm_ui$Element$Border$width(((theme.thumb.size.pressed - thumbSize) / 2) | 0),
+				selected ? $mdgriffith$elm_ui$Element$alignRight : $mdgriffith$elm_ui$Element$alignLeft,
+				$mdgriffith$elm_ui$Element$mouseDown(
+				_List_fromArray(
+					[
+						$mdgriffith$elm_ui$Element$Border$color(thumbColor)
+					])),
+				$mdgriffith$elm_ui$Element$inFront(
+				A2(
+					$mdgriffith$elm_ui$Element$el,
+					_List_fromArray(
+						[
+							$mdgriffith$elm_ui$Element$centerX,
+							$mdgriffith$elm_ui$Element$moveUp(((theme.stateLayer.size - thumbSize) / 2) | 0),
+							$mdgriffith$elm_ui$Element$height(
+							$mdgriffith$elm_ui$Element$px(theme.stateLayer.size)),
+							$mdgriffith$elm_ui$Element$width(
+							$mdgriffith$elm_ui$Element$px(theme.stateLayer.size)),
+							$mdgriffith$elm_ui$Element$Border$rounded((theme.stateLayer.size / 2) | 0),
+							$mdgriffith$elm_ui$Element$mouseOver(
+							_List_fromArray(
+								[
+									$mdgriffith$elm_ui$Element$Background$color(
+									$author$project$OUI$Material$Color$toElementColor(
+										A2($author$project$OUI$Material$Color$setAlpha, $author$project$OUI$Material$Color$hoverStateLayerOpacity, colorscheme.onSurface)))
+								])),
+							$mdgriffith$elm_ui$Element$focused(
+							_List_fromArray(
+								[
+									$mdgriffith$elm_ui$Element$Background$color(
+									$author$project$OUI$Material$Color$toElementColor(
+										A2($author$project$OUI$Material$Color$setAlpha, $author$project$OUI$Material$Color$focusStateLayerOpacity, colorscheme.onSurface)))
+								])),
+							$mdgriffith$elm_ui$Element$mouseDown(
+							_List_fromArray(
+								[
+									$mdgriffith$elm_ui$Element$Background$color(
+									$author$project$OUI$Material$Color$toElementColor(
+										A2($author$project$OUI$Material$Color$setAlpha, $author$project$OUI$Material$Color$pressStateLayerOpacity, colorscheme.onSurface)))
+								]))
+						]),
+					$mdgriffith$elm_ui$Element$none))
+			]);
+		return A2(
+			$mdgriffith$elm_ui$Element$Input$button,
+			trackAttrs,
+			{
+				label: A2($mdgriffith$elm_ui$Element$el, thumbAttrs, icon),
+				onPress: A2(
+					$elm$core$Maybe$map,
+					function (msg) {
+						return msg(!selected);
+					},
+					onChange)
+			});
+	});
+var $author$project$OUI$Material$renderSwitch = function (_v0) {
+	var colorscheme = _v0.colorscheme;
+	var _switch = _v0._switch;
+	return A2($author$project$OUI$Material$Switch$render, colorscheme, _switch);
+};
+var $author$project$OUI$Switch$withColor = F2(
+	function (value, _v0) {
+		var _switch = _v0.a;
+		return $author$project$OUI$Switch$Switch(
+			_Utils_update(
+				_switch,
+				{color: value}));
+	});
+var $author$project$OUI$Switch$withIconSelected = F2(
+	function (value, _v0) {
+		var _switch = _v0.a;
+		return $author$project$OUI$Switch$Switch(
+			_Utils_update(
+				_switch,
+				{
+					iconSelected: $elm$core$Maybe$Just(value)
+				}));
+	});
+var $author$project$OUI$Switch$withIconUnselected = F2(
+	function (value, _v0) {
+		var _switch = _v0.a;
+		return $author$project$OUI$Switch$Switch(
+			_Utils_update(
+				_switch,
+				{
+					iconUnselected: $elm$core$Maybe$Just(value)
+				}));
+	});
+var $author$project$OUI$Switch$withSelected = F2(
+	function (value, _v0) {
+		var _switch = _v0.a;
+		return $author$project$OUI$Switch$Switch(
+			_Utils_update(
+				_switch,
+				{selected: value}));
+	});
+var $author$project$OUI$Showcase$Switch$checkbox = function (_v0) {
+	var theme = _v0.theme;
+	return A2(
+		$mdgriffith$elm_ui$Element$column,
+		_List_fromArray(
+			[
+				$mdgriffith$elm_ui$Element$spacing(30)
+			]),
+		_List_fromArray(
+			[
+				$mdgriffith$elm_ui$Element$text('Switch'),
+				A2(
+				$mdgriffith$elm_ui$Element$row,
+				_List_fromArray(
+					[
+						$mdgriffith$elm_ui$Element$spacing(30)
+					]),
+				_List_fromArray(
+					[
+						A3(
+						$author$project$OUI$Material$renderSwitch,
+						theme,
+						_List_Nil,
+						A2(
+							$author$project$OUI$Switch$withSelected,
+							false,
+							A2(
+								$author$project$OUI$Switch$onChange,
+								$author$project$OUI$Showcase$Switch$onChange('unselected'),
+								$author$project$OUI$Switch$new))),
+						A3(
+						$author$project$OUI$Material$renderSwitch,
+						theme,
+						_List_Nil,
+						A2(
+							$author$project$OUI$Switch$withSelected,
+							true,
+							A2(
+								$author$project$OUI$Switch$onChange,
+								$author$project$OUI$Showcase$Switch$onChange('selected'),
+								$author$project$OUI$Switch$new))),
+						A3(
+						$author$project$OUI$Material$renderSwitch,
+						theme,
+						_List_Nil,
+						A2($author$project$OUI$Switch$withSelected, false, $author$project$OUI$Switch$new)),
+						A3(
+						$author$project$OUI$Material$renderSwitch,
+						theme,
+						_List_Nil,
+						A2($author$project$OUI$Switch$withSelected, true, $author$project$OUI$Switch$new)),
+						A3(
+						$author$project$OUI$Material$renderSwitch,
+						theme,
+						_List_Nil,
+						A2(
+							$author$project$OUI$Switch$withIconUnselected,
+							$author$project$OUI$Icon$clear,
+							A2(
+								$author$project$OUI$Switch$withSelected,
+								false,
+								A2(
+									$author$project$OUI$Switch$onChange,
+									$author$project$OUI$Showcase$Switch$onChange('unselected icon'),
+									$author$project$OUI$Switch$new)))),
+						A3(
+						$author$project$OUI$Material$renderSwitch,
+						theme,
+						_List_Nil,
+						A2(
+							$author$project$OUI$Switch$withIconSelected,
+							$author$project$OUI$Icon$check,
+							A2(
+								$author$project$OUI$Switch$withSelected,
+								true,
+								A2(
+									$author$project$OUI$Switch$onChange,
+									$author$project$OUI$Showcase$Switch$onChange('selected icon'),
+									$author$project$OUI$Switch$new)))),
+						A3(
+						$author$project$OUI$Material$renderSwitch,
+						theme,
+						_List_Nil,
+						A2(
+							$author$project$OUI$Switch$withColor,
+							$author$project$OUI$Error,
+							A2(
+								$author$project$OUI$Switch$withSelected,
+								false,
+								A2(
+									$author$project$OUI$Switch$onChange,
+									$author$project$OUI$Showcase$Switch$onChange('unselected error'),
+									$author$project$OUI$Switch$new)))),
+						A3(
+						$author$project$OUI$Material$renderSwitch,
+						theme,
+						_List_Nil,
+						A2(
+							$author$project$OUI$Switch$withColor,
+							$author$project$OUI$Error,
+							A2(
+								$author$project$OUI$Switch$withSelected,
+								true,
+								A2(
+									$author$project$OUI$Switch$onChange,
+									$author$project$OUI$Showcase$Switch$onChange('selected error'),
+									$author$project$OUI$Switch$new))))
+					]))
+			]));
+};
+var $author$project$OUI$Showcase$Switch$book = A2(
+	$author$project$OUI$Explorer$withStaticChapter,
+	$author$project$OUI$Showcase$Switch$checkbox,
+	$author$project$OUI$Explorer$book('Switch'));
 var $author$project$OUI$Text$Body = {$: 'Body'};
 var $author$project$OUI$Text$Text = F3(
 	function (a, b, c) {
@@ -23637,7 +24047,10 @@ var $author$project$OUI$Showcase$addPages = A2(
 				A2(
 					$elm$core$Basics$composeR,
 					$author$project$OUI$Explorer$addBook($author$project$OUI$Showcase$Buttons$book),
-					$author$project$OUI$Explorer$addBook($author$project$OUI$Showcase$Checkbox$book))))));
+					A2(
+						$elm$core$Basics$composeR,
+						$author$project$OUI$Explorer$addBook($author$project$OUI$Showcase$Checkbox$book),
+						$author$project$OUI$Explorer$addBook($author$project$OUI$Showcase$Switch$book)))))));
 var $elm$svg$Svg$Attributes$enableBackground = _VirtualDom_attribute('enable-background');
 var $icidasset$elm_material_icons$Material$Icons$Internal$b = $elm$svg$Svg$Attributes$enableBackground;
 var $icidasset$elm_material_icons$Material$Icons$Internal$f = $elm$svg$Svg$Attributes$fill;
@@ -24358,6 +24771,14 @@ var $author$project$OUI$Material$Button$defaultTheme = {
 	icon: {containerSize: 40, iconSize: 24}
 };
 var $author$project$OUI$Material$Checkbox$defaultTheme = {containerHeight: 18, containerShape: 2, containerWidth: 18, iconSize: 18, stateLayerSize: 40};
+var $author$project$OUI$Material$Switch$defaultTheme = {
+	icon: {sizeSelected: 16, sizeUnselected: 16},
+	stateLayer: {size: 40},
+	thumb: {
+		size: {pressed: 28, selected: 24, unselected: 16, withIcon: 24}
+	},
+	track: {corner: 16, height: 32, outlineWidth: 2, width: 52}
+};
 var $author$project$OUI$Material$Theme$defaultTypescale = {
 	body: {
 		large: {font: 'Roboto', lineHeight: 24, size: 16, tracking: 0.5, weight: 400},
@@ -24385,7 +24806,7 @@ var $author$project$OUI$Material$Theme$defaultTypescale = {
 		small: {font: 'Roboto', lineHeight: 20, size: 14, tracking: 0.1, weight: 500}
 	}
 };
-var $author$project$OUI$Material$Theme$defaultTheme = {button: $author$project$OUI$Material$Button$defaultTheme, checkbox: $author$project$OUI$Material$Checkbox$defaultTheme, colorscheme: $author$project$OUI$Material$Color$defaultLightScheme, typescale: $author$project$OUI$Material$Theme$defaultTypescale};
+var $author$project$OUI$Material$Theme$defaultTheme = {button: $author$project$OUI$Material$Button$defaultTheme, checkbox: $author$project$OUI$Material$Checkbox$defaultTheme, colorscheme: $author$project$OUI$Material$Color$defaultLightScheme, _switch: $author$project$OUI$Material$Switch$defaultTheme, typescale: $author$project$OUI$Material$Theme$defaultTypescale};
 var $mdgriffith$elm_ui$Internal$Model$FocusStyleOption = function (a) {
 	return {$: 'FocusStyleOption', a: a};
 };
