@@ -13507,87 +13507,81 @@ var $author$project$OUI$Material$Checkbox$render = F4(
 		var backColor = _v0.b;
 		var borderColor = _v0.c;
 		return A2(
-			$mdgriffith$elm_ui$Element$el,
-			_Utils_ap(
-				_List_fromArray(
-					[
-						$mdgriffith$elm_ui$Element$width(
-						$mdgriffith$elm_ui$Element$px(theme.stateLayerSize)),
-						$mdgriffith$elm_ui$Element$height(
-						$mdgriffith$elm_ui$Element$px(theme.stateLayerSize)),
-						$mdgriffith$elm_ui$Element$Border$rounded((theme.stateLayerSize / 2) | 0),
-						$mdgriffith$elm_ui$Element$htmlAttribute(
-						$elm$html$Html$Attributes$tabindex(0)),
-						$mdgriffith$elm_ui$Element$focused(
-						_List_fromArray(
-							[
-								$mdgriffith$elm_ui$Element$Background$color(
-								$author$project$OUI$Material$Color$toElementColor(
-									A2($author$project$OUI$Material$Color$setAlpha, $author$project$OUI$Material$Color$focusStateLayerOpacity, colorscheme.onSurface)))
-							])),
-						$mdgriffith$elm_ui$Element$mouseDown(
-						_List_fromArray(
-							[
-								$mdgriffith$elm_ui$Element$Background$color(
-								$author$project$OUI$Material$Color$toElementColor(
-									A2($author$project$OUI$Material$Color$setAlpha, $author$project$OUI$Material$Color$pressStateLayerOpacity, colorscheme.onSurface)))
-							])),
-						$mdgriffith$elm_ui$Element$mouseOver(
-						_List_fromArray(
-							[
-								$mdgriffith$elm_ui$Element$Background$color(
-								$author$project$OUI$Material$Color$toElementColor(
-									A2($author$project$OUI$Material$Color$setAlpha, $author$project$OUI$Material$Color$hoverStateLayerOpacity, colorscheme.onSurface)))
-							]))
-					]),
-				function () {
-					var _v4 = properties.onChange;
-					if (_v4.$ === 'Just') {
-						var msg = _v4.a;
-						return _List_fromArray(
-							[
-								$mdgriffith$elm_ui$Element$Events$onClick(
-								msg(!properties.checked))
-							]);
-					} else {
-						return _List_Nil;
-					}
-				}()),
-			A2(
-				$mdgriffith$elm_ui$Element$el,
-				_List_fromArray(
-					[
-						$mdgriffith$elm_ui$Element$width(
-						$mdgriffith$elm_ui$Element$px(theme.containerWidth)),
-						$mdgriffith$elm_ui$Element$height(
-						$mdgriffith$elm_ui$Element$px(theme.containerHeight)),
-						$mdgriffith$elm_ui$Element$centerX,
-						$mdgriffith$elm_ui$Element$centerY
-					]),
-				properties.checked ? A4(
-					$author$project$OUI$Material$Icon$renderWithSizeColor,
-					theme.iconSize,
-					frontColor,
+			$mdgriffith$elm_ui$Element$Input$button,
+			_List_fromArray(
+				[
+					$mdgriffith$elm_ui$Element$width(
+					$mdgriffith$elm_ui$Element$px(theme.stateLayerSize)),
+					$mdgriffith$elm_ui$Element$height(
+					$mdgriffith$elm_ui$Element$px(theme.stateLayerSize)),
+					$mdgriffith$elm_ui$Element$Border$rounded((theme.stateLayerSize / 2) | 0),
+					$mdgriffith$elm_ui$Element$htmlAttribute(
+					$elm$html$Html$Attributes$tabindex(0)),
+					$mdgriffith$elm_ui$Element$focused(
 					_List_fromArray(
 						[
 							$mdgriffith$elm_ui$Element$Background$color(
-							$author$project$OUI$Material$Color$toElementColor(backColor)),
-							$mdgriffith$elm_ui$Element$Border$rounded(theme.containerShape)
-						]),
-					properties.icon) : A2(
+							$author$project$OUI$Material$Color$toElementColor(
+								A2($author$project$OUI$Material$Color$setAlpha, $author$project$OUI$Material$Color$focusStateLayerOpacity, colorscheme.onSurface)))
+						])),
+					$mdgriffith$elm_ui$Element$mouseDown(
+					_List_fromArray(
+						[
+							$mdgriffith$elm_ui$Element$Background$color(
+							$author$project$OUI$Material$Color$toElementColor(
+								A2($author$project$OUI$Material$Color$setAlpha, $author$project$OUI$Material$Color$pressStateLayerOpacity, colorscheme.onSurface)))
+						])),
+					$mdgriffith$elm_ui$Element$mouseOver(
+					_List_fromArray(
+						[
+							$mdgriffith$elm_ui$Element$Background$color(
+							$author$project$OUI$Material$Color$toElementColor(
+								A2($author$project$OUI$Material$Color$setAlpha, $author$project$OUI$Material$Color$hoverStateLayerOpacity, colorscheme.onSurface)))
+						]))
+				]),
+			{
+				label: A2(
 					$mdgriffith$elm_ui$Element$el,
 					_List_fromArray(
 						[
 							$mdgriffith$elm_ui$Element$width(
-							$mdgriffith$elm_ui$Element$px(theme.iconSize)),
+							$mdgriffith$elm_ui$Element$px(theme.containerWidth)),
 							$mdgriffith$elm_ui$Element$height(
-							$mdgriffith$elm_ui$Element$px(theme.iconSize)),
-							$mdgriffith$elm_ui$Element$Border$width(2),
-							$mdgriffith$elm_ui$Element$Border$rounded(theme.containerShape),
-							$mdgriffith$elm_ui$Element$Border$color(
-							$author$project$OUI$Material$Color$toElementColor(borderColor))
+							$mdgriffith$elm_ui$Element$px(theme.containerHeight)),
+							$mdgriffith$elm_ui$Element$centerX,
+							$mdgriffith$elm_ui$Element$centerY
 						]),
-					$mdgriffith$elm_ui$Element$none)));
+					properties.checked ? A4(
+						$author$project$OUI$Material$Icon$renderWithSizeColor,
+						theme.iconSize,
+						frontColor,
+						_List_fromArray(
+							[
+								$mdgriffith$elm_ui$Element$Background$color(
+								$author$project$OUI$Material$Color$toElementColor(backColor)),
+								$mdgriffith$elm_ui$Element$Border$rounded(theme.containerShape)
+							]),
+						properties.icon) : A2(
+						$mdgriffith$elm_ui$Element$el,
+						_List_fromArray(
+							[
+								$mdgriffith$elm_ui$Element$width(
+								$mdgriffith$elm_ui$Element$px(theme.iconSize)),
+								$mdgriffith$elm_ui$Element$height(
+								$mdgriffith$elm_ui$Element$px(theme.iconSize)),
+								$mdgriffith$elm_ui$Element$Border$width(2),
+								$mdgriffith$elm_ui$Element$Border$rounded(theme.containerShape),
+								$mdgriffith$elm_ui$Element$Border$color(
+								$author$project$OUI$Material$Color$toElementColor(borderColor))
+							]),
+						$mdgriffith$elm_ui$Element$none)),
+				onPress: A2(
+					$elm$core$Maybe$map,
+					function (msg) {
+						return msg(!properties.checked);
+					},
+					properties.onChange)
+			});
 	});
 var $author$project$OUI$Material$renderCheckbox = function (_v0) {
 	var colorscheme = _v0.colorscheme;

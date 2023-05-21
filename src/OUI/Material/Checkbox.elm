@@ -3,7 +3,7 @@ module OUI.Material.Checkbox exposing (..)
 import Element exposing (Attribute, Element)
 import Element.Background as Background
 import Element.Border as Border
-import Element.Events as Events
+import Element.Input as Input
 import Html.Attributes
 import OUI
 import OUI.Checkbox
@@ -69,60 +69,54 @@ render colorscheme theme attrs checkbox =
                         |> OUI.Material.Color.setAlpha 0.38
                     )
     in
-    Element.el
-        ([ Element.width <| Element.px theme.stateLayerSize
-         , Element.height <| Element.px theme.stateLayerSize
-         , Border.rounded <| theme.stateLayerSize // 2
-         , Element.htmlAttribute <| Html.Attributes.tabindex 0
-         , Element.focused
+    Input.button
+        [ Element.width <| Element.px theme.stateLayerSize
+        , Element.height <| Element.px theme.stateLayerSize
+        , Border.rounded <| theme.stateLayerSize // 2
+        , Element.htmlAttribute <| Html.Attributes.tabindex 0
+        , Element.focused
             [ colorscheme.onSurface
                 |> OUI.Material.Color.setAlpha OUI.Material.Color.focusStateLayerOpacity
                 |> OUI.Material.Color.toElementColor
                 |> Background.color
             ]
-         , Element.mouseDown
+        , Element.mouseDown
             [ colorscheme.onSurface
                 |> OUI.Material.Color.setAlpha OUI.Material.Color.pressStateLayerOpacity
                 |> OUI.Material.Color.toElementColor
                 |> Background.color
             ]
-         , Element.mouseOver
+        , Element.mouseOver
             [ colorscheme.onSurface
                 |> OUI.Material.Color.setAlpha OUI.Material.Color.hoverStateLayerOpacity
                 |> OUI.Material.Color.toElementColor
                 |> Background.color
             ]
-         ]
-            ++ (case properties.onChange of
-                    Just msg ->
-                        [ Events.onClick (msg <| not properties.checked) ]
+        ]
+        { onPress = properties.onChange |> Maybe.map (\msg -> msg <| not properties.checked)
+        , label =
+            Element.el
+                [ Element.width <| Element.px theme.containerWidth
+                , Element.height <| Element.px theme.containerHeight
+                , Element.centerX
+                , Element.centerY
+                ]
+            <|
+                if properties.checked then
+                    Icon.renderWithSizeColor theme.iconSize
+                        frontColor
+                        [ Background.color <| toElementColor backColor
+                        , Border.rounded theme.containerShape
+                        ]
+                        properties.icon
 
-                    Nothing ->
-                        []
-               )
-        )
-    <|
-        Element.el
-            [ Element.width <| Element.px theme.containerWidth
-            , Element.height <| Element.px theme.containerHeight
-            , Element.centerX
-            , Element.centerY
-            ]
-        <|
-            if properties.checked then
-                Icon.renderWithSizeColor theme.iconSize
-                    frontColor
-                    [ Background.color <| toElementColor backColor
-                    , Border.rounded theme.containerShape
-                    ]
-                    properties.icon
-
-            else
-                Element.el
-                    [ Element.width <| Element.px theme.iconSize
-                    , Element.height <| Element.px theme.iconSize
-                    , Border.width 2
-                    , Border.rounded theme.containerShape
-                    , Border.color <| toElementColor borderColor
-                    ]
-                    Element.none
+                else
+                    Element.el
+                        [ Element.width <| Element.px theme.iconSize
+                        , Element.height <| Element.px theme.iconSize
+                        , Border.width 2
+                        , Border.rounded theme.containerShape
+                        , Border.color <| toElementColor borderColor
+                        ]
+                        Element.none
+        }
