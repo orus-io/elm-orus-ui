@@ -10,7 +10,7 @@ import OUI.Explorer as Explorer exposing (Explorer)
 import OUI.Showcase.Buttons as Buttons
 import OUI.Showcase.Checkbox as Checkbox
 import OUI.Showcase.Colors as Colors
-import OUI.Showcase.Switch as Switch
+import OUI.Showcase.Switches as Switches
 import OUI.Showcase.Typography as Typography
 import Spa
 import Spa.PageStack
@@ -24,7 +24,7 @@ addPages :
         Explorer
             Explorer.Shared
             Explorer.SharedMsg
-            ()
+            Switches.Model
             (Spa.PageStack.Model
                 Spa.SetupError
                 ()
@@ -42,19 +42,19 @@ addPages :
                     )
                 )
             )
-            Explorer.BookMsg
+            (Explorer.BookMsg Switches.Msg)
             (Spa.PageStack.Msg
                 Explorer.Route
-                Explorer.BookMsg
+                (Explorer.BookMsg ())
                 (Spa.PageStack.Msg
                     Explorer.Route
-                    Explorer.BookMsg
+                    (Explorer.BookMsg ())
                     (Spa.PageStack.Msg
                         Explorer.Route
-                        Explorer.BookMsg
+                        (Explorer.BookMsg ())
                         (Spa.PageStack.Msg
                             Explorer.Route
-                            Explorer.BookMsg
+                            (Explorer.BookMsg ())
                             (Spa.PageStack.Msg
                                 Explorer.Route
                                 currentMsg
@@ -71,4 +71,4 @@ addPages =
         >> Explorer.category "Basics"
         >> Explorer.addBook Buttons.book
         >> Explorer.addBook Checkbox.book
-        >> Explorer.addBook Switch.book
+        >> Explorer.addBook Switches.book

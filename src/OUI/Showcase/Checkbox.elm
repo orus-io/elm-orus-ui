@@ -13,9 +13,9 @@ book =
         |> Explorer.withStaticChapter checkbox
 
 
-onChange : String -> Bool -> Explorer.BookMsg
+onChange : String -> Bool -> Explorer.BookMsg ()
 onChange name checked =
-    Explorer.event <|
+    Explorer.logEvent <|
         name
             ++ " changes to "
             ++ (if checked then
@@ -26,7 +26,7 @@ onChange name checked =
                )
 
 
-checkbox : Explorer.Shared -> Element Explorer.BookMsg
+checkbox : Explorer.Shared -> Element (Explorer.BookMsg ())
 checkbox { theme } =
     Element.column [ Element.spacing 30 ]
         [ Element.text "Checkbox"

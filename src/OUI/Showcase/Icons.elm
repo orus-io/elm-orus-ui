@@ -7,7 +7,7 @@ import OUI.Material as Material
 import OUI.Material.Theme as Theme
 
 
-book : String -> List ( String, Icon ) -> Explorer.Book Explorer.BookMsg
+book : String -> List ( String, Icon ) -> Explorer.Book () ()
 book title iconList =
     Explorer.book title
         |> Explorer.withStaticChapter

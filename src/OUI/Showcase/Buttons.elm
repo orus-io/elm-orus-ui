@@ -13,7 +13,7 @@ book =
         |> Explorer.withStaticChapter commonButtons
 
 
-commonButtons : Explorer.Shared -> Element Explorer.BookMsg
+commonButtons : Explorer.Shared -> Element (Explorer.BookMsg ())
 commonButtons { theme } =
     Element.column [ Element.spacing 30 ]
         [ Element.text "Common buttons"
@@ -22,7 +22,7 @@ commonButtons { theme } =
                 [ Button.new
                     |> Button.withText "Elevated"
                     |> Button.withIcon clear
-                    |> Button.onClick (Explorer.event "Clicked Elevated")
+                    |> Button.onClick (Explorer.logEvent "Clicked Elevated")
                     |> Button.elevatedButton
                     |> Material.renderButton theme [ Element.centerX ]
                 , Button.new
@@ -36,7 +36,7 @@ commonButtons { theme } =
                 [ Button.new
                     |> Button.withText "Filled"
                     |> Button.withIcon clear
-                    |> Button.onClick (Explorer.event "Clicked Filled")
+                    |> Button.onClick (Explorer.logEvent "Clicked Filled")
                     |> Button.filledButton
                     |> Material.renderButton theme [ Element.centerX ]
                 , Button.new
@@ -50,7 +50,7 @@ commonButtons { theme } =
                 [ Button.new
                     |> Button.withText "Tonal"
                     |> Button.withIcon clear
-                    |> Button.onClick (Explorer.event "Clicked Tonal")
+                    |> Button.onClick (Explorer.logEvent "Clicked Tonal")
                     |> Button.tonalButton
                     |> Material.renderButton theme [ Element.centerX ]
                 , Button.new
@@ -64,7 +64,7 @@ commonButtons { theme } =
                 [ Button.new
                     |> Button.withText "Outlined"
                     |> Button.withIcon clear
-                    |> Button.onClick (Explorer.event "Clicked Outlined")
+                    |> Button.onClick (Explorer.logEvent "Clicked Outlined")
                     |> Button.outlinedButton
                     |> Material.renderButton theme [ Element.centerX ]
                 , Button.new
@@ -78,7 +78,7 @@ commonButtons { theme } =
                 [ Button.new
                     |> Button.withText "Text"
                     |> Button.withIcon clear
-                    |> Button.onClick (Explorer.event "Clicked Text")
+                    |> Button.onClick (Explorer.logEvent "Clicked Text")
                     |> Button.textButton
                     |> Material.renderButton theme [ Element.centerX ]
                 , Button.new
@@ -96,7 +96,7 @@ commonButtons { theme } =
                     Button.new
                         |> Button.withText (s ++ "FAB")
                         |> Button.withIcon clear
-                        |> Button.onClick (Explorer.event <| "Clicked " ++ s ++ " FAB")
+                        |> Button.onClick (Explorer.logEvent <| "Clicked " ++ s ++ " FAB")
              in
              [ btn "Small"
                 |> Button.smallFAB
@@ -118,7 +118,7 @@ commonButtons { theme } =
                     Button.new
                         |> Button.withText (s ++ " Icon")
                         |> Button.withIcon clear
-                        |> Button.onClick (Explorer.event <| "Clicked " ++ s ++ " Icon")
+                        |> Button.onClick (Explorer.logEvent <| "Clicked " ++ s ++ " Icon")
              in
              [ btn "Standard"
                 |> Button.iconButton

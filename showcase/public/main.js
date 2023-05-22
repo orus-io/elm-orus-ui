@@ -4738,6 +4738,9 @@ var $elm$core$Basics$LT = {$: 'LT'};
 var $icidasset$elm_material_icons$Material$Icons$Types$Color = function (a) {
 	return {$: 'Color', a: a};
 };
+var $author$project$OUI$Explorer$BookMsg = function (a) {
+	return {$: 'BookMsg', a: a};
+};
 var $elm$core$Maybe$Just = function (a) {
 	return {$: 'Just', a: a};
 };
@@ -11356,19 +11359,33 @@ var $author$project$OUI$Explorer$addBook = F2(
 					return $orus_io$elm_spa$Spa$Page$element(
 						{
 							init: function (_v0) {
-								return _Utils_Tuple2(_Utils_Tuple0, $orus_io$elm_spa$Effect$none);
+								return A2(
+									$elm$core$Tuple$mapSecond,
+									$orus_io$elm_spa$Effect$map($author$project$OUI$Explorer$BookMsg),
+									b.init(shared));
 							},
-							subscriptions: function (_v1) {
-								return $elm$core$Platform$Sub$none;
+							subscriptions: function (model) {
+								return A2(
+									$elm$core$Platform$Sub$map,
+									$author$project$OUI$Explorer$BookMsg,
+									A2(b.subscriptions, shared, model));
 							},
 							update: F2(
-								function (_v2, _v3) {
-									var msg = _v2.a;
-									return _Utils_Tuple2(
-										_Utils_Tuple0,
-										$orus_io$elm_spa$Effect$fromShared(msg));
+								function (msg, model) {
+									if (msg.$ === 'SharedMsg') {
+										var sharedMsg = msg.a;
+										return _Utils_Tuple2(
+											model,
+											$orus_io$elm_spa$Effect$fromShared(sharedMsg));
+									} else {
+										var subMsg = msg.a;
+										return A2(
+											$elm$core$Tuple$mapSecond,
+											$orus_io$elm_spa$Effect$map($author$project$OUI$Explorer$BookMsg),
+											A3(b.update, shared, subMsg, model));
+									}
 								}),
-							view: function (_v4) {
+							view: function (model) {
 								return {
 									content: A2(
 										$mdgriffith$elm_ui$Element$column,
@@ -11379,7 +11396,7 @@ var $author$project$OUI$Explorer$addBook = F2(
 										A2(
 											$elm$core$List$map,
 											function (v) {
-												return v(shared);
+												return A2(v, shared, model);
 											},
 											$elm$core$List$reverse(b.chapters))),
 									title: b.title
@@ -11389,12 +11406,12 @@ var $author$project$OUI$Explorer$addBook = F2(
 				},
 				expl.app),
 			categories: function () {
-				var _v5 = expl.categories;
-				if (_v5.b) {
-					var _v6 = _v5.a;
-					var cat_ = _v6.a;
-					var pages = _v6.b;
-					var tail = _v5.b;
+				var _v2 = expl.categories;
+				if (_v2.b) {
+					var _v3 = _v2.a;
+					var cat_ = _v3.a;
+					var pages = _v3.b;
+					var tail = _v2.b;
 					return A2(
 						$elm$core$List$cons,
 						_Utils_Tuple2(
@@ -11413,8 +11430,25 @@ var $author$project$OUI$Explorer$addBook = F2(
 			}()
 		};
 	});
+var $orus_io$elm_spa$Effect$withNone = function (model) {
+	return _Utils_Tuple2(model, $orus_io$elm_spa$Effect$none);
+};
 var $author$project$OUI$Explorer$book = function (title) {
-	return {chapters: _List_Nil, title: title};
+	return {
+		chapters: _List_Nil,
+		init: function (_v0) {
+			return $orus_io$elm_spa$Effect$withNone(_Utils_Tuple0);
+		},
+		subscriptions: F2(
+			function (_v1, _v2) {
+				return $elm$core$Platform$Sub$none;
+			}),
+		title: title,
+		update: F3(
+			function (_v3, _v4, _v5) {
+				return _Utils_Tuple2(_Utils_Tuple0, $orus_io$elm_spa$Effect$none);
+			})
+	};
 };
 var $author$project$OUI$Primary = {$: 'Primary'};
 var $author$project$OUI$Secondary = {$: 'Secondary'};
@@ -11539,16 +11573,6 @@ var $author$project$OUI$Button$btntype = F2(
 				{type_: value}));
 	});
 var $author$project$OUI$Button$elevatedButton = $author$project$OUI$Button$btntype($author$project$OUI$Button$Elevated);
-var $author$project$OUI$Explorer$Event = function (a) {
-	return {$: 'Event', a: a};
-};
-var $author$project$OUI$Explorer$SharedMsg = function (a) {
-	return {$: 'SharedMsg', a: a};
-};
-var $author$project$OUI$Explorer$event = function (value) {
-	return $author$project$OUI$Explorer$SharedMsg(
-		$author$project$OUI$Explorer$Event(value));
-};
 var $author$project$OUI$Button$Filled = {$: 'Filled'};
 var $author$project$OUI$Button$filledButton = $author$project$OUI$Button$btntype($author$project$OUI$Button$Filled);
 var $author$project$OUI$Button$FilledIcon = {$: 'FilledIcon'};
@@ -11557,6 +11581,16 @@ var $author$project$OUI$Button$Icon = {$: 'Icon'};
 var $author$project$OUI$Button$iconButton = $author$project$OUI$Button$btntype($author$project$OUI$Button$Icon);
 var $author$project$OUI$Button$LargeFAB = {$: 'LargeFAB'};
 var $author$project$OUI$Button$largeFAB = $author$project$OUI$Button$btntype($author$project$OUI$Button$LargeFAB);
+var $author$project$OUI$Explorer$Event = function (a) {
+	return {$: 'Event', a: a};
+};
+var $author$project$OUI$Explorer$SharedMsg = function (a) {
+	return {$: 'SharedMsg', a: a};
+};
+var $author$project$OUI$Explorer$logEvent = function (value) {
+	return $author$project$OUI$Explorer$SharedMsg(
+		$author$project$OUI$Explorer$Event(value));
+};
 var $author$project$OUI$Button$MediumFAB = {$: 'MediumFAB'};
 var $author$project$OUI$Button$mediumFAB = $author$project$OUI$Button$btntype($author$project$OUI$Button$MediumFAB);
 var $author$project$OUI$Button$new = $author$project$OUI$Button$Button(
@@ -13144,7 +13178,7 @@ var $author$project$OUI$Showcase$Buttons$commonButtons = function (_v0) {
 								$author$project$OUI$Button$elevatedButton(
 									A2(
 										$author$project$OUI$Button$onClick,
-										$author$project$OUI$Explorer$event('Clicked Elevated'),
+										$author$project$OUI$Explorer$logEvent('Clicked Elevated'),
 										A2(
 											$author$project$OUI$Button$withIcon,
 											$author$project$OUI$Icon$clear,
@@ -13177,7 +13211,7 @@ var $author$project$OUI$Showcase$Buttons$commonButtons = function (_v0) {
 								$author$project$OUI$Button$filledButton(
 									A2(
 										$author$project$OUI$Button$onClick,
-										$author$project$OUI$Explorer$event('Clicked Filled'),
+										$author$project$OUI$Explorer$logEvent('Clicked Filled'),
 										A2(
 											$author$project$OUI$Button$withIcon,
 											$author$project$OUI$Icon$clear,
@@ -13210,7 +13244,7 @@ var $author$project$OUI$Showcase$Buttons$commonButtons = function (_v0) {
 								$author$project$OUI$Button$tonalButton(
 									A2(
 										$author$project$OUI$Button$onClick,
-										$author$project$OUI$Explorer$event('Clicked Tonal'),
+										$author$project$OUI$Explorer$logEvent('Clicked Tonal'),
 										A2(
 											$author$project$OUI$Button$withIcon,
 											$author$project$OUI$Icon$clear,
@@ -13243,7 +13277,7 @@ var $author$project$OUI$Showcase$Buttons$commonButtons = function (_v0) {
 								$author$project$OUI$Button$outlinedButton(
 									A2(
 										$author$project$OUI$Button$onClick,
-										$author$project$OUI$Explorer$event('Clicked Outlined'),
+										$author$project$OUI$Explorer$logEvent('Clicked Outlined'),
 										A2(
 											$author$project$OUI$Button$withIcon,
 											$author$project$OUI$Icon$clear,
@@ -13276,7 +13310,7 @@ var $author$project$OUI$Showcase$Buttons$commonButtons = function (_v0) {
 								$author$project$OUI$Button$textButton(
 									A2(
 										$author$project$OUI$Button$onClick,
-										$author$project$OUI$Explorer$event('Clicked Text'),
+										$author$project$OUI$Explorer$logEvent('Clicked Text'),
 										A2(
 											$author$project$OUI$Button$withIcon,
 											$author$project$OUI$Icon$clear,
@@ -13305,7 +13339,7 @@ var $author$project$OUI$Showcase$Buttons$commonButtons = function (_v0) {
 					var btn = function (s) {
 						return A2(
 							$author$project$OUI$Button$onClick,
-							$author$project$OUI$Explorer$event('Clicked ' + (s + ' FAB')),
+							$author$project$OUI$Explorer$logEvent('Clicked ' + (s + ' FAB')),
 							A2(
 								$author$project$OUI$Button$withIcon,
 								$author$project$OUI$Icon$clear,
@@ -13353,7 +13387,7 @@ var $author$project$OUI$Showcase$Buttons$commonButtons = function (_v0) {
 					var btn = function (s) {
 						return A2(
 							$author$project$OUI$Button$onClick,
-							$author$project$OUI$Explorer$event('Clicked ' + (s + ' Icon')),
+							$author$project$OUI$Explorer$logEvent('Clicked ' + (s + ' Icon')),
 							A2(
 								$author$project$OUI$Button$withIcon,
 								$author$project$OUI$Icon$clear,
@@ -13397,7 +13431,13 @@ var $author$project$OUI$Explorer$withStaticChapter = F2(
 		return _Utils_update(
 			b,
 			{
-				chapters: A2($elm$core$List$cons, body, b.chapters)
+				chapters: A2(
+					$elm$core$List$cons,
+					F2(
+						function (shared, _v0) {
+							return body(shared);
+						}),
+					b.chapters)
 			});
 	});
 var $author$project$OUI$Showcase$Buttons$book = A2(
@@ -13468,7 +13508,7 @@ var $author$project$OUI$Checkbox$onChange = F2(
 	});
 var $author$project$OUI$Showcase$Checkbox$onChange = F2(
 	function (name, checked) {
-		return $author$project$OUI$Explorer$event(
+		return $author$project$OUI$Explorer$logEvent(
 			name + (' changes to ' + (checked ? '\'checked\'' : '\'unchecked\'')));
 	});
 var $mdgriffith$elm_ui$Element$htmlAttribute = $mdgriffith$elm_ui$Internal$Model$Attr;
@@ -23451,28 +23491,29 @@ var $author$project$OUI$Explorer$withMarkdownChapter = F2(
 			{
 				chapters: A2(
 					$elm$core$List$cons,
-					function (_v0) {
-						var _v1 = A2(
-							$elm$core$Result$andThen,
-							$dillonkearns$elm_markdown$Markdown$Renderer$render($dillonkearns$elm_markdown$Markdown$Renderer$defaultHtmlRenderer),
-							A2(
-								$elm$core$Result$mapError,
+					F2(
+						function (_v0, _v1) {
+							var _v2 = A2(
+								$elm$core$Result$andThen,
+								$dillonkearns$elm_markdown$Markdown$Renderer$render($dillonkearns$elm_markdown$Markdown$Renderer$defaultHtmlRenderer),
 								A2(
-									$elm$core$Basics$composeR,
-									$elm$core$List$map($dillonkearns$elm_markdown$Markdown$Parser$deadEndToString),
-									$elm$core$String$join(', ')),
-								$dillonkearns$elm_markdown$Markdown$Parser$parse(markdown)));
-						if (_v1.$ === 'Ok') {
-							var value = _v1.a;
-							return A2(
-								$mdgriffith$elm_ui$Element$column,
-								_List_Nil,
-								A2($elm$core$List$map, $mdgriffith$elm_ui$Element$html, value));
-						} else {
-							var err = _v1.a;
-							return $mdgriffith$elm_ui$Element$text('Error rendering markdown: ' + err);
-						}
-					},
+									$elm$core$Result$mapError,
+									A2(
+										$elm$core$Basics$composeR,
+										$elm$core$List$map($dillonkearns$elm_markdown$Markdown$Parser$deadEndToString),
+										$elm$core$String$join(', ')),
+									$dillonkearns$elm_markdown$Markdown$Parser$parse(markdown)));
+							if (_v2.$ === 'Ok') {
+								var value = _v2.a;
+								return A2(
+									$mdgriffith$elm_ui$Element$column,
+									_List_Nil,
+									A2($elm$core$List$map, $mdgriffith$elm_ui$Element$html, value));
+							} else {
+								var err = _v2.a;
+								return $mdgriffith$elm_ui$Element$text('Error rendering markdown: ' + err);
+							}
+						}),
 					b.chapters)
 			});
 	});
@@ -23490,6 +23531,13 @@ var $author$project$OUI$Showcase$Colors$book = A2(
 			$author$project$OUI$Explorer$withMarkdownChapter,
 			'\n# Colors\nThe two default color schemes\n    ',
 			$author$project$OUI$Explorer$book('Colors'))));
+var $author$project$OUI$Showcase$Switches$SetSwitch = F2(
+	function (a, b) {
+		return {$: 'SetSwitch', a: a, b: b};
+	});
+var $mdgriffith$elm_ui$Internal$Model$Right = {$: 'Right'};
+var $mdgriffith$elm_ui$Element$alignRight = $mdgriffith$elm_ui$Internal$Model$AlignX($mdgriffith$elm_ui$Internal$Model$Right);
+var $author$project$OUI$Explorer$bookMsg = $author$project$OUI$Explorer$BookMsg;
 var $author$project$OUI$Switch$Switch = function (a) {
 	return {$: 'Switch', a: a};
 };
@@ -23497,11 +23545,6 @@ var $author$project$OUI$Switch$new = function (selected) {
 	return $author$project$OUI$Switch$Switch(
 		{color: $author$project$OUI$Primary, iconSelected: $elm$core$Maybe$Nothing, iconUnselected: $elm$core$Maybe$Nothing, onChange: $elm$core$Maybe$Nothing, selected: selected});
 };
-var $author$project$OUI$Showcase$Switch$onChange = F2(
-	function (name, selected) {
-		return $author$project$OUI$Explorer$event(
-			name + (' changes to ' + (selected ? '\'selected\'' : '\'unselected\'')));
-	});
 var $author$project$OUI$Switch$onChange = F2(
 	function (msg, _v0) {
 		var _switch = _v0.a;
@@ -23516,8 +23559,6 @@ var $author$project$OUI$Switch$onChange = F2(
 	});
 var $mdgriffith$elm_ui$Internal$Model$Left = {$: 'Left'};
 var $mdgriffith$elm_ui$Element$alignLeft = $mdgriffith$elm_ui$Internal$Model$AlignX($mdgriffith$elm_ui$Internal$Model$Left);
-var $mdgriffith$elm_ui$Internal$Model$Right = {$: 'Right'};
-var $mdgriffith$elm_ui$Element$alignRight = $mdgriffith$elm_ui$Internal$Model$AlignX($mdgriffith$elm_ui$Internal$Model$Right);
 var $author$project$OUI$Material$Color$getOnContainerColor = function (c) {
 	switch (c.$) {
 		case 'Primary':
@@ -23582,6 +23623,16 @@ var $author$project$OUI$Material$Color$isError = function (c) {
 			return false;
 	}
 };
+var $mdgriffith$elm_ui$Internal$Model$MoveX = function (a) {
+	return {$: 'MoveX', a: a};
+};
+var $mdgriffith$elm_ui$Internal$Flag$moveX = $mdgriffith$elm_ui$Internal$Flag$flag(25);
+var $mdgriffith$elm_ui$Element$moveRight = function (x) {
+	return A2(
+		$mdgriffith$elm_ui$Internal$Model$TransformComponent,
+		$mdgriffith$elm_ui$Internal$Flag$moveX,
+		$mdgriffith$elm_ui$Internal$Model$MoveX(x));
+};
 var $mdgriffith$elm_ui$Internal$Model$MoveY = function (a) {
 	return {$: 'MoveY', a: a};
 };
@@ -23596,6 +23647,8 @@ var $author$project$OUI$Switch$properties = function (_v0) {
 	var _switch = _v0.a;
 	return _switch;
 };
+var $elm$virtual_dom$VirtualDom$style = _VirtualDom_style;
+var $elm$html$Html$Attributes$style = $elm$virtual_dom$VirtualDom$style;
 var $author$project$OUI$Material$Switch$render = F4(
 	function (colorscheme, theme, attrs, _switch) {
 		var _v0 = $author$project$OUI$Switch$properties(_switch);
@@ -23692,7 +23745,8 @@ var $author$project$OUI$Material$Switch$render = F4(
 				$mdgriffith$elm_ui$Element$Border$rounded((theme.thumb.size.pressed / 2) | 0),
 				$mdgriffith$elm_ui$Element$Border$color(bgColor),
 				$mdgriffith$elm_ui$Element$Border$width(((theme.thumb.size.pressed - thumbSize) / 2) | 0),
-				selected ? $mdgriffith$elm_ui$Element$alignRight : $mdgriffith$elm_ui$Element$alignLeft,
+				$mdgriffith$elm_ui$Element$alignLeft,
+				selected ? $mdgriffith$elm_ui$Element$moveRight((theme.track.width - theme.thumb.size.pressed) - (theme.track.outlineWidth * 2)) : $mdgriffith$elm_ui$Element$moveRight(0),
 				$mdgriffith$elm_ui$Element$mouseDown(
 				_List_fromArray(
 					[
@@ -23732,7 +23786,9 @@ var $author$project$OUI$Material$Switch$render = F4(
 										A2($author$project$OUI$Material$Color$setAlpha, $author$project$OUI$Material$Color$pressStateLayerOpacity, colorscheme.onSurface)))
 								]))
 						]),
-					$mdgriffith$elm_ui$Element$none))
+					$mdgriffith$elm_ui$Element$none)),
+				$mdgriffith$elm_ui$Element$htmlAttribute(
+				A2($elm$html$Html$Attributes$style, 'transition', 'all 0.3s ease-out'))
 			]);
 		return A2(
 			$mdgriffith$elm_ui$Element$Input$button,
@@ -23780,102 +23836,206 @@ var $author$project$OUI$Switch$withIconUnselected = F2(
 					iconUnselected: $elm$core$Maybe$Just(value)
 				}));
 	});
-var $author$project$OUI$Showcase$Switch$checkbox = function (_v0) {
-	var theme = _v0.theme;
-	return A2(
-		$mdgriffith$elm_ui$Element$column,
-		_List_fromArray(
-			[
-				$mdgriffith$elm_ui$Element$spacing(30)
-			]),
-		_List_fromArray(
-			[
-				$mdgriffith$elm_ui$Element$text('Switch'),
-				A2(
-				$mdgriffith$elm_ui$Element$row,
-				_List_fromArray(
-					[
-						$mdgriffith$elm_ui$Element$spacing(30)
-					]),
-				_List_fromArray(
-					[
-						A3(
-						$author$project$OUI$Material$renderSwitch,
-						theme,
-						_List_Nil,
-						A2(
-							$author$project$OUI$Switch$onChange,
-							$author$project$OUI$Showcase$Switch$onChange('unselected'),
-							$author$project$OUI$Switch$new(false))),
-						A3(
-						$author$project$OUI$Material$renderSwitch,
-						theme,
-						_List_Nil,
-						A2(
-							$author$project$OUI$Switch$onChange,
-							$author$project$OUI$Showcase$Switch$onChange('selected'),
-							$author$project$OUI$Switch$new(true))),
-						A3(
-						$author$project$OUI$Material$renderSwitch,
-						theme,
-						_List_Nil,
-						$author$project$OUI$Switch$new(false)),
-						A3(
-						$author$project$OUI$Material$renderSwitch,
-						theme,
-						_List_Nil,
-						$author$project$OUI$Switch$new(true)),
-						A3(
-						$author$project$OUI$Material$renderSwitch,
-						theme,
-						_List_Nil,
-						A2(
-							$author$project$OUI$Switch$withIconUnselected,
-							$author$project$OUI$Icon$clear,
+var $author$project$OUI$Showcase$Switches$checkbox = F2(
+	function (_v0, _v1) {
+		var theme = _v0.theme;
+		var switches = _v1.switches;
+		return A2(
+			$mdgriffith$elm_ui$Element$column,
+			_List_fromArray(
+				[
+					$mdgriffith$elm_ui$Element$spacing(30),
+					$mdgriffith$elm_ui$Element$width(
+					$mdgriffith$elm_ui$Element$px(300))
+				]),
+			_List_fromArray(
+				[
+					$mdgriffith$elm_ui$Element$text('Switches'),
+					A2(
+					$mdgriffith$elm_ui$Element$row,
+					_List_fromArray(
+						[
+							$mdgriffith$elm_ui$Element$spacing(30),
+							$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill)
+						]),
+					_List_fromArray(
+						[
+							$mdgriffith$elm_ui$Element$text('Primary color'),
+							A3(
+							$author$project$OUI$Material$renderSwitch,
+							theme,
+							_List_fromArray(
+								[$mdgriffith$elm_ui$Element$alignRight]),
 							A2(
 								$author$project$OUI$Switch$onChange,
-								$author$project$OUI$Showcase$Switch$onChange('unselected icon'),
-								$author$project$OUI$Switch$new(false)))),
-						A3(
-						$author$project$OUI$Material$renderSwitch,
-						theme,
-						_List_Nil,
-						A2(
-							$author$project$OUI$Switch$withIconSelected,
-							$author$project$OUI$Icon$check,
+								A2(
+									$elm$core$Basics$composeL,
+									$author$project$OUI$Explorer$bookMsg,
+									$author$project$OUI$Showcase$Switches$SetSwitch('primary')),
+								$author$project$OUI$Switch$new(
+									A2(
+										$elm$core$Maybe$withDefault,
+										true,
+										A2($elm$core$Dict$get, 'primary', switches)))))
+						])),
+					A2(
+					$mdgriffith$elm_ui$Element$row,
+					_List_fromArray(
+						[
+							$mdgriffith$elm_ui$Element$spacing(30),
+							$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill)
+						]),
+					_List_fromArray(
+						[
+							$mdgriffith$elm_ui$Element$text('Disabled'),
+							A3(
+							$author$project$OUI$Material$renderSwitch,
+							theme,
+							_List_fromArray(
+								[$mdgriffith$elm_ui$Element$alignRight]),
+							$author$project$OUI$Switch$new(
+								A2(
+									$elm$core$Maybe$withDefault,
+									true,
+									A2($elm$core$Dict$get, 'primary', switches))))
+						])),
+					A2(
+					$mdgriffith$elm_ui$Element$row,
+					_List_fromArray(
+						[
+							$mdgriffith$elm_ui$Element$spacing(30),
+							$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill)
+						]),
+					_List_fromArray(
+						[
+							$mdgriffith$elm_ui$Element$text('With icons'),
+							A3(
+							$author$project$OUI$Material$renderSwitch,
+							theme,
+							_List_fromArray(
+								[$mdgriffith$elm_ui$Element$alignRight]),
+							A2(
+								$author$project$OUI$Switch$withIconSelected,
+								$author$project$OUI$Icon$check,
+								A2(
+									$author$project$OUI$Switch$withIconUnselected,
+									$author$project$OUI$Icon$clear,
+									A2(
+										$author$project$OUI$Switch$onChange,
+										A2(
+											$elm$core$Basics$composeL,
+											$author$project$OUI$Explorer$bookMsg,
+											$author$project$OUI$Showcase$Switches$SetSwitch('icons')),
+										$author$project$OUI$Switch$new(
+											A2(
+												$elm$core$Maybe$withDefault,
+												true,
+												A2($elm$core$Dict$get, 'icons', switches)))))))
+						])),
+					A2(
+					$mdgriffith$elm_ui$Element$row,
+					_List_fromArray(
+						[
+							$mdgriffith$elm_ui$Element$spacing(30),
+							$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill)
+						]),
+					_List_fromArray(
+						[
+							$mdgriffith$elm_ui$Element$text('Secondary color'),
+							A3(
+							$author$project$OUI$Material$renderSwitch,
+							theme,
+							_List_fromArray(
+								[$mdgriffith$elm_ui$Element$alignRight]),
 							A2(
 								$author$project$OUI$Switch$onChange,
-								$author$project$OUI$Showcase$Switch$onChange('selected icon'),
-								$author$project$OUI$Switch$new(true)))),
-						A3(
-						$author$project$OUI$Material$renderSwitch,
-						theme,
-						_List_Nil,
-						A2(
-							$author$project$OUI$Switch$withColor,
-							$author$project$OUI$Error,
+								A2(
+									$elm$core$Basics$composeL,
+									$author$project$OUI$Explorer$bookMsg,
+									$author$project$OUI$Showcase$Switches$SetSwitch('secondary')),
+								A2(
+									$author$project$OUI$Switch$withColor,
+									$author$project$OUI$Secondary,
+									$author$project$OUI$Switch$new(
+										A2(
+											$elm$core$Maybe$withDefault,
+											true,
+											A2($elm$core$Dict$get, 'secondary', switches))))))
+						])),
+					A2(
+					$mdgriffith$elm_ui$Element$row,
+					_List_fromArray(
+						[
+							$mdgriffith$elm_ui$Element$spacing(30),
+							$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill)
+						]),
+					_List_fromArray(
+						[
+							$mdgriffith$elm_ui$Element$text('Error color'),
+							A3(
+							$author$project$OUI$Material$renderSwitch,
+							theme,
+							_List_fromArray(
+								[$mdgriffith$elm_ui$Element$alignRight]),
 							A2(
-								$author$project$OUI$Switch$onChange,
-								$author$project$OUI$Showcase$Switch$onChange('unselected error'),
-								$author$project$OUI$Switch$new(false)))),
-						A3(
-						$author$project$OUI$Material$renderSwitch,
-						theme,
-						_List_Nil,
-						A2(
-							$author$project$OUI$Switch$withColor,
-							$author$project$OUI$Error,
-							A2(
-								$author$project$OUI$Switch$onChange,
-								$author$project$OUI$Showcase$Switch$onChange('selected error'),
-								$author$project$OUI$Switch$new(true))))
-					]))
-			]));
-};
-var $author$project$OUI$Showcase$Switch$book = A2(
-	$author$project$OUI$Explorer$withStaticChapter,
-	$author$project$OUI$Showcase$Switch$checkbox,
-	$author$project$OUI$Explorer$book('Switch'));
+								$author$project$OUI$Switch$withColor,
+								$author$project$OUI$Error,
+								A2(
+									$author$project$OUI$Switch$onChange,
+									A2(
+										$elm$core$Basics$composeL,
+										$author$project$OUI$Explorer$bookMsg,
+										$author$project$OUI$Showcase$Switches$SetSwitch('error')),
+									$author$project$OUI$Switch$new(
+										A2(
+											$elm$core$Maybe$withDefault,
+											true,
+											A2($elm$core$Dict$get, 'error', switches))))))
+						]))
+				]));
+	});
+var $author$project$OUI$Explorer$statefulBook = F2(
+	function (title, _v0) {
+		var init = _v0.init;
+		var update = _v0.update;
+		var subscriptions = _v0.subscriptions;
+		return {chapters: _List_Nil, init: init, subscriptions: subscriptions, title: title, update: update};
+	});
+var $author$project$OUI$Explorer$withChapter = F2(
+	function (body, b) {
+		return _Utils_update(
+			b,
+			{
+				chapters: A2($elm$core$List$cons, body, b.chapters)
+			});
+	});
+var $author$project$OUI$Showcase$Switches$book = A2(
+	$author$project$OUI$Explorer$withChapter,
+	$author$project$OUI$Showcase$Switches$checkbox,
+	A2(
+		$author$project$OUI$Explorer$statefulBook,
+		'Switch',
+		{
+			init: function (_v0) {
+				return $orus_io$elm_spa$Effect$withNone(
+					{switches: $elm$core$Dict$empty});
+			},
+			subscriptions: F2(
+				function (_v1, _v2) {
+					return $elm$core$Platform$Sub$none;
+				}),
+			update: F3(
+				function (_v3, _v4, model) {
+					var name = _v4.a;
+					var selected = _v4.b;
+					return $orus_io$elm_spa$Effect$withNone(
+						_Utils_update(
+							model,
+							{
+								switches: A3($elm$core$Dict$insert, name, selected, model.switches)
+							}));
+				})
+		}));
 var $author$project$OUI$Text$Body = {$: 'Body'};
 var $author$project$OUI$Text$Text = F3(
 	function (a, b, c) {
@@ -24023,7 +24183,7 @@ var $author$project$OUI$Showcase$addPages = A2(
 					A2(
 						$elm$core$Basics$composeR,
 						$author$project$OUI$Explorer$addBook($author$project$OUI$Showcase$Checkbox$book),
-						$author$project$OUI$Explorer$addBook($author$project$OUI$Showcase$Switch$book)))))));
+						$author$project$OUI$Explorer$addBook($author$project$OUI$Showcase$Switches$book)))))));
 var $elm$svg$Svg$Attributes$enableBackground = _VirtualDom_attribute('enable-background');
 var $icidasset$elm_material_icons$Material$Icons$Internal$b = $elm$svg$Svg$Attributes$enableBackground;
 var $icidasset$elm_material_icons$Material$Icons$Internal$f = $elm$svg$Svg$Attributes$fill;

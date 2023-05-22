@@ -4,6 +4,7 @@ import Element exposing (Attribute, Element)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Input as Input
+import Html.Attributes
 import OUI.Material.Color as Color
 import OUI.Material.Icon as Icon
 import OUI.Switch as Switch exposing (Switch)
@@ -175,11 +176,12 @@ render colorscheme theme attrs switch =
             , Border.rounded <| theme.thumb.size.pressed // 2
             , Border.color bgColor
             , Border.width <| (theme.thumb.size.pressed - thumbSize) // 2
+            , Element.alignLeft
             , if selected then
-                Element.alignRight
+                Element.moveRight <| toFloat (theme.track.width - theme.thumb.size.pressed - theme.track.outlineWidth * 2)
 
               else
-                Element.alignLeft
+                Element.moveRight 0
             , Element.mouseDown
                 [ Border.color thumbColor
                 ]
@@ -211,6 +213,8 @@ render colorscheme theme attrs switch =
                     ]
                     Element.none
                 )
+            , Element.htmlAttribute
+                (Html.Attributes.style "transition" "all 0.3s ease-out")
             ]
     in
     Input.button (trackAttrs ++ attrs)

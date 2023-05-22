@@ -1,19 +1,19 @@
 module OUI.Explorer exposing
     ( Book, BookMsg, Page, Route, Shared, SharedMsg, Explorer
-    , addBook, book, category, event, explorer, finalize
-    , withMarkdownChapter, withStaticChapter
+    , addBook, book, statefulBook, category, bookMsg, logEvent, explorer, finalize
+    , withMarkdownChapter, withStaticChapter, withChapter
     )
 
 {-|
 
 @docs Book, BookMsg, Page, Route, Shared, SharedMsg, Explorer
-@docs addBook, book, category, event, explorer, finalize
-@docs withMarkdownChapter, withStaticChapter
+@docs addBook, book, statefulBook, category, bookMsg, logEvent, explorer, finalize
+@docs withMarkdownChapter, withStaticChapter, withChapter
 
 -}
 
 import Browser
-import Effect
+import Effect exposing (Effect)
 import Element exposing (Element)
 import Element.Background as Background
 import Element.Font as Font
@@ -128,9 +128,9 @@ category name expl =
 {-| Add a book to the current category
 -}
 addBook :
-    Book BookMsg
+    Book model msg
     -> Explorer Shared SharedMsg current previous currentMsg previousMsg
-    -> Explorer Shared SharedMsg () (Spa.PageStack.Model Spa.SetupError current previous) BookMsg (Spa.PageStack.Msg Route currentMsg previousMsg)
+    -> Explorer Shared SharedMsg model (Spa.PageStack.Model Spa.SetupError current previous) (BookMsg msg) (Spa.PageStack.Msg Route currentMsg previousMsg)
 addBook b expl =
     let
         cat =
@@ -151,18 +151,32 @@ addBook b expl =
                 )
                 (\shared ->
                     Spa.Page.element
-                        { init = \_ -> ( (), Effect.none )
-                        , update = \(SharedMsg msg) () -> ( (), Effect.fromShared msg )
-                        , view =
+                        { init =
                             \_ ->
+                                b.init shared
+                                    |> Tuple.mapSecond (Effect.map BookMsg)
+                        , update =
+                            \msg model ->
+                                case msg of
+                                    SharedMsg sharedMsg ->
+                                        ( model, Effect.fromShared sharedMsg )
+
+                                    BookMsg subMsg ->
+                                        b.update shared subMsg model
+                                            |> Tuple.mapSecond (Effect.map BookMsg)
+                        , view =
+                            \model ->
                                 { title = b.title
                                 , content =
                                     b.chapters
                                         |> List.reverse
-                                        |> List.map (\v -> v shared)
+                                        |> List.map (\v -> v shared model)
                                         |> Element.column [ Element.spacing 20 ]
                                 }
-                        , subscriptions = \_ -> Sub.none
+                        , subscriptions =
+                            \model ->
+                                b.subscriptions shared model
+                                    |> Sub.map BookMsg
                         }
                 )
     , categories =
@@ -177,44 +191,77 @@ addBook b expl =
 
 {-| A stateless book
 -}
-type alias Book msg =
+type alias Book model msg =
     { title : String
-    , chapters : List (Shared -> Element msg)
+    , init : Shared -> ( model, Effect SharedMsg msg )
+    , update : Shared -> msg -> model -> ( model, Effect SharedMsg msg )
+    , subscriptions : Shared -> model -> Sub msg
+    , chapters : List (Shared -> model -> Element (BookMsg msg))
     }
 
 
 {-| A stateless book message
 -}
-type BookMsg
+type BookMsg msg
     = SharedMsg SharedMsg
+    | BookMsg msg
 
 
-{-| A simple event
+{-| A simple log event
 
-The passed string will be logged in the event window
+The passed string will be logged in the log event window
 
 -}
-event : String -> BookMsg
-event value =
+logEvent : String -> BookMsg msg
+logEvent value =
     SharedMsg <| Event value
 
 
-{-| Creates a new empty book
+{-| wrap a book msg into a `BookMsg msg`. This is needed in views.
 -}
-book : String -> Book msg
+bookMsg : msg -> BookMsg msg
+bookMsg =
+    BookMsg
+
+
+{-| Creates a new static book
+-}
+book : String -> Book () ()
 book title =
     { title = title
+    , init = \_ -> () |> Effect.withNone
+    , update = \_ () () -> ( (), Effect.none )
+    , subscriptions = \_ () -> Sub.none
+    , chapters = []
+    }
+
+
+{-| Creates a new stateful book
+-}
+statefulBook :
+    String
+    ->
+        { init : Shared -> ( model, Effect SharedMsg msg )
+        , update : Shared -> msg -> model -> ( model, Effect SharedMsg msg )
+        , subscriptions : Shared -> model -> Sub msg
+        }
+    -> Book model msg
+statefulBook title { init, update, subscriptions } =
+    { title = title
+    , init = init
+    , update = update
+    , subscriptions = subscriptions
     , chapters = []
     }
 
 
 {-| Add a mardown chapter to a book
 -}
-withMarkdownChapter : String -> Book msg -> Book msg
+withMarkdownChapter : String -> Book model msg -> Book model msg
 withMarkdownChapter markdown b =
     { b
         | chapters =
-            (\_ ->
+            (\_ _ ->
                 case
                     Markdown.Parser.parse markdown
                         |> Result.mapError (List.map Markdown.Parser.deadEndToString >> String.join ", ")
@@ -235,8 +282,17 @@ withMarkdownChapter markdown b =
 
 {-| Add a static content chapter to a book
 -}
-withStaticChapter : (Shared -> Element msg) -> Book msg -> Book msg
+withStaticChapter : (Shared -> Element (BookMsg msg)) -> Book model msg -> Book model msg
 withStaticChapter body b =
+    { b
+        | chapters = (\shared _ -> body shared) :: b.chapters
+    }
+
+
+{-| Add a chapter to a book
+-}
+withChapter : (Shared -> model -> Element (BookMsg msg)) -> Book model msg -> Book model msg
+withChapter body b =
     { b
         | chapters = body :: b.chapters
     }
