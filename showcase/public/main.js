@@ -23946,7 +23946,10 @@ var $author$project$OUI$Showcase$Typography$book = A2(
 		var theme = _v0.theme;
 		return A2(
 			$mdgriffith$elm_ui$Element$column,
-			_List_Nil,
+			_List_fromArray(
+				[
+					$mdgriffith$elm_ui$Element$spacing(10)
+				]),
 			_List_fromArray(
 				[
 					A2(

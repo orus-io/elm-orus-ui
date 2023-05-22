@@ -15,7 +15,9 @@ The material typescale
     """
         |> Explorer.withStaticChapter
             (\{ theme } ->
-                Element.column []
+                Element.column
+                    [ Element.spacing 10
+                    ]
                     [ Text.displayLarge "Display Large" |> Material.renderText theme
                     , Text.displayMedium "Display Medium" |> Material.renderText theme
                     , Text.displaySmall "Display Small" |> Material.renderText theme
