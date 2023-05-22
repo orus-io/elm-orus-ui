@@ -364,6 +364,9 @@ finalize expl =
                                 ]
                                 [ Element.text "Light/Dark"
                                 , Switch.new
+                                    (Tuple.second shared.selectedColorScheme
+                                        == Dark
+                                    )
                                     |> Switch.onChange
                                         (\dark ->
                                             SelectColorScheme
@@ -375,10 +378,6 @@ finalize expl =
                                                     Light
                                                 )
                                                 |> Spa.mapSharedMsg
-                                        )
-                                    |> Switch.withSelected
-                                        (Tuple.second shared.selectedColorScheme
-                                            == Dark
                                         )
                                     |> Switch.withIconSelected Icon.dark_mode
                                     |> Switch.withIconUnselected Icon.light_mode

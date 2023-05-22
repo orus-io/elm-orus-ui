@@ -31,38 +31,30 @@ checkbox { theme } =
     Element.column [ Element.spacing 30 ]
         [ Element.text "Switch"
         , Element.row [ Element.spacing 30 ]
-            [ Switch.new
+            [ Switch.new False
                 |> Switch.onChange (onChange "unselected")
-                |> Switch.withSelected False
                 |> Material.renderSwitch theme []
-            , Switch.new
+            , Switch.new True
                 |> Switch.onChange (onChange "selected")
-                |> Switch.withSelected True
                 |> Material.renderSwitch theme []
-            , Switch.new
-                |> Switch.withSelected False
+            , Switch.new False
                 |> Material.renderSwitch theme []
-            , Switch.new
-                |> Switch.withSelected True
+            , Switch.new True
                 |> Material.renderSwitch theme []
-            , Switch.new
+            , Switch.new False
                 |> Switch.onChange (onChange "unselected icon")
-                |> Switch.withSelected False
                 |> Switch.withIconUnselected clear
                 |> Material.renderSwitch theme []
-            , Switch.new
+            , Switch.new True
                 |> Switch.onChange (onChange "selected icon")
-                |> Switch.withSelected True
                 |> Switch.withIconSelected check
                 |> Material.renderSwitch theme []
-            , Switch.new
+            , Switch.new False
                 |> Switch.onChange (onChange "unselected error")
-                |> Switch.withSelected False
                 |> Switch.withColor OUI.Error
                 |> Material.renderSwitch theme []
-            , Switch.new
+            , Switch.new True
                 |> Switch.onChange (onChange "selected error")
-                |> Switch.withSelected True
                 |> Switch.withColor OUI.Error
                 |> Material.renderSwitch theme []
             ]

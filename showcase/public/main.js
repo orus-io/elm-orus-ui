@@ -23493,8 +23493,10 @@ var $author$project$OUI$Showcase$Colors$book = A2(
 var $author$project$OUI$Switch$Switch = function (a) {
 	return {$: 'Switch', a: a};
 };
-var $author$project$OUI$Switch$new = $author$project$OUI$Switch$Switch(
-	{color: $author$project$OUI$Primary, iconSelected: $elm$core$Maybe$Nothing, iconUnselected: $elm$core$Maybe$Nothing, onChange: $elm$core$Maybe$Nothing, selected: false});
+var $author$project$OUI$Switch$new = function (selected) {
+	return $author$project$OUI$Switch$Switch(
+		{color: $author$project$OUI$Primary, iconSelected: $elm$core$Maybe$Nothing, iconUnselected: $elm$core$Maybe$Nothing, onChange: $elm$core$Maybe$Nothing, selected: selected});
+};
 var $author$project$OUI$Showcase$Switch$onChange = F2(
 	function (name, selected) {
 		return $author$project$OUI$Explorer$event(
@@ -23778,14 +23780,6 @@ var $author$project$OUI$Switch$withIconUnselected = F2(
 					iconUnselected: $elm$core$Maybe$Just(value)
 				}));
 	});
-var $author$project$OUI$Switch$withSelected = F2(
-	function (value, _v0) {
-		var _switch = _v0.a;
-		return $author$project$OUI$Switch$Switch(
-			_Utils_update(
-				_switch,
-				{selected: value}));
-	});
 var $author$project$OUI$Showcase$Switch$checkbox = function (_v0) {
 	var theme = _v0.theme;
 	return A2(
@@ -23810,33 +23804,27 @@ var $author$project$OUI$Showcase$Switch$checkbox = function (_v0) {
 						theme,
 						_List_Nil,
 						A2(
-							$author$project$OUI$Switch$withSelected,
-							false,
-							A2(
-								$author$project$OUI$Switch$onChange,
-								$author$project$OUI$Showcase$Switch$onChange('unselected'),
-								$author$project$OUI$Switch$new))),
+							$author$project$OUI$Switch$onChange,
+							$author$project$OUI$Showcase$Switch$onChange('unselected'),
+							$author$project$OUI$Switch$new(false))),
 						A3(
 						$author$project$OUI$Material$renderSwitch,
 						theme,
 						_List_Nil,
 						A2(
-							$author$project$OUI$Switch$withSelected,
-							true,
-							A2(
-								$author$project$OUI$Switch$onChange,
-								$author$project$OUI$Showcase$Switch$onChange('selected'),
-								$author$project$OUI$Switch$new))),
+							$author$project$OUI$Switch$onChange,
+							$author$project$OUI$Showcase$Switch$onChange('selected'),
+							$author$project$OUI$Switch$new(true))),
 						A3(
 						$author$project$OUI$Material$renderSwitch,
 						theme,
 						_List_Nil,
-						A2($author$project$OUI$Switch$withSelected, false, $author$project$OUI$Switch$new)),
+						$author$project$OUI$Switch$new(false)),
 						A3(
 						$author$project$OUI$Material$renderSwitch,
 						theme,
 						_List_Nil,
-						A2($author$project$OUI$Switch$withSelected, true, $author$project$OUI$Switch$new)),
+						$author$project$OUI$Switch$new(true)),
 						A3(
 						$author$project$OUI$Material$renderSwitch,
 						theme,
@@ -23845,12 +23833,9 @@ var $author$project$OUI$Showcase$Switch$checkbox = function (_v0) {
 							$author$project$OUI$Switch$withIconUnselected,
 							$author$project$OUI$Icon$clear,
 							A2(
-								$author$project$OUI$Switch$withSelected,
-								false,
-								A2(
-									$author$project$OUI$Switch$onChange,
-									$author$project$OUI$Showcase$Switch$onChange('unselected icon'),
-									$author$project$OUI$Switch$new)))),
+								$author$project$OUI$Switch$onChange,
+								$author$project$OUI$Showcase$Switch$onChange('unselected icon'),
+								$author$project$OUI$Switch$new(false)))),
 						A3(
 						$author$project$OUI$Material$renderSwitch,
 						theme,
@@ -23859,12 +23844,9 @@ var $author$project$OUI$Showcase$Switch$checkbox = function (_v0) {
 							$author$project$OUI$Switch$withIconSelected,
 							$author$project$OUI$Icon$check,
 							A2(
-								$author$project$OUI$Switch$withSelected,
-								true,
-								A2(
-									$author$project$OUI$Switch$onChange,
-									$author$project$OUI$Showcase$Switch$onChange('selected icon'),
-									$author$project$OUI$Switch$new)))),
+								$author$project$OUI$Switch$onChange,
+								$author$project$OUI$Showcase$Switch$onChange('selected icon'),
+								$author$project$OUI$Switch$new(true)))),
 						A3(
 						$author$project$OUI$Material$renderSwitch,
 						theme,
@@ -23873,12 +23855,9 @@ var $author$project$OUI$Showcase$Switch$checkbox = function (_v0) {
 							$author$project$OUI$Switch$withColor,
 							$author$project$OUI$Error,
 							A2(
-								$author$project$OUI$Switch$withSelected,
-								false,
-								A2(
-									$author$project$OUI$Switch$onChange,
-									$author$project$OUI$Showcase$Switch$onChange('unselected error'),
-									$author$project$OUI$Switch$new)))),
+								$author$project$OUI$Switch$onChange,
+								$author$project$OUI$Showcase$Switch$onChange('unselected error'),
+								$author$project$OUI$Switch$new(false)))),
 						A3(
 						$author$project$OUI$Material$renderSwitch,
 						theme,
@@ -23887,12 +23866,9 @@ var $author$project$OUI$Showcase$Switch$checkbox = function (_v0) {
 							$author$project$OUI$Switch$withColor,
 							$author$project$OUI$Error,
 							A2(
-								$author$project$OUI$Switch$withSelected,
-								true,
-								A2(
-									$author$project$OUI$Switch$onChange,
-									$author$project$OUI$Showcase$Switch$onChange('selected error'),
-									$author$project$OUI$Switch$new))))
+								$author$project$OUI$Switch$onChange,
+								$author$project$OUI$Showcase$Switch$onChange('selected error'),
+								$author$project$OUI$Switch$new(true))))
 					]))
 			]));
 };
@@ -25244,18 +25220,16 @@ var $author$project$OUI$Explorer$finalize = function (expl) {
 																				$author$project$OUI$Switch$withIconSelected,
 																				$author$project$OUI$Icon$dark_mode,
 																				A2(
-																					$author$project$OUI$Switch$withSelected,
-																					_Utils_eq(shared.selectedColorScheme.b, $author$project$OUI$Explorer$Dark),
-																					A2(
-																						$author$project$OUI$Switch$onChange,
-																						function (dark) {
-																							return $orus_io$elm_spa$Spa$mapSharedMsg(
-																								A2(
-																									$author$project$OUI$Explorer$SelectColorScheme,
-																									shared.selectedColorScheme.a,
-																									dark ? $author$project$OUI$Explorer$Dark : $author$project$OUI$Explorer$Light));
-																						},
-																						$author$project$OUI$Switch$new)))))
+																					$author$project$OUI$Switch$onChange,
+																					function (dark) {
+																						return $orus_io$elm_spa$Spa$mapSharedMsg(
+																							A2(
+																								$author$project$OUI$Explorer$SelectColorScheme,
+																								shared.selectedColorScheme.a,
+																								dark ? $author$project$OUI$Explorer$Dark : $author$project$OUI$Explorer$Light));
+																					},
+																					$author$project$OUI$Switch$new(
+																						_Utils_eq(shared.selectedColorScheme.b, $author$project$OUI$Explorer$Dark))))))
 																	])),
 															A2(
 																$elm$core$List$concatMap,

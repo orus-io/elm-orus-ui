@@ -1,6 +1,6 @@
 module OUI.Switch exposing
     ( Switch, new
-    , withSelected, withIconSelected, withIconUnselected, withColor, onChange
+    , withIconSelected, withIconUnselected, withColor, onChange
     , properties
     )
 
@@ -8,7 +8,7 @@ module OUI.Switch exposing
 
 @docs Switch, new
 
-@docs withSelected, withIconSelected, withIconUnselected, withColor, onChange
+@docs withIconSelected, withIconUnselected, withColor, onChange
 
 @docs properties
 
@@ -32,24 +32,14 @@ type Switch msg
 
 {-| create a new unselected Switch
 -}
-new : Switch msg
-new =
+new : Bool -> Switch msg
+new selected =
     Switch
-        { selected = False
+        { selected = selected
         , iconSelected = Nothing
         , iconUnselected = Nothing
         , color = OUI.Primary
         , onChange = Nothing
-        }
-
-
-{-| Set the 'selected' state
--}
-withSelected : Bool -> Switch msg -> Switch msg
-withSelected value (Switch switch) =
-    Switch
-        { switch
-            | selected = value
         }
 
 
