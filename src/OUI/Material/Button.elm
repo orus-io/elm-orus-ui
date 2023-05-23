@@ -12,6 +12,7 @@ import OUI.Material.Color exposing (getOnColor)
 import OUI.Material.Icon as Icon
 import OUI.Material.Typography
 import OUI.Text
+import OUI.Utils.ARIA as ARIA
 
 
 type alias Theme =
@@ -547,6 +548,11 @@ render typescale colorscheme theme attrs button =
         props =
             properties button
 
+        aria =
+            ARIA.roleButton
+                |> ARIA.withLabel props.text
+                |> ARIA.toElementAttributes
+
         hasIcon =
             props.icon /= Nothing
 
@@ -581,7 +587,8 @@ render typescale colorscheme theme attrs button =
     in
     Input.button
         ((Element.height <| Element.px theme.common.containerHeight)
-            :: attrs
+            :: aria
+            ++ attrs
             ++ (case ( props.type_, props.onClick ) of
                     ( OUI.Button.Elevated, Just _ ) ->
                         commonButtonAttrs typescale colorscheme theme.common hasIcon

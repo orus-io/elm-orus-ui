@@ -12861,6 +12861,11 @@ var $author$project$OUI$Material$Icon$renderWithSizeColor = F4(
 				}
 			}());
 	});
+var $author$project$OUI$Utils$ARIA$RoleButton = {$: 'RoleButton'};
+var $author$project$OUI$Utils$ARIA$fromRole = function (role) {
+	return {label: $elm$core$Maybe$Nothing, role: role};
+};
+var $author$project$OUI$Utils$ARIA$roleButton = $author$project$OUI$Utils$ARIA$fromRole($author$project$OUI$Utils$ARIA$RoleButton);
 var $mdgriffith$elm_ui$Internal$Model$AsRow = {$: 'AsRow'};
 var $mdgriffith$elm_ui$Internal$Model$asRow = $mdgriffith$elm_ui$Internal$Model$AsRow;
 var $mdgriffith$elm_ui$Element$row = F2(
@@ -12941,6 +12946,119 @@ var $author$project$OUI$Material$Button$textDisabledAttrs = F3(
 					]))
 			]);
 	});
+var $elm$html$Html$Attributes$attribute = $elm$virtual_dom$VirtualDom$attribute;
+var $mdgriffith$elm_ui$Element$htmlAttribute = $mdgriffith$elm_ui$Internal$Model$Attr;
+var $author$project$OUI$Utils$ARIA$ifThenElse = F3(
+	function (value, ifTrue, ifFalse) {
+		return value ? ifTrue : ifFalse;
+	});
+var $author$project$OUI$Utils$ARIA$checkedAttr = function (value) {
+	return $mdgriffith$elm_ui$Element$htmlAttribute(
+		A2(
+			$elm$html$Html$Attributes$attribute,
+			'aria-checked',
+			A3($author$project$OUI$Utils$ARIA$ifThenElse, value, 'true', 'false')));
+};
+var $author$project$OUI$Utils$ARIA$labelAttr = function (value) {
+	return $mdgriffith$elm_ui$Element$htmlAttribute(
+		A2($elm$html$Html$Attributes$attribute, 'aria-label', value));
+};
+var $author$project$OUI$Utils$ARIA$prependMaybe = A2(
+	$elm$core$Basics$composeR,
+	$elm$core$Maybe$map($elm$core$List$cons),
+	$elm$core$Maybe$withDefault($elm$core$Basics$identity));
+var $author$project$OUI$Utils$ARIA$pressedAttr = function (value) {
+	return $mdgriffith$elm_ui$Element$htmlAttribute(
+		A2(
+			$elm$html$Html$Attributes$attribute,
+			'aria-pressed',
+			A3($author$project$OUI$Utils$ARIA$ifThenElse, value, 'true', 'false')));
+};
+var $author$project$OUI$Utils$ARIA$roleAttr = function (role) {
+	return $mdgriffith$elm_ui$Element$htmlAttribute(
+		A2($elm$html$Html$Attributes$attribute, 'role', role));
+};
+var $author$project$OUI$Utils$ARIA$selectedAttr = function (value) {
+	return $mdgriffith$elm_ui$Element$htmlAttribute(
+		A2(
+			$elm$html$Html$Attributes$attribute,
+			'aria-selected',
+			A3($author$project$OUI$Utils$ARIA$ifThenElse, value, 'true', 'false')));
+};
+var $author$project$OUI$Utils$ARIA$toElementAttributes = function (_v0) {
+	var role = _v0.role;
+	var label = _v0.label;
+	return A2(
+		$author$project$OUI$Utils$ARIA$prependMaybe,
+		A2($elm$core$Maybe$map, $author$project$OUI$Utils$ARIA$labelAttr, label),
+		function () {
+			switch (role.$) {
+				case 'RoleButton':
+					return _List_fromArray(
+						[
+							$author$project$OUI$Utils$ARIA$roleAttr('button')
+						]);
+				case 'RoleToggleButton':
+					var pressed = role.a;
+					return _List_fromArray(
+						[
+							$author$project$OUI$Utils$ARIA$roleAttr('button'),
+							$author$project$OUI$Utils$ARIA$pressedAttr(pressed)
+						]);
+				case 'RoleCheckbox':
+					var checked = role.a;
+					return _List_fromArray(
+						[
+							$author$project$OUI$Utils$ARIA$roleAttr('checkbox'),
+							$author$project$OUI$Utils$ARIA$checkedAttr(checked)
+						]);
+				case 'RoleSwitch':
+					var state = role.a;
+					return _List_fromArray(
+						[
+							$author$project$OUI$Utils$ARIA$roleAttr('checkbox'),
+							$author$project$OUI$Utils$ARIA$checkedAttr(state)
+						]);
+				case 'RoleImage':
+					return _List_fromArray(
+						[
+							$author$project$OUI$Utils$ARIA$roleAttr('img')
+						]);
+				case 'RolePresentation':
+					return _List_fromArray(
+						[
+							$author$project$OUI$Utils$ARIA$roleAttr('presentation')
+						]);
+				case 'RoleRadio':
+					var checked = role.a;
+					return _List_fromArray(
+						[
+							$author$project$OUI$Utils$ARIA$roleAttr('radio'),
+							$author$project$OUI$Utils$ARIA$checkedAttr(checked)
+						]);
+				case 'RoleRadioGroup':
+					return _List_fromArray(
+						[
+							$author$project$OUI$Utils$ARIA$roleAttr('radiogroup')
+						]);
+				default:
+					var selected = role.a;
+					return _List_fromArray(
+						[
+							$author$project$OUI$Utils$ARIA$roleAttr('tab'),
+							$author$project$OUI$Utils$ARIA$selectedAttr(selected)
+						]);
+			}
+		}());
+};
+var $author$project$OUI$Utils$ARIA$withLabel = F2(
+	function (label, semantics) {
+		return _Utils_update(
+			semantics,
+			{
+				label: $elm$core$Maybe$Just(label)
+			});
+	});
 var $author$project$OUI$Material$Button$render = F5(
 	function (typescale, colorscheme, theme, attrs, button) {
 		var props = $author$project$OUI$Button$properties(button);
@@ -12985,6 +13103,8 @@ var $author$project$OUI$Material$Button$render = F5(
 			}
 		}();
 		var hasIcon = !_Utils_eq(props.icon, $elm$core$Maybe$Nothing);
+		var aria = $author$project$OUI$Utils$ARIA$toElementAttributes(
+			A2($author$project$OUI$Utils$ARIA$withLabel, props.text, $author$project$OUI$Utils$ARIA$roleButton));
 		return A2(
 			$mdgriffith$elm_ui$Element$Input$button,
 			A2(
@@ -12992,122 +13112,124 @@ var $author$project$OUI$Material$Button$render = F5(
 				$mdgriffith$elm_ui$Element$height(
 					$mdgriffith$elm_ui$Element$px(theme.common.containerHeight)),
 				_Utils_ap(
-					attrs,
-					function () {
-						var _v0 = _Utils_Tuple2(props.type_, props.onClick);
-						_v0$19:
-						while (true) {
-							if (_v0.b.$ === 'Nothing') {
-								switch (_v0.a.$) {
-									case 'Elevated':
-										var _v2 = _v0.a;
-										var _v3 = _v0.b;
-										return _Utils_ap(
-											A4($author$project$OUI$Material$Button$commonButtonAttrs, typescale, colorscheme, theme.common, hasIcon),
-											A3($author$project$OUI$Material$Button$elevatedDisabledAttrs, typescale, colorscheme, theme.common));
-									case 'Filled':
-										var _v5 = _v0.a;
-										var _v6 = _v0.b;
-										return _Utils_ap(
-											A4($author$project$OUI$Material$Button$commonButtonAttrs, typescale, colorscheme, theme.common, hasIcon),
-											A3($author$project$OUI$Material$Button$filledDisabledAttrs, typescale, colorscheme, theme.common));
-									case 'FilledIcon':
-										var _v8 = _v0.a;
-										var _v9 = _v0.b;
-										return _Utils_ap(
-											$author$project$OUI$Material$Button$iconButtonAttrs(theme.icon),
-											A3($author$project$OUI$Material$Button$filledDisabledAttrs, typescale, colorscheme, theme.common));
-									case 'Tonal':
-										var _v11 = _v0.a;
-										var _v12 = _v0.b;
-										return _Utils_ap(
-											A4($author$project$OUI$Material$Button$commonButtonAttrs, typescale, colorscheme, theme.common, hasIcon),
-											A3($author$project$OUI$Material$Button$filledDisabledAttrs, typescale, colorscheme, theme.common));
-									case 'Outlined':
-										var _v14 = _v0.a;
-										var _v15 = _v0.b;
-										return _Utils_ap(
-											A4($author$project$OUI$Material$Button$commonButtonAttrs, typescale, colorscheme, theme.common, hasIcon),
-											A3($author$project$OUI$Material$Button$outlinedDisabledAttrs, typescale, colorscheme, theme.common));
-									case 'OutlinedIcon':
-										var _v17 = _v0.a;
-										var _v18 = _v0.b;
-										return _Utils_ap(
-											$author$project$OUI$Material$Button$iconButtonAttrs(theme.icon),
-											A3($author$project$OUI$Material$Button$outlinedDisabledAttrs, typescale, colorscheme, theme.common));
-									case 'Text':
-										var _v20 = _v0.a;
-										var _v21 = _v0.b;
-										return _Utils_ap(
-											A4($author$project$OUI$Material$Button$commonButtonAttrs, typescale, colorscheme, theme.common, hasIcon),
-											A3($author$project$OUI$Material$Button$textDisabledAttrs, typescale, colorscheme, theme.common));
-									case 'Icon':
-										var _v23 = _v0.a;
-										var _v24 = _v0.b;
-										return _Utils_ap(
-											$author$project$OUI$Material$Button$iconButtonAttrs(theme.icon),
-											A3($author$project$OUI$Material$Button$textDisabledAttrs, typescale, colorscheme, theme.common));
-									default:
-										break _v0$19;
-								}
-							} else {
-								switch (_v0.a.$) {
-									case 'Elevated':
-										var _v1 = _v0.a;
-										return _Utils_ap(
-											A4($author$project$OUI$Material$Button$commonButtonAttrs, typescale, colorscheme, theme.common, hasIcon),
-											A4($author$project$OUI$Material$Button$elevatedAttrs, typescale, colorscheme, theme.common, props.color));
-									case 'Filled':
-										var _v4 = _v0.a;
-										return _Utils_ap(
-											A4($author$project$OUI$Material$Button$commonButtonAttrs, typescale, colorscheme, theme.common, hasIcon),
-											A4($author$project$OUI$Material$Button$filledAttrs, typescale, colorscheme, theme.common, props.color));
-									case 'FilledIcon':
-										var _v7 = _v0.a;
-										return _Utils_ap(
-											$author$project$OUI$Material$Button$iconButtonAttrs(theme.icon),
-											A4($author$project$OUI$Material$Button$filledAttrs, typescale, colorscheme, theme.common, props.color));
-									case 'Tonal':
-										var _v10 = _v0.a;
-										return _Utils_ap(
-											A4($author$project$OUI$Material$Button$commonButtonAttrs, typescale, colorscheme, theme.common, hasIcon),
-											A4($author$project$OUI$Material$Button$filledAttrs, typescale, colorscheme, theme.common, props.color));
-									case 'Outlined':
-										var _v13 = _v0.a;
-										return _Utils_ap(
-											A4($author$project$OUI$Material$Button$commonButtonAttrs, typescale, colorscheme, theme.common, hasIcon),
-											A4($author$project$OUI$Material$Button$outlinedAttrs, typescale, colorscheme, theme.common, props.color));
-									case 'OutlinedIcon':
-										var _v16 = _v0.a;
-										return _Utils_ap(
-											$author$project$OUI$Material$Button$iconButtonAttrs(theme.icon),
-											A4($author$project$OUI$Material$Button$outlinedAttrs, typescale, colorscheme, theme.common, props.color));
-									case 'Text':
-										var _v19 = _v0.a;
-										return _Utils_ap(
-											A4($author$project$OUI$Material$Button$commonButtonAttrs, typescale, colorscheme, theme.common, hasIcon),
-											A4($author$project$OUI$Material$Button$textAttrs, typescale, colorscheme, theme.common, props.color));
-									case 'Icon':
-										var _v22 = _v0.a;
-										return _Utils_ap(
-											$author$project$OUI$Material$Button$iconButtonAttrs(theme.icon),
-											A4($author$project$OUI$Material$Button$textAttrs, typescale, colorscheme, theme.common, props.color));
-									case 'SmallFAB':
-										var _v25 = _v0.a;
-										return A3($author$project$OUI$Material$Button$fabAttrs, colorscheme, theme.fab.small, props.color);
-									case 'MediumFAB':
-										var _v26 = _v0.a;
-										return A3($author$project$OUI$Material$Button$fabAttrs, colorscheme, theme.fab.medium, props.color);
-									case 'LargeFAB':
-										var _v27 = _v0.a;
-										return A3($author$project$OUI$Material$Button$fabAttrs, colorscheme, theme.fab.large, props.color);
-									default:
-										break _v0$19;
+					aria,
+					_Utils_ap(
+						attrs,
+						function () {
+							var _v0 = _Utils_Tuple2(props.type_, props.onClick);
+							_v0$19:
+							while (true) {
+								if (_v0.b.$ === 'Nothing') {
+									switch (_v0.a.$) {
+										case 'Elevated':
+											var _v2 = _v0.a;
+											var _v3 = _v0.b;
+											return _Utils_ap(
+												A4($author$project$OUI$Material$Button$commonButtonAttrs, typescale, colorscheme, theme.common, hasIcon),
+												A3($author$project$OUI$Material$Button$elevatedDisabledAttrs, typescale, colorscheme, theme.common));
+										case 'Filled':
+											var _v5 = _v0.a;
+											var _v6 = _v0.b;
+											return _Utils_ap(
+												A4($author$project$OUI$Material$Button$commonButtonAttrs, typescale, colorscheme, theme.common, hasIcon),
+												A3($author$project$OUI$Material$Button$filledDisabledAttrs, typescale, colorscheme, theme.common));
+										case 'FilledIcon':
+											var _v8 = _v0.a;
+											var _v9 = _v0.b;
+											return _Utils_ap(
+												$author$project$OUI$Material$Button$iconButtonAttrs(theme.icon),
+												A3($author$project$OUI$Material$Button$filledDisabledAttrs, typescale, colorscheme, theme.common));
+										case 'Tonal':
+											var _v11 = _v0.a;
+											var _v12 = _v0.b;
+											return _Utils_ap(
+												A4($author$project$OUI$Material$Button$commonButtonAttrs, typescale, colorscheme, theme.common, hasIcon),
+												A3($author$project$OUI$Material$Button$filledDisabledAttrs, typescale, colorscheme, theme.common));
+										case 'Outlined':
+											var _v14 = _v0.a;
+											var _v15 = _v0.b;
+											return _Utils_ap(
+												A4($author$project$OUI$Material$Button$commonButtonAttrs, typescale, colorscheme, theme.common, hasIcon),
+												A3($author$project$OUI$Material$Button$outlinedDisabledAttrs, typescale, colorscheme, theme.common));
+										case 'OutlinedIcon':
+											var _v17 = _v0.a;
+											var _v18 = _v0.b;
+											return _Utils_ap(
+												$author$project$OUI$Material$Button$iconButtonAttrs(theme.icon),
+												A3($author$project$OUI$Material$Button$outlinedDisabledAttrs, typescale, colorscheme, theme.common));
+										case 'Text':
+											var _v20 = _v0.a;
+											var _v21 = _v0.b;
+											return _Utils_ap(
+												A4($author$project$OUI$Material$Button$commonButtonAttrs, typescale, colorscheme, theme.common, hasIcon),
+												A3($author$project$OUI$Material$Button$textDisabledAttrs, typescale, colorscheme, theme.common));
+										case 'Icon':
+											var _v23 = _v0.a;
+											var _v24 = _v0.b;
+											return _Utils_ap(
+												$author$project$OUI$Material$Button$iconButtonAttrs(theme.icon),
+												A3($author$project$OUI$Material$Button$textDisabledAttrs, typescale, colorscheme, theme.common));
+										default:
+											break _v0$19;
+									}
+								} else {
+									switch (_v0.a.$) {
+										case 'Elevated':
+											var _v1 = _v0.a;
+											return _Utils_ap(
+												A4($author$project$OUI$Material$Button$commonButtonAttrs, typescale, colorscheme, theme.common, hasIcon),
+												A4($author$project$OUI$Material$Button$elevatedAttrs, typescale, colorscheme, theme.common, props.color));
+										case 'Filled':
+											var _v4 = _v0.a;
+											return _Utils_ap(
+												A4($author$project$OUI$Material$Button$commonButtonAttrs, typescale, colorscheme, theme.common, hasIcon),
+												A4($author$project$OUI$Material$Button$filledAttrs, typescale, colorscheme, theme.common, props.color));
+										case 'FilledIcon':
+											var _v7 = _v0.a;
+											return _Utils_ap(
+												$author$project$OUI$Material$Button$iconButtonAttrs(theme.icon),
+												A4($author$project$OUI$Material$Button$filledAttrs, typescale, colorscheme, theme.common, props.color));
+										case 'Tonal':
+											var _v10 = _v0.a;
+											return _Utils_ap(
+												A4($author$project$OUI$Material$Button$commonButtonAttrs, typescale, colorscheme, theme.common, hasIcon),
+												A4($author$project$OUI$Material$Button$filledAttrs, typescale, colorscheme, theme.common, props.color));
+										case 'Outlined':
+											var _v13 = _v0.a;
+											return _Utils_ap(
+												A4($author$project$OUI$Material$Button$commonButtonAttrs, typescale, colorscheme, theme.common, hasIcon),
+												A4($author$project$OUI$Material$Button$outlinedAttrs, typescale, colorscheme, theme.common, props.color));
+										case 'OutlinedIcon':
+											var _v16 = _v0.a;
+											return _Utils_ap(
+												$author$project$OUI$Material$Button$iconButtonAttrs(theme.icon),
+												A4($author$project$OUI$Material$Button$outlinedAttrs, typescale, colorscheme, theme.common, props.color));
+										case 'Text':
+											var _v19 = _v0.a;
+											return _Utils_ap(
+												A4($author$project$OUI$Material$Button$commonButtonAttrs, typescale, colorscheme, theme.common, hasIcon),
+												A4($author$project$OUI$Material$Button$textAttrs, typescale, colorscheme, theme.common, props.color));
+										case 'Icon':
+											var _v22 = _v0.a;
+											return _Utils_ap(
+												$author$project$OUI$Material$Button$iconButtonAttrs(theme.icon),
+												A4($author$project$OUI$Material$Button$textAttrs, typescale, colorscheme, theme.common, props.color));
+										case 'SmallFAB':
+											var _v25 = _v0.a;
+											return A3($author$project$OUI$Material$Button$fabAttrs, colorscheme, theme.fab.small, props.color);
+										case 'MediumFAB':
+											var _v26 = _v0.a;
+											return A3($author$project$OUI$Material$Button$fabAttrs, colorscheme, theme.fab.medium, props.color);
+										case 'LargeFAB':
+											var _v27 = _v0.a;
+											return A3($author$project$OUI$Material$Button$fabAttrs, colorscheme, theme.fab.large, props.color);
+										default:
+											break _v0$19;
+									}
 								}
 							}
-						}
-						return A3($author$project$OUI$Material$Button$textDisabledAttrs, typescale, colorscheme, theme.common);
-					}())),
+							return A3($author$project$OUI$Material$Button$textDisabledAttrs, typescale, colorscheme, theme.common);
+						}()))),
 			{label: label, onPress: props.onClick});
 	});
 var $author$project$OUI$Material$renderButton = function (_v0) {
@@ -13511,15 +13633,23 @@ var $author$project$OUI$Showcase$Checkbox$onChange = F2(
 		return $author$project$OUI$Explorer$logEvent(
 			name + (' changes to ' + (checked ? '\'checked\'' : '\'unchecked\'')));
 	});
-var $mdgriffith$elm_ui$Element$htmlAttribute = $mdgriffith$elm_ui$Internal$Model$Attr;
 var $mdgriffith$elm_ui$Element$none = $mdgriffith$elm_ui$Internal$Model$Empty;
 var $author$project$OUI$Checkbox$properties = function (_v0) {
 	var props = _v0.a;
 	return props;
 };
+var $author$project$OUI$Utils$ARIA$RoleCheckbox = function (a) {
+	return {$: 'RoleCheckbox', a: a};
+};
+var $author$project$OUI$Utils$ARIA$roleCheckbox = function (checked) {
+	return $author$project$OUI$Utils$ARIA$fromRole(
+		$author$project$OUI$Utils$ARIA$RoleCheckbox(checked));
+};
 var $author$project$OUI$Material$Checkbox$render = F4(
 	function (colorscheme, theme, attrs, checkbox) {
 		var properties = $author$project$OUI$Checkbox$properties(checkbox);
+		var aria = $author$project$OUI$Utils$ARIA$toElementAttributes(
+			$author$project$OUI$Utils$ARIA$roleCheckbox(properties.checked));
 		var _v0 = function () {
 			var _v1 = _Utils_Tuple2(properties.onChange, properties.color);
 			if (_v1.a.$ === 'Just') {
@@ -13548,37 +13678,37 @@ var $author$project$OUI$Material$Checkbox$render = F4(
 		var borderColor = _v0.c;
 		return A2(
 			$mdgriffith$elm_ui$Element$Input$button,
-			_List_fromArray(
-				[
-					$mdgriffith$elm_ui$Element$width(
-					$mdgriffith$elm_ui$Element$px(theme.stateLayerSize)),
-					$mdgriffith$elm_ui$Element$height(
-					$mdgriffith$elm_ui$Element$px(theme.stateLayerSize)),
-					$mdgriffith$elm_ui$Element$Border$rounded((theme.stateLayerSize / 2) | 0),
-					$mdgriffith$elm_ui$Element$htmlAttribute(
-					$elm$html$Html$Attributes$tabindex(0)),
-					$mdgriffith$elm_ui$Element$focused(
-					_List_fromArray(
-						[
-							$mdgriffith$elm_ui$Element$Background$color(
-							$author$project$OUI$Material$Color$toElementColor(
-								A2($author$project$OUI$Material$Color$setAlpha, $author$project$OUI$Material$Color$focusStateLayerOpacity, colorscheme.onSurface)))
-						])),
-					$mdgriffith$elm_ui$Element$mouseDown(
-					_List_fromArray(
-						[
-							$mdgriffith$elm_ui$Element$Background$color(
-							$author$project$OUI$Material$Color$toElementColor(
-								A2($author$project$OUI$Material$Color$setAlpha, $author$project$OUI$Material$Color$pressStateLayerOpacity, colorscheme.onSurface)))
-						])),
-					$mdgriffith$elm_ui$Element$mouseOver(
-					_List_fromArray(
-						[
-							$mdgriffith$elm_ui$Element$Background$color(
-							$author$project$OUI$Material$Color$toElementColor(
-								A2($author$project$OUI$Material$Color$setAlpha, $author$project$OUI$Material$Color$hoverStateLayerOpacity, colorscheme.onSurface)))
-						]))
-				]),
+			_Utils_ap(
+				aria,
+				_List_fromArray(
+					[
+						$mdgriffith$elm_ui$Element$width(
+						$mdgriffith$elm_ui$Element$px(theme.stateLayerSize)),
+						$mdgriffith$elm_ui$Element$height(
+						$mdgriffith$elm_ui$Element$px(theme.stateLayerSize)),
+						$mdgriffith$elm_ui$Element$Border$rounded((theme.stateLayerSize / 2) | 0),
+						$mdgriffith$elm_ui$Element$focused(
+						_List_fromArray(
+							[
+								$mdgriffith$elm_ui$Element$Background$color(
+								$author$project$OUI$Material$Color$toElementColor(
+									A2($author$project$OUI$Material$Color$setAlpha, $author$project$OUI$Material$Color$focusStateLayerOpacity, colorscheme.onSurface)))
+							])),
+						$mdgriffith$elm_ui$Element$mouseDown(
+						_List_fromArray(
+							[
+								$mdgriffith$elm_ui$Element$Background$color(
+								$author$project$OUI$Material$Color$toElementColor(
+									A2($author$project$OUI$Material$Color$setAlpha, $author$project$OUI$Material$Color$pressStateLayerOpacity, colorscheme.onSurface)))
+							])),
+						$mdgriffith$elm_ui$Element$mouseOver(
+						_List_fromArray(
+							[
+								$mdgriffith$elm_ui$Element$Background$color(
+								$author$project$OUI$Material$Color$toElementColor(
+									A2($author$project$OUI$Material$Color$setAlpha, $author$project$OUI$Material$Color$hoverStateLayerOpacity, colorscheme.onSurface)))
+							]))
+					])),
 			{
 				label: A2(
 					$mdgriffith$elm_ui$Element$el,
@@ -23647,6 +23777,13 @@ var $author$project$OUI$Switch$properties = function (_v0) {
 	var _switch = _v0.a;
 	return _switch;
 };
+var $author$project$OUI$Utils$ARIA$RoleSwitch = function (a) {
+	return {$: 'RoleSwitch', a: a};
+};
+var $author$project$OUI$Utils$ARIA$roleSwitch = function (state) {
+	return $author$project$OUI$Utils$ARIA$fromRole(
+		$author$project$OUI$Utils$ARIA$RoleSwitch(state));
+};
 var $elm$virtual_dom$VirtualDom$style = _VirtualDom_style;
 var $elm$html$Html$Attributes$style = $elm$virtual_dom$VirtualDom$style;
 var $author$project$OUI$Material$Switch$render = F4(
@@ -23657,6 +23794,8 @@ var $author$project$OUI$Material$Switch$render = F4(
 		var color = _v0.color;
 		var iconSelected = _v0.iconSelected;
 		var iconUnselected = _v0.iconUnselected;
+		var aria = $author$project$OUI$Utils$ARIA$toElementAttributes(
+			$author$project$OUI$Utils$ARIA$roleSwitch(selected));
 		var withIcon = (selected && (!_Utils_eq(iconSelected, $elm$core$Maybe$Nothing))) || ((!selected) && (!_Utils_eq(iconUnselected, $elm$core$Maybe$Nothing)));
 		var thumbSize = (withIcon ? function ($) {
 			return $.withIcon;
@@ -23792,7 +23931,9 @@ var $author$project$OUI$Material$Switch$render = F4(
 			]);
 		return A2(
 			$mdgriffith$elm_ui$Element$Input$button,
-			_Utils_ap(trackAttrs, attrs),
+			_Utils_ap(
+				aria,
+				_Utils_ap(trackAttrs, attrs)),
 			{
 				label: A2($mdgriffith$elm_ui$Element$el, thumbAttrs, icon),
 				onPress: A2(

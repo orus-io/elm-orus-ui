@@ -9,6 +9,7 @@ import OUI
 import OUI.Checkbox
 import OUI.Material.Color exposing (toElementColor)
 import OUI.Material.Icon as Icon
+import OUI.Utils.ARIA as ARIA
 
 
 type alias Theme =
@@ -47,6 +48,10 @@ render colorscheme theme attrs checkbox =
         properties =
             OUI.Checkbox.properties checkbox
 
+        aria =
+            ARIA.roleCheckbox properties.checked
+                |> ARIA.toElementAttributes
+
         ( frontColor, backColor, borderColor ) =
             case ( properties.onChange, properties.color ) of
                 ( Just _, OUI.Error ) ->
@@ -70,29 +75,30 @@ render colorscheme theme attrs checkbox =
                     )
     in
     Input.button
-        [ Element.width <| Element.px theme.stateLayerSize
-        , Element.height <| Element.px theme.stateLayerSize
-        , Border.rounded <| theme.stateLayerSize // 2
-        , Element.htmlAttribute <| Html.Attributes.tabindex 0
-        , Element.focused
-            [ colorscheme.onSurface
-                |> OUI.Material.Color.setAlpha OUI.Material.Color.focusStateLayerOpacity
-                |> OUI.Material.Color.toElementColor
-                |> Background.color
-            ]
-        , Element.mouseDown
-            [ colorscheme.onSurface
-                |> OUI.Material.Color.setAlpha OUI.Material.Color.pressStateLayerOpacity
-                |> OUI.Material.Color.toElementColor
-                |> Background.color
-            ]
-        , Element.mouseOver
-            [ colorscheme.onSurface
-                |> OUI.Material.Color.setAlpha OUI.Material.Color.hoverStateLayerOpacity
-                |> OUI.Material.Color.toElementColor
-                |> Background.color
-            ]
-        ]
+        (aria
+            ++ [ Element.width <| Element.px theme.stateLayerSize
+               , Element.height <| Element.px theme.stateLayerSize
+               , Border.rounded <| theme.stateLayerSize // 2
+               , Element.focused
+                    [ colorscheme.onSurface
+                        |> OUI.Material.Color.setAlpha OUI.Material.Color.focusStateLayerOpacity
+                        |> OUI.Material.Color.toElementColor
+                        |> Background.color
+                    ]
+               , Element.mouseDown
+                    [ colorscheme.onSurface
+                        |> OUI.Material.Color.setAlpha OUI.Material.Color.pressStateLayerOpacity
+                        |> OUI.Material.Color.toElementColor
+                        |> Background.color
+                    ]
+               , Element.mouseOver
+                    [ colorscheme.onSurface
+                        |> OUI.Material.Color.setAlpha OUI.Material.Color.hoverStateLayerOpacity
+                        |> OUI.Material.Color.toElementColor
+                        |> Background.color
+                    ]
+               ]
+        )
         { onPress = properties.onChange |> Maybe.map (\msg -> msg <| not properties.checked)
         , label =
             Element.el

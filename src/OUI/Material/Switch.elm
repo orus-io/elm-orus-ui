@@ -8,6 +8,7 @@ import Html.Attributes
 import OUI.Material.Color as Color
 import OUI.Material.Icon as Icon
 import OUI.Switch as Switch exposing (Switch)
+import OUI.Utils.ARIA as ARIA
 
 
 type alias Theme =
@@ -66,6 +67,10 @@ render colorscheme theme attrs switch =
     let
         { onChange, selected, color, iconSelected, iconUnselected } =
             Switch.properties switch
+
+        aria =
+            ARIA.roleSwitch selected
+                |> ARIA.toElementAttributes
 
         { bgColor, outlineColor, thumbColor, iconColor } =
             case ( onChange /= Nothing, selected ) of
@@ -217,7 +222,7 @@ render colorscheme theme attrs switch =
                 (Html.Attributes.style "transition" "all 0.3s ease-out")
             ]
     in
-    Input.button (trackAttrs ++ attrs)
+    Input.button (aria ++ trackAttrs ++ attrs)
         { onPress = onChange |> Maybe.map (\msg -> msg <| not selected)
         , label =
             Element.el thumbAttrs icon

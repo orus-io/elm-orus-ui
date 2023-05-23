@@ -15,7 +15,8 @@
     "OUI.Material",
     "OUI.Material.Color",
     "OUI.Material.Theme",
-    "OUI.Showcase"
+    "OUI.Showcase",
+    "OUI.Utils.ARIA"
   ],
   "elm-version": "0.19.0 <= v < 0.20.0",
   "dependencies": {
