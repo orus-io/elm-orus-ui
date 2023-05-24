@@ -10,7 +10,9 @@
 
     <body>
         <script>
-            let app = Elm.Main.init();
+            let app = Elm.Main.init({flags: {
+                dark_mode: window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+            }});
         </script>
     </body>
 </html>

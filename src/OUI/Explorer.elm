@@ -17,6 +17,7 @@ import Effect exposing (Effect)
 import Element exposing (Element)
 import Element.Background as Background
 import Element.Font as Font
+import Json.Decode
 import Markdown.Parser
 import Markdown.Renderer
 import OUI.Icon as Icon
@@ -311,13 +312,73 @@ bookPath cat title =
         |> String.replace " " "_"
 
 
+type alias Flags =
+    { dark_mode : Bool
+    }
+
+
+decodeFlags : Json.Decode.Decoder Flags
+decodeFlags =
+    Json.Decode.map Flags
+        (Json.Decode.oneOf
+            [ Json.Decode.field "dark_mode" Json.Decode.bool
+            , Json.Decode.succeed False
+            ]
+        )
+
+
+setColorScheme : Int -> ColorSchemeType -> Shared -> Shared
+setColorScheme index type_ shared =
+    let
+        realIndex =
+            if index < 0 then
+                0
+
+            else if index >= List.length shared.colorSchemeList then
+                List.length shared.colorSchemeList - 1
+
+            else
+                index
+
+        colorScheme =
+            shared.colorSchemeList
+                |> (if realIndex > 0 then
+                        List.take realIndex
+
+                    else
+                        identity
+                   )
+                |> List.head
+                |> Maybe.map
+                    (\( light, dark ) ->
+                        case type_ of
+                            Light ->
+                                light
+
+                            Dark ->
+                                dark
+                    )
+                |> Maybe.withDefault Color.defaultLightScheme
+
+        theme =
+            shared.theme
+    in
+    { shared
+        | theme =
+            { theme
+                | colorscheme = colorScheme
+            }
+        , selectedColorScheme = ( realIndex, type_ )
+    }
+
+
 {-| Finalize a explorer and returns Program
 -}
 finalize :
     Explorer Shared SharedMsg current previous currentMsg previousMsg
     ->
         Platform.Program
-            ()
+            Json.Decode.Value
             (Spa.Model String Shared current previous)
             (Spa.Msg SharedMsg (Spa.PageStack.Msg String currentMsg previousMsg))
 finalize expl =
@@ -330,12 +391,25 @@ finalize expl =
     Spa.application mapView
         { toRoute = \url -> url.fragment |> Maybe.withDefault "/"
         , init =
-            \() _ ->
+            \flags _ ->
+                let
+                    dFlags =
+                        Json.Decode.decodeValue decodeFlags flags
+                            |> Result.withDefault { dark_mode = False }
+                in
                 ( { lastEvents = []
                   , theme = Theme.defaultTheme
                   , colorSchemeList = [ ( Color.defaultLightScheme, Color.defaultDarkScheme ) ]
-                  , selectedColorScheme = ( 0, Light )
+                  , selectedColorScheme =
+                        ( 0, Light )
                   }
+                    |> setColorScheme 0
+                        (if dFlags.dark_mode then
+                            Dark
+
+                         else
+                            Light
+                        )
                 , Cmd.none
                 )
         , update =
@@ -352,47 +426,7 @@ finalize expl =
                         )
 
                     SelectColorScheme index type_ ->
-                        let
-                            realIndex =
-                                if index < 0 then
-                                    0
-
-                                else if index >= List.length shared.colorSchemeList then
-                                    List.length shared.colorSchemeList - 1
-
-                                else
-                                    index
-
-                            colorScheme =
-                                shared.colorSchemeList
-                                    |> (if realIndex > 0 then
-                                            List.take realIndex
-
-                                        else
-                                            identity
-                                       )
-                                    |> List.head
-                                    |> Maybe.map
-                                        (\( light, dark ) ->
-                                            case type_ of
-                                                Light ->
-                                                    light
-
-                                                Dark ->
-                                                    dark
-                                        )
-                                    |> Maybe.withDefault Color.defaultLightScheme
-
-                            theme =
-                                shared.theme
-                        in
-                        ( { shared
-                            | theme =
-                                { theme
-                                    | colorscheme = colorScheme
-                                }
-                            , selectedColorScheme = ( realIndex, type_ )
-                          }
+                        ( setColorScheme index type_ shared
                         , Cmd.none
                         )
         , subscriptions = \_ -> Sub.none
