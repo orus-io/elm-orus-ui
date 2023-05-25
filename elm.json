@@ -11,7 +11,7 @@
         "OUI.Explorer",
         "OUI.Icon",
         "OUI.Text",
-        "OUI.TextInput",
+        "OUI.TextField",
         "OUI.Switch",
         "OUI.Material",
         "OUI.Material.Color",

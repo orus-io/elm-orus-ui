@@ -1,11 +1,11 @@
 module OUI.Material exposing
-    ( renderText, renderButton, renderCheckbox, renderIcon, renderSwitch
+    ( renderText, renderButton, renderCheckbox, renderIcon, renderSwitch, renderTextField
     , toElementColor
     )
 
 {-| A elm-ui based renderer API
 
-@docs renderText, renderButton, renderCheckbox, renderIcon, renderSwitch
+@docs renderText, renderButton, renderCheckbox, renderIcon, renderSwitch, renderTextField
 
 @docs toElementColor
 
@@ -20,10 +20,12 @@ import OUI.Material.Button
 import OUI.Material.Checkbox
 import OUI.Material.Icon
 import OUI.Material.Switch
+import OUI.Material.TextField
 import OUI.Material.Theme exposing (Theme)
 import OUI.Material.Typography
 import OUI.Switch
 import OUI.Text
+import OUI.TextField
 
 
 {-| Convert a color to a Element.color
@@ -71,3 +73,10 @@ renderCheckbox { colorscheme, checkbox } =
 renderSwitch : Theme -> List (Attribute msg) -> OUI.Switch.Switch msg -> Element msg
 renderSwitch { colorscheme, switch } =
     OUI.Material.Switch.render colorscheme switch
+
+
+{-| Render a TextField
+-}
+renderTextField : Theme -> List (Attribute msg) -> OUI.TextField.TextField msg -> Element msg
+renderTextField { typescale, colorscheme, textfield } =
+    OUI.Material.TextField.render typescale colorscheme textfield

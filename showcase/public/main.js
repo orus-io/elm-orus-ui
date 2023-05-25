@@ -24723,24 +24723,47 @@ var $author$project$OUI$Showcase$Switches$book = A2(
 							}));
 				})
 		}));
-var $author$project$OUI$Showcase$TextInput$OnChange = function (a) {
-	return {$: 'OnChange', a: a};
-};
-var $author$project$OUI$Showcase$TextInput$OnFocus = {$: 'OnFocus'};
-var $author$project$OUI$Showcase$TextInput$OnLoseFocus = {$: 'OnLoseFocus'};
-var $author$project$OUI$TextInput$Filled = {$: 'Filled'};
-var $author$project$OUI$TextInput$TextInput = function (a) {
-	return {$: 'TextInput', a: a};
-};
-var $author$project$OUI$TextInput$new = F2(
-	function (onChange, value) {
-		return $author$project$OUI$TextInput$TextInput(
-			{color: $author$project$OUI$Primary, hasFocus: false, onChange: onChange, onFocus: $elm$core$Maybe$Nothing, onLoseFocus: $elm$core$Maybe$Nothing, supportingText: $elm$core$Maybe$Nothing, type_: $author$project$OUI$TextInput$Filled, value: value});
+var $author$project$OUI$TextField$Filled = {$: 'Filled'};
+var $author$project$OUI$Showcase$TextFields$OnChange = F2(
+	function (a, b) {
+		return {$: 'OnChange', a: a, b: b};
 	});
-var $author$project$OUI$TextInput$onFocusBlur = F3(
+var $author$project$OUI$Showcase$TextFields$OnFocus = function (a) {
+	return {$: 'OnFocus', a: a};
+};
+var $author$project$OUI$Showcase$TextFields$OnLoseFocus = function (a) {
+	return {$: 'OnLoseFocus', a: a};
+};
+var $author$project$OUI$TextField$Outlined = {$: 'Outlined'};
+var $author$project$OUI$Showcase$TextFields$newInputState = {hasFocus: false, text: ''};
+var $author$project$OUI$Showcase$TextFields$inputHasFocus = F2(
+	function (name, _v0) {
+		var inputs = _v0.inputs;
+		return A2(
+			$elm$core$Maybe$withDefault,
+			$author$project$OUI$Showcase$TextFields$newInputState,
+			A2($elm$core$Dict$get, name, inputs)).hasFocus;
+	});
+var $author$project$OUI$Showcase$TextFields$inputText = F2(
+	function (name, _v0) {
+		var inputs = _v0.inputs;
+		return A2(
+			$elm$core$Maybe$withDefault,
+			$author$project$OUI$Showcase$TextFields$newInputState,
+			A2($elm$core$Dict$get, name, inputs)).text;
+	});
+var $author$project$OUI$TextField$TextField = function (a) {
+	return {$: 'TextField', a: a};
+};
+var $author$project$OUI$TextField$new = F3(
+	function (label, onChange, value) {
+		return $author$project$OUI$TextField$TextField(
+			{color: $author$project$OUI$Primary, hasFocus: false, label: label, leadingIcon: $elm$core$Maybe$Nothing, onChange: onChange, onFocus: $elm$core$Maybe$Nothing, onLoseFocus: $elm$core$Maybe$Nothing, supportingText: $elm$core$Maybe$Nothing, trailingIcon: $elm$core$Maybe$Nothing, type_: $author$project$OUI$TextField$Filled, value: value});
+	});
+var $author$project$OUI$TextField$onFocusBlur = F3(
 	function (onFocus, onLoseFocus, _v0) {
 		var props = _v0.a;
-		return $author$project$OUI$TextInput$TextInput(
+		return $author$project$OUI$TextField$TextField(
 			_Utils_update(
 				props,
 				{
@@ -24748,10 +24771,28 @@ var $author$project$OUI$TextInput$onFocusBlur = F3(
 					onLoseFocus: $elm$core$Maybe$Just(onLoseFocus)
 				}));
 	});
+var $author$project$OUI$Text$Body = {$: 'Body'};
+var $author$project$OUI$Text$Text = F3(
+	function (a, b, c) {
+		return {$: 'Text', a: a, b: b, c: c};
+	});
+var $author$project$OUI$Text$bodyLarge = A2($author$project$OUI$Text$Text, $author$project$OUI$Text$Body, $author$project$OUI$Text$Large);
+var $author$project$OUI$Text$Small = {$: 'Small'};
+var $author$project$OUI$Text$bodySmall = A2($author$project$OUI$Text$Text, $author$project$OUI$Text$Body, $author$project$OUI$Text$Small);
+var $author$project$OUI$Material$TextField$ifThenElse = F3(
+	function (value, ifTrue, ifFalse) {
+		return value ? ifTrue : ifFalse;
+	});
 var $mdgriffith$elm_ui$Element$Input$HiddenLabel = function (a) {
 	return {$: 'HiddenLabel', a: a};
 };
 var $mdgriffith$elm_ui$Element$Input$labelHidden = $mdgriffith$elm_ui$Element$Input$HiddenLabel;
+var $mdgriffith$elm_ui$Element$moveDown = function (y) {
+	return A2(
+		$mdgriffith$elm_ui$Internal$Model$TransformComponent,
+		$mdgriffith$elm_ui$Internal$Flag$moveY,
+		$mdgriffith$elm_ui$Internal$Model$MoveY(y));
+};
 var $elm$html$Html$Events$onFocus = function (msg) {
 	return A2(
 		$elm$html$Html$Events$on,
@@ -24766,10 +24807,20 @@ var $elm$html$Html$Events$onBlur = function (msg) {
 		$elm$json$Json$Decode$succeed(msg));
 };
 var $mdgriffith$elm_ui$Element$Events$onLoseFocus = A2($elm$core$Basics$composeL, $mdgriffith$elm_ui$Internal$Model$Attr, $elm$html$Html$Events$onBlur);
-var $author$project$OUI$TextInput$properties = function (_v0) {
+var $author$project$OUI$TextField$properties = function (_v0) {
 	var props = _v0.a;
 	return props;
 };
+var $author$project$OUI$Material$Typography$render = F2(
+	function (typescale, _v0) {
+		var type_ = _v0.a;
+		var size = _v0.b;
+		var text = _v0.c;
+		return A2(
+			$mdgriffith$elm_ui$Element$el,
+			A3($author$project$OUI$Material$Typography$attrs, typescale, type_, size),
+			$mdgriffith$elm_ui$Element$text(text));
+	});
 var $mdgriffith$elm_ui$Element$Input$TextInputNode = function (a) {
 	return {$: 'TextInputNode', a: a};
 };
@@ -25572,103 +25623,637 @@ var $mdgriffith$elm_ui$Element$Input$text = $mdgriffith$elm_ui$Element$Input$tex
 		spellchecked: false,
 		type_: $mdgriffith$elm_ui$Element$Input$TextInputNode('text')
 	});
-var $author$project$OUI$Material$TextInput$render = F4(
-	function (colorscheme, theme, attrs, textfield) {
-		var _v0 = $author$project$OUI$TextInput$properties(textfield);
-		var onChange = _v0.onChange;
-		var value = _v0.value;
-		var onFocus = _v0.onFocus;
-		var onLoseFocus = _v0.onLoseFocus;
-		var hasFocus = _v0.hasFocus;
+var $author$project$OUI$Material$TextField$transition = A2(
+	$elm$core$Basics$composeR,
+	$elm$html$Html$Attributes$style('transition'),
+	$mdgriffith$elm_ui$Element$htmlAttribute);
+var $mdgriffith$elm_ui$Element$Border$widthXY = F2(
+	function (x, y) {
+		return A2(
+			$mdgriffith$elm_ui$Internal$Model$StyleClass,
+			$mdgriffith$elm_ui$Internal$Flag$borderWidth,
+			A5(
+				$mdgriffith$elm_ui$Internal$Model$BorderWidth,
+				'b-' + ($elm$core$String$fromInt(x) + ('-' + $elm$core$String$fromInt(y))),
+				y,
+				x,
+				y,
+				x));
+	});
+var $mdgriffith$elm_ui$Element$Border$widthEach = function (_v0) {
+	var bottom = _v0.bottom;
+	var top = _v0.top;
+	var left = _v0.left;
+	var right = _v0.right;
+	return (_Utils_eq(top, bottom) && _Utils_eq(left, right)) ? (_Utils_eq(top, right) ? $mdgriffith$elm_ui$Element$Border$width(top) : A2($mdgriffith$elm_ui$Element$Border$widthXY, left, top)) : A2(
+		$mdgriffith$elm_ui$Internal$Model$StyleClass,
+		$mdgriffith$elm_ui$Internal$Flag$borderWidth,
+		A5(
+			$mdgriffith$elm_ui$Internal$Model$BorderWidth,
+			'b-' + ($elm$core$String$fromInt(top) + ('-' + ($elm$core$String$fromInt(right) + ('-' + ($elm$core$String$fromInt(bottom) + ('-' + $elm$core$String$fromInt(left))))))),
+			top,
+			right,
+			bottom,
+			left));
+};
+var $author$project$OUI$Material$TextField$render = F5(
+	function (typescale, colorscheme, theme, attrs, textfield) {
+		var p = $author$project$OUI$TextField$properties(textfield);
+		var label = p.label;
+		var isOutlined = _Utils_eq(p.type_, $author$project$OUI$TextField$Outlined);
+		var leftBorderWidth = isOutlined ? A3($author$project$OUI$Material$TextField$ifThenElse, p.hasFocus, 2, 1) : 0;
+		var rightBorderWidth = isOutlined ? A3($author$project$OUI$Material$TextField$ifThenElse, p.hasFocus, 2, 1) : 0;
+		var topBorderWidth = isOutlined ? A3($author$project$OUI$Material$TextField$ifThenElse, p.hasFocus, 2, 1) : 0;
+		var isFilled = _Utils_eq(p.type_, $author$project$OUI$TextField$Filled);
+		var isEmpty = p.value === '';
+		var labelHoldPlace = isEmpty && (!p.hasFocus);
+		var inputMoveDownBy = (isFilled && (!labelHoldPlace)) ? ((theme.height - theme.filled.topBottomPadding) - (((theme.height / 2) | 0) + ((typescale.body.large.lineHeight / 2) | 0))) : 0;
+		var heightAttr = $mdgriffith$elm_ui$Element$height(
+			$mdgriffith$elm_ui$Element$px(
+				function () {
+					var _v5 = p.type_;
+					if (_v5.$ === 'Filled') {
+						return theme.height;
+					} else {
+						return theme.height;
+					}
+				}()));
+		var hasTrailingIcon = !_Utils_eq(p.trailingIcon, $elm$core$Maybe$Nothing);
+		var hasLeadingIcon = !_Utils_eq(p.leadingIcon, $elm$core$Maybe$Nothing);
+		var inputLeftOffset = hasLeadingIcon ? ((theme.leftRightPaddingWithIcon + theme.iconSize) + theme.paddingBetweenIconAndText) : theme.leftRightPaddingWithoutIcon;
+		var hasError = $author$project$OUI$Material$Color$isError(p.color);
+		var labelColor = (hasError || p.hasFocus) ? A2($author$project$OUI$Material$Color$getElementColor, p.color, colorscheme) : $author$project$OUI$Material$Color$toElementColor(colorscheme.onSurface);
+		var labelElement = function () {
+			var staticAttrs = _List_fromArray(
+				[
+					$author$project$OUI$Material$TextField$transition('all 0.15s'),
+					$mdgriffith$elm_ui$Element$Font$color(labelColor),
+					$mdgriffith$elm_ui$Element$htmlAttribute(
+					A2($elm$html$Html$Attributes$style, 'pointer-events', 'none'))
+				]);
+			if (labelHoldPlace) {
+				return A2(
+					$mdgriffith$elm_ui$Element$el,
+					_Utils_ap(
+						staticAttrs,
+						_List_fromArray(
+							[
+								$mdgriffith$elm_ui$Element$moveDown((((theme.height / 2) | 0) - ((typescale.body.large.size / 2) | 0)) - topBorderWidth),
+								$mdgriffith$elm_ui$Element$moveRight(inputLeftOffset - leftBorderWidth)
+							])),
+					A2(
+						$author$project$OUI$Material$Typography$render,
+						typescale,
+						$author$project$OUI$Text$bodyLarge(label)));
+			} else {
+				if (isOutlined) {
+					var topOffset = (typescale.body.small.size / 2) | 0;
+					return A2(
+						$mdgriffith$elm_ui$Element$el,
+						_Utils_ap(
+							staticAttrs,
+							_List_fromArray(
+								[
+									$mdgriffith$elm_ui$Element$moveUp(topOffset),
+									$mdgriffith$elm_ui$Element$moveRight(theme.leftRightPaddingWithoutIcon - theme.outlined.labelLeftRightPadding),
+									A2($mdgriffith$elm_ui$Element$paddingXY, theme.outlined.labelLeftRightPadding, 0),
+									$mdgriffith$elm_ui$Element$htmlAttribute(
+									A2(
+										$elm$html$Html$Attributes$style,
+										'background',
+										'linear-gradient(to bottom, transparent 0 ' + ($elm$core$String$fromInt(topOffset) + ('px, ' + ($avh4$elm_color$Color$toCssString(colorscheme.surface) + (' ' + ($elm$core$String$fromInt(topOffset) + 'px)')))))))
+								])),
+						A2(
+							$author$project$OUI$Material$Typography$render,
+							typescale,
+							$author$project$OUI$Text$bodySmall(label)));
+				} else {
+					return A2(
+						$mdgriffith$elm_ui$Element$el,
+						_Utils_ap(
+							staticAttrs,
+							_List_fromArray(
+								[
+									$mdgriffith$elm_ui$Element$moveDown(theme.filled.topBottomPadding + (((typescale.body.large.lineHeight - typescale.body.large.size) / 2) | 0)),
+									$mdgriffith$elm_ui$Element$moveRight(inputLeftOffset - leftBorderWidth)
+								])),
+						A2(
+							$author$project$OUI$Material$Typography$render,
+							typescale,
+							$author$project$OUI$Text$bodySmall(label)));
+				}
+			}
+		}();
+		var fontColorAttr = $mdgriffith$elm_ui$Element$Font$color(
+			$author$project$OUI$Material$Color$toElementColor(colorscheme.onSurface));
 		var focusEvents = A2(
 			$elm$core$List$filterMap,
 			$elm$core$Basics$identity,
 			_List_fromArray(
 				[
-					A2($elm$core$Maybe$map, $mdgriffith$elm_ui$Element$Events$onFocus, onFocus),
-					A2($elm$core$Maybe$map, $mdgriffith$elm_ui$Element$Events$onLoseFocus, onLoseFocus)
+					A2($elm$core$Maybe$map, $mdgriffith$elm_ui$Element$Events$onFocus, p.onFocus),
+					A2($elm$core$Maybe$map, $mdgriffith$elm_ui$Element$Events$onLoseFocus, p.onLoseFocus)
 				]));
+		var bottomBorderWidth = A3($author$project$OUI$Material$TextField$ifThenElse, p.hasFocus, 2, 1);
+		var paddingAttrs = function () {
+			var _v4 = p.type_;
+			if (_v4.$ === 'Filled') {
+				return _List_fromArray(
+					[
+						$mdgriffith$elm_ui$Element$paddingEach(
+						{
+							bottom: A3($author$project$OUI$Material$TextField$ifThenElse, labelHoldPlace, 0, theme.filled.topBottomPadding - bottomBorderWidth),
+							left: A3($author$project$OUI$Material$TextField$ifThenElse, hasLeadingIcon, theme.leftRightPaddingWithIcon, theme.leftRightPaddingWithoutIcon),
+							right: A3($author$project$OUI$Material$TextField$ifThenElse, hasTrailingIcon, theme.leftRightPaddingWithIcon, theme.leftRightPaddingWithoutIcon),
+							top: A3($author$project$OUI$Material$TextField$ifThenElse, labelHoldPlace, bottomBorderWidth, theme.filled.topBottomPadding)
+						}),
+						$mdgriffith$elm_ui$Element$spacing(theme.paddingBetweenIconAndText)
+					]);
+			} else {
+				return _List_fromArray(
+					[
+						$mdgriffith$elm_ui$Element$padding(
+						A3($author$project$OUI$Material$TextField$ifThenElse, p.hasFocus, 0, 1))
+					]);
+			}
+		}();
+		var borderColor = (hasError || p.hasFocus) ? A2($author$project$OUI$Material$Color$getElementColor, p.color, colorscheme) : $author$project$OUI$Material$Color$toElementColor(colorscheme.onSurfaceVariant);
+		var borderAttrs = A2(
+			$elm$core$List$cons,
+			$author$project$OUI$Material$TextField$transition('color 0.15s'),
+			A2(
+				$elm$core$List$cons,
+				$mdgriffith$elm_ui$Element$Border$color(borderColor),
+				function () {
+					var _v3 = p.type_;
+					if (_v3.$ === 'Filled') {
+						return _List_fromArray(
+							[
+								$mdgriffith$elm_ui$Element$Border$widthEach(
+								{bottom: bottomBorderWidth, left: 0, right: 0, top: 0})
+							]);
+					} else {
+						return _List_fromArray(
+							[
+								$mdgriffith$elm_ui$Element$Border$widthEach(
+								{bottom: bottomBorderWidth, left: leftBorderWidth, right: rightBorderWidth, top: topBorderWidth}),
+								$mdgriffith$elm_ui$Element$Border$rounded(theme.outlined.shape)
+							]);
+					}
+				}()));
+		var bgColorAttr = function () {
+			var _v2 = p.type_;
+			if (_v2.$ === 'Filled') {
+				return $mdgriffith$elm_ui$Element$Background$color(
+					$author$project$OUI$Material$Color$toElementColor(colorscheme.surfaceContainerHighest));
+			} else {
+				return $mdgriffith$elm_ui$Element$Background$color(
+					$author$project$OUI$Material$Color$toElementColor(colorscheme.surface));
+			}
+		}();
 		return A2(
-			$mdgriffith$elm_ui$Element$Input$text,
-			_Utils_ap(attrs, focusEvents),
-			{
-				label: $mdgriffith$elm_ui$Element$Input$labelHidden(''),
-				onChange: onChange,
-				placeholder: $elm$core$Maybe$Nothing,
-				text: value
-			});
+			$mdgriffith$elm_ui$Element$column,
+			A2(
+				$elm$core$List$cons,
+				$mdgriffith$elm_ui$Element$spacing(theme.supportingTextTopPadding),
+				A2(
+					$elm$core$List$cons,
+					$mdgriffith$elm_ui$Element$inFront(labelElement),
+					attrs)),
+			A2(
+				$elm$core$List$cons,
+				A2(
+					$mdgriffith$elm_ui$Element$row,
+					A2(
+						$elm$core$List$cons,
+						bgColorAttr,
+						A2(
+							$elm$core$List$cons,
+							fontColorAttr,
+							A2(
+								$elm$core$List$cons,
+								heightAttr,
+								_Utils_ap(borderAttrs, paddingAttrs)))),
+					_Utils_ap(
+						function () {
+							var _v0 = p.leadingIcon;
+							if (_v0.$ === 'Just') {
+								var icon = _v0.a;
+								return _List_fromArray(
+									[
+										A4($author$project$OUI$Material$Icon$renderWithSizeColor, 24, colorscheme.onSurfaceVariant, _List_Nil, icon)
+									]);
+							} else {
+								return _List_Nil;
+							}
+						}(),
+						_List_fromArray(
+							[
+								A2(
+								$mdgriffith$elm_ui$Element$Input$text,
+								A2(
+									$elm$core$List$cons,
+									bgColorAttr,
+									A2(
+										$elm$core$List$cons,
+										$mdgriffith$elm_ui$Element$Border$width(0),
+										A2(
+											$elm$core$List$cons,
+											A2($mdgriffith$elm_ui$Element$paddingXY, 0, 12),
+											A2(
+												$elm$core$List$cons,
+												$mdgriffith$elm_ui$Element$moveDown(inputMoveDownBy),
+												_Utils_ap(
+													focusEvents,
+													A3($author$project$OUI$Material$Typography$attrs, typescale, $author$project$OUI$Text$Body, $author$project$OUI$Text$Large)))))),
+								{
+									label: $mdgriffith$elm_ui$Element$Input$labelHidden(p.label),
+									onChange: p.onChange,
+									placeholder: $elm$core$Maybe$Nothing,
+									text: p.value
+								})
+							]))),
+				function () {
+					var _v1 = p.supportingText;
+					if (_v1.$ === 'Just') {
+						var text = _v1.a;
+						return _List_fromArray(
+							[
+								A2(
+								$mdgriffith$elm_ui$Element$el,
+								_List_fromArray(
+									[
+										$mdgriffith$elm_ui$Element$Font$color(
+										$author$project$OUI$Material$Color$toElementColor(colorscheme.onSurfaceVariant)),
+										A2($mdgriffith$elm_ui$Element$paddingXY, theme.leftRightPaddingWithoutIcon, 0)
+									]),
+								A2(
+									$author$project$OUI$Material$Typography$render,
+									typescale,
+									$author$project$OUI$Text$bodySmall(text)))
+							]);
+					} else {
+						return _List_Nil;
+					}
+				}()));
 	});
-var $author$project$OUI$Material$renderTextInput = function (_v0) {
+var $author$project$OUI$Material$renderTextField = function (_v0) {
+	var typescale = _v0.typescale;
 	var colorscheme = _v0.colorscheme;
 	var textfield = _v0.textfield;
-	return A2($author$project$OUI$Material$TextInput$render, colorscheme, textfield);
+	return A3($author$project$OUI$Material$TextField$render, typescale, colorscheme, textfield);
 };
-var $author$project$OUI$Showcase$TextInput$textfields = F2(
-	function (_v0, _v1) {
+var $author$project$OUI$TextField$withColor = F2(
+	function (value, _v0) {
+		var props = _v0.a;
+		return $author$project$OUI$TextField$TextField(
+			_Utils_update(
+				props,
+				{color: value}));
+	});
+var $author$project$OUI$TextField$withFocused = F2(
+	function (hasFocus, _v0) {
+		var props = _v0.a;
+		return $author$project$OUI$TextField$TextField(
+			_Utils_update(
+				props,
+				{hasFocus: hasFocus}));
+	});
+var $author$project$OUI$TextField$withLeadingIcon = F2(
+	function (value, _v0) {
+		var props = _v0.a;
+		return $author$project$OUI$TextField$TextField(
+			_Utils_update(
+				props,
+				{
+					leadingIcon: $elm$core$Maybe$Just(value)
+				}));
+	});
+var $author$project$OUI$TextField$withSupportingText = F2(
+	function (value, _v0) {
+		var props = _v0.a;
+		return $author$project$OUI$TextField$TextField(
+			_Utils_update(
+				props,
+				{
+					supportingText: $elm$core$Maybe$Just(value)
+				}));
+	});
+var $author$project$OUI$TextField$withTrailingIcon = F2(
+	function (value, _v0) {
+		var props = _v0.a;
+		return $author$project$OUI$TextField$TextField(
+			_Utils_update(
+				props,
+				{
+					trailingIcon: $elm$core$Maybe$Just(value)
+				}));
+	});
+var $author$project$OUI$TextField$withType = F2(
+	function (value, _v0) {
+		var props = _v0.a;
+		return $author$project$OUI$TextField$TextField(
+			_Utils_update(
+				props,
+				{type_: value}));
+	});
+var $author$project$OUI$Showcase$TextFields$textfields = F2(
+	function (_v0, model) {
 		var theme = _v0.theme;
-		var text1 = _v1.text1;
 		return A2(
 			$mdgriffith$elm_ui$Element$map,
 			$author$project$OUI$Explorer$bookMsg,
-			A3(
-				$author$project$OUI$Material$renderTextInput,
-				theme,
+			A2(
+				$mdgriffith$elm_ui$Element$column,
 				_List_fromArray(
-					[$mdgriffith$elm_ui$Element$centerX, $mdgriffith$elm_ui$Element$centerY]),
-				A3(
-					$author$project$OUI$TextInput$onFocusBlur,
-					$author$project$OUI$Showcase$TextInput$OnFocus,
-					$author$project$OUI$Showcase$TextInput$OnLoseFocus,
-					A2($author$project$OUI$TextInput$new, $author$project$OUI$Showcase$TextInput$OnChange, text1))));
+					[
+						$mdgriffith$elm_ui$Element$spacing(20)
+					]),
+				_List_fromArray(
+					[
+						A3(
+						$author$project$OUI$Material$renderTextField,
+						theme,
+						_List_fromArray(
+							[$mdgriffith$elm_ui$Element$centerX, $mdgriffith$elm_ui$Element$centerY]),
+						A2(
+							$author$project$OUI$TextField$withType,
+							$author$project$OUI$TextField$Filled,
+							A2(
+								$author$project$OUI$TextField$withSupportingText,
+								'A filled text field',
+								A2(
+									$author$project$OUI$TextField$withFocused,
+									A2($author$project$OUI$Showcase$TextFields$inputHasFocus, 'filled', model),
+									A3(
+										$author$project$OUI$TextField$onFocusBlur,
+										$author$project$OUI$Showcase$TextFields$OnFocus('filled'),
+										$author$project$OUI$Showcase$TextFields$OnLoseFocus('filled'),
+										A3(
+											$author$project$OUI$TextField$new,
+											'Filled',
+											$author$project$OUI$Showcase$TextFields$OnChange('filled'),
+											A2($author$project$OUI$Showcase$TextFields$inputText, 'filled', model))))))),
+						A3(
+						$author$project$OUI$Material$renderTextField,
+						theme,
+						_List_fromArray(
+							[$mdgriffith$elm_ui$Element$centerX, $mdgriffith$elm_ui$Element$centerY]),
+						A2(
+							$author$project$OUI$TextField$withType,
+							$author$project$OUI$TextField$Filled,
+							A2(
+								$author$project$OUI$TextField$withLeadingIcon,
+								$author$project$OUI$Icon$check,
+								A2(
+									$author$project$OUI$TextField$withSupportingText,
+									'A filled text field with leading icon',
+									A2(
+										$author$project$OUI$TextField$withFocused,
+										A2($author$project$OUI$Showcase$TextFields$inputHasFocus, 'filledLeadIcon', model),
+										A3(
+											$author$project$OUI$TextField$onFocusBlur,
+											$author$project$OUI$Showcase$TextFields$OnFocus('filledLeadIcon'),
+											$author$project$OUI$Showcase$TextFields$OnLoseFocus('filledLeadIcon'),
+											A3(
+												$author$project$OUI$TextField$new,
+												'Filled',
+												$author$project$OUI$Showcase$TextFields$OnChange('filledLeadIcon'),
+												A2($author$project$OUI$Showcase$TextFields$inputText, 'filledLeadIcon', model)))))))),
+						A3(
+						$author$project$OUI$Material$renderTextField,
+						theme,
+						_List_fromArray(
+							[$mdgriffith$elm_ui$Element$centerX, $mdgriffith$elm_ui$Element$centerY]),
+						A2(
+							$author$project$OUI$TextField$withType,
+							$author$project$OUI$TextField$Filled,
+							A2(
+								$author$project$OUI$TextField$withTrailingIcon,
+								$author$project$OUI$Icon$clear,
+								A2(
+									$author$project$OUI$TextField$withSupportingText,
+									'A filled text field with trailing icon',
+									A2(
+										$author$project$OUI$TextField$withFocused,
+										A2($author$project$OUI$Showcase$TextFields$inputHasFocus, 'filledTrailIcon', model),
+										A3(
+											$author$project$OUI$TextField$onFocusBlur,
+											$author$project$OUI$Showcase$TextFields$OnFocus('filledTrailIcon'),
+											$author$project$OUI$Showcase$TextFields$OnLoseFocus('filledTrailIcon'),
+											A3(
+												$author$project$OUI$TextField$new,
+												'Filled',
+												$author$project$OUI$Showcase$TextFields$OnChange('filledTrailIcon'),
+												A2($author$project$OUI$Showcase$TextFields$inputText, 'filledTrailIcon', model)))))))),
+						A3(
+						$author$project$OUI$Material$renderTextField,
+						theme,
+						_List_fromArray(
+							[$mdgriffith$elm_ui$Element$centerX, $mdgriffith$elm_ui$Element$centerY]),
+						A2(
+							$author$project$OUI$TextField$withColor,
+							$author$project$OUI$Error,
+							A2(
+								$author$project$OUI$TextField$withType,
+								$author$project$OUI$TextField$Filled,
+								A2(
+									$author$project$OUI$TextField$withSupportingText,
+									'A filled text field with error',
+									A2(
+										$author$project$OUI$TextField$withFocused,
+										A2($author$project$OUI$Showcase$TextFields$inputHasFocus, 'filledError', model),
+										A3(
+											$author$project$OUI$TextField$onFocusBlur,
+											$author$project$OUI$Showcase$TextFields$OnFocus('filledError'),
+											$author$project$OUI$Showcase$TextFields$OnLoseFocus('filledError'),
+											A3(
+												$author$project$OUI$TextField$new,
+												'Filled',
+												$author$project$OUI$Showcase$TextFields$OnChange('filledError'),
+												A2($author$project$OUI$Showcase$TextFields$inputText, 'filledError', model)))))))),
+						A3(
+						$author$project$OUI$Material$renderTextField,
+						theme,
+						_List_fromArray(
+							[$mdgriffith$elm_ui$Element$centerX, $mdgriffith$elm_ui$Element$centerY]),
+						A2(
+							$author$project$OUI$TextField$withSupportingText,
+							'A outlined text field',
+							A2(
+								$author$project$OUI$TextField$withType,
+								$author$project$OUI$TextField$Outlined,
+								A2(
+									$author$project$OUI$TextField$withFocused,
+									A2($author$project$OUI$Showcase$TextFields$inputHasFocus, 'outlined', model),
+									A3(
+										$author$project$OUI$TextField$onFocusBlur,
+										$author$project$OUI$Showcase$TextFields$OnFocus('outlined'),
+										$author$project$OUI$Showcase$TextFields$OnLoseFocus('outlined'),
+										A3(
+											$author$project$OUI$TextField$new,
+											'Outlined',
+											$author$project$OUI$Showcase$TextFields$OnChange('outlined'),
+											A2($author$project$OUI$Showcase$TextFields$inputText, 'outlined', model))))))),
+						A3(
+						$author$project$OUI$Material$renderTextField,
+						theme,
+						_List_fromArray(
+							[$mdgriffith$elm_ui$Element$centerX, $mdgriffith$elm_ui$Element$centerY]),
+						A2(
+							$author$project$OUI$TextField$withType,
+							$author$project$OUI$TextField$Outlined,
+							A2(
+								$author$project$OUI$TextField$withLeadingIcon,
+								$author$project$OUI$Icon$check,
+								A2(
+									$author$project$OUI$TextField$withSupportingText,
+									'A outlined text field with leading icon',
+									A2(
+										$author$project$OUI$TextField$withFocused,
+										A2($author$project$OUI$Showcase$TextFields$inputHasFocus, 'outlinedLeadIcon', model),
+										A3(
+											$author$project$OUI$TextField$onFocusBlur,
+											$author$project$OUI$Showcase$TextFields$OnFocus('outlinedLeadIcon'),
+											$author$project$OUI$Showcase$TextFields$OnLoseFocus('outlinedLeadIcon'),
+											A3(
+												$author$project$OUI$TextField$new,
+												'Outlined',
+												$author$project$OUI$Showcase$TextFields$OnChange('outlinedLeadIcon'),
+												A2($author$project$OUI$Showcase$TextFields$inputText, 'outlinedLeadIcon', model)))))))),
+						A3(
+						$author$project$OUI$Material$renderTextField,
+						theme,
+						_List_fromArray(
+							[$mdgriffith$elm_ui$Element$centerX, $mdgriffith$elm_ui$Element$centerY]),
+						A2(
+							$author$project$OUI$TextField$withType,
+							$author$project$OUI$TextField$Outlined,
+							A2(
+								$author$project$OUI$TextField$withTrailingIcon,
+								$author$project$OUI$Icon$clear,
+								A2(
+									$author$project$OUI$TextField$withSupportingText,
+									'A outlined text field with trailing icon',
+									A2(
+										$author$project$OUI$TextField$withFocused,
+										A2($author$project$OUI$Showcase$TextFields$inputHasFocus, 'outlinedTrailIcon', model),
+										A3(
+											$author$project$OUI$TextField$onFocusBlur,
+											$author$project$OUI$Showcase$TextFields$OnFocus('outlinedTrailIcon'),
+											$author$project$OUI$Showcase$TextFields$OnLoseFocus('outlinedTrailIcon'),
+											A3(
+												$author$project$OUI$TextField$new,
+												'Outlined',
+												$author$project$OUI$Showcase$TextFields$OnChange('outlinedTrailIcon'),
+												A2($author$project$OUI$Showcase$TextFields$inputText, 'outlinedTrailIcon', model)))))))),
+						A3(
+						$author$project$OUI$Material$renderTextField,
+						theme,
+						_List_fromArray(
+							[$mdgriffith$elm_ui$Element$centerX, $mdgriffith$elm_ui$Element$centerY]),
+						A2(
+							$author$project$OUI$TextField$withColor,
+							$author$project$OUI$Error,
+							A2(
+								$author$project$OUI$TextField$withType,
+								$author$project$OUI$TextField$Outlined,
+								A2(
+									$author$project$OUI$TextField$withSupportingText,
+									'A outlined text field with error',
+									A2(
+										$author$project$OUI$TextField$withFocused,
+										A2($author$project$OUI$Showcase$TextFields$inputHasFocus, 'outlinedError', model),
+										A3(
+											$author$project$OUI$TextField$onFocusBlur,
+											$author$project$OUI$Showcase$TextFields$OnFocus('outlinedError'),
+											$author$project$OUI$Showcase$TextFields$OnLoseFocus('outlinedError'),
+											A3(
+												$author$project$OUI$TextField$new,
+												'Outlined',
+												$author$project$OUI$Showcase$TextFields$OnChange('outlinedError'),
+												A2($author$project$OUI$Showcase$TextFields$inputText, 'outlinedError', model))))))))
+					])));
 	});
-var $author$project$OUI$Showcase$TextInput$update = F3(
+var $author$project$OUI$Showcase$TextFields$update = F3(
 	function (_v0, msg, model) {
 		switch (msg.$) {
 			case 'OnChange':
-				var value = msg.a;
+				var name = msg.a;
+				var value = msg.b;
+				var input = A2(
+					$elm$core$Maybe$withDefault,
+					$author$project$OUI$Showcase$TextFields$newInputState,
+					A2($elm$core$Dict$get, name, model.inputs));
 				return $orus_io$elm_spa$Effect$withNone(
 					_Utils_update(
 						model,
-						{text1: value}));
+						{
+							inputs: A3(
+								$elm$core$Dict$insert,
+								name,
+								_Utils_update(
+									input,
+									{text: value}),
+								model.inputs)
+						}));
 			case 'OnFocus':
+				var name = msg.a;
+				var input = A2(
+					$elm$core$Maybe$withDefault,
+					$author$project$OUI$Showcase$TextFields$newInputState,
+					A2($elm$core$Dict$get, name, model.inputs));
 				return $orus_io$elm_spa$Effect$withNone(
 					_Utils_update(
 						model,
-						{hasFocus: true}));
+						{
+							inputs: A3(
+								$elm$core$Dict$insert,
+								name,
+								_Utils_update(
+									input,
+									{hasFocus: true}),
+								model.inputs)
+						}));
 			default:
+				var name = msg.a;
+				var input = A2(
+					$elm$core$Maybe$withDefault,
+					$author$project$OUI$Showcase$TextFields$newInputState,
+					A2($elm$core$Dict$get, name, model.inputs));
 				return $orus_io$elm_spa$Effect$withNone(
 					_Utils_update(
 						model,
-						{hasFocus: false}));
+						{
+							inputs: A3(
+								$elm$core$Dict$insert,
+								name,
+								_Utils_update(
+									input,
+									{hasFocus: false}),
+								model.inputs)
+						}));
 		}
 	});
-var $author$project$OUI$Showcase$TextInput$book = A2(
+var $author$project$OUI$Showcase$TextFields$book = A2(
 	$author$project$OUI$Explorer$withChapter,
-	$author$project$OUI$Showcase$TextInput$textfields,
+	$author$project$OUI$Showcase$TextFields$textfields,
 	A2(
 		$author$project$OUI$Explorer$statefulBook,
-		'Text Input',
+		'Text Fields',
 		{
 			init: function (_v0) {
 				return $orus_io$elm_spa$Effect$withNone(
-					{hasFocus: false, text1: ''});
+					{inputs: $elm$core$Dict$empty});
 			},
 			subscriptions: F2(
 				function (_v1, _v2) {
 					return $elm$core$Platform$Sub$none;
 				}),
-			update: $author$project$OUI$Showcase$TextInput$update
+			update: $author$project$OUI$Showcase$TextFields$update
 		}));
-var $author$project$OUI$Text$Body = {$: 'Body'};
-var $author$project$OUI$Text$Text = F3(
-	function (a, b, c) {
-		return {$: 'Text', a: a, b: b, c: c};
-	});
-var $author$project$OUI$Text$bodyLarge = A2($author$project$OUI$Text$Text, $author$project$OUI$Text$Body, $author$project$OUI$Text$Large);
 var $author$project$OUI$Text$Medium = {$: 'Medium'};
 var $author$project$OUI$Text$bodyMedium = A2($author$project$OUI$Text$Text, $author$project$OUI$Text$Body, $author$project$OUI$Text$Medium);
-var $author$project$OUI$Text$Small = {$: 'Small'};
-var $author$project$OUI$Text$bodySmall = A2($author$project$OUI$Text$Text, $author$project$OUI$Text$Body, $author$project$OUI$Text$Small);
 var $author$project$OUI$Text$Display = {$: 'Display'};
 var $author$project$OUI$Text$displayLarge = A2($author$project$OUI$Text$Text, $author$project$OUI$Text$Display, $author$project$OUI$Text$Large);
 var $author$project$OUI$Text$displayMedium = A2($author$project$OUI$Text$Text, $author$project$OUI$Text$Display, $author$project$OUI$Text$Medium);
@@ -25680,16 +26265,6 @@ var $author$project$OUI$Text$headlineSmall = A2($author$project$OUI$Text$Text, $
 var $author$project$OUI$Text$labelLarge = A2($author$project$OUI$Text$Text, $author$project$OUI$Text$Label, $author$project$OUI$Text$Large);
 var $author$project$OUI$Text$labelMedium = A2($author$project$OUI$Text$Text, $author$project$OUI$Text$Label, $author$project$OUI$Text$Medium);
 var $author$project$OUI$Text$labelSmall = A2($author$project$OUI$Text$Text, $author$project$OUI$Text$Label, $author$project$OUI$Text$Small);
-var $author$project$OUI$Material$Typography$render = F2(
-	function (typescale, _v0) {
-		var type_ = _v0.a;
-		var size = _v0.b;
-		var text = _v0.c;
-		return A2(
-			$mdgriffith$elm_ui$Element$el,
-			A3($author$project$OUI$Material$Typography$attrs, typescale, type_, size),
-			$mdgriffith$elm_ui$Element$text(text));
-	});
 var $author$project$OUI$Material$renderText = F2(
 	function (_v0, text) {
 		var typescale = _v0.typescale;
@@ -25809,7 +26384,7 @@ var $author$project$OUI$Showcase$addPages = A2(
 						A2(
 							$elm$core$Basics$composeR,
 							$author$project$OUI$Explorer$addBook($author$project$OUI$Showcase$Switches$book),
-							$author$project$OUI$Explorer$addBook($author$project$OUI$Showcase$TextInput$book))))))));
+							$author$project$OUI$Explorer$addBook($author$project$OUI$Showcase$TextFields$book))))))));
 var $elm$svg$Svg$Attributes$enableBackground = _VirtualDom_attribute('enable-background');
 var $icidasset$elm_material_icons$Material$Icons$Internal$b = $elm$svg$Svg$Attributes$enableBackground;
 var $icidasset$elm_material_icons$Material$Icons$Internal$f = $elm$svg$Svg$Attributes$fill;
@@ -30618,7 +31193,7 @@ var $author$project$OUI$Explorer$decodeFlags = A2(
 				$elm$json$Json$Decode$succeed(false)
 			])));
 var $author$project$OUI$Material$Button$defaultTheme = {
-	common: {containerHeight: 40, containerRadius: 4, iconSize: 18, leftPaddingWithIcon: 16, leftRightPadding: 24, paddingBetweenElements: 8, rightPaddingWithIcon: 16},
+	common: {containerHeight: 40, containerRadius: 20, iconSize: 18, leftPaddingWithIcon: 16, leftRightPadding: 24, paddingBetweenElements: 8, rightPaddingWithIcon: 16},
 	fab: {
 		large: {containerHeight: 96, containerShape: 28, containerWidth: 96, iconSize: 36},
 		medium: {containerHeight: 56, containerShape: 16, containerWidth: 56, iconSize: 24},
@@ -30635,7 +31210,17 @@ var $author$project$OUI$Material$Switch$defaultTheme = {
 	},
 	track: {corner: 16, height: 32, outlineWidth: 2, width: 52}
 };
-var $author$project$OUI$Material$TextInput$defaultTheme = {};
+var $author$project$OUI$Material$TextField$defaultTheme = {
+	filled: {topBottomPadding: 8},
+	height: 56,
+	iconSize: 24,
+	leftRightPaddingWithIcon: 12,
+	leftRightPaddingWithoutIcon: 16,
+	outlined: {labelBottom: 8, labelLeftRightPadding: 4, shape: 4},
+	paddingBetweenIconAndText: 16,
+	paddingBetweenSupportingTextAndCharacterCounter: 16,
+	supportingTextTopPadding: 4
+};
 var $author$project$OUI$Material$Theme$defaultTypescale = {
 	body: {
 		large: {font: 'Roboto', lineHeight: 24, size: 16, tracking: 0.5, weight: 400},
@@ -30663,7 +31248,7 @@ var $author$project$OUI$Material$Theme$defaultTypescale = {
 		small: {font: 'Roboto', lineHeight: 20, size: 14, tracking: 0.1, weight: 500}
 	}
 };
-var $author$project$OUI$Material$Theme$defaultTheme = {button: $author$project$OUI$Material$Button$defaultTheme, checkbox: $author$project$OUI$Material$Checkbox$defaultTheme, colorscheme: $author$project$OUI$Material$Color$defaultLightScheme, _switch: $author$project$OUI$Material$Switch$defaultTheme, textfield: $author$project$OUI$Material$TextInput$defaultTheme, typescale: $author$project$OUI$Material$Theme$defaultTypescale};
+var $author$project$OUI$Material$Theme$defaultTheme = {button: $author$project$OUI$Material$Button$defaultTheme, checkbox: $author$project$OUI$Material$Checkbox$defaultTheme, colorscheme: $author$project$OUI$Material$Color$defaultLightScheme, _switch: $author$project$OUI$Material$Switch$defaultTheme, textfield: $author$project$OUI$Material$TextField$defaultTheme, typescale: $author$project$OUI$Material$Theme$defaultTypescale};
 var $mdgriffith$elm_ui$Internal$Model$FocusStyleOption = function (a) {
 	return {$: 'FocusStyleOption', a: a};
 };
@@ -31215,4 +31800,4 @@ var $author$project$Main$main = $author$project$OUI$Explorer$finalize(
 					A2($author$project$OUI$Icon$elmMaterialIcons, $icidasset$elm_material_icons$Material$Icons$Types$Color, $icidasset$elm_material_icons$Material$Icons$Outlined$face))
 				])),
 		$author$project$OUI$Showcase$addPages($author$project$OUI$Explorer$explorer)));
-_Platform_export({'Main':{'init':$author$project$Main$main($elm$json$Json$Decode$value)({"versions":{"elm":"0.19.1"},"types":{"message":"Spa.Msg OUI.Explorer.SharedMsg (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg ()) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg OUI.Showcase.TextInput.Msg) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg OUI.Showcase.Switches.Msg) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg ()) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg ()) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg ()) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg ()) (Spa.PageStack.Msg String.String () ()))))))))","aliases":{"Url.Url":{"args":[],"type":"{ protocol : Url.Protocol, host : String.String, port_ : Maybe.Maybe Basics.Int, path : String.String, query : Maybe.Maybe String.String, fragment : Maybe.Maybe String.String }"}},"unions":{"OUI.Explorer.BookMsg":{"args":["msg"],"tags":{"SharedMsg":["OUI.Explorer.SharedMsg"],"BookMsg":["msg"]}},"OUI.Showcase.Switches.Msg":{"args":[],"tags":{"SetSwitch":["String.String","Basics.Bool"]}},"OUI.Showcase.TextInput.Msg":{"args":[],"tags":{"OnChange":["String.String"],"OnFocus":[],"OnLoseFocus":[]}},"Spa.Msg":{"args":["sharedMsg","pageMsg"],"tags":{"SharedMsg":["sharedMsg"],"PageMsg":["pageMsg"],"UrlRequest":["Browser.UrlRequest"],"UrlChange":["Url.Url"]}},"Spa.PageStack.Msg":{"args":["route","current","previous"],"tags":{"CurrentMsg":["current"],"PreviousMsg":["previous"],"RouteChange":["route"]}},"OUI.Explorer.SharedMsg":{"args":[],"tags":{"Event":["String.String"],"SelectColorScheme":["Basics.Int","OUI.Explorer.ColorSchemeType"]}},"String.String":{"args":[],"tags":{"String":[]}},"Basics.Bool":{"args":[],"tags":{"True":[],"False":[]}},"OUI.Explorer.ColorSchemeType":{"args":[],"tags":{"Light":[],"Dark":[]}},"Basics.Int":{"args":[],"tags":{"Int":[]}},"Maybe.Maybe":{"args":["a"],"tags":{"Just":["a"],"Nothing":[]}},"Url.Protocol":{"args":[],"tags":{"Http":[],"Https":[]}},"Browser.UrlRequest":{"args":[],"tags":{"Internal":["Url.Url"],"External":["String.String"]}}}}})}});}(this));
+_Platform_export({'Main':{'init':$author$project$Main$main($elm$json$Json$Decode$value)({"versions":{"elm":"0.19.1"},"types":{"message":"Spa.Msg OUI.Explorer.SharedMsg (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg ()) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg OUI.Showcase.TextFields.Msg) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg OUI.Showcase.Switches.Msg) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg ()) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg ()) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg ()) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg ()) (Spa.PageStack.Msg String.String () ()))))))))","aliases":{"Url.Url":{"args":[],"type":"{ protocol : Url.Protocol, host : String.String, port_ : Maybe.Maybe Basics.Int, path : String.String, query : Maybe.Maybe String.String, fragment : Maybe.Maybe String.String }"}},"unions":{"OUI.Explorer.BookMsg":{"args":["msg"],"tags":{"SharedMsg":["OUI.Explorer.SharedMsg"],"BookMsg":["msg"]}},"OUI.Showcase.Switches.Msg":{"args":[],"tags":{"SetSwitch":["String.String","Basics.Bool"]}},"OUI.Showcase.TextFields.Msg":{"args":[],"tags":{"OnChange":["String.String","String.String"],"OnFocus":["String.String"],"OnLoseFocus":["String.String"]}},"Spa.Msg":{"args":["sharedMsg","pageMsg"],"tags":{"SharedMsg":["sharedMsg"],"PageMsg":["pageMsg"],"UrlRequest":["Browser.UrlRequest"],"UrlChange":["Url.Url"]}},"Spa.PageStack.Msg":{"args":["route","current","previous"],"tags":{"CurrentMsg":["current"],"PreviousMsg":["previous"],"RouteChange":["route"]}},"OUI.Explorer.SharedMsg":{"args":[],"tags":{"Event":["String.String"],"SelectColorScheme":["Basics.Int","OUI.Explorer.ColorSchemeType"]}},"String.String":{"args":[],"tags":{"String":[]}},"Basics.Bool":{"args":[],"tags":{"True":[],"False":[]}},"OUI.Explorer.ColorSchemeType":{"args":[],"tags":{"Light":[],"Dark":[]}},"Basics.Int":{"args":[],"tags":{"Int":[]}},"Maybe.Maybe":{"args":["a"],"tags":{"Just":["a"],"Nothing":[]}},"Url.Protocol":{"args":[],"tags":{"Http":[],"Https":[]}},"Browser.UrlRequest":{"args":[],"tags":{"Internal":["Url.Url"],"External":["String.String"]}}}}})}});}(this));
