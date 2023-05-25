@@ -365,7 +365,7 @@ render typescale colorscheme buttonTheme theme attrs textfield =
                                             |> Button.withText p.label
                                             |> Button.withIcon icon
                                             |> Button.onClick onClick
-                                            |> Button.color p.color
+                                            |> Button.color (ifThenElse p.hasFocus p.color OUI.Neutral)
                                             |> Button.iconButton
                                             |> Button.render typescale colorscheme buttonTheme [ Element.centerX, Element.centerY ]
                             )

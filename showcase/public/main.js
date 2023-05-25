@@ -12557,6 +12557,10 @@ var $author$project$OUI$Material$Color$getColor = function (c) {
 			return function ($) {
 				return $.tertiaryContainer;
 			};
+		case 'Neutral':
+			return function ($) {
+				return $.onSurfaceVariant;
+			};
 		case 'Error':
 			return function ($) {
 				return $.error;
@@ -12592,6 +12596,10 @@ var $author$project$OUI$Material$Color$getOnColor = function (c) {
 		case 'TertiaryContainer':
 			return function ($) {
 				return $.onTertiaryContainer;
+			};
+		case 'Neutral':
+			return function ($) {
+				return $.surface;
 			};
 		case 'Error':
 			return function ($) {
@@ -13076,6 +13084,8 @@ var $author$project$OUI$Material$Button$fabAttrs = F3(
 					return _Utils_Tuple2(colorscheme.tertiaryContainer, colorscheme.onTertiaryContainer);
 				case 'TertiaryContainer':
 					return _Utils_Tuple2(colorscheme.tertiaryContainer, colorscheme.onTertiaryContainer);
+				case 'Neutral':
+					return _Utils_Tuple2(colorscheme.surfaceContainer, colorscheme.onSurfaceVariant);
 				case 'Error':
 					return _Utils_Tuple2(colorscheme.errorContainer, colorscheme.onErrorContainer);
 				default:
@@ -24261,6 +24271,10 @@ var $author$project$OUI$Material$Color$getOnContainerColor = function (c) {
 			return function ($) {
 				return $.onTertiaryContainer;
 			};
+		case 'Neutral':
+			return function ($) {
+				return $.onSurfaceVariant;
+			};
 		case 'Error':
 			return function ($) {
 				return $.onErrorContainer;
@@ -24772,6 +24786,7 @@ var $author$project$OUI$TextField$onFocusBlur = F3(
 				}));
 	});
 var $author$project$OUI$Text$Body = {$: 'Body'};
+var $author$project$OUI$Neutral = {$: 'Neutral'};
 var $author$project$OUI$Text$Text = F3(
 	function (a, b, c) {
 		return {$: 'Text', a: a, b: b, c: c};
@@ -25794,7 +25809,7 @@ var $author$project$OUI$Material$TextField$render = F6(
 								$author$project$OUI$Button$iconButton(
 									A2(
 										$author$project$OUI$Button$color,
-										p.color,
+										A3($author$project$OUI$Material$TextField$ifThenElse, p.hasFocus, p.color, $author$project$OUI$Neutral),
 										A2(
 											$author$project$OUI$Button$onClick,
 											onClick,

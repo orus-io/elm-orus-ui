@@ -122,6 +122,9 @@ getColor c =
         OUI.TertiaryContainer ->
             .tertiaryContainer
 
+        OUI.Neutral ->
+            .onSurfaceVariant
+
         OUI.Error ->
             .error
 
@@ -151,6 +154,9 @@ getOnColor c =
 
         OUI.TertiaryContainer ->
             .onTertiaryContainer
+
+        OUI.Neutral ->
+            .surface
 
         OUI.Error ->
             .onError
@@ -182,6 +188,9 @@ getContainerColor c =
         OUI.TertiaryContainer ->
             .tertiaryContainer
 
+        OUI.Neutral ->
+            .surfaceContainer
+
         OUI.Error ->
             .errorContainer
 
@@ -211,6 +220,9 @@ getOnContainerColor c =
 
         OUI.TertiaryContainer ->
             .onTertiaryContainer
+
+        OUI.Neutral ->
+            .onSurfaceVariant
 
         OUI.Error ->
             .onErrorContainer

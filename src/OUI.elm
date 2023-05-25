@@ -16,5 +16,6 @@ type Color
     | SecondaryContainer
     | Tertiary
     | TertiaryContainer
+    | Neutral
     | Error
     | ErrorContainer

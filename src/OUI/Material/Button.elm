@@ -439,6 +439,9 @@ fabAttrs colorscheme layout color =
                 OUI.TertiaryContainer ->
                     ( colorscheme.tertiaryContainer, colorscheme.onTertiaryContainer )
 
+                OUI.Neutral ->
+                    ( colorscheme.surfaceContainer, colorscheme.onSurfaceVariant )
+
                 OUI.Error ->
                     ( colorscheme.errorContainer, colorscheme.onErrorContainer )
 
