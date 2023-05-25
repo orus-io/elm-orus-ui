@@ -12314,6 +12314,51 @@ var $mdgriffith$elm_ui$Internal$Model$CenterY = {$: 'CenterY'};
 var $mdgriffith$elm_ui$Element$centerY = $mdgriffith$elm_ui$Internal$Model$AlignY($mdgriffith$elm_ui$Internal$Model$CenterY);
 var $author$project$OUI$Text$Label = {$: 'Label'};
 var $author$project$OUI$Text$Large = {$: 'Large'};
+var $author$project$OUI$Material$Typography$getTypo = F2(
+	function (type_, size) {
+		return A2(
+			$elm$core$Basics$composeR,
+			function () {
+				switch (type_.$) {
+					case 'Display':
+						return function ($) {
+							return $.display;
+						};
+					case 'Headline':
+						return function ($) {
+							return $.headline;
+						};
+					case 'Title':
+						return function ($) {
+							return $.title;
+						};
+					case 'Label':
+						return function ($) {
+							return $.label;
+						};
+					default:
+						return function ($) {
+							return $.body;
+						};
+				}
+			}(),
+			function () {
+				switch (size.$) {
+					case 'Small':
+						return function ($) {
+							return $.small;
+						};
+					case 'Medium':
+						return function ($) {
+							return $.medium;
+						};
+					default:
+						return function ($) {
+							return $.large;
+						};
+				}
+			}());
+	});
 var $mdgriffith$elm_ui$Internal$Model$FontFamily = F2(
 	function (a, b) {
 		return {$: 'FontFamily', a: a, b: b};
@@ -12396,49 +12441,12 @@ var $author$project$OUI$Material$Typography$typographyAttrs = function (typograp
 			(typography.weight === 500) ? $mdgriffith$elm_ui$Element$Font$medium : $mdgriffith$elm_ui$Element$Font$regular
 		]);
 };
-var $author$project$OUI$Material$Typography$attrs = F3(
-	function (typescale, type_, size) {
-		return $author$project$OUI$Material$Typography$typographyAttrs(
-			function () {
-				switch (size.$) {
-					case 'Small':
-						return function ($) {
-							return $.small;
-						};
-					case 'Medium':
-						return function ($) {
-							return $.medium;
-						};
-					default:
-						return function ($) {
-							return $.large;
-						};
-				}
-			}()(
-				function () {
-					switch (type_.$) {
-						case 'Display':
-							return function ($) {
-								return $.display;
-							};
-						case 'Headline':
-							return function ($) {
-								return $.headline;
-							};
-						case 'Title':
-							return function ($) {
-								return $.title;
-							};
-						case 'Label':
-							return function ($) {
-								return $.label;
-							};
-						default:
-							return function ($) {
-								return $.body;
-							};
-					}
-				}()(typescale)));
+var $author$project$OUI$Material$Typography$attrs = F2(
+	function (type_, size) {
+		return A2(
+			$elm$core$Basics$composeR,
+			A2($author$project$OUI$Material$Typography$getTypo, type_, size),
+			$author$project$OUI$Material$Typography$typographyAttrs);
 	});
 var $mdgriffith$elm_ui$Internal$Model$PaddingStyle = F5(
 	function (a, b, c, d, e) {
@@ -12524,7 +12532,7 @@ var $author$project$OUI$Material$Button$commonButtonAttrs = F4(
 		var padding = hasIcon ? $mdgriffith$elm_ui$Element$paddingEach(
 			{bottom: 0, left: layout.leftPaddingWithIcon, right: layout.rightPaddingWithIcon, top: 0}) : A2($mdgriffith$elm_ui$Element$paddingXY, layout.leftRightPadding, 0);
 		return _Utils_ap(
-			A3($author$project$OUI$Material$Typography$attrs, typescale, $author$project$OUI$Text$Label, $author$project$OUI$Text$Large),
+			A3($author$project$OUI$Material$Typography$attrs, $author$project$OUI$Text$Label, $author$project$OUI$Text$Large, typescale),
 			_List_fromArray(
 				[
 					$mdgriffith$elm_ui$Element$Border$rounded(layout.containerRadius),
@@ -24834,7 +24842,7 @@ var $author$project$OUI$Material$Typography$render = F2(
 		var text = _v0.c;
 		return A2(
 			$mdgriffith$elm_ui$Element$el,
-			A3($author$project$OUI$Material$Typography$attrs, typescale, type_, size),
+			A3($author$project$OUI$Material$Typography$attrs, type_, size, typescale),
 			$mdgriffith$elm_ui$Element$text(text));
 	});
 var $author$project$OUI$Material$Typography$renderWithAttrs = F3(
@@ -24844,9 +24852,14 @@ var $author$project$OUI$Material$Typography$renderWithAttrs = F3(
 		var text = _v0.c;
 		return A2(
 			$mdgriffith$elm_ui$Element$el,
-			_Utils_ap(
-				A3($author$project$OUI$Material$Typography$attrs, typescale, type_, size),
-				customAttrs),
+			A2(
+				$elm$core$List$cons,
+				$mdgriffith$elm_ui$Element$height(
+					$mdgriffith$elm_ui$Element$px(
+						A3($author$project$OUI$Material$Typography$getTypo, type_, size, typescale).lineHeight)),
+				_Utils_ap(
+					A3($author$project$OUI$Material$Typography$attrs, type_, size, typescale),
+					customAttrs)),
 			$mdgriffith$elm_ui$Element$text(text));
 	});
 var $mdgriffith$elm_ui$Element$Input$TextInputNode = function (a) {
@@ -25950,7 +25963,7 @@ var $author$project$OUI$Material$TextField$render = F6(
 														$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
 														_Utils_ap(
 															focusEvents,
-															A3($author$project$OUI$Material$Typography$attrs, typescale, $author$project$OUI$Text$Body, $author$project$OUI$Text$Large))))))),
+															A3($author$project$OUI$Material$Typography$attrs, $author$project$OUI$Text$Body, $author$project$OUI$Text$Large, typescale))))))),
 									{
 										label: $mdgriffith$elm_ui$Element$Input$labelHidden(p.label),
 										onChange: p.onChange,
@@ -26532,10 +26545,7 @@ var $author$project$OUI$Showcase$Typography$book = A2(
 		var theme = _v0.theme;
 		return A2(
 			$mdgriffith$elm_ui$Element$column,
-			_List_fromArray(
-				[
-					$mdgriffith$elm_ui$Element$spacing(10)
-				]),
+			_List_Nil,
 			_List_fromArray(
 				[
 					A2(

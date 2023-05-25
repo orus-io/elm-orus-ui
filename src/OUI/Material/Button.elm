@@ -151,7 +151,7 @@ commonButtonAttrs typescale colorscheme layout hasIcon =
             else
                 Element.paddingXY layout.leftRightPadding 0
     in
-    OUI.Material.Typography.attrs typescale OUI.Text.Label OUI.Text.Large
+    OUI.Material.Typography.attrs OUI.Text.Label OUI.Text.Large typescale
         ++ [ Border.rounded layout.containerRadius
            , padding
            ]

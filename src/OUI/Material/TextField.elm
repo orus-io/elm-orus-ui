@@ -398,7 +398,7 @@ render typescale colorscheme buttonTheme theme attrs textfield =
                             :: (Element.moveDown <| toFloat inputMoveDownBy)
                             :: Element.width Element.fill
                             :: focusEvents
-                            ++ OUI.Material.Typography.attrs typescale OUI.Text.Body OUI.Text.Large
+                            ++ OUI.Material.Typography.attrs OUI.Text.Body OUI.Text.Large typescale
                         )
                         { onChange = p.onChange
                         , text = p.value
