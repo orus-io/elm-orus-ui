@@ -9,7 +9,9 @@ import Element.Font as Font
 import Element.Input as Input exposing (labelHidden)
 import Html.Attributes
 import OUI
+import OUI.Button as Button
 import OUI.Icon exposing (Icon)
+import OUI.Material.Button as Button
 import OUI.Material.Color
 import OUI.Material.Icon
 import OUI.Material.Typography
@@ -24,6 +26,11 @@ ifThenElse value ifTrue ifFalse =
 
     else
         ifFalse
+
+
+filterMaybe : List (Maybe a) -> List a
+filterMaybe =
+    List.filterMap identity
 
 
 transition : String -> Attribute msg
@@ -74,11 +81,12 @@ defaultTheme =
 render :
     OUI.Material.Typography.Typescale
     -> OUI.Material.Color.Scheme
+    -> Button.Theme
     -> Theme
     -> List (Attribute msg)
     -> OUI.TextField.TextField msg
     -> Element msg
-render typescale colorscheme theme attrs textfield =
+render typescale colorscheme buttonTheme theme attrs textfield =
     let
         p =
             OUI.TextField.properties textfield
@@ -103,6 +111,9 @@ render typescale colorscheme theme attrs textfield =
 
         hasTrailingIcon =
             p.trailingIcon /= Nothing
+
+        hasClickableTrailingIcon =
+            p.trailingIcon /= Nothing && p.onTrailingIconClick /= Nothing
 
         focusEvents =
             List.filterMap identity
@@ -202,6 +213,13 @@ render typescale colorscheme theme attrs textfield =
                         OUI.TextField.Outlined ->
                             theme.height
 
+        trailingIconOffset =
+            if hasClickableTrailingIcon then
+                (buttonTheme.icon.containerSize - buttonTheme.icon.iconSize) // 2
+
+            else
+                0
+
         paddingAttrs =
             case p.type_ of
                 OUI.TextField.Filled ->
@@ -220,15 +238,28 @@ render typescale colorscheme theme attrs textfield =
                                 theme.leftRightPaddingWithoutIcon
                         , right =
                             ifThenElse hasTrailingIcon
-                                theme.leftRightPaddingWithIcon
+                                (theme.leftRightPaddingWithIcon - trailingIconOffset)
                                 theme.leftRightPaddingWithoutIcon
                         }
                     , Element.spacing theme.paddingBetweenIconAndText
                     ]
 
                 OUI.TextField.Outlined ->
-                    [ Element.padding <|
-                        ifThenElse p.hasFocus 0 1
+                    [ Element.paddingEach
+                        { top =
+                            ifThenElse p.hasFocus 0 1
+                        , bottom =
+                            ifThenElse p.hasFocus 0 1
+                        , left =
+                            ifThenElse hasLeadingIcon
+                                (theme.leftRightPaddingWithIcon - leftBorderWidth)
+                                (theme.leftRightPaddingWithoutIcon - leftBorderWidth)
+                        , right =
+                            ifThenElse hasTrailingIcon
+                                (theme.leftRightPaddingWithIcon - rightBorderWidth - trailingIconOffset)
+                                (theme.leftRightPaddingWithoutIcon - rightBorderWidth)
+                        }
+                    , Element.spacing theme.paddingBetweenIconAndText
                     ]
 
         label =
@@ -314,6 +345,30 @@ render typescale colorscheme theme attrs textfield =
             colorscheme.onSurface
                 |> OUI.Material.Color.toElementColor
                 |> Font.color
+
+        trailingIcon =
+            case ( hasError, p.errorIcon ) of
+                ( True, Just icon ) ->
+                    Just
+                        (OUI.Material.Icon.renderWithSizeColor 24 colorscheme.error [] icon)
+
+                _ ->
+                    p.trailingIcon
+                        |> Maybe.map
+                            (\icon ->
+                                case p.onTrailingIconClick of
+                                    Nothing ->
+                                        OUI.Material.Icon.renderWithSizeColor 24 colorscheme.onSurfaceVariant [] icon
+
+                                    Just onClick ->
+                                        Button.new
+                                            |> Button.withText p.label
+                                            |> Button.withIcon icon
+                                            |> Button.onClick onClick
+                                            |> Button.color p.color
+                                            |> Button.iconButton
+                                            |> Button.render typescale colorscheme buttonTheme [ Element.centerX, Element.centerY ]
+                            )
     in
     Element.column
         (Element.spacing theme.supportingTextTopPadding
@@ -325,24 +380,23 @@ render typescale colorscheme theme attrs textfield =
             (bgColorAttr
                 :: fontColorAttr
                 :: heightAttr
+                :: Element.width Element.fill
                 :: borderAttrs
                 ++ paddingAttrs
             )
-            ((case p.leadingIcon of
-                Just icon ->
-                    [ OUI.Material.Icon.renderWithSizeColor 24 colorscheme.onSurfaceVariant [] icon
-                    ]
-
-                Nothing ->
-                    []
-             )
-                ++ [ Input.text
+            (filterMaybe
+                [ p.leadingIcon
+                    |> Maybe.map
+                        (OUI.Material.Icon.renderWithSizeColor 24 colorscheme.onSurfaceVariant [])
+                , Just <|
+                    Input.text
                         (bgColorAttr
                             :: Border.width 0
                             -- 12 is the default vertical padding of Input.text
                             -- and is needed to have enough height for the text
                             :: Element.paddingXY 0 12
                             :: (Element.moveDown <| toFloat inputMoveDownBy)
+                            :: Element.width Element.fill
                             :: focusEvents
                             ++ OUI.Material.Typography.attrs typescale OUI.Text.Body OUI.Text.Large
                         )
@@ -351,7 +405,8 @@ render typescale colorscheme theme attrs textfield =
                         , label = Input.labelHidden p.label
                         , placeholder = Nothing
                         }
-                   ]
+                , trailingIcon
+                ]
             )
             :: (case p.supportingText of
                     Just text ->

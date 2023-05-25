@@ -78,5 +78,5 @@ renderSwitch { colorscheme, switch } =
 {-| Render a TextField
 -}
 renderTextField : Theme -> List (Attribute msg) -> OUI.TextField.TextField msg -> Element msg
-renderTextField { typescale, colorscheme, textfield } =
-    OUI.Material.TextField.render typescale colorscheme textfield
+renderTextField { typescale, colorscheme, textfield, button } =
+    OUI.Material.TextField.render typescale colorscheme button textfield

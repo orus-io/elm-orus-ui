@@ -14517,7 +14517,7 @@ var $author$project$OUI$Material$Color$darkFromKeyColors = function (keyColors) 
 		shadow: A2(
 			$author$project$OUI$Material$Color$setAlpha,
 			0.16,
-			A2($author$project$OUI$Material$Color$tone, 0, keyColors.neutral)),
+			A2($author$project$OUI$Material$Color$tone, 100, keyColors.neutral)),
 		surface: A2($author$project$OUI$Material$Color$tone, 6, keyColors.neutral),
 		surfaceBright: A2($author$project$OUI$Material$Color$tone, 24, keyColors.neutral),
 		surfaceContainer: A2($author$project$OUI$Material$Color$tone, 12, keyColors.neutral),
@@ -24758,7 +24758,7 @@ var $author$project$OUI$TextField$TextField = function (a) {
 var $author$project$OUI$TextField$new = F3(
 	function (label, onChange, value) {
 		return $author$project$OUI$TextField$TextField(
-			{color: $author$project$OUI$Primary, hasFocus: false, label: label, leadingIcon: $elm$core$Maybe$Nothing, onChange: onChange, onFocus: $elm$core$Maybe$Nothing, onLoseFocus: $elm$core$Maybe$Nothing, supportingText: $elm$core$Maybe$Nothing, trailingIcon: $elm$core$Maybe$Nothing, type_: $author$project$OUI$TextField$Filled, value: value});
+			{color: $author$project$OUI$Primary, errorIcon: $elm$core$Maybe$Nothing, hasFocus: false, label: label, leadingIcon: $elm$core$Maybe$Nothing, onChange: onChange, onFocus: $elm$core$Maybe$Nothing, onLoseFocus: $elm$core$Maybe$Nothing, onTrailingIconClick: $elm$core$Maybe$Nothing, supportingText: $elm$core$Maybe$Nothing, trailingIcon: $elm$core$Maybe$Nothing, type_: $author$project$OUI$TextField$Filled, value: value});
 	});
 var $author$project$OUI$TextField$onFocusBlur = F3(
 	function (onFocus, onLoseFocus, _v0) {
@@ -24779,6 +24779,7 @@ var $author$project$OUI$Text$Text = F3(
 var $author$project$OUI$Text$bodyLarge = A2($author$project$OUI$Text$Text, $author$project$OUI$Text$Body, $author$project$OUI$Text$Large);
 var $author$project$OUI$Text$Small = {$: 'Small'};
 var $author$project$OUI$Text$bodySmall = A2($author$project$OUI$Text$Text, $author$project$OUI$Text$Body, $author$project$OUI$Text$Small);
+var $author$project$OUI$Material$TextField$filterMaybe = $elm$core$List$filterMap($elm$core$Basics$identity);
 var $author$project$OUI$Material$TextField$ifThenElse = F3(
 	function (value, ifTrue, ifFalse) {
 		return value ? ifTrue : ifFalse;
@@ -25668,8 +25669,8 @@ var $mdgriffith$elm_ui$Element$Border$widthEach = function (_v0) {
 			bottom,
 			left));
 };
-var $author$project$OUI$Material$TextField$render = F5(
-	function (typescale, colorscheme, theme, attrs, textfield) {
+var $author$project$OUI$Material$TextField$render = F6(
+	function (typescale, colorscheme, buttonTheme, theme, attrs, textfield) {
 		var p = $author$project$OUI$TextField$properties(textfield);
 		var label = p.label;
 		var isOutlined = _Utils_eq(p.type_, $author$project$OUI$TextField$Outlined);
@@ -25683,8 +25684,8 @@ var $author$project$OUI$Material$TextField$render = F5(
 		var heightAttr = $mdgriffith$elm_ui$Element$height(
 			$mdgriffith$elm_ui$Element$px(
 				function () {
-					var _v5 = p.type_;
-					if (_v5.$ === 'Filled') {
+					var _v6 = p.type_;
+					if (_v6.$ === 'Filled') {
 						return theme.height;
 					} else {
 						return theme.height;
@@ -25768,6 +25769,46 @@ var $author$project$OUI$Material$TextField$render = F5(
 				}
 			}
 		}();
+		var trailingIcon = function () {
+			var _v4 = _Utils_Tuple2(hasError, p.errorIcon);
+			if (_v4.a && (_v4.b.$ === 'Just')) {
+				var icon = _v4.b.a;
+				return $elm$core$Maybe$Just(
+					A4($author$project$OUI$Material$Icon$renderWithSizeColor, 24, colorscheme.error, _List_Nil, icon));
+			} else {
+				return A2(
+					$elm$core$Maybe$map,
+					function (icon) {
+						var _v5 = p.onTrailingIconClick;
+						if (_v5.$ === 'Nothing') {
+							return A4($author$project$OUI$Material$Icon$renderWithSizeColor, 24, colorscheme.onSurfaceVariant, _List_Nil, icon);
+						} else {
+							var onClick = _v5.a;
+							return A5(
+								$author$project$OUI$Material$Button$render,
+								typescale,
+								colorscheme,
+								buttonTheme,
+								_List_fromArray(
+									[$mdgriffith$elm_ui$Element$centerX, $mdgriffith$elm_ui$Element$centerY]),
+								$author$project$OUI$Button$iconButton(
+									A2(
+										$author$project$OUI$Button$color,
+										p.color,
+										A2(
+											$author$project$OUI$Button$onClick,
+											onClick,
+											A2(
+												$author$project$OUI$Button$withIcon,
+												icon,
+												A2($author$project$OUI$Button$withText, p.label, $author$project$OUI$Button$new))))));
+						}
+					},
+					p.trailingIcon);
+			}
+		}();
+		var hasClickableTrailingIcon = (!_Utils_eq(p.trailingIcon, $elm$core$Maybe$Nothing)) && (!_Utils_eq(p.onTrailingIconClick, $elm$core$Maybe$Nothing));
+		var trailingIconOffset = hasClickableTrailingIcon ? (((buttonTheme.icon.containerSize - buttonTheme.icon.iconSize) / 2) | 0) : 0;
 		var fontColorAttr = $mdgriffith$elm_ui$Element$Font$color(
 			$author$project$OUI$Material$Color$toElementColor(colorscheme.onSurface));
 		var focusEvents = A2(
@@ -25780,15 +25821,15 @@ var $author$project$OUI$Material$TextField$render = F5(
 				]));
 		var bottomBorderWidth = A3($author$project$OUI$Material$TextField$ifThenElse, p.hasFocus, 2, 1);
 		var paddingAttrs = function () {
-			var _v4 = p.type_;
-			if (_v4.$ === 'Filled') {
+			var _v3 = p.type_;
+			if (_v3.$ === 'Filled') {
 				return _List_fromArray(
 					[
 						$mdgriffith$elm_ui$Element$paddingEach(
 						{
 							bottom: A3($author$project$OUI$Material$TextField$ifThenElse, labelHoldPlace, 0, theme.filled.topBottomPadding - bottomBorderWidth),
 							left: A3($author$project$OUI$Material$TextField$ifThenElse, hasLeadingIcon, theme.leftRightPaddingWithIcon, theme.leftRightPaddingWithoutIcon),
-							right: A3($author$project$OUI$Material$TextField$ifThenElse, hasTrailingIcon, theme.leftRightPaddingWithIcon, theme.leftRightPaddingWithoutIcon),
+							right: A3($author$project$OUI$Material$TextField$ifThenElse, hasTrailingIcon, theme.leftRightPaddingWithIcon - trailingIconOffset, theme.leftRightPaddingWithoutIcon),
 							top: A3($author$project$OUI$Material$TextField$ifThenElse, labelHoldPlace, bottomBorderWidth, theme.filled.topBottomPadding)
 						}),
 						$mdgriffith$elm_ui$Element$spacing(theme.paddingBetweenIconAndText)
@@ -25796,8 +25837,14 @@ var $author$project$OUI$Material$TextField$render = F5(
 			} else {
 				return _List_fromArray(
 					[
-						$mdgriffith$elm_ui$Element$padding(
-						A3($author$project$OUI$Material$TextField$ifThenElse, p.hasFocus, 0, 1))
+						$mdgriffith$elm_ui$Element$paddingEach(
+						{
+							bottom: A3($author$project$OUI$Material$TextField$ifThenElse, p.hasFocus, 0, 1),
+							left: A3($author$project$OUI$Material$TextField$ifThenElse, hasLeadingIcon, theme.leftRightPaddingWithIcon - leftBorderWidth, theme.leftRightPaddingWithoutIcon - leftBorderWidth),
+							right: A3($author$project$OUI$Material$TextField$ifThenElse, hasTrailingIcon, (theme.leftRightPaddingWithIcon - rightBorderWidth) - trailingIconOffset, theme.leftRightPaddingWithoutIcon - rightBorderWidth),
+							top: A3($author$project$OUI$Material$TextField$ifThenElse, p.hasFocus, 0, 1)
+						}),
+						$mdgriffith$elm_ui$Element$spacing(theme.paddingBetweenIconAndText)
 					]);
 			}
 		}();
@@ -25809,8 +25856,8 @@ var $author$project$OUI$Material$TextField$render = F5(
 				$elm$core$List$cons,
 				$mdgriffith$elm_ui$Element$Border$color(borderColor),
 				function () {
-					var _v3 = p.type_;
-					if (_v3.$ === 'Filled') {
+					var _v2 = p.type_;
+					if (_v2.$ === 'Filled') {
 						return _List_fromArray(
 							[
 								$mdgriffith$elm_ui$Element$Border$widthEach(
@@ -25826,8 +25873,8 @@ var $author$project$OUI$Material$TextField$render = F5(
 					}
 				}()));
 		var bgColorAttr = function () {
-			var _v2 = p.type_;
-			if (_v2.$ === 'Filled') {
+			var _v1 = p.type_;
+			if (_v1.$ === 'Filled') {
 				return $mdgriffith$elm_ui$Element$Background$color(
 					$author$project$OUI$Material$Color$toElementColor(colorscheme.surfaceContainerHighest));
 			} else {
@@ -25857,50 +25904,50 @@ var $author$project$OUI$Material$TextField$render = F5(
 							A2(
 								$elm$core$List$cons,
 								heightAttr,
-								_Utils_ap(borderAttrs, paddingAttrs)))),
-					_Utils_ap(
-						function () {
-							var _v0 = p.leadingIcon;
-							if (_v0.$ === 'Just') {
-								var icon = _v0.a;
-								return _List_fromArray(
-									[
-										A4($author$project$OUI$Material$Icon$renderWithSizeColor, 24, colorscheme.onSurfaceVariant, _List_Nil, icon)
-									]);
-							} else {
-								return _List_Nil;
-							}
-						}(),
+								A2(
+									$elm$core$List$cons,
+									$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
+									_Utils_ap(borderAttrs, paddingAttrs))))),
+					$author$project$OUI$Material$TextField$filterMaybe(
 						_List_fromArray(
 							[
 								A2(
-								$mdgriffith$elm_ui$Element$Input$text,
+								$elm$core$Maybe$map,
+								A3($author$project$OUI$Material$Icon$renderWithSizeColor, 24, colorscheme.onSurfaceVariant, _List_Nil),
+								p.leadingIcon),
+								$elm$core$Maybe$Just(
 								A2(
-									$elm$core$List$cons,
-									bgColorAttr,
+									$mdgriffith$elm_ui$Element$Input$text,
 									A2(
 										$elm$core$List$cons,
-										$mdgriffith$elm_ui$Element$Border$width(0),
+										bgColorAttr,
 										A2(
 											$elm$core$List$cons,
-											A2($mdgriffith$elm_ui$Element$paddingXY, 0, 12),
+											$mdgriffith$elm_ui$Element$Border$width(0),
 											A2(
 												$elm$core$List$cons,
-												$mdgriffith$elm_ui$Element$moveDown(inputMoveDownBy),
-												_Utils_ap(
-													focusEvents,
-													A3($author$project$OUI$Material$Typography$attrs, typescale, $author$project$OUI$Text$Body, $author$project$OUI$Text$Large)))))),
-								{
-									label: $mdgriffith$elm_ui$Element$Input$labelHidden(p.label),
-									onChange: p.onChange,
-									placeholder: $elm$core$Maybe$Nothing,
-									text: p.value
-								})
+												A2($mdgriffith$elm_ui$Element$paddingXY, 0, 12),
+												A2(
+													$elm$core$List$cons,
+													$mdgriffith$elm_ui$Element$moveDown(inputMoveDownBy),
+													A2(
+														$elm$core$List$cons,
+														$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
+														_Utils_ap(
+															focusEvents,
+															A3($author$project$OUI$Material$Typography$attrs, typescale, $author$project$OUI$Text$Body, $author$project$OUI$Text$Large))))))),
+									{
+										label: $mdgriffith$elm_ui$Element$Input$labelHidden(p.label),
+										onChange: p.onChange,
+										placeholder: $elm$core$Maybe$Nothing,
+										text: p.value
+									})),
+								trailingIcon
 							]))),
 				function () {
-					var _v1 = p.supportingText;
-					if (_v1.$ === 'Just') {
-						var text = _v1.a;
+					var _v0 = p.supportingText;
+					if (_v0.$ === 'Just') {
+						var text = _v0.a;
 						return _List_fromArray(
 							[
 								A2(
@@ -25925,8 +25972,20 @@ var $author$project$OUI$Material$renderTextField = function (_v0) {
 	var typescale = _v0.typescale;
 	var colorscheme = _v0.colorscheme;
 	var textfield = _v0.textfield;
-	return A3($author$project$OUI$Material$TextField$render, typescale, colorscheme, textfield);
+	var button = _v0.button;
+	return A4($author$project$OUI$Material$TextField$render, typescale, colorscheme, button, textfield);
 };
+var $author$project$OUI$TextField$withClickableTrailingIcon = F3(
+	function (msg, icon, _v0) {
+		var props = _v0.a;
+		return $author$project$OUI$TextField$TextField(
+			_Utils_update(
+				props,
+				{
+					onTrailingIconClick: $elm$core$Maybe$Just(msg),
+					trailingIcon: $elm$core$Maybe$Just(icon)
+				}));
+	});
 var $author$project$OUI$TextField$withColor = F2(
 	function (value, _v0) {
 		var props = _v0.a;
@@ -25934,6 +25993,16 @@ var $author$project$OUI$TextField$withColor = F2(
 			_Utils_update(
 				props,
 				{color: value}));
+	});
+var $author$project$OUI$TextField$withErrorIcon = F2(
+	function (value, _v0) {
+		var props = _v0.a;
+		return $author$project$OUI$TextField$TextField(
+			_Utils_update(
+				props,
+				{
+					errorIcon: $elm$core$Maybe$Just(value)
+				}));
 	});
 var $author$project$OUI$TextField$withFocused = F2(
 	function (hasFocus, _v0) {
@@ -25984,220 +26053,364 @@ var $author$project$OUI$TextField$withType = F2(
 var $author$project$OUI$Showcase$TextFields$textfields = F2(
 	function (_v0, model) {
 		var theme = _v0.theme;
+		var render = A2(
+			$author$project$OUI$Material$renderTextField,
+			theme,
+			_List_fromArray(
+				[
+					$mdgriffith$elm_ui$Element$centerX,
+					$mdgriffith$elm_ui$Element$centerY,
+					$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill)
+				]));
 		return A2(
-			$mdgriffith$elm_ui$Element$map,
-			$author$project$OUI$Explorer$bookMsg,
-			A2(
-				$mdgriffith$elm_ui$Element$column,
-				_List_fromArray(
-					[
-						$mdgriffith$elm_ui$Element$spacing(20)
-					]),
-				_List_fromArray(
-					[
-						A3(
-						$author$project$OUI$Material$renderTextField,
-						theme,
-						_List_fromArray(
-							[$mdgriffith$elm_ui$Element$centerX, $mdgriffith$elm_ui$Element$centerY]),
-						A2(
-							$author$project$OUI$TextField$withType,
-							$author$project$OUI$TextField$Filled,
+			$mdgriffith$elm_ui$Element$row,
+			_List_fromArray(
+				[
+					$mdgriffith$elm_ui$Element$Border$width(1),
+					$mdgriffith$elm_ui$Element$Border$color(
+					$author$project$OUI$Material$Color$toElementColor(theme.colorscheme.outline)),
+					$mdgriffith$elm_ui$Element$Background$color(
+					$author$project$OUI$Material$Color$toElementColor(theme.colorscheme.surfaceContainer))
+				]),
+			_List_fromArray(
+				[
+					A2(
+					$mdgriffith$elm_ui$Element$column,
+					_List_fromArray(
+						[
+							$mdgriffith$elm_ui$Element$spacing(20),
+							$mdgriffith$elm_ui$Element$width(
+							$mdgriffith$elm_ui$Element$px(500)),
+							$mdgriffith$elm_ui$Element$padding(40)
+						]),
+					_List_fromArray(
+						[
 							A2(
-								$author$project$OUI$TextField$withSupportingText,
-								'A filled text field',
+							$mdgriffith$elm_ui$Element$map,
+							$author$project$OUI$Explorer$bookMsg,
+							render(
 								A2(
-									$author$project$OUI$TextField$withFocused,
-									A2($author$project$OUI$Showcase$TextFields$inputHasFocus, 'filled', model),
-									A3(
-										$author$project$OUI$TextField$onFocusBlur,
-										$author$project$OUI$Showcase$TextFields$OnFocus('filled'),
-										$author$project$OUI$Showcase$TextFields$OnLoseFocus('filled'),
-										A3(
-											$author$project$OUI$TextField$new,
-											'Filled',
-											$author$project$OUI$Showcase$TextFields$OnChange('filled'),
-											A2($author$project$OUI$Showcase$TextFields$inputText, 'filled', model))))))),
-						A3(
-						$author$project$OUI$Material$renderTextField,
-						theme,
-						_List_fromArray(
-							[$mdgriffith$elm_ui$Element$centerX, $mdgriffith$elm_ui$Element$centerY]),
-						A2(
-							$author$project$OUI$TextField$withType,
-							$author$project$OUI$TextField$Filled,
-							A2(
-								$author$project$OUI$TextField$withLeadingIcon,
-								$author$project$OUI$Icon$check,
-								A2(
-									$author$project$OUI$TextField$withSupportingText,
-									'A filled text field with leading icon',
+									$author$project$OUI$TextField$withType,
+									$author$project$OUI$TextField$Filled,
 									A2(
-										$author$project$OUI$TextField$withFocused,
-										A2($author$project$OUI$Showcase$TextFields$inputHasFocus, 'filledLeadIcon', model),
-										A3(
-											$author$project$OUI$TextField$onFocusBlur,
-											$author$project$OUI$Showcase$TextFields$OnFocus('filledLeadIcon'),
-											$author$project$OUI$Showcase$TextFields$OnLoseFocus('filledLeadIcon'),
+										$author$project$OUI$TextField$withSupportingText,
+										'A filled text field',
+										A2(
+											$author$project$OUI$TextField$withFocused,
+											A2($author$project$OUI$Showcase$TextFields$inputHasFocus, 'filled', model),
 											A3(
-												$author$project$OUI$TextField$new,
-												'Filled',
-												$author$project$OUI$Showcase$TextFields$OnChange('filledLeadIcon'),
-												A2($author$project$OUI$Showcase$TextFields$inputText, 'filledLeadIcon', model)))))))),
-						A3(
-						$author$project$OUI$Material$renderTextField,
-						theme,
-						_List_fromArray(
-							[$mdgriffith$elm_ui$Element$centerX, $mdgriffith$elm_ui$Element$centerY]),
-						A2(
-							$author$project$OUI$TextField$withType,
-							$author$project$OUI$TextField$Filled,
+												$author$project$OUI$TextField$onFocusBlur,
+												$author$project$OUI$Showcase$TextFields$OnFocus('filled'),
+												$author$project$OUI$Showcase$TextFields$OnLoseFocus('filled'),
+												A3(
+													$author$project$OUI$TextField$new,
+													'Filled',
+													$author$project$OUI$Showcase$TextFields$OnChange('filled'),
+													A2($author$project$OUI$Showcase$TextFields$inputText, 'filled', model)))))))),
 							A2(
-								$author$project$OUI$TextField$withTrailingIcon,
-								$author$project$OUI$Icon$clear,
+							$mdgriffith$elm_ui$Element$map,
+							$author$project$OUI$Explorer$bookMsg,
+							render(
 								A2(
-									$author$project$OUI$TextField$withSupportingText,
-									'A filled text field with trailing icon',
+									$author$project$OUI$TextField$withType,
+									$author$project$OUI$TextField$Filled,
 									A2(
-										$author$project$OUI$TextField$withFocused,
-										A2($author$project$OUI$Showcase$TextFields$inputHasFocus, 'filledTrailIcon', model),
-										A3(
-											$author$project$OUI$TextField$onFocusBlur,
-											$author$project$OUI$Showcase$TextFields$OnFocus('filledTrailIcon'),
-											$author$project$OUI$Showcase$TextFields$OnLoseFocus('filledTrailIcon'),
-											A3(
-												$author$project$OUI$TextField$new,
-												'Filled',
-												$author$project$OUI$Showcase$TextFields$OnChange('filledTrailIcon'),
-												A2($author$project$OUI$Showcase$TextFields$inputText, 'filledTrailIcon', model)))))))),
-						A3(
-						$author$project$OUI$Material$renderTextField,
-						theme,
-						_List_fromArray(
-							[$mdgriffith$elm_ui$Element$centerX, $mdgriffith$elm_ui$Element$centerY]),
-						A2(
-							$author$project$OUI$TextField$withColor,
-							$author$project$OUI$Error,
+										$author$project$OUI$TextField$withLeadingIcon,
+										$author$project$OUI$Icon$check,
+										A2(
+											$author$project$OUI$TextField$withSupportingText,
+											'A filled text field with leading icon',
+											A2(
+												$author$project$OUI$TextField$withFocused,
+												A2($author$project$OUI$Showcase$TextFields$inputHasFocus, 'filledLeadIcon', model),
+												A3(
+													$author$project$OUI$TextField$onFocusBlur,
+													$author$project$OUI$Showcase$TextFields$OnFocus('filledLeadIcon'),
+													$author$project$OUI$Showcase$TextFields$OnLoseFocus('filledLeadIcon'),
+													A3(
+														$author$project$OUI$TextField$new,
+														'Filled',
+														$author$project$OUI$Showcase$TextFields$OnChange('filledLeadIcon'),
+														A2($author$project$OUI$Showcase$TextFields$inputText, 'filledLeadIcon', model))))))))),
+							A2(
+							$mdgriffith$elm_ui$Element$map,
+							$author$project$OUI$Explorer$bookMsg,
+							render(
+								A2(
+									$author$project$OUI$TextField$withType,
+									$author$project$OUI$TextField$Filled,
+									A2(
+										$author$project$OUI$TextField$withTrailingIcon,
+										$author$project$OUI$Icon$clear,
+										A2(
+											$author$project$OUI$TextField$withSupportingText,
+											'A filled text field with trailing icon',
+											A2(
+												$author$project$OUI$TextField$withFocused,
+												A2($author$project$OUI$Showcase$TextFields$inputHasFocus, 'filledTrailIcon', model),
+												A3(
+													$author$project$OUI$TextField$onFocusBlur,
+													$author$project$OUI$Showcase$TextFields$OnFocus('filledTrailIcon'),
+													$author$project$OUI$Showcase$TextFields$OnLoseFocus('filledTrailIcon'),
+													A3(
+														$author$project$OUI$TextField$new,
+														'Filled',
+														$author$project$OUI$Showcase$TextFields$OnChange('filledTrailIcon'),
+														A2($author$project$OUI$Showcase$TextFields$inputText, 'filledTrailIcon', model))))))))),
+							render(
 							A2(
 								$author$project$OUI$TextField$withType,
 								$author$project$OUI$TextField$Filled,
+								A3(
+									$author$project$OUI$TextField$withClickableTrailingIcon,
+									$author$project$OUI$Explorer$logEvent('Clicked !'),
+									$author$project$OUI$Icon$clear,
+									A2(
+										$author$project$OUI$TextField$withLeadingIcon,
+										$author$project$OUI$Icon$check,
+										A2(
+											$author$project$OUI$TextField$withSupportingText,
+											'A filled text field with clickable trailing icon',
+											A2(
+												$author$project$OUI$TextField$withFocused,
+												A2($author$project$OUI$Showcase$TextFields$inputHasFocus, 'filledLeadTrailClickIcon', model),
+												A3(
+													$author$project$OUI$TextField$onFocusBlur,
+													$author$project$OUI$Explorer$bookMsg(
+														$author$project$OUI$Showcase$TextFields$OnFocus('filledLeadTrailClickIcon')),
+													$author$project$OUI$Explorer$bookMsg(
+														$author$project$OUI$Showcase$TextFields$OnLoseFocus('filledLeadTrailClickIcon')),
+													A3(
+														$author$project$OUI$TextField$new,
+														'Filled',
+														A2(
+															$elm$core$Basics$composeR,
+															$author$project$OUI$Showcase$TextFields$OnChange('filledLeadTrailClickIcon'),
+															$author$project$OUI$Explorer$bookMsg),
+														A2($author$project$OUI$Showcase$TextFields$inputText, 'filledLeadTrailClickIcon', model))))))))),
+							A2(
+							$mdgriffith$elm_ui$Element$map,
+							$author$project$OUI$Explorer$bookMsg,
+							render(
+								A2(
+									$author$project$OUI$TextField$withColor,
+									$author$project$OUI$Error,
+									A2(
+										$author$project$OUI$TextField$withType,
+										$author$project$OUI$TextField$Filled,
+										A2(
+											$author$project$OUI$TextField$withSupportingText,
+											'A filled text field with error',
+											A2(
+												$author$project$OUI$TextField$withFocused,
+												A2($author$project$OUI$Showcase$TextFields$inputHasFocus, 'filledError', model),
+												A3(
+													$author$project$OUI$TextField$onFocusBlur,
+													$author$project$OUI$Showcase$TextFields$OnFocus('filledError'),
+													$author$project$OUI$Showcase$TextFields$OnLoseFocus('filledError'),
+													A3(
+														$author$project$OUI$TextField$new,
+														'Filled',
+														$author$project$OUI$Showcase$TextFields$OnChange('filledError'),
+														A2($author$project$OUI$Showcase$TextFields$inputText, 'filledError', model))))))))),
+							A2(
+							$mdgriffith$elm_ui$Element$map,
+							$author$project$OUI$Explorer$bookMsg,
+							render(
+								A2(
+									$author$project$OUI$TextField$withColor,
+									$author$project$OUI$Error,
+									A2(
+										$author$project$OUI$TextField$withErrorIcon,
+										$author$project$OUI$Icon$clear,
+										A2(
+											$author$project$OUI$TextField$withType,
+											$author$project$OUI$TextField$Filled,
+											A2(
+												$author$project$OUI$TextField$withSupportingText,
+												'A filled text field with a error icon',
+												A2(
+													$author$project$OUI$TextField$withFocused,
+													A2($author$project$OUI$Showcase$TextFields$inputHasFocus, 'filledErrorIcon', model),
+													A3(
+														$author$project$OUI$TextField$onFocusBlur,
+														$author$project$OUI$Showcase$TextFields$OnFocus('filledErrorIcon'),
+														$author$project$OUI$Showcase$TextFields$OnLoseFocus('filledErrorIcon'),
+														A3(
+															$author$project$OUI$TextField$new,
+															'Filled',
+															$author$project$OUI$Showcase$TextFields$OnChange('filledErrorIcon'),
+															A2($author$project$OUI$Showcase$TextFields$inputText, 'filledErrorIcon', model))))))))))
+						])),
+					A2(
+					$mdgriffith$elm_ui$Element$column,
+					_List_fromArray(
+						[
+							$mdgriffith$elm_ui$Element$spacing(20),
+							$mdgriffith$elm_ui$Element$width(
+							$mdgriffith$elm_ui$Element$px(500)),
+							$mdgriffith$elm_ui$Element$padding(40)
+						]),
+					_List_fromArray(
+						[
+							A2(
+							$mdgriffith$elm_ui$Element$map,
+							$author$project$OUI$Explorer$bookMsg,
+							render(
 								A2(
 									$author$project$OUI$TextField$withSupportingText,
-									'A filled text field with error',
+									'A outlined text field',
 									A2(
-										$author$project$OUI$TextField$withFocused,
-										A2($author$project$OUI$Showcase$TextFields$inputHasFocus, 'filledError', model),
-										A3(
-											$author$project$OUI$TextField$onFocusBlur,
-											$author$project$OUI$Showcase$TextFields$OnFocus('filledError'),
-											$author$project$OUI$Showcase$TextFields$OnLoseFocus('filledError'),
+										$author$project$OUI$TextField$withType,
+										$author$project$OUI$TextField$Outlined,
+										A2(
+											$author$project$OUI$TextField$withFocused,
+											A2($author$project$OUI$Showcase$TextFields$inputHasFocus, 'outlined', model),
 											A3(
-												$author$project$OUI$TextField$new,
-												'Filled',
-												$author$project$OUI$Showcase$TextFields$OnChange('filledError'),
-												A2($author$project$OUI$Showcase$TextFields$inputText, 'filledError', model)))))))),
-						A3(
-						$author$project$OUI$Material$renderTextField,
-						theme,
-						_List_fromArray(
-							[$mdgriffith$elm_ui$Element$centerX, $mdgriffith$elm_ui$Element$centerY]),
-						A2(
-							$author$project$OUI$TextField$withSupportingText,
-							'A outlined text field',
+												$author$project$OUI$TextField$onFocusBlur,
+												$author$project$OUI$Showcase$TextFields$OnFocus('outlined'),
+												$author$project$OUI$Showcase$TextFields$OnLoseFocus('outlined'),
+												A3(
+													$author$project$OUI$TextField$new,
+													'Outlined',
+													$author$project$OUI$Showcase$TextFields$OnChange('outlined'),
+													A2($author$project$OUI$Showcase$TextFields$inputText, 'outlined', model)))))))),
+							A2(
+							$mdgriffith$elm_ui$Element$map,
+							$author$project$OUI$Explorer$bookMsg,
+							render(
+								A2(
+									$author$project$OUI$TextField$withType,
+									$author$project$OUI$TextField$Outlined,
+									A2(
+										$author$project$OUI$TextField$withLeadingIcon,
+										$author$project$OUI$Icon$check,
+										A2(
+											$author$project$OUI$TextField$withSupportingText,
+											'A outlined text field with leading icon',
+											A2(
+												$author$project$OUI$TextField$withFocused,
+												A2($author$project$OUI$Showcase$TextFields$inputHasFocus, 'outlinedLeadIcon', model),
+												A3(
+													$author$project$OUI$TextField$onFocusBlur,
+													$author$project$OUI$Showcase$TextFields$OnFocus('outlinedLeadIcon'),
+													$author$project$OUI$Showcase$TextFields$OnLoseFocus('outlinedLeadIcon'),
+													A3(
+														$author$project$OUI$TextField$new,
+														'Outlined',
+														$author$project$OUI$Showcase$TextFields$OnChange('outlinedLeadIcon'),
+														A2($author$project$OUI$Showcase$TextFields$inputText, 'outlinedLeadIcon', model))))))))),
+							A2(
+							$mdgriffith$elm_ui$Element$map,
+							$author$project$OUI$Explorer$bookMsg,
+							render(
+								A2(
+									$author$project$OUI$TextField$withType,
+									$author$project$OUI$TextField$Outlined,
+									A2(
+										$author$project$OUI$TextField$withTrailingIcon,
+										$author$project$OUI$Icon$clear,
+										A2(
+											$author$project$OUI$TextField$withSupportingText,
+											'A outlined text field with trailing icon',
+											A2(
+												$author$project$OUI$TextField$withFocused,
+												A2($author$project$OUI$Showcase$TextFields$inputHasFocus, 'outlinedTrailIcon', model),
+												A3(
+													$author$project$OUI$TextField$onFocusBlur,
+													$author$project$OUI$Showcase$TextFields$OnFocus('outlinedTrailIcon'),
+													$author$project$OUI$Showcase$TextFields$OnLoseFocus('outlinedTrailIcon'),
+													A3(
+														$author$project$OUI$TextField$new,
+														'Outlined',
+														$author$project$OUI$Showcase$TextFields$OnChange('outlinedTrailIcon'),
+														A2($author$project$OUI$Showcase$TextFields$inputText, 'outlinedTrailIcon', model))))))))),
+							render(
 							A2(
 								$author$project$OUI$TextField$withType,
 								$author$project$OUI$TextField$Outlined,
-								A2(
-									$author$project$OUI$TextField$withFocused,
-									A2($author$project$OUI$Showcase$TextFields$inputHasFocus, 'outlined', model),
-									A3(
-										$author$project$OUI$TextField$onFocusBlur,
-										$author$project$OUI$Showcase$TextFields$OnFocus('outlined'),
-										$author$project$OUI$Showcase$TextFields$OnLoseFocus('outlined'),
-										A3(
-											$author$project$OUI$TextField$new,
-											'Outlined',
-											$author$project$OUI$Showcase$TextFields$OnChange('outlined'),
-											A2($author$project$OUI$Showcase$TextFields$inputText, 'outlined', model))))))),
-						A3(
-						$author$project$OUI$Material$renderTextField,
-						theme,
-						_List_fromArray(
-							[$mdgriffith$elm_ui$Element$centerX, $mdgriffith$elm_ui$Element$centerY]),
-						A2(
-							$author$project$OUI$TextField$withType,
-							$author$project$OUI$TextField$Outlined,
-							A2(
-								$author$project$OUI$TextField$withLeadingIcon,
-								$author$project$OUI$Icon$check,
-								A2(
-									$author$project$OUI$TextField$withSupportingText,
-									'A outlined text field with leading icon',
+								A3(
+									$author$project$OUI$TextField$withClickableTrailingIcon,
+									$author$project$OUI$Explorer$logEvent('Clicked !'),
+									$author$project$OUI$Icon$clear,
 									A2(
-										$author$project$OUI$TextField$withFocused,
-										A2($author$project$OUI$Showcase$TextFields$inputHasFocus, 'outlinedLeadIcon', model),
-										A3(
-											$author$project$OUI$TextField$onFocusBlur,
-											$author$project$OUI$Showcase$TextFields$OnFocus('outlinedLeadIcon'),
-											$author$project$OUI$Showcase$TextFields$OnLoseFocus('outlinedLeadIcon'),
-											A3(
-												$author$project$OUI$TextField$new,
-												'Outlined',
-												$author$project$OUI$Showcase$TextFields$OnChange('outlinedLeadIcon'),
-												A2($author$project$OUI$Showcase$TextFields$inputText, 'outlinedLeadIcon', model)))))))),
-						A3(
-						$author$project$OUI$Material$renderTextField,
-						theme,
-						_List_fromArray(
-							[$mdgriffith$elm_ui$Element$centerX, $mdgriffith$elm_ui$Element$centerY]),
-						A2(
-							$author$project$OUI$TextField$withType,
-							$author$project$OUI$TextField$Outlined,
+										$author$project$OUI$TextField$withLeadingIcon,
+										$author$project$OUI$Icon$check,
+										A2(
+											$author$project$OUI$TextField$withSupportingText,
+											'A outlined text field with clickable trailing icon',
+											A2(
+												$author$project$OUI$TextField$withFocused,
+												A2($author$project$OUI$Showcase$TextFields$inputHasFocus, 'outlinedLeadTrailClickIcon', model),
+												A3(
+													$author$project$OUI$TextField$onFocusBlur,
+													$author$project$OUI$Explorer$bookMsg(
+														$author$project$OUI$Showcase$TextFields$OnFocus('outlinedLeadTrailClickIcon')),
+													$author$project$OUI$Explorer$bookMsg(
+														$author$project$OUI$Showcase$TextFields$OnLoseFocus('outlinedLeadTrailClickIcon')),
+													A3(
+														$author$project$OUI$TextField$new,
+														'Outlined',
+														A2(
+															$elm$core$Basics$composeR,
+															$author$project$OUI$Showcase$TextFields$OnChange('outlinedLeadTrailClickIcon'),
+															$author$project$OUI$Explorer$bookMsg),
+														A2($author$project$OUI$Showcase$TextFields$inputText, 'outlinedLeadTrailClickIcon', model))))))))),
 							A2(
-								$author$project$OUI$TextField$withTrailingIcon,
-								$author$project$OUI$Icon$clear,
+							$mdgriffith$elm_ui$Element$map,
+							$author$project$OUI$Explorer$bookMsg,
+							render(
 								A2(
-									$author$project$OUI$TextField$withSupportingText,
-									'A outlined text field with trailing icon',
+									$author$project$OUI$TextField$withColor,
+									$author$project$OUI$Error,
 									A2(
-										$author$project$OUI$TextField$withFocused,
-										A2($author$project$OUI$Showcase$TextFields$inputHasFocus, 'outlinedTrailIcon', model),
-										A3(
-											$author$project$OUI$TextField$onFocusBlur,
-											$author$project$OUI$Showcase$TextFields$OnFocus('outlinedTrailIcon'),
-											$author$project$OUI$Showcase$TextFields$OnLoseFocus('outlinedTrailIcon'),
-											A3(
-												$author$project$OUI$TextField$new,
-												'Outlined',
-												$author$project$OUI$Showcase$TextFields$OnChange('outlinedTrailIcon'),
-												A2($author$project$OUI$Showcase$TextFields$inputText, 'outlinedTrailIcon', model)))))))),
-						A3(
-						$author$project$OUI$Material$renderTextField,
-						theme,
-						_List_fromArray(
-							[$mdgriffith$elm_ui$Element$centerX, $mdgriffith$elm_ui$Element$centerY]),
-						A2(
-							$author$project$OUI$TextField$withColor,
-							$author$project$OUI$Error,
+										$author$project$OUI$TextField$withType,
+										$author$project$OUI$TextField$Outlined,
+										A2(
+											$author$project$OUI$TextField$withSupportingText,
+											'A outlined text field with error',
+											A2(
+												$author$project$OUI$TextField$withFocused,
+												A2($author$project$OUI$Showcase$TextFields$inputHasFocus, 'outlinedError', model),
+												A3(
+													$author$project$OUI$TextField$onFocusBlur,
+													$author$project$OUI$Showcase$TextFields$OnFocus('outlinedError'),
+													$author$project$OUI$Showcase$TextFields$OnLoseFocus('outlinedError'),
+													A3(
+														$author$project$OUI$TextField$new,
+														'Outlined',
+														$author$project$OUI$Showcase$TextFields$OnChange('outlinedError'),
+														A2($author$project$OUI$Showcase$TextFields$inputText, 'outlinedError', model))))))))),
 							A2(
-								$author$project$OUI$TextField$withType,
-								$author$project$OUI$TextField$Outlined,
+							$mdgriffith$elm_ui$Element$map,
+							$author$project$OUI$Explorer$bookMsg,
+							render(
 								A2(
-									$author$project$OUI$TextField$withSupportingText,
-									'A outlined text field with error',
+									$author$project$OUI$TextField$withColor,
+									$author$project$OUI$Error,
 									A2(
-										$author$project$OUI$TextField$withFocused,
-										A2($author$project$OUI$Showcase$TextFields$inputHasFocus, 'outlinedError', model),
-										A3(
-											$author$project$OUI$TextField$onFocusBlur,
-											$author$project$OUI$Showcase$TextFields$OnFocus('outlinedError'),
-											$author$project$OUI$Showcase$TextFields$OnLoseFocus('outlinedError'),
-											A3(
-												$author$project$OUI$TextField$new,
-												'Outlined',
-												$author$project$OUI$Showcase$TextFields$OnChange('outlinedError'),
-												A2($author$project$OUI$Showcase$TextFields$inputText, 'outlinedError', model))))))))
-					])));
+										$author$project$OUI$TextField$withErrorIcon,
+										$author$project$OUI$Icon$clear,
+										A2(
+											$author$project$OUI$TextField$withType,
+											$author$project$OUI$TextField$Outlined,
+											A2(
+												$author$project$OUI$TextField$withSupportingText,
+												'A outlined text field with a error icon',
+												A2(
+													$author$project$OUI$TextField$withFocused,
+													A2($author$project$OUI$Showcase$TextFields$inputHasFocus, 'outlinedErrorIcon', model),
+													A3(
+														$author$project$OUI$TextField$onFocusBlur,
+														$author$project$OUI$Showcase$TextFields$OnFocus('outlinedErrorIcon'),
+														$author$project$OUI$Showcase$TextFields$OnLoseFocus('outlinedErrorIcon'),
+														A3(
+															$author$project$OUI$TextField$new,
+															'Outlined',
+															$author$project$OUI$Showcase$TextFields$OnChange('outlinedErrorIcon'),
+															A2($author$project$OUI$Showcase$TextFields$inputText, 'outlinedErrorIcon', model))))))))))
+						]))
+				]));
 	});
 var $author$project$OUI$Showcase$TextFields$update = F3(
 	function (_v0, msg, model) {

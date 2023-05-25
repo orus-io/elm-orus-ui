@@ -1,6 +1,6 @@
 module OUI.TextField exposing
     ( TextField, Type(..), new
-    , withColor, withType, withSupportingText, withFocused, withLeadingIcon, withTrailingIcon
+    , withColor, withType, withSupportingText, withFocused, withLeadingIcon, withTrailingIcon, withClickableTrailingIcon, withErrorIcon
     , onFocusBlur
     , properties
     )
@@ -8,7 +8,7 @@ module OUI.TextField exposing
 {-| A [Text Field](https://m3.material.io/components/text-fields) component
 
 @docs TextField, Type, new
-@docs withColor, withType, withSupportingText, withFocused, withLeadingIcon, withTrailingIcon
+@docs withColor, withType, withSupportingText, withFocused, withLeadingIcon, withTrailingIcon, withClickableTrailingIcon, withErrorIcon
 @docs onFocusBlur
 @docs properties
 
@@ -42,6 +42,8 @@ type TextField msg
         , type_ : Type
         , leadingIcon : Maybe Icon
         , trailingIcon : Maybe Icon
+        , onTrailingIconClick : Maybe msg
+        , errorIcon : Maybe Icon
         }
 
 
@@ -61,6 +63,8 @@ new label onChange value =
         , type_ = Filled
         , leadingIcon = Nothing
         , trailingIcon = Nothing
+        , onTrailingIconClick = Nothing
+        , errorIcon = Nothing
         }
 
 
@@ -101,6 +105,27 @@ withTrailingIcon value (TextField props) =
     TextField
         { props
             | trailingIcon = Just value
+        }
+
+
+{-| add a clickable trailing icon
+-}
+withClickableTrailingIcon : msg -> Icon -> TextField msg -> TextField msg
+withClickableTrailingIcon msg icon (TextField props) =
+    TextField
+        { props
+            | trailingIcon = Just icon
+            , onTrailingIconClick = Just msg
+        }
+
+
+{-| set the error icon
+-}
+withErrorIcon : Icon -> TextField msg -> TextField msg
+withErrorIcon value (TextField props) =
+    TextField
+        { props
+            | errorIcon = Just value
         }
 
 
@@ -150,6 +175,8 @@ properties :
         , type_ : Type
         , leadingIcon : Maybe Icon
         , trailingIcon : Maybe Icon
+        , onTrailingIconClick : Maybe msg
+        , errorIcon : Maybe Icon
         }
 properties (TextField props) =
     props
