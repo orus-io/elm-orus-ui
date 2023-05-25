@@ -99,3 +99,9 @@ render : Typescale -> OUI.Text.Text -> Element msg
 render typescale (OUI.Text.Text type_ size text) =
     Element.el (attrs typescale type_ size) <|
         Element.text text
+
+
+renderWithAttrs : Typescale -> List (Attribute msg) -> OUI.Text.Text -> Element msg
+renderWithAttrs typescale customAttrs (OUI.Text.Text type_ size text) =
+    Element.el (attrs typescale type_ size ++ customAttrs) <|
+        Element.text text

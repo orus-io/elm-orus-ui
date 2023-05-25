@@ -24821,6 +24821,18 @@ var $author$project$OUI$Material$Typography$render = F2(
 			A3($author$project$OUI$Material$Typography$attrs, typescale, type_, size),
 			$mdgriffith$elm_ui$Element$text(text));
 	});
+var $author$project$OUI$Material$Typography$renderWithAttrs = F3(
+	function (typescale, customAttrs, _v0) {
+		var type_ = _v0.a;
+		var size = _v0.b;
+		var text = _v0.c;
+		return A2(
+			$mdgriffith$elm_ui$Element$el,
+			_Utils_ap(
+				A3($author$project$OUI$Material$Typography$attrs, typescale, type_, size),
+				customAttrs),
+			$mdgriffith$elm_ui$Element$text(text));
+	});
 var $mdgriffith$elm_ui$Element$Input$TextInputNode = function (a) {
 	return {$: 'TextInputNode', a: a};
 };
@@ -25701,9 +25713,13 @@ var $author$project$OUI$Material$TextField$render = F5(
 								$mdgriffith$elm_ui$Element$moveDown((((theme.height / 2) | 0) - ((typescale.body.large.size / 2) | 0)) - topBorderWidth),
 								$mdgriffith$elm_ui$Element$moveRight(inputLeftOffset - leftBorderWidth)
 							])),
-					A2(
-						$author$project$OUI$Material$Typography$render,
+					A3(
+						$author$project$OUI$Material$Typography$renderWithAttrs,
 						typescale,
+						_List_fromArray(
+							[
+								$author$project$OUI$Material$TextField$transition('font-size 0.15s')
+							]),
 						$author$project$OUI$Text$bodyLarge(label)));
 			} else {
 				if (isOutlined) {
@@ -25723,9 +25739,13 @@ var $author$project$OUI$Material$TextField$render = F5(
 										'background',
 										'linear-gradient(to bottom, transparent 0 ' + ($elm$core$String$fromInt(topOffset) + ('px, ' + ($avh4$elm_color$Color$toCssString(colorscheme.surface) + (' ' + ($elm$core$String$fromInt(topOffset) + 'px)')))))))
 								])),
-						A2(
-							$author$project$OUI$Material$Typography$render,
+						A3(
+							$author$project$OUI$Material$Typography$renderWithAttrs,
 							typescale,
+							_List_fromArray(
+								[
+									$author$project$OUI$Material$TextField$transition('font-size 0.15s')
+								]),
 							$author$project$OUI$Text$bodySmall(label)));
 				} else {
 					return A2(
@@ -25737,9 +25757,13 @@ var $author$project$OUI$Material$TextField$render = F5(
 									$mdgriffith$elm_ui$Element$moveDown(theme.filled.topBottomPadding + (((typescale.body.large.lineHeight - typescale.body.large.size) / 2) | 0)),
 									$mdgriffith$elm_ui$Element$moveRight(inputLeftOffset - leftBorderWidth)
 								])),
-						A2(
-							$author$project$OUI$Material$Typography$render,
+						A3(
+							$author$project$OUI$Material$Typography$renderWithAttrs,
 							typescale,
+							_List_fromArray(
+								[
+									$author$project$OUI$Material$TextField$transition('font-size 0.15s')
+								]),
 							$author$project$OUI$Text$bodySmall(label)));
 				}
 			}

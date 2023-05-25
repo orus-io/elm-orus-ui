@@ -251,7 +251,7 @@ render typescale colorscheme theme attrs textfield =
             in
             if labelHoldPlace then
                 OUI.Text.bodyLarge label
-                    |> OUI.Material.Typography.render typescale
+                    |> OUI.Material.Typography.renderWithAttrs typescale [ transition "font-size 0.15s" ]
                     |> Element.el
                         (staticAttrs
                             ++ [ Element.moveDown <|
@@ -271,7 +271,7 @@ render typescale colorscheme theme attrs textfield =
                         typescale.body.small.size // 2
                 in
                 OUI.Text.bodySmall label
-                    |> OUI.Material.Typography.render typescale
+                    |> OUI.Material.Typography.renderWithAttrs typescale [ transition "font-size 0.15s" ]
                     |> Element.el
                         (staticAttrs
                             ++ [ Element.moveUp <| toFloat <| topOffset
@@ -295,7 +295,7 @@ render typescale colorscheme theme attrs textfield =
 
             else
                 OUI.Text.bodySmall label
-                    |> OUI.Material.Typography.render typescale
+                    |> OUI.Material.Typography.renderWithAttrs typescale [ transition "font-size 0.15s" ]
                     |> Element.el
                         (staticAttrs
                             ++ [ Element.moveDown <|
