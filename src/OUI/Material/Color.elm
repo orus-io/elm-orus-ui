@@ -410,7 +410,7 @@ darkFromKeyColors keyColors =
     , onErrorContainer = tone 90 keyColors.error
     , outline = tone 60 keyColors.neutralVariant
     , outlineVariant = tone 30 keyColors.neutralVariant
-    , shadow = tone 0 keyColors.neutral |> setAlpha 0.16
+    , shadow = tone 100 keyColors.neutral |> setAlpha 0.16
     , surfaceTint = keyColors.primary
     , scrim = tone 0 keyColors.neutral
     }
