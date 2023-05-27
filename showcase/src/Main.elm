@@ -1,5 +1,6 @@
 module Main exposing (..)
 
+import Browser
 import Material.Icons.Outlined as Outlined
 import Material.Icons.Types exposing (Coloring(..))
 import OUI.Explorer as Explorer
@@ -18,3 +19,4 @@ main =
                 ]
             )
         |> Explorer.finalize
+        |> Browser.application

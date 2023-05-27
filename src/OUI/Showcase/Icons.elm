@@ -18,7 +18,7 @@ book title iconList =
                     |> List.map
                         (\( label, icon ) ->
                             Element.column [ Element.spacing 10 ]
-                                [ Material.renderIcon theme [ Element.centerX ] icon
+                                [ Material.icon theme [ Element.centerX ] icon
                                 , Element.text label
                                 ]
                         )

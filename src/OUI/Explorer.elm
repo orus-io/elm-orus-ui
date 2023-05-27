@@ -504,7 +504,7 @@ finalize expl =
                                         )
                                     |> Switch.withIconSelected Icon.dark_mode
                                     |> Switch.withIconUnselected Icon.light_mode
-                                    |> Material.renderSwitch shared.theme
+                                    |> Material.switch shared.theme
                                         [ Element.alignRight
                                         ]
                                 ]

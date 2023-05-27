@@ -24,13 +24,13 @@ commonButtons { theme } =
                     |> Button.withIcon clear
                     |> Button.onClick (Explorer.logEvent "Clicked Elevated")
                     |> Button.elevatedButton
-                    |> Material.renderButton theme [ Element.centerX ]
+                    |> Material.button theme [ Element.centerX ]
                 , Button.new
                     |> Button.withText "Elevated"
                     |> Button.withIcon clear
                     |> Button.disabled
                     |> Button.elevatedButton
-                    |> Material.renderButton theme [ Element.centerX ]
+                    |> Material.button theme [ Element.centerX ]
                 ]
             , Element.column [ Element.spacing 30 ]
                 [ Button.new
@@ -38,13 +38,13 @@ commonButtons { theme } =
                     |> Button.withIcon clear
                     |> Button.onClick (Explorer.logEvent "Clicked Filled")
                     |> Button.filledButton
-                    |> Material.renderButton theme [ Element.centerX ]
+                    |> Material.button theme [ Element.centerX ]
                 , Button.new
                     |> Button.withText "Filled"
                     |> Button.withIcon clear
                     |> Button.disabled
                     |> Button.filledButton
-                    |> Material.renderButton theme [ Element.centerX ]
+                    |> Material.button theme [ Element.centerX ]
                 ]
             , Element.column [ Element.spacing 30 ]
                 [ Button.new
@@ -52,13 +52,13 @@ commonButtons { theme } =
                     |> Button.withIcon clear
                     |> Button.onClick (Explorer.logEvent "Clicked Tonal")
                     |> Button.tonalButton
-                    |> Material.renderButton theme [ Element.centerX ]
+                    |> Material.button theme [ Element.centerX ]
                 , Button.new
                     |> Button.withText "Tonal"
                     |> Button.withIcon clear
                     |> Button.disabled
                     |> Button.tonalButton
-                    |> Material.renderButton theme [ Element.centerX ]
+                    |> Material.button theme [ Element.centerX ]
                 ]
             , Element.column [ Element.spacing 30 ]
                 [ Button.new
@@ -66,13 +66,13 @@ commonButtons { theme } =
                     |> Button.withIcon clear
                     |> Button.onClick (Explorer.logEvent "Clicked Outlined")
                     |> Button.outlinedButton
-                    |> Material.renderButton theme [ Element.centerX ]
+                    |> Material.button theme [ Element.centerX ]
                 , Button.new
                     |> Button.withText "Outlined"
                     |> Button.withIcon clear
                     |> Button.disabled
                     |> Button.outlinedButton
-                    |> Material.renderButton theme [ Element.centerX ]
+                    |> Material.button theme [ Element.centerX ]
                 ]
             , Element.column [ Element.spacing 30 ]
                 [ Button.new
@@ -80,13 +80,13 @@ commonButtons { theme } =
                     |> Button.withIcon clear
                     |> Button.onClick (Explorer.logEvent "Clicked Text")
                     |> Button.textButton
-                    |> Material.renderButton theme [ Element.centerX ]
+                    |> Material.button theme [ Element.centerX ]
                 , Button.new
                     |> Button.withText "Text"
                     |> Button.withIcon clear
                     |> Button.disabled
                     |> Button.textButton
-                    |> Material.renderButton theme [ Element.centerX ]
+                    |> Material.button theme [ Element.centerX ]
                 ]
             ]
         , Element.text "FAB"
@@ -100,15 +100,15 @@ commonButtons { theme } =
              in
              [ btn "Small"
                 |> Button.smallFAB
-                |> Material.renderButton theme [ Element.centerX ]
+                |> Material.button theme [ Element.centerX ]
              , btn "Medium"
                 |> Button.mediumFAB
                 |> Button.color OUI.Secondary
-                |> Material.renderButton theme [ Element.centerX ]
+                |> Material.button theme [ Element.centerX ]
              , btn "Large"
                 |> Button.largeFAB
                 |> Button.color OUI.Tertiary
-                |> Material.renderButton theme [ Element.centerX ]
+                |> Material.button theme [ Element.centerX ]
              ]
             )
         , Element.text "Icon Buttons"
@@ -122,15 +122,15 @@ commonButtons { theme } =
              in
              [ btn "Standard"
                 |> Button.iconButton
-                |> Material.renderButton theme [ Element.centerX ]
+                |> Material.button theme [ Element.centerX ]
              , btn "Filled"
                 |> Button.filledIconButton
                 |> Button.color OUI.Primary
-                |> Material.renderButton theme [ Element.centerX ]
+                |> Material.button theme [ Element.centerX ]
              , btn "Outlined"
                 |> Button.outlinedIconButton
                 |> Button.color OUI.Primary
-                |> Material.renderButton theme [ Element.centerX ]
+                |> Material.button theme [ Element.centerX ]
              ]
             )
         ]

@@ -114,7 +114,7 @@ textfields : Explorer.Shared -> Model -> Element (Explorer.BookMsg Msg)
 textfields { theme } model =
     let
         render =
-            Material.renderTextField theme
+            Material.textField theme
                 [ Element.centerX
                 , Element.centerY
                 , Element.width Element.fill

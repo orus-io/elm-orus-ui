@@ -12,8 +12,8 @@ import OUI.Material.Color
 colorCell : String -> Color -> Color -> Int -> Element msg
 colorCell name color onColor height =
     Element.row
-        [ Background.color (color |> OUI.Material.toElementColor)
-        , Font.color (onColor |> OUI.Material.toElementColor)
+        [ Background.color (color |> OUI.Material.Color.toElementColor)
+        , Font.color (onColor |> OUI.Material.Color.toElementColor)
         , Element.width Element.fill
         , Element.height <| Element.px height
         , Element.padding 15

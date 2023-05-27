@@ -1,13 +1,8 @@
-module OUI.Material exposing
-    ( renderText, renderButton, renderCheckbox, renderIcon, renderSwitch, renderTextField
-    , toElementColor
-    )
+module OUI.Material exposing (text, button, checkbox, icon, switch, textField)
 
 {-| A elm-ui based renderer API
 
-@docs renderText, renderButton, renderCheckbox, renderIcon, renderSwitch, renderTextField
-
-@docs toElementColor
+@docs text, button, checkbox, icon, switch, textField
 
 -}
 
@@ -38,45 +33,45 @@ toElementColor =
 
 {-| Render a text
 -}
-renderText : Theme -> OUI.Text.Text -> Element msg
-renderText { typescale } text =
-    OUI.Material.Typography.render typescale text
+text : Theme -> OUI.Text.Text -> Element msg
+text { typescale } =
+    OUI.Material.Typography.render typescale
 
 
 {-| Render a button
 -}
-renderButton :
+button :
     Theme
     -> List (Attribute msg)
     -> OUI.Button.Button { constraints | hasText : (), hasAction : () } msg
     -> Element msg
-renderButton { typescale, colorscheme, button } =
-    OUI.Material.Button.render typescale colorscheme button
+button theme =
+    OUI.Material.Button.render theme.typescale theme.colorscheme theme.button
 
 
 {-| Render an icon
 -}
-renderIcon : Theme -> List (Attribute msg) -> Icon -> Element msg
-renderIcon { colorscheme } =
+icon : Theme -> List (Attribute msg) -> Icon -> Element msg
+icon { colorscheme } =
     OUI.Material.Icon.render colorscheme
 
 
 {-| Render a checkbox
 -}
-renderCheckbox : Theme -> List (Attribute msg) -> OUI.Checkbox.Checkbox { hasAction : (), withChecked : () } msg -> Element msg
-renderCheckbox { colorscheme, checkbox } =
-    OUI.Material.Checkbox.render colorscheme checkbox
+checkbox : Theme -> List (Attribute msg) -> OUI.Checkbox.Checkbox { hasAction : (), withChecked : () } msg -> Element msg
+checkbox theme =
+    OUI.Material.Checkbox.render theme.colorscheme theme.checkbox
 
 
 {-| Render a Switch
 -}
-renderSwitch : Theme -> List (Attribute msg) -> OUI.Switch.Switch msg -> Element msg
-renderSwitch { colorscheme, switch } =
-    OUI.Material.Switch.render colorscheme switch
+switch : Theme -> List (Attribute msg) -> OUI.Switch.Switch msg -> Element msg
+switch theme =
+    OUI.Material.Switch.render theme.colorscheme theme.switch
 
 
 {-| Render a TextField
 -}
-renderTextField : Theme -> List (Attribute msg) -> OUI.TextField.TextField msg -> Element msg
-renderTextField { typescale, colorscheme, textfield, button } =
-    OUI.Material.TextField.render typescale colorscheme button textfield
+textField : Theme -> List (Attribute msg) -> OUI.TextField.TextField msg -> Element msg
+textField theme =
+    OUI.Material.TextField.render theme.typescale theme.colorscheme theme.button theme.textfield

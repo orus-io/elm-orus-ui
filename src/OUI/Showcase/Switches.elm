@@ -58,12 +58,12 @@ checkbox { theme } { switches } =
             [ Element.text "Primary color"
             , Switch.new (Dict.get "primary" switches |> Maybe.withDefault True)
                 |> Switch.onChange (Explorer.bookMsg << SetSwitch "primary")
-                |> Material.renderSwitch theme [ Element.alignRight ]
+                |> Material.switch theme [ Element.alignRight ]
             ]
         , Element.row [ Element.spacing 30, Element.width Element.fill ]
             [ Element.text "Disabled"
             , Switch.new (Dict.get "primary" switches |> Maybe.withDefault True)
-                |> Material.renderSwitch theme [ Element.alignRight ]
+                |> Material.switch theme [ Element.alignRight ]
             ]
         , Element.row [ Element.spacing 30, Element.width Element.fill ]
             [ Element.text "With icons"
@@ -71,20 +71,20 @@ checkbox { theme } { switches } =
                 |> Switch.onChange (Explorer.bookMsg << SetSwitch "icons")
                 |> Switch.withIconUnselected clear
                 |> Switch.withIconSelected check
-                |> Material.renderSwitch theme [ Element.alignRight ]
+                |> Material.switch theme [ Element.alignRight ]
             ]
         , Element.row [ Element.spacing 30, Element.width Element.fill ]
             [ Element.text "Secondary color"
             , Switch.new (Dict.get "secondary" switches |> Maybe.withDefault True)
                 |> Switch.withColor OUI.Secondary
                 |> Switch.onChange (Explorer.bookMsg << SetSwitch "secondary")
-                |> Material.renderSwitch theme [ Element.alignRight ]
+                |> Material.switch theme [ Element.alignRight ]
             ]
         , Element.row [ Element.spacing 30, Element.width Element.fill ]
             [ Element.text "Error color"
             , Switch.new (Dict.get "error" switches |> Maybe.withDefault True)
                 |> Switch.onChange (Explorer.bookMsg << SetSwitch "error")
                 |> Switch.withColor OUI.Error
-                |> Material.renderSwitch theme [ Element.alignRight ]
+                |> Material.switch theme [ Element.alignRight ]
             ]
         ]

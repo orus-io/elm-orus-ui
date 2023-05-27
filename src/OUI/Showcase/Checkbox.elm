@@ -34,33 +34,33 @@ checkbox { theme } =
             [ Checkbox.new
                 |> Checkbox.onChange (onChange "unchecked")
                 |> Checkbox.withChecked False
-                |> Material.renderCheckbox theme []
+                |> Material.checkbox theme []
             , Checkbox.new
                 |> Checkbox.onChange (onChange "checked")
                 |> Checkbox.withChecked True
-                |> Material.renderCheckbox theme []
+                |> Material.checkbox theme []
             , Checkbox.new
                 |> Checkbox.disabled
                 |> Checkbox.withChecked False
-                |> Material.renderCheckbox theme []
+                |> Material.checkbox theme []
             , Checkbox.new
                 |> Checkbox.disabled
                 |> Checkbox.withChecked True
-                |> Material.renderCheckbox theme []
+                |> Material.checkbox theme []
             , Checkbox.new
                 |> Checkbox.onChange (onChange "custom icon")
                 |> Checkbox.withChecked True
                 |> Checkbox.withIcon clear
-                |> Material.renderCheckbox theme []
+                |> Material.checkbox theme []
             , Checkbox.new
                 |> Checkbox.onChange (onChange "unchecked error")
                 |> Checkbox.withChecked False
                 |> Checkbox.withColor OUI.Error
-                |> Material.renderCheckbox theme []
+                |> Material.checkbox theme []
             , Checkbox.new
                 |> Checkbox.onChange (onChange "checked error")
                 |> Checkbox.withChecked True
                 |> Checkbox.withColor OUI.Error
-                |> Material.renderCheckbox theme []
+                |> Material.checkbox theme []
             ]
         ]
