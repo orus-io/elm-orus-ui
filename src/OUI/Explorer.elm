@@ -1,13 +1,13 @@
 module OUI.Explorer exposing
     ( Book, BookMsg, Page, Route, Shared, SharedMsg, Explorer
-    , addBook, book, statefulBook, category, bookMsg, logEvent, explorer, finalize
+    , setTheme, setColorScheme, addBook, book, statefulBook, category, bookMsg, logEvent, explorer, finalize
     , withMarkdownChapter, withStaticChapter, withChapter
     )
 
 {-|
 
 @docs Book, BookMsg, Page, Route, Shared, SharedMsg, Explorer
-@docs addBook, book, statefulBook, category, bookMsg, logEvent, explorer, finalize
+@docs setTheme, setColorScheme, addBook, book, statefulBook, category, bookMsg, logEvent, explorer, finalize
 @docs withMarkdownChapter, withStaticChapter, withChapter
 
 -}
@@ -94,6 +94,7 @@ mapView mapper abook =
 type alias Explorer shared sharedMsg current previous currentMsg previousMsg =
     { app : Spa.Builder Route () shared sharedMsg (Page (Spa.PageStack.Msg Route currentMsg previousMsg)) current previous currentMsg previousMsg
     , categories : List ( String, List String )
+    , initialShared : Shared
     }
 
 
@@ -107,6 +108,46 @@ explorer =
             , extractIdentity = always Nothing
             }
     , categories = []
+    , initialShared =
+        { lastEvents = []
+        , theme = Theme.defaultTheme
+        , colorSchemeList = [ ( Color.defaultLightScheme, Color.defaultDarkScheme ) ]
+        , selectedColorScheme =
+            ( 0, Light )
+        }
+    }
+
+
+{-| set the theme
+-}
+setTheme :
+    Theme.Theme
+    -> Explorer shared sharedMsg c p cm pm
+    -> Explorer shared sharedMsg c p cm pm
+setTheme theme expl =
+    let
+        shared =
+            expl.initialShared
+    in
+    { expl
+        | initialShared = { shared | theme = theme }
+    }
+
+
+{-| setColorScheme
+-}
+setColorScheme :
+    Color.Scheme
+    -> Color.Scheme
+    -> Explorer shared sharedMsg c p cm pm
+    -> Explorer shared sharedMsg c p cm pm
+setColorScheme light dark expl =
+    let
+        shared =
+            expl.initialShared
+    in
+    { expl
+        | initialShared = { shared | colorSchemeList = [ ( light, dark ) ] }
     }
 
 
@@ -187,6 +228,7 @@ addBook b expl =
 
             [] ->
                 [ ( "", [ b.title ] ) ]
+    , initialShared = expl.initialShared
     }
 
 
@@ -327,8 +369,8 @@ decodeFlags =
         )
 
 
-setColorScheme : Int -> ColorSchemeType -> Shared -> Shared
-setColorScheme index type_ shared =
+changeColorScheme : Int -> ColorSchemeType -> Shared -> Shared
+changeColorScheme index type_ shared =
     let
         realIndex =
             if index < 0 then
@@ -376,11 +418,7 @@ setColorScheme index type_ shared =
 -}
 finalize :
     Explorer Shared SharedMsg current previous currentMsg previousMsg
-    ->
-        Platform.Program
-            Json.Decode.Value
-            (Spa.Model String Shared current previous)
-            (Spa.Msg SharedMsg (Spa.PageStack.Msg String currentMsg previousMsg))
+    -> Spa.Application Json.Decode.Value Shared SharedMsg String current previous currentMsg previousMsg
 finalize expl =
     let
         categories =
@@ -397,13 +435,8 @@ finalize expl =
                         Json.Decode.decodeValue decodeFlags flags
                             |> Result.withDefault { dark_mode = False }
                 in
-                ( { lastEvents = []
-                  , theme = Theme.defaultTheme
-                  , colorSchemeList = [ ( Color.defaultLightScheme, Color.defaultDarkScheme ) ]
-                  , selectedColorScheme =
-                        ( 0, Light )
-                  }
-                    |> setColorScheme 0
+                ( expl.initialShared
+                    |> changeColorScheme 0
                         (if dFlags.dark_mode then
                             Dark
 
@@ -426,7 +459,7 @@ finalize expl =
                         )
 
                     SelectColorScheme index type_ ->
-                        ( setColorScheme index type_ shared
+                        ( changeColorScheme index type_ shared
                         , Cmd.none
                         )
         , subscriptions = \_ -> Sub.none
@@ -537,4 +570,3 @@ finalize expl =
                 }
         }
         expl.app
-        |> Browser.application

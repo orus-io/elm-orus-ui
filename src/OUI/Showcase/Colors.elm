@@ -112,6 +112,20 @@ book =
 The two default color schemes
     """
         |> Explorer.withStaticChapter
-            (\_ -> showColorScheme "Light Scheme" OUI.Material.Color.defaultLightScheme)
+            (\shared ->
+                shared.colorSchemeList
+                    |> List.drop (shared.selectedColorScheme |> Tuple.first)
+                    |> List.head
+                    |> Maybe.map Tuple.first
+                    |> Maybe.withDefault OUI.Material.Color.defaultLightScheme
+                    |> showColorScheme "Light Scheme"
+            )
         |> Explorer.withStaticChapter
-            (\_ -> showColorScheme "Dark Scheme" OUI.Material.Color.defaultDarkScheme)
+            (\shared ->
+                shared.colorSchemeList
+                    |> List.drop (shared.selectedColorScheme |> Tuple.first)
+                    |> List.head
+                    |> Maybe.map Tuple.second
+                    |> Maybe.withDefault OUI.Material.Color.defaultLightScheme
+                    |> showColorScheme "Dark Scheme"
+            )
