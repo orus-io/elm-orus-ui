@@ -43,6 +43,7 @@ following functions.
 
 import OUI exposing (Color(..))
 import OUI.Icon exposing (Icon)
+import OUI.Menu exposing (Menu)
 
 
 {-| A button type
@@ -84,6 +85,10 @@ type alias Props msg =
 -}
 type Button constraints msg
     = Button (Props msg)
+
+
+type MenuButton item msg
+    = MenuButton (Props msg) (Menu item msg)
 
 
 {-| Create a button with the given label
@@ -234,6 +239,15 @@ link url (Button props) =
         }
 
 
+withMenu :
+    (Bool -> msg)
+    -> Menu item msg
+    -> Button { props | needOnClickOrDisabled : () } msg
+    -> MenuButton  item msg
+withMenu onOpened menu (Button props) =
+    MenuButton props menu
+
+
 {-| -}
 type alias Properties msg =
     { text : String
@@ -250,3 +264,22 @@ properties :
     -> Properties msg
 properties (Button props) =
     props
+
+
+{-| -}
+menuButtonProperties :
+    MenuButton item msg
+    ->
+        { button :
+            { text : String
+            , icon : Maybe Icon
+            , action : Action msg
+            , color : Color
+            , type_ : Type
+            }
+        , menu : Menu item msg
+        }
+menuButtonProperties (MenuButton props menu) =
+    { button = props
+    , menu = menu
+    }

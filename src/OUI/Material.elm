@@ -2,6 +2,7 @@ module OUI.Material exposing
     ( text, icon
     , button, checkbox, switch, textField, radiobutton
     , navigation
+    , menu, menuButton
     )
 
 {-| A elm-ui based renderer API
@@ -32,12 +33,16 @@ import OUI.Material.Button
 import OUI.Material.Checkbox
 import OUI.Material.Color
 import OUI.Material.Icon
+import OUI.Material.Menu
+import OUI.Material.MenuButton
 import OUI.Material.Navigation
 import OUI.Material.RadioButton
 import OUI.Material.Switch
 import OUI.Material.TextField
 import OUI.Material.Theme exposing (Theme, Typescale)
 import OUI.Material.Typography
+import OUI.Menu
+import OUI.MenuButton
 import OUI.Navigation
 import OUI.RadioButton
 import OUI.Switch
@@ -94,6 +99,24 @@ checkbox :
     -> Element msg
 checkbox theme =
     OUI.Material.Checkbox.render theme.colorscheme theme.checkbox
+
+
+menu :
+    Theme themeExt
+    -> List (Attribute msg)
+    -> OUI.Menu.Menu item msg
+    -> Element msg
+menu theme =
+    OUI.Material.Menu.render theme.typescale theme.colorscheme theme.menu
+
+
+menuButton :
+    Theme themeExt
+    -> List (Attribute msg)
+    -> OUI.MenuButton.MenuButton btnC item msg
+    -> Element msg
+menuButton theme =
+    OUI.Material.MenuButton.render theme.typescale theme.colorscheme theme.button theme.menu
 
 
 {-| Render a navigation trail/drawer

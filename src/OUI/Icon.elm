@@ -1,6 +1,6 @@
 module OUI.Icon exposing
     ( Icon, withSize, withColor
-    , check, clear, light_mode, dark_mode
+    , blank, check, clear, light_mode, dark_mode
     , elmMaterialIcons, materialIcons
     , Renderer(..), Properties, properties
     )
@@ -15,7 +15,7 @@ module OUI.Icon exposing
 
 # Stock icons
 
-@docs check, clear, light_mode, dark_mode
+@docs blank, check, clear, light_mode, dark_mode
 
 
 # Adapters
@@ -30,6 +30,7 @@ module OUI.Icon exposing
 -}
 
 import Color exposing (Color)
+import Element
 import Html exposing (Html)
 import OUI
 import Svg exposing (Svg)
@@ -82,6 +83,25 @@ fromRenderer renderer =
         , color = Nothing
         , renderer = renderer
         }
+
+
+blank : Icon
+blank =
+    fromRenderer <|
+        Svg
+            (\size color ->
+                let
+                    sizeAsString : String
+                    sizeAsString =
+                        String.fromInt size
+                in
+                Svg.svg
+                    [ Svg.Attributes.viewBox "0 0 24 24"
+                    , Svg.Attributes.height sizeAsString
+                    , Svg.Attributes.width sizeAsString
+                    ]
+                    []
+            )
 
 
 {-| The 'check' icon, taken from icidasset/elm-material-icons

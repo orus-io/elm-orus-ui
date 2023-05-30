@@ -1,4 +1,12 @@
-module OUI.Material.Button exposing (FABLayout, IconLayout, Layout, Theme, defaultTheme, render)
+module OUI.Material.Button exposing
+    ( FABLayout
+    , IconLayout
+    , Layout
+    , Theme
+    , defaultTheme
+    , render
+    , renderProps
+    )
 
 import Color
 import Element exposing (Attribute, Element)
@@ -576,7 +584,19 @@ render typescale colorscheme theme attrs button =
         props : OUI.Button.Properties msg
         props =
             properties button
+    in
+    renderProps typescale colorscheme theme attrs props
 
+
+renderProps :
+    OUI.Material.Typography.Typescale
+    -> OUI.Material.Color.Scheme
+    -> Theme
+    -> List (Attribute msg)
+    -> OUI.Button.Properties msg
+    -> Element msg
+renderProps typescale colorscheme theme attrs props =
+    let
         aria : List (Attribute msg)
         aria =
             ARIA.roleButton
