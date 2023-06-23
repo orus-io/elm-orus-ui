@@ -11454,6 +11454,7 @@ var $author$project$OUI$Explorer$book = function (title) {
 var $author$project$OUI$Primary = {$: 'Primary'};
 var $author$project$OUI$Secondary = {$: 'Secondary'};
 var $author$project$OUI$Tertiary = {$: 'Tertiary'};
+var $author$project$OUI$Button$Disabled = {$: 'Disabled'};
 var $mdgriffith$elm_ui$Internal$Model$Button = {$: 'Button'};
 var $mdgriffith$elm_ui$Internal$Model$Describe = function (a) {
 	return {$: 'Describe', a: a};
@@ -12562,6 +12563,43 @@ var $author$project$OUI$Material$Button$iconSizeColor = F5(
 				return _Utils_Tuple2(theme.common.iconSize, frontColor);
 		}
 	});
+var $elm$html$Html$Attributes$href = function (url) {
+	return A2(
+		$elm$html$Html$Attributes$stringProperty,
+		'href',
+		_VirtualDom_noJavaScriptUri(url));
+};
+var $elm$html$Html$Attributes$rel = _VirtualDom_attribute('rel');
+var $mdgriffith$elm_ui$Element$link = F2(
+	function (attrs, _v0) {
+		var url = _v0.url;
+		var label = _v0.label;
+		return A4(
+			$mdgriffith$elm_ui$Internal$Model$element,
+			$mdgriffith$elm_ui$Internal$Model$asEl,
+			$mdgriffith$elm_ui$Internal$Model$NodeName('a'),
+			A2(
+				$elm$core$List$cons,
+				$mdgriffith$elm_ui$Internal$Model$Attr(
+					$elm$html$Html$Attributes$href(url)),
+				A2(
+					$elm$core$List$cons,
+					$mdgriffith$elm_ui$Internal$Model$Attr(
+						$elm$html$Html$Attributes$rel('noopener noreferrer')),
+					A2(
+						$elm$core$List$cons,
+						$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$shrink),
+						A2(
+							$elm$core$List$cons,
+							$mdgriffith$elm_ui$Element$height($mdgriffith$elm_ui$Element$shrink),
+							A2(
+								$elm$core$List$cons,
+								$mdgriffith$elm_ui$Internal$Model$htmlClass($mdgriffith$elm_ui$Internal$Style$classes.contentCenterX + (' ' + ($mdgriffith$elm_ui$Internal$Style$classes.contentCenterY + (' ' + $mdgriffith$elm_ui$Internal$Style$classes.link)))),
+								attrs))))),
+			$mdgriffith$elm_ui$Internal$Model$Unkeyed(
+				_List_fromArray(
+					[label])));
+	});
 var $mdgriffith$elm_ui$Internal$Flag$borderColor = $mdgriffith$elm_ui$Internal$Flag$flag(28);
 var $mdgriffith$elm_ui$Element$Border$color = function (clr) {
 	return A2(
@@ -12935,20 +12973,20 @@ var $author$project$OUI$Material$Button$render = F5(
 	function (typescale, colorscheme, theme, attrs, button) {
 		var props = $author$project$OUI$Button$properties(button);
 		var label = function () {
-			var _v28 = props.icon;
-			if (_v28.$ === 'Nothing') {
+			var _v29 = props.icon;
+			if (_v29.$ === 'Nothing') {
 				return $mdgriffith$elm_ui$Element$text(props.text);
 			} else {
-				var icon = _v28.a;
-				var _v29 = A5(
+				var icon = _v29.a;
+				var _v30 = A5(
 					$author$project$OUI$Material$Button$iconSizeColor,
 					colorscheme,
 					theme,
 					props.type_,
 					props.color,
-					_Utils_eq(props.onClick, $elm$core$Maybe$Nothing));
-				var size = _v29.a;
-				var color = _v29.b;
+					_Utils_eq(props.action, $author$project$OUI$Button$Disabled));
+				var size = _v30.a;
+				var color = _v30.b;
 				return $author$project$OUI$Material$Button$iconOnly(props.type_) ? A4(
 					$author$project$OUI$Material$Icon$renderWithSizeColor,
 					size,
@@ -12977,132 +13015,157 @@ var $author$project$OUI$Material$Button$render = F5(
 		var hasIcon = !_Utils_eq(props.icon, $elm$core$Maybe$Nothing);
 		var aria = $author$project$OUI$Utils$ARIA$toElementAttributes(
 			A2($author$project$OUI$Utils$ARIA$withLabel, props.text, $author$project$OUI$Utils$ARIA$roleButton));
-		return A2(
-			$mdgriffith$elm_ui$Element$Input$button,
-			A2(
-				$elm$core$List$cons,
-				$mdgriffith$elm_ui$Element$height(
-					$mdgriffith$elm_ui$Element$px(theme.common.containerHeight)),
+		var all_attrs = A2(
+			$elm$core$List$cons,
+			$mdgriffith$elm_ui$Element$height(
+				$mdgriffith$elm_ui$Element$px(theme.common.containerHeight)),
+			_Utils_ap(
+				aria,
 				_Utils_ap(
-					aria,
-					_Utils_ap(
-						attrs,
-						function () {
-							var _v0 = _Utils_Tuple2(props.type_, props.onClick);
-							_v0$19:
-							while (true) {
-								if (_v0.b.$ === 'Nothing') {
-									switch (_v0.a.$) {
-										case 'Elevated':
-											var _v2 = _v0.a;
-											var _v3 = _v0.b;
-											return _Utils_ap(
-												A4($author$project$OUI$Material$Button$commonButtonAttrs, typescale, colorscheme, theme.common, hasIcon),
-												A3($author$project$OUI$Material$Button$elevatedDisabledAttrs, typescale, colorscheme, theme.common));
-										case 'Filled':
-											var _v5 = _v0.a;
-											var _v6 = _v0.b;
-											return _Utils_ap(
-												A4($author$project$OUI$Material$Button$commonButtonAttrs, typescale, colorscheme, theme.common, hasIcon),
-												A3($author$project$OUI$Material$Button$filledDisabledAttrs, typescale, colorscheme, theme.common));
-										case 'FilledIcon':
-											var _v8 = _v0.a;
-											var _v9 = _v0.b;
-											return _Utils_ap(
-												$author$project$OUI$Material$Button$iconButtonAttrs(theme.icon),
-												A3($author$project$OUI$Material$Button$filledDisabledAttrs, typescale, colorscheme, theme.common));
-										case 'Tonal':
-											var _v11 = _v0.a;
-											var _v12 = _v0.b;
-											return _Utils_ap(
-												A4($author$project$OUI$Material$Button$commonButtonAttrs, typescale, colorscheme, theme.common, hasIcon),
-												A3($author$project$OUI$Material$Button$filledDisabledAttrs, typescale, colorscheme, theme.common));
-										case 'Outlined':
-											var _v14 = _v0.a;
-											var _v15 = _v0.b;
-											return _Utils_ap(
-												A4($author$project$OUI$Material$Button$commonButtonAttrs, typescale, colorscheme, theme.common, hasIcon),
-												A3($author$project$OUI$Material$Button$outlinedDisabledAttrs, typescale, colorscheme, theme.common));
-										case 'OutlinedIcon':
-											var _v17 = _v0.a;
-											var _v18 = _v0.b;
-											return _Utils_ap(
-												$author$project$OUI$Material$Button$iconButtonAttrs(theme.icon),
-												A3($author$project$OUI$Material$Button$outlinedDisabledAttrs, typescale, colorscheme, theme.common));
-										case 'Text':
-											var _v20 = _v0.a;
-											var _v21 = _v0.b;
-											return _Utils_ap(
-												A4($author$project$OUI$Material$Button$commonButtonAttrs, typescale, colorscheme, theme.common, hasIcon),
-												A3($author$project$OUI$Material$Button$textDisabledAttrs, typescale, colorscheme, theme.common));
-										case 'Icon':
-											var _v23 = _v0.a;
-											var _v24 = _v0.b;
-											return _Utils_ap(
-												$author$project$OUI$Material$Button$iconButtonAttrs(theme.icon),
-												A3($author$project$OUI$Material$Button$textDisabledAttrs, typescale, colorscheme, theme.common));
-										default:
-											break _v0$19;
-									}
+					attrs,
+					function () {
+						var _v1 = _Utils_Tuple2(props.type_, props.action);
+						switch (_v1.a.$) {
+							case 'Elevated':
+								if (_v1.b.$ === 'Disabled') {
+									var _v2 = _v1.a;
+									var _v3 = _v1.b;
+									return _Utils_ap(
+										A4($author$project$OUI$Material$Button$commonButtonAttrs, typescale, colorscheme, theme.common, hasIcon),
+										A3($author$project$OUI$Material$Button$elevatedDisabledAttrs, typescale, colorscheme, theme.common));
 								} else {
-									switch (_v0.a.$) {
-										case 'Elevated':
-											var _v1 = _v0.a;
-											return _Utils_ap(
-												A4($author$project$OUI$Material$Button$commonButtonAttrs, typescale, colorscheme, theme.common, hasIcon),
-												A4($author$project$OUI$Material$Button$elevatedAttrs, typescale, colorscheme, theme.common, props.color));
-										case 'Filled':
-											var _v4 = _v0.a;
-											return _Utils_ap(
-												A4($author$project$OUI$Material$Button$commonButtonAttrs, typescale, colorscheme, theme.common, hasIcon),
-												A4($author$project$OUI$Material$Button$filledAttrs, typescale, colorscheme, theme.common, props.color));
-										case 'FilledIcon':
-											var _v7 = _v0.a;
-											return _Utils_ap(
-												$author$project$OUI$Material$Button$iconButtonAttrs(theme.icon),
-												A4($author$project$OUI$Material$Button$filledAttrs, typescale, colorscheme, theme.common, props.color));
-										case 'Tonal':
-											var _v10 = _v0.a;
-											return _Utils_ap(
-												A4($author$project$OUI$Material$Button$commonButtonAttrs, typescale, colorscheme, theme.common, hasIcon),
-												A4($author$project$OUI$Material$Button$filledAttrs, typescale, colorscheme, theme.common, props.color));
-										case 'Outlined':
-											var _v13 = _v0.a;
-											return _Utils_ap(
-												A4($author$project$OUI$Material$Button$commonButtonAttrs, typescale, colorscheme, theme.common, hasIcon),
-												A4($author$project$OUI$Material$Button$outlinedAttrs, typescale, colorscheme, theme.common, props.color));
-										case 'OutlinedIcon':
-											var _v16 = _v0.a;
-											return _Utils_ap(
-												$author$project$OUI$Material$Button$iconButtonAttrs(theme.icon),
-												A4($author$project$OUI$Material$Button$outlinedAttrs, typescale, colorscheme, theme.common, props.color));
-										case 'Text':
-											var _v19 = _v0.a;
-											return _Utils_ap(
-												A4($author$project$OUI$Material$Button$commonButtonAttrs, typescale, colorscheme, theme.common, hasIcon),
-												A4($author$project$OUI$Material$Button$textAttrs, typescale, colorscheme, theme.common, props.color));
-										case 'Icon':
-											var _v22 = _v0.a;
-											return _Utils_ap(
-												$author$project$OUI$Material$Button$iconButtonAttrs(theme.icon),
-												A4($author$project$OUI$Material$Button$textAttrs, typescale, colorscheme, theme.common, props.color));
-										case 'SmallFAB':
-											var _v25 = _v0.a;
-											return A3($author$project$OUI$Material$Button$fabAttrs, colorscheme, theme.fab.small, props.color);
-										case 'MediumFAB':
-											var _v26 = _v0.a;
-											return A3($author$project$OUI$Material$Button$fabAttrs, colorscheme, theme.fab.medium, props.color);
-										case 'LargeFAB':
-											var _v27 = _v0.a;
-											return A3($author$project$OUI$Material$Button$fabAttrs, colorscheme, theme.fab.large, props.color);
-										default:
-											break _v0$19;
-									}
+									var _v4 = _v1.a;
+									return _Utils_ap(
+										A4($author$project$OUI$Material$Button$commonButtonAttrs, typescale, colorscheme, theme.common, hasIcon),
+										A4($author$project$OUI$Material$Button$elevatedAttrs, typescale, colorscheme, theme.common, props.color));
 								}
-							}
-							return A3($author$project$OUI$Material$Button$textDisabledAttrs, typescale, colorscheme, theme.common);
-						}()))),
-			{label: label, onPress: props.onClick});
+							case 'Filled':
+								if (_v1.b.$ === 'Disabled') {
+									var _v5 = _v1.a;
+									var _v6 = _v1.b;
+									return _Utils_ap(
+										A4($author$project$OUI$Material$Button$commonButtonAttrs, typescale, colorscheme, theme.common, hasIcon),
+										A3($author$project$OUI$Material$Button$filledDisabledAttrs, typescale, colorscheme, theme.common));
+								} else {
+									var _v7 = _v1.a;
+									return _Utils_ap(
+										A4($author$project$OUI$Material$Button$commonButtonAttrs, typescale, colorscheme, theme.common, hasIcon),
+										A4($author$project$OUI$Material$Button$filledAttrs, typescale, colorscheme, theme.common, props.color));
+								}
+							case 'FilledIcon':
+								if (_v1.b.$ === 'Disabled') {
+									var _v8 = _v1.a;
+									var _v9 = _v1.b;
+									return _Utils_ap(
+										$author$project$OUI$Material$Button$iconButtonAttrs(theme.icon),
+										A3($author$project$OUI$Material$Button$filledDisabledAttrs, typescale, colorscheme, theme.common));
+								} else {
+									var _v10 = _v1.a;
+									return _Utils_ap(
+										$author$project$OUI$Material$Button$iconButtonAttrs(theme.icon),
+										A4($author$project$OUI$Material$Button$filledAttrs, typescale, colorscheme, theme.common, props.color));
+								}
+							case 'Tonal':
+								if (_v1.b.$ === 'Disabled') {
+									var _v11 = _v1.a;
+									var _v12 = _v1.b;
+									return _Utils_ap(
+										A4($author$project$OUI$Material$Button$commonButtonAttrs, typescale, colorscheme, theme.common, hasIcon),
+										A3($author$project$OUI$Material$Button$filledDisabledAttrs, typescale, colorscheme, theme.common));
+								} else {
+									var _v13 = _v1.a;
+									return _Utils_ap(
+										A4($author$project$OUI$Material$Button$commonButtonAttrs, typescale, colorscheme, theme.common, hasIcon),
+										A4($author$project$OUI$Material$Button$filledAttrs, typescale, colorscheme, theme.common, props.color));
+								}
+							case 'Outlined':
+								if (_v1.b.$ === 'Disabled') {
+									var _v14 = _v1.a;
+									var _v15 = _v1.b;
+									return _Utils_ap(
+										A4($author$project$OUI$Material$Button$commonButtonAttrs, typescale, colorscheme, theme.common, hasIcon),
+										A3($author$project$OUI$Material$Button$outlinedDisabledAttrs, typescale, colorscheme, theme.common));
+								} else {
+									var _v16 = _v1.a;
+									return _Utils_ap(
+										A4($author$project$OUI$Material$Button$commonButtonAttrs, typescale, colorscheme, theme.common, hasIcon),
+										A4($author$project$OUI$Material$Button$outlinedAttrs, typescale, colorscheme, theme.common, props.color));
+								}
+							case 'OutlinedIcon':
+								if (_v1.b.$ === 'Disabled') {
+									var _v17 = _v1.a;
+									var _v18 = _v1.b;
+									return _Utils_ap(
+										$author$project$OUI$Material$Button$iconButtonAttrs(theme.icon),
+										A3($author$project$OUI$Material$Button$outlinedDisabledAttrs, typescale, colorscheme, theme.common));
+								} else {
+									var _v19 = _v1.a;
+									return _Utils_ap(
+										$author$project$OUI$Material$Button$iconButtonAttrs(theme.icon),
+										A4($author$project$OUI$Material$Button$outlinedAttrs, typescale, colorscheme, theme.common, props.color));
+								}
+							case 'Text':
+								if (_v1.b.$ === 'Disabled') {
+									var _v20 = _v1.a;
+									var _v21 = _v1.b;
+									return _Utils_ap(
+										A4($author$project$OUI$Material$Button$commonButtonAttrs, typescale, colorscheme, theme.common, hasIcon),
+										A3($author$project$OUI$Material$Button$textDisabledAttrs, typescale, colorscheme, theme.common));
+								} else {
+									var _v22 = _v1.a;
+									return _Utils_ap(
+										A4($author$project$OUI$Material$Button$commonButtonAttrs, typescale, colorscheme, theme.common, hasIcon),
+										A4($author$project$OUI$Material$Button$textAttrs, typescale, colorscheme, theme.common, props.color));
+								}
+							case 'Icon':
+								if (_v1.b.$ === 'Disabled') {
+									var _v23 = _v1.a;
+									var _v24 = _v1.b;
+									return _Utils_ap(
+										$author$project$OUI$Material$Button$iconButtonAttrs(theme.icon),
+										A3($author$project$OUI$Material$Button$textDisabledAttrs, typescale, colorscheme, theme.common));
+								} else {
+									var _v25 = _v1.a;
+									return _Utils_ap(
+										$author$project$OUI$Material$Button$iconButtonAttrs(theme.icon),
+										A4($author$project$OUI$Material$Button$textAttrs, typescale, colorscheme, theme.common, props.color));
+								}
+							case 'SmallFAB':
+								var _v26 = _v1.a;
+								return A3($author$project$OUI$Material$Button$fabAttrs, colorscheme, theme.fab.small, props.color);
+							case 'MediumFAB':
+								var _v27 = _v1.a;
+								return A3($author$project$OUI$Material$Button$fabAttrs, colorscheme, theme.fab.medium, props.color);
+							case 'LargeFAB':
+								var _v28 = _v1.a;
+								return A3($author$project$OUI$Material$Button$fabAttrs, colorscheme, theme.fab.large, props.color);
+							default:
+								return A3($author$project$OUI$Material$Button$textDisabledAttrs, typescale, colorscheme, theme.common);
+						}
+					}())));
+		var _v0 = props.action;
+		switch (_v0.$) {
+			case 'Link':
+				var url = _v0.a;
+				return A2(
+					$mdgriffith$elm_ui$Element$link,
+					all_attrs,
+					{label: label, url: url});
+			case 'OnClick':
+				var msg = _v0.a;
+				return A2(
+					$mdgriffith$elm_ui$Element$Input$button,
+					all_attrs,
+					{
+						label: label,
+						onPress: $elm$core$Maybe$Just(msg)
+					});
+			default:
+				return A2(
+					$mdgriffith$elm_ui$Element$Input$button,
+					all_attrs,
+					{label: label, onPress: $elm$core$Maybe$Nothing});
+		}
 	});
 var $author$project$OUI$Material$button = function (theme) {
 	return A3($author$project$OUI$Material$Button$render, theme.typescale, theme.colorscheme, theme.button);
@@ -13226,6 +13289,19 @@ var $author$project$OUI$Button$Icon = {$: 'Icon'};
 var $author$project$OUI$Button$iconButton = $author$project$OUI$Button$btntype($author$project$OUI$Button$Icon);
 var $author$project$OUI$Button$LargeFAB = {$: 'LargeFAB'};
 var $author$project$OUI$Button$largeFAB = $author$project$OUI$Button$btntype($author$project$OUI$Button$LargeFAB);
+var $author$project$OUI$Button$Link = function (a) {
+	return {$: 'Link', a: a};
+};
+var $author$project$OUI$Button$link = F2(
+	function (url, _v0) {
+		var props = _v0.a;
+		return $author$project$OUI$Button$Button(
+			_Utils_update(
+				props,
+				{
+					action: $author$project$OUI$Button$Link(url)
+				}));
+	});
 var $author$project$OUI$Explorer$Event = function (a) {
 	return {$: 'Event', a: a};
 };
@@ -13239,7 +13315,10 @@ var $author$project$OUI$Explorer$logEvent = function (value) {
 var $author$project$OUI$Button$MediumFAB = {$: 'MediumFAB'};
 var $author$project$OUI$Button$mediumFAB = $author$project$OUI$Button$btntype($author$project$OUI$Button$MediumFAB);
 var $author$project$OUI$Button$new = $author$project$OUI$Button$Button(
-	{color: $author$project$OUI$Primary, icon: $elm$core$Maybe$Nothing, onClick: $elm$core$Maybe$Nothing, text: '', type_: $author$project$OUI$Button$Elevated});
+	{action: $author$project$OUI$Button$Disabled, color: $author$project$OUI$Primary, icon: $elm$core$Maybe$Nothing, text: '', type_: $author$project$OUI$Button$Elevated});
+var $author$project$OUI$Button$OnClick = function (a) {
+	return {$: 'OnClick', a: a};
+};
 var $author$project$OUI$Button$onClick = F2(
 	function (msg, _v0) {
 		var props = _v0.a;
@@ -13247,7 +13326,7 @@ var $author$project$OUI$Button$onClick = F2(
 			_Utils_update(
 				props,
 				{
-					onClick: $elm$core$Maybe$Just(msg)
+					action: $author$project$OUI$Button$OnClick(msg)
 				}));
 	});
 var $author$project$OUI$Button$Outlined = {$: 'Outlined'};
@@ -13327,6 +13406,19 @@ var $author$project$OUI$Showcase$Buttons$commonButtons = function (_v0) {
 								_List_fromArray(
 									[$mdgriffith$elm_ui$Element$centerX]),
 								$author$project$OUI$Button$elevatedButton(
+									A2(
+										$author$project$OUI$Button$link,
+										'#/Basics/Buttons',
+										A2(
+											$author$project$OUI$Button$withIcon,
+											$author$project$OUI$Icon$clear,
+											A2($author$project$OUI$Button$withText, 'Elevated', $author$project$OUI$Button$new))))),
+								A3(
+								$author$project$OUI$Material$button,
+								theme,
+								_List_fromArray(
+									[$mdgriffith$elm_ui$Element$centerX]),
+								$author$project$OUI$Button$elevatedButton(
 									$author$project$OUI$Button$disabled(
 										A2(
 											$author$project$OUI$Button$withIcon,
@@ -13350,6 +13442,19 @@ var $author$project$OUI$Showcase$Buttons$commonButtons = function (_v0) {
 									A2(
 										$author$project$OUI$Button$onClick,
 										$author$project$OUI$Explorer$logEvent('Clicked Filled'),
+										A2(
+											$author$project$OUI$Button$withIcon,
+											$author$project$OUI$Icon$clear,
+											A2($author$project$OUI$Button$withText, 'Filled', $author$project$OUI$Button$new))))),
+								A3(
+								$author$project$OUI$Material$button,
+								theme,
+								_List_fromArray(
+									[$mdgriffith$elm_ui$Element$centerX]),
+								$author$project$OUI$Button$filledButton(
+									A2(
+										$author$project$OUI$Button$link,
+										'#/Basics/Buttons',
 										A2(
 											$author$project$OUI$Button$withIcon,
 											$author$project$OUI$Icon$clear,
@@ -13393,6 +13498,19 @@ var $author$project$OUI$Showcase$Buttons$commonButtons = function (_v0) {
 								_List_fromArray(
 									[$mdgriffith$elm_ui$Element$centerX]),
 								$author$project$OUI$Button$tonalButton(
+									A2(
+										$author$project$OUI$Button$link,
+										'#/Basics/Buttons',
+										A2(
+											$author$project$OUI$Button$withIcon,
+											$author$project$OUI$Icon$clear,
+											A2($author$project$OUI$Button$withText, 'Tonal', $author$project$OUI$Button$new))))),
+								A3(
+								$author$project$OUI$Material$button,
+								theme,
+								_List_fromArray(
+									[$mdgriffith$elm_ui$Element$centerX]),
+								$author$project$OUI$Button$tonalButton(
 									$author$project$OUI$Button$disabled(
 										A2(
 											$author$project$OUI$Button$withIcon,
@@ -13416,6 +13534,19 @@ var $author$project$OUI$Showcase$Buttons$commonButtons = function (_v0) {
 									A2(
 										$author$project$OUI$Button$onClick,
 										$author$project$OUI$Explorer$logEvent('Clicked Outlined'),
+										A2(
+											$author$project$OUI$Button$withIcon,
+											$author$project$OUI$Icon$clear,
+											A2($author$project$OUI$Button$withText, 'Outlined', $author$project$OUI$Button$new))))),
+								A3(
+								$author$project$OUI$Material$button,
+								theme,
+								_List_fromArray(
+									[$mdgriffith$elm_ui$Element$centerX]),
+								$author$project$OUI$Button$outlinedButton(
+									A2(
+										$author$project$OUI$Button$link,
+										'#/Basics/Buttons',
 										A2(
 											$author$project$OUI$Button$withIcon,
 											$author$project$OUI$Icon$clear,
@@ -13459,6 +13590,19 @@ var $author$project$OUI$Showcase$Buttons$commonButtons = function (_v0) {
 								_List_fromArray(
 									[$mdgriffith$elm_ui$Element$centerX]),
 								$author$project$OUI$Button$textButton(
+									A2(
+										$author$project$OUI$Button$link,
+										'#/Basics/Buttons',
+										A2(
+											$author$project$OUI$Button$withIcon,
+											$author$project$OUI$Icon$clear,
+											A2($author$project$OUI$Button$withText, 'Text', $author$project$OUI$Button$new))))),
+								A3(
+								$author$project$OUI$Material$button,
+								theme,
+								_List_fromArray(
+									[$mdgriffith$elm_ui$Element$centerX]),
+								$author$project$OUI$Button$textButton(
 									$author$project$OUI$Button$disabled(
 										A2(
 											$author$project$OUI$Button$withIcon,
@@ -13476,12 +13620,21 @@ var $author$project$OUI$Showcase$Buttons$commonButtons = function (_v0) {
 				function () {
 					var btn = function (s) {
 						return A2(
+							$author$project$OUI$Button$withIcon,
+							$author$project$OUI$Icon$clear,
+							A2($author$project$OUI$Button$withText, s + 'FAB', $author$project$OUI$Button$new));
+					};
+					var clickBtn = function (s) {
+						return A2(
 							$author$project$OUI$Button$onClick,
 							$author$project$OUI$Explorer$logEvent('Clicked ' + (s + ' FAB')),
-							A2(
-								$author$project$OUI$Button$withIcon,
-								$author$project$OUI$Icon$clear,
-								A2($author$project$OUI$Button$withText, s + 'FAB', $author$project$OUI$Button$new)));
+							btn(s));
+					};
+					var linkBtn = function (s) {
+						return A2(
+							$author$project$OUI$Button$link,
+							'#/Basics/Button',
+							btn(s));
 					};
 					return _List_fromArray(
 						[
@@ -13491,7 +13644,14 @@ var $author$project$OUI$Showcase$Buttons$commonButtons = function (_v0) {
 							_List_fromArray(
 								[$mdgriffith$elm_ui$Element$centerX]),
 							$author$project$OUI$Button$smallFAB(
-								btn('Small'))),
+								clickBtn('Small'))),
+							A3(
+							$author$project$OUI$Material$button,
+							theme,
+							_List_fromArray(
+								[$mdgriffith$elm_ui$Element$centerX]),
+							$author$project$OUI$Button$smallFAB(
+								linkBtn('Small'))),
 							A3(
 							$author$project$OUI$Material$button,
 							theme,
@@ -13501,7 +13661,17 @@ var $author$project$OUI$Showcase$Buttons$commonButtons = function (_v0) {
 								$author$project$OUI$Button$color,
 								$author$project$OUI$Secondary,
 								$author$project$OUI$Button$mediumFAB(
-									btn('Medium')))),
+									clickBtn('Medium')))),
+							A3(
+							$author$project$OUI$Material$button,
+							theme,
+							_List_fromArray(
+								[$mdgriffith$elm_ui$Element$centerX]),
+							A2(
+								$author$project$OUI$Button$color,
+								$author$project$OUI$Secondary,
+								$author$project$OUI$Button$mediumFAB(
+									linkBtn('Medium')))),
 							A3(
 							$author$project$OUI$Material$button,
 							theme,
@@ -13511,7 +13681,17 @@ var $author$project$OUI$Showcase$Buttons$commonButtons = function (_v0) {
 								$author$project$OUI$Button$color,
 								$author$project$OUI$Tertiary,
 								$author$project$OUI$Button$largeFAB(
-									btn('Large'))))
+									clickBtn('Large')))),
+							A3(
+							$author$project$OUI$Material$button,
+							theme,
+							_List_fromArray(
+								[$mdgriffith$elm_ui$Element$centerX]),
+							A2(
+								$author$project$OUI$Button$color,
+								$author$project$OUI$Tertiary,
+								$author$project$OUI$Button$largeFAB(
+									linkBtn('Large'))))
 						]);
 				}()),
 				$mdgriffith$elm_ui$Element$text('Icon Buttons'),
@@ -13524,12 +13704,21 @@ var $author$project$OUI$Showcase$Buttons$commonButtons = function (_v0) {
 				function () {
 					var btn = function (s) {
 						return A2(
+							$author$project$OUI$Button$withIcon,
+							$author$project$OUI$Icon$clear,
+							A2($author$project$OUI$Button$withText, s + ' Icon', $author$project$OUI$Button$new));
+					};
+					var clickBtn = function (s) {
+						return A2(
 							$author$project$OUI$Button$onClick,
 							$author$project$OUI$Explorer$logEvent('Clicked ' + (s + ' Icon')),
-							A2(
-								$author$project$OUI$Button$withIcon,
-								$author$project$OUI$Icon$clear,
-								A2($author$project$OUI$Button$withText, s + ' Icon', $author$project$OUI$Button$new)));
+							btn(s));
+					};
+					var linkBtn = function (s) {
+						return A2(
+							$author$project$OUI$Button$link,
+							'#/Basics/Button',
+							btn(s));
 					};
 					return _List_fromArray(
 						[
@@ -13539,7 +13728,14 @@ var $author$project$OUI$Showcase$Buttons$commonButtons = function (_v0) {
 							_List_fromArray(
 								[$mdgriffith$elm_ui$Element$centerX]),
 							$author$project$OUI$Button$iconButton(
-								btn('Standard'))),
+								clickBtn('Standard'))),
+							A3(
+							$author$project$OUI$Material$button,
+							theme,
+							_List_fromArray(
+								[$mdgriffith$elm_ui$Element$centerX]),
+							$author$project$OUI$Button$iconButton(
+								linkBtn('Standard'))),
 							A3(
 							$author$project$OUI$Material$button,
 							theme,
@@ -13549,7 +13745,17 @@ var $author$project$OUI$Showcase$Buttons$commonButtons = function (_v0) {
 								$author$project$OUI$Button$color,
 								$author$project$OUI$Primary,
 								$author$project$OUI$Button$filledIconButton(
-									btn('Filled')))),
+									clickBtn('Filled')))),
+							A3(
+							$author$project$OUI$Material$button,
+							theme,
+							_List_fromArray(
+								[$mdgriffith$elm_ui$Element$centerX]),
+							A2(
+								$author$project$OUI$Button$color,
+								$author$project$OUI$Primary,
+								$author$project$OUI$Button$filledIconButton(
+									linkBtn('Filled')))),
 							A3(
 							$author$project$OUI$Material$button,
 							theme,
@@ -13559,7 +13765,17 @@ var $author$project$OUI$Showcase$Buttons$commonButtons = function (_v0) {
 								$author$project$OUI$Button$color,
 								$author$project$OUI$Primary,
 								$author$project$OUI$Button$outlinedIconButton(
-									btn('Outlined'))))
+									clickBtn('Outlined')))),
+							A3(
+							$author$project$OUI$Material$button,
+							theme,
+							_List_fromArray(
+								[$mdgriffith$elm_ui$Element$centerX]),
+							A2(
+								$author$project$OUI$Button$color,
+								$author$project$OUI$Primary,
+								$author$project$OUI$Button$outlinedIconButton(
+									linkBtn('Outlined'))))
 						]);
 				}())
 			]));
@@ -14347,12 +14563,6 @@ var $elm$html$Html$h4 = _VirtualDom_node('h4');
 var $elm$html$Html$h5 = _VirtualDom_node('h5');
 var $elm$html$Html$h6 = _VirtualDom_node('h6');
 var $elm$html$Html$hr = _VirtualDom_node('hr');
-var $elm$html$Html$Attributes$href = function (url) {
-	return A2(
-		$elm$html$Html$Attributes$stringProperty,
-		'href',
-		_VirtualDom_noJavaScriptUri(url));
-};
 var $elm$html$Html$img = _VirtualDom_node('img');
 var $elm$html$Html$input = _VirtualDom_node('input');
 var $elm$html$Html$li = _VirtualDom_node('li');
@@ -27223,37 +27433,6 @@ var $author$project$OUI$Icon$light_mode = $author$project$OUI$Icon$fromRenderer(
 								]))
 						]));
 			})));
-var $elm$html$Html$Attributes$rel = _VirtualDom_attribute('rel');
-var $mdgriffith$elm_ui$Element$link = F2(
-	function (attrs, _v0) {
-		var url = _v0.url;
-		var label = _v0.label;
-		return A4(
-			$mdgriffith$elm_ui$Internal$Model$element,
-			$mdgriffith$elm_ui$Internal$Model$asEl,
-			$mdgriffith$elm_ui$Internal$Model$NodeName('a'),
-			A2(
-				$elm$core$List$cons,
-				$mdgriffith$elm_ui$Internal$Model$Attr(
-					$elm$html$Html$Attributes$href(url)),
-				A2(
-					$elm$core$List$cons,
-					$mdgriffith$elm_ui$Internal$Model$Attr(
-						$elm$html$Html$Attributes$rel('noopener noreferrer')),
-					A2(
-						$elm$core$List$cons,
-						$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$shrink),
-						A2(
-							$elm$core$List$cons,
-							$mdgriffith$elm_ui$Element$height($mdgriffith$elm_ui$Element$shrink),
-							A2(
-								$elm$core$List$cons,
-								$mdgriffith$elm_ui$Internal$Model$htmlClass($mdgriffith$elm_ui$Internal$Style$classes.contentCenterX + (' ' + ($mdgriffith$elm_ui$Internal$Style$classes.contentCenterY + (' ' + $mdgriffith$elm_ui$Internal$Style$classes.link)))),
-								attrs))))),
-			$mdgriffith$elm_ui$Internal$Model$Unkeyed(
-				_List_fromArray(
-					[label])));
-	});
 var $orus_io$elm_spa$Spa$mapSharedMsg = $orus_io$elm_spa$Spa$SharedMsg;
 var $author$project$OUI$Explorer$finalize = function (expl) {
 	var categories = $elm$core$List$reverse(

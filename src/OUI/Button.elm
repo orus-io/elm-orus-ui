@@ -1,15 +1,15 @@
 module OUI.Button exposing
-    ( Type(..), Button
+    ( Button, Type(..), Action(..)
     , new
     , withText, withIcon, color
-    , onClick, disabled
+    , onClick, link, disabled
     , elevatedButton, filledButton, tonalButton, outlinedButton, textButton, smallFAB, mediumFAB, largeFAB, extendedFAB, iconButton, filledIconButton, outlinedIconButton
     , properties
     )
 
 {-| A button creation API
 
-@docs Type, Button
+@docs Button, Type, Action
 
 
 # Constructor
@@ -24,7 +24,10 @@ module OUI.Button exposing
 
 # Actions
 
-@docs onClick, disabled
+A button must have one and only one action that can be set with one of the
+following functions.
+
+@docs onClick, link, disabled
 
 
 # Button types
@@ -59,12 +62,20 @@ type Type
     | Icon
 
 
+{-| A button action
+-}
+type Action msg
+    = Disabled
+    | OnClick msg
+    | Link String
+
+
 {-| underlying properties of the button
 -}
 type alias Props msg =
     { text : String
     , icon : Maybe Icon
-    , onClick : Maybe msg
+    , action : Action msg
     , color : Color
     , type_ : Type
     }
@@ -78,7 +89,7 @@ type Button constraints msg
 
 {-| Create an empty button
 
-A text and an action (onClick or disabled) must be set before it can be
+A text and an action (onClick, link or disabled) must be set before it can be
 rendered
 
 By default, the button is of the 'Elevated' type, and its color is 'Primary'
@@ -89,7 +100,7 @@ new =
     Button
         { text = ""
         , icon = Nothing
-        , onClick = Nothing
+        , action = Disabled
         , color = Primary
         , type_ = Elevated
         }
@@ -219,23 +230,27 @@ withIcon value (Button props) =
 
 
 {-| Set the button 'onClick' handler
-
-Can only be called once
-
 -}
 onClick : msg -> Button { a | needOnClickOrDisabled : () } msg -> Button { a | hasAction : () } msg
 onClick msg (Button props) =
-    Button { props | onClick = Just msg }
+    Button { props | action = OnClick msg }
 
 
 {-| Set the button as 'disabled'
-
-Can only be called once
-
 -}
 disabled : Button { props | needOnClickOrDisabled : () } msg -> Button { a | hasAction : () } msg
 disabled (Button props) =
     Button props
+
+
+{-| Set the button as a link to the given URL
+-}
+link : String -> Button { props | needOnClickOrDisabled : () } msg -> Button { a | hasAction : () } msg
+link url (Button props) =
+    Button
+        { props
+            | action = Link url
+        }
 
 
 {-| -}
@@ -244,7 +259,7 @@ properties :
     ->
         { text : String
         , icon : Maybe Icon
-        , onClick : Maybe msg
+        , action : Action msg
         , color : Color
         , type_ : Type
         }

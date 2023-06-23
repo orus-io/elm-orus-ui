@@ -567,7 +567,7 @@ render typescale colorscheme theme attrs button =
                 Just icon ->
                     let
                         ( size, color ) =
-                            iconSizeColor colorscheme theme props.type_ props.color (props.onClick == Nothing)
+                            iconSizeColor colorscheme theme props.type_ props.color (props.action == OUI.Button.Disabled)
                     in
                     if iconOnly props.type_ then
                         Icon.renderWithSizeColor size
@@ -587,89 +587,104 @@ render typescale colorscheme theme attrs button =
                                 icon
                             , Element.text props.text
                             ]
+
+        all_attrs =
+            (Element.height <| Element.px theme.common.containerHeight)
+                :: aria
+                ++ attrs
+                ++ (case ( props.type_, props.action ) of
+                        ( OUI.Button.Elevated, OUI.Button.Disabled ) ->
+                            commonButtonAttrs typescale colorscheme theme.common hasIcon
+                                ++ elevatedDisabledAttrs typescale colorscheme theme.common
+
+                        ( OUI.Button.Elevated, _ ) ->
+                            commonButtonAttrs typescale colorscheme theme.common hasIcon
+                                ++ elevatedAttrs typescale colorscheme theme.common props.color
+
+                        ( OUI.Button.Filled, OUI.Button.Disabled ) ->
+                            commonButtonAttrs typescale colorscheme theme.common hasIcon
+                                ++ filledDisabledAttrs typescale colorscheme theme.common
+
+                        ( OUI.Button.Filled, _ ) ->
+                            commonButtonAttrs typescale colorscheme theme.common hasIcon
+                                ++ filledAttrs typescale colorscheme theme.common props.color
+
+                        ( OUI.Button.FilledIcon, OUI.Button.Disabled ) ->
+                            iconButtonAttrs theme.icon
+                                ++ filledDisabledAttrs typescale colorscheme theme.common
+
+                        ( OUI.Button.FilledIcon, _ ) ->
+                            iconButtonAttrs theme.icon
+                                ++ filledAttrs typescale colorscheme theme.common props.color
+
+                        ( OUI.Button.Tonal, OUI.Button.Disabled ) ->
+                            commonButtonAttrs typescale colorscheme theme.common hasIcon
+                                ++ filledDisabledAttrs typescale colorscheme theme.common
+
+                        ( OUI.Button.Tonal, _ ) ->
+                            commonButtonAttrs typescale colorscheme theme.common hasIcon
+                                ++ filledAttrs typescale colorscheme theme.common props.color
+
+                        ( OUI.Button.Outlined, OUI.Button.Disabled ) ->
+                            commonButtonAttrs typescale colorscheme theme.common hasIcon
+                                ++ outlinedDisabledAttrs typescale colorscheme theme.common
+
+                        ( OUI.Button.Outlined, _ ) ->
+                            commonButtonAttrs typescale colorscheme theme.common hasIcon
+                                ++ outlinedAttrs typescale colorscheme theme.common props.color
+
+                        ( OUI.Button.OutlinedIcon, OUI.Button.Disabled ) ->
+                            iconButtonAttrs theme.icon
+                                ++ outlinedDisabledAttrs typescale colorscheme theme.common
+
+                        ( OUI.Button.OutlinedIcon, _ ) ->
+                            iconButtonAttrs theme.icon
+                                ++ outlinedAttrs typescale colorscheme theme.common props.color
+
+                        ( OUI.Button.Text, OUI.Button.Disabled ) ->
+                            commonButtonAttrs typescale colorscheme theme.common hasIcon
+                                ++ textDisabledAttrs typescale colorscheme theme.common
+
+                        ( OUI.Button.Text, _ ) ->
+                            commonButtonAttrs typescale colorscheme theme.common hasIcon
+                                ++ textAttrs typescale colorscheme theme.common props.color
+
+                        ( OUI.Button.Icon, OUI.Button.Disabled ) ->
+                            iconButtonAttrs theme.icon
+                                ++ textDisabledAttrs typescale colorscheme theme.common
+
+                        ( OUI.Button.Icon, _ ) ->
+                            iconButtonAttrs theme.icon
+                                ++ textAttrs typescale colorscheme theme.common props.color
+
+                        ( OUI.Button.SmallFAB, _ ) ->
+                            fabAttrs colorscheme theme.fab.small props.color
+
+                        ( OUI.Button.MediumFAB, _ ) ->
+                            fabAttrs colorscheme theme.fab.medium props.color
+
+                        ( OUI.Button.LargeFAB, _ ) ->
+                            fabAttrs colorscheme theme.fab.large props.color
+
+                        _ ->
+                            textDisabledAttrs typescale colorscheme theme.common
+                   )
     in
-    Input.button
-        ((Element.height <| Element.px theme.common.containerHeight)
-            :: aria
-            ++ attrs
-            ++ (case ( props.type_, props.onClick ) of
-                    ( OUI.Button.Elevated, Just _ ) ->
-                        commonButtonAttrs typescale colorscheme theme.common hasIcon
-                            ++ elevatedAttrs typescale colorscheme theme.common props.color
+    case props.action of
+        OUI.Button.Link url ->
+            Element.link all_attrs
+                { label = label
+                , url = url
+                }
 
-                    ( OUI.Button.Elevated, Nothing ) ->
-                        commonButtonAttrs typescale colorscheme theme.common hasIcon
-                            ++ elevatedDisabledAttrs typescale colorscheme theme.common
+        OUI.Button.OnClick msg ->
+            Input.button all_attrs
+                { label = label
+                , onPress = Just msg
+                }
 
-                    ( OUI.Button.Filled, Just _ ) ->
-                        commonButtonAttrs typescale colorscheme theme.common hasIcon
-                            ++ filledAttrs typescale colorscheme theme.common props.color
-
-                    ( OUI.Button.Filled, Nothing ) ->
-                        commonButtonAttrs typescale colorscheme theme.common hasIcon
-                            ++ filledDisabledAttrs typescale colorscheme theme.common
-
-                    ( OUI.Button.FilledIcon, Just _ ) ->
-                        iconButtonAttrs theme.icon
-                            ++ filledAttrs typescale colorscheme theme.common props.color
-
-                    ( OUI.Button.FilledIcon, Nothing ) ->
-                        iconButtonAttrs theme.icon
-                            ++ filledDisabledAttrs typescale colorscheme theme.common
-
-                    ( OUI.Button.Tonal, Just _ ) ->
-                        commonButtonAttrs typescale colorscheme theme.common hasIcon
-                            ++ filledAttrs typescale colorscheme theme.common props.color
-
-                    ( OUI.Button.Tonal, Nothing ) ->
-                        commonButtonAttrs typescale colorscheme theme.common hasIcon
-                            ++ filledDisabledAttrs typescale colorscheme theme.common
-
-                    ( OUI.Button.Outlined, Just _ ) ->
-                        commonButtonAttrs typescale colorscheme theme.common hasIcon
-                            ++ outlinedAttrs typescale colorscheme theme.common props.color
-
-                    ( OUI.Button.Outlined, Nothing ) ->
-                        commonButtonAttrs typescale colorscheme theme.common hasIcon
-                            ++ outlinedDisabledAttrs typescale colorscheme theme.common
-
-                    ( OUI.Button.OutlinedIcon, Just _ ) ->
-                        iconButtonAttrs theme.icon
-                            ++ outlinedAttrs typescale colorscheme theme.common props.color
-
-                    ( OUI.Button.OutlinedIcon, Nothing ) ->
-                        iconButtonAttrs theme.icon
-                            ++ outlinedDisabledAttrs typescale colorscheme theme.common
-
-                    ( OUI.Button.Text, Just _ ) ->
-                        commonButtonAttrs typescale colorscheme theme.common hasIcon
-                            ++ textAttrs typescale colorscheme theme.common props.color
-
-                    ( OUI.Button.Text, Nothing ) ->
-                        commonButtonAttrs typescale colorscheme theme.common hasIcon
-                            ++ textDisabledAttrs typescale colorscheme theme.common
-
-                    ( OUI.Button.Icon, Just _ ) ->
-                        iconButtonAttrs theme.icon
-                            ++ textAttrs typescale colorscheme theme.common props.color
-
-                    ( OUI.Button.Icon, Nothing ) ->
-                        iconButtonAttrs theme.icon
-                            ++ textDisabledAttrs typescale colorscheme theme.common
-
-                    ( OUI.Button.SmallFAB, Just _ ) ->
-                        fabAttrs colorscheme theme.fab.small props.color
-
-                    ( OUI.Button.MediumFAB, Just _ ) ->
-                        fabAttrs colorscheme theme.fab.medium props.color
-
-                    ( OUI.Button.LargeFAB, Just _ ) ->
-                        fabAttrs colorscheme theme.fab.large props.color
-
-                    _ ->
-                        textDisabledAttrs typescale colorscheme theme.common
-               )
-        )
-        { label = label
-        , onPress = props.onClick
-        }
+        OUI.Button.Disabled ->
+            Input.button all_attrs
+                { label = label
+                , onPress = Nothing
+                }
