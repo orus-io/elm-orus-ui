@@ -1,6 +1,6 @@
 module OUI.TextField exposing
     ( TextField, Type(..), new
-    , withColor, withType, withSupportingText, withFocused, withLeadingIcon, withTrailingIcon, withClickableTrailingIcon, withErrorIcon
+    , multiline, withColor, withType, withSupportingText, withFocused, withLeadingIcon, withTrailingIcon, withClickableTrailingIcon, withErrorIcon
     , onFocusBlur
     , properties
     )
@@ -8,7 +8,7 @@ module OUI.TextField exposing
 {-| A [Text Field](https://m3.material.io/components/text-fields) component
 
 @docs TextField, Type, new
-@docs withColor, withType, withSupportingText, withFocused, withLeadingIcon, withTrailingIcon, withClickableTrailingIcon, withErrorIcon
+@docs multiline, withColor, withType, withSupportingText, withFocused, withLeadingIcon, withTrailingIcon, withClickableTrailingIcon, withErrorIcon
 @docs onFocusBlur
 @docs properties
 
@@ -33,6 +33,8 @@ type TextField msg
     = TextField
         { onChange : String -> msg
         , label : String
+        , isMultiline : Bool
+        , spellcheck : Bool
         , value : String
         , onFocus : Maybe msg
         , onLoseFocus : Maybe msg
@@ -54,6 +56,8 @@ new label onChange value =
     TextField
         { onChange = onChange
         , label = label
+        , isMultiline = False
+        , spellcheck = False
         , value = value
         , onFocus = Nothing
         , onLoseFocus = Nothing
@@ -160,12 +164,26 @@ withFocused hasFocus (TextField props) =
         }
 
 
+{-| Enable multiline input.
+-}
+multiline : Bool -> TextField msg -> TextField msg
+multiline spellcheck (TextField props) =
+    TextField
+        { props
+            | isMultiline = True
+            , spellcheck =
+                spellcheck
+        }
+
+
 {-| -}
 properties :
     TextField msg
     ->
         { onChange : String -> msg
         , label : String
+        , isMultiline : Bool
+        , spellcheck : Bool
         , value : String
         , onFocus : Maybe msg
         , onLoseFocus : Maybe msg

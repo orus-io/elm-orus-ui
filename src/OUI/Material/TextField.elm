@@ -204,14 +204,13 @@ render typescale colorscheme buttonTheme theme attrs textfield =
                    )
 
         heightAttr =
-            Element.height <|
-                Element.px <|
-                    case p.type_ of
-                        OUI.TextField.Filled ->
-                            theme.height
+            if p.isMultiline then
+                [ Element.scrollbarY
+                , Element.height Element.fill
+                ]
 
-                        OUI.TextField.Outlined ->
-                            theme.height
+            else
+                [ Element.height <| Element.px theme.height ]
 
         trailingIconOffset =
             if hasClickableTrailingIcon then
@@ -221,17 +220,27 @@ render typescale colorscheme buttonTheme theme attrs textfield =
                 0
 
         paddingAttrs =
+            let
+                baseverticalPadding =
+                    if p.isMultiline then
+                        0
+
+                    else
+                        0
+            in
             case p.type_ of
                 OUI.TextField.Filled ->
                     [ Element.paddingEach
                         { top =
-                            ifThenElse labelHoldPlace
-                                bottomBorderWidth
-                                theme.filled.topBottomPadding
+                            baseverticalPadding
+                                + ifThenElse labelHoldPlace
+                                    bottomBorderWidth
+                                    theme.filled.topBottomPadding
                         , bottom =
-                            ifThenElse labelHoldPlace
-                                0
-                                (theme.filled.topBottomPadding - bottomBorderWidth)
+                            baseverticalPadding
+                                + ifThenElse labelHoldPlace
+                                    0
+                                    (theme.filled.topBottomPadding - bottomBorderWidth)
                         , left =
                             ifThenElse hasLeadingIcon
                                 theme.leftRightPaddingWithIcon
@@ -245,11 +254,20 @@ render typescale colorscheme buttonTheme theme attrs textfield =
                     ]
 
                 OUI.TextField.Outlined ->
+                    let
+                        basePadding =
+                            ((theme.height // 2 - typescale.body.large.lineHeight // 2)
+                                - 4
+                            )
+                                // 2
+                    in
                     [ Element.paddingEach
                         { top =
-                            ifThenElse p.hasFocus 0 1
+                            basePadding
+                                + ifThenElse p.hasFocus 0 1
                         , bottom =
-                            ifThenElse p.hasFocus 0 1
+                            basePadding
+                                + ifThenElse p.hasFocus 0 1
                         , left =
                             ifThenElse hasLeadingIcon
                                 (theme.leftRightPaddingWithIcon - leftBorderWidth)
@@ -369,19 +387,42 @@ render typescale colorscheme buttonTheme theme attrs textfield =
                                             |> Button.iconButton
                                             |> Button.render typescale colorscheme buttonTheme [ Element.centerX, Element.centerY ]
                             )
+
+        input_attrs =
+            bgColorAttr
+                :: Border.width 0
+                -- 12 is the default vertical padding of Input.text
+                -- and is needed to have enough height for the text
+                :: Element.paddingXY 0 12
+                :: (Element.moveDown <| toFloat inputMoveDownBy)
+                :: Element.width Element.fill
+                :: focusEvents
+                ++ OUI.Material.Typography.attrs OUI.Text.Body OUI.Text.Large typescale
+                ++ (if p.isMultiline then
+                        [ Element.height Element.fill ]
+
+                    else
+                        []
+                   )
     in
     Element.column
         (Element.spacing theme.supportingTextTopPadding
             :: Element.inFront labelElement
-            :: attrs
+            :: (if p.isMultiline then
+                    [ Element.height <| Element.px <| theme.height * 3 ]
+
+                else
+                    []
+               )
+            ++ attrs
         )
     <|
         Element.row
             (bgColorAttr
                 :: fontColorAttr
-                :: heightAttr
                 :: Element.width Element.fill
                 :: borderAttrs
+                ++ heightAttr
                 ++ paddingAttrs
             )
             (filterMaybe
@@ -389,22 +430,22 @@ render typescale colorscheme buttonTheme theme attrs textfield =
                     |> Maybe.map
                         (OUI.Material.Icon.renderWithSizeColor 24 colorscheme.onSurfaceVariant [])
                 , Just <|
-                    Input.text
-                        (bgColorAttr
-                            :: Border.width 0
-                            -- 12 is the default vertical padding of Input.text
-                            -- and is needed to have enough height for the text
-                            :: Element.paddingXY 0 12
-                            :: (Element.moveDown <| toFloat inputMoveDownBy)
-                            :: Element.width Element.fill
-                            :: focusEvents
-                            ++ OUI.Material.Typography.attrs OUI.Text.Body OUI.Text.Large typescale
-                        )
-                        { onChange = p.onChange
-                        , text = p.value
-                        , label = Input.labelHidden p.label
-                        , placeholder = Nothing
-                        }
+                    if p.isMultiline then
+                        Input.multiline input_attrs
+                            { onChange = p.onChange
+                            , text = p.value
+                            , label = Input.labelHidden p.label
+                            , placeholder = Nothing
+                            , spellcheck = p.spellcheck
+                            }
+
+                    else
+                        Input.text input_attrs
+                            { onChange = p.onChange
+                            , text = p.value
+                            , label = Input.labelHidden p.label
+                            , placeholder = Nothing
+                            }
                 , trailingIcon
                 ]
             )

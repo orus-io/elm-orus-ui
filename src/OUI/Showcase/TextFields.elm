@@ -10,7 +10,7 @@ import OUI.Explorer as Explorer exposing (Explorer)
 import OUI.Icon exposing (check, clear)
 import OUI.Material as Material
 import OUI.Material.Color
-import OUI.TextField as TextField
+import OUI.TextField as TextField exposing (multiline)
 
 
 book : Explorer.Book Model Msg
@@ -25,7 +25,8 @@ book =
             update
         , subscriptions = \_ _ -> Sub.none
         }
-        |> Explorer.withChapter textfields
+        |> Explorer.withChapter (textfields False)
+        |> Explorer.withChapter (textfields True)
 
 
 type alias InputState =
@@ -110,15 +111,35 @@ update _ msg model =
                 |> Effect.withNone
 
 
-textfields : Explorer.Shared -> Model -> Element (Explorer.BookMsg Msg)
-textfields { theme } model =
+textfields : Bool -> Explorer.Shared -> Model -> Element (Explorer.BookMsg Msg)
+textfields multiline { theme } model =
     let
+        key name =
+            name
+                ++ (if multiline then
+                        "-multiline"
+
+                    else
+                        ""
+                   )
+
+        textField label name =
+            TextField.new label (OnChange (key name)) (inputText (key name) model)
+                |> TextField.onFocusBlur (OnFocus (key name)) (OnLoseFocus (key name))
+                |> TextField.withFocused (inputHasFocus (key name) model)
+
         render =
-            Material.textField theme
-                [ Element.centerX
-                , Element.centerY
-                , Element.width Element.fill
-                ]
+            (if multiline then
+                TextField.multiline True
+
+             else
+                identity
+            )
+                >> Material.textField theme
+                    [ Element.centerX
+                    , Element.centerY
+                    , Element.width Element.fill
+                    ]
     in
     Element.row
         [ Border.width 1
@@ -134,54 +155,48 @@ textfields { theme } model =
             , Element.width <| Element.px 500
             , Element.padding 40
             ]
-            [ TextField.new "Filled" (OnChange "filled") (inputText "filled" model)
-                |> TextField.onFocusBlur (OnFocus "filled") (OnLoseFocus "filled")
-                |> TextField.withFocused (inputHasFocus "filled" model)
+            [ textField "Filled" "filled"
                 |> TextField.withSupportingText "A filled text field"
                 |> TextField.withType TextField.Filled
                 |> render
                 |> Element.map Explorer.bookMsg
-            , TextField.new "Filled" (OnChange "filledLeadIcon") (inputText "filledLeadIcon" model)
-                |> TextField.onFocusBlur (OnFocus "filledLeadIcon") (OnLoseFocus "filledLeadIcon")
-                |> TextField.withFocused (inputHasFocus "filledLeadIcon" model)
+            , textField "Filled" "filledLeadIcon"
                 |> TextField.withSupportingText "A filled text field with leading icon"
                 |> TextField.withLeadingIcon check
                 |> TextField.withType TextField.Filled
                 |> render
                 |> Element.map Explorer.bookMsg
-            , TextField.new "Filled" (OnChange "filledTrailIcon") (inputText "filledTrailIcon" model)
-                |> TextField.onFocusBlur (OnFocus "filledTrailIcon") (OnLoseFocus "filledTrailIcon")
-                |> TextField.withFocused (inputHasFocus "filledTrailIcon" model)
+            , textField "Filled" "filledTrailIcon"
                 |> TextField.withSupportingText "A filled text field with trailing icon"
                 |> TextField.withTrailingIcon clear
                 |> TextField.withType TextField.Filled
                 |> render
                 |> Element.map Explorer.bookMsg
-            , TextField.new "Filled"
-                (OnChange "filledLeadTrailClickIcon"
+            , let
+                k =
+                    key "filledLeadTrailClickIcon"
+              in
+              TextField.new "Filled"
+                (OnChange k
                     >> Explorer.bookMsg
                 )
-                (inputText "filledLeadTrailClickIcon" model)
+                (inputText k model)
                 |> TextField.onFocusBlur
-                    (OnFocus "filledLeadTrailClickIcon" |> Explorer.bookMsg)
-                    (OnLoseFocus "filledLeadTrailClickIcon" |> Explorer.bookMsg)
-                |> TextField.withFocused (inputHasFocus "filledLeadTrailClickIcon" model)
+                    (OnFocus k |> Explorer.bookMsg)
+                    (OnLoseFocus k |> Explorer.bookMsg)
+                |> TextField.withFocused (inputHasFocus k model)
                 |> TextField.withSupportingText "A filled text field with clickable trailing icon"
                 |> TextField.withLeadingIcon check
                 |> TextField.withClickableTrailingIcon (Explorer.logEvent "Clicked !") clear
                 |> TextField.withType TextField.Filled
                 |> render
-            , TextField.new "Filled" (OnChange "filledError") (inputText "filledError" model)
-                |> TextField.onFocusBlur (OnFocus "filledError") (OnLoseFocus "filledError")
-                |> TextField.withFocused (inputHasFocus "filledError" model)
+            , textField "Filled" "filledError"
                 |> TextField.withSupportingText "A filled text field with error"
                 |> TextField.withType TextField.Filled
                 |> TextField.withColor OUI.Error
                 |> render
                 |> Element.map Explorer.bookMsg
-            , TextField.new "Filled" (OnChange "filledErrorIcon") (inputText "filledErrorIcon" model)
-                |> TextField.onFocusBlur (OnFocus "filledErrorIcon") (OnLoseFocus "filledErrorIcon")
-                |> TextField.withFocused (inputHasFocus "filledErrorIcon" model)
+            , textField "Filled" "filledErrorIcon"
                 |> TextField.withSupportingText "A filled text field with a error icon"
                 |> TextField.withType TextField.Filled
                 |> TextField.withErrorIcon clear
@@ -194,54 +209,48 @@ textfields { theme } model =
             , Element.width <| Element.px 500
             , Element.padding 40
             ]
-            [ TextField.new "Outlined" (OnChange "outlined") (inputText "outlined" model)
-                |> TextField.onFocusBlur (OnFocus "outlined") (OnLoseFocus "outlined")
-                |> TextField.withFocused (inputHasFocus "outlined" model)
+            [ textField "Outlined" "outlined"
                 |> TextField.withType TextField.Outlined
                 |> TextField.withSupportingText "A outlined text field"
                 |> render
                 |> Element.map Explorer.bookMsg
-            , TextField.new "Outlined" (OnChange "outlinedLeadIcon") (inputText "outlinedLeadIcon" model)
-                |> TextField.onFocusBlur (OnFocus "outlinedLeadIcon") (OnLoseFocus "outlinedLeadIcon")
-                |> TextField.withFocused (inputHasFocus "outlinedLeadIcon" model)
+            , textField "Outlined" "outlinedLeadIcon"
                 |> TextField.withSupportingText "A outlined text field with leading icon"
                 |> TextField.withLeadingIcon check
                 |> TextField.withType TextField.Outlined
                 |> render
                 |> Element.map Explorer.bookMsg
-            , TextField.new "Outlined" (OnChange "outlinedTrailIcon") (inputText "outlinedTrailIcon" model)
-                |> TextField.onFocusBlur (OnFocus "outlinedTrailIcon") (OnLoseFocus "outlinedTrailIcon")
-                |> TextField.withFocused (inputHasFocus "outlinedTrailIcon" model)
+            , textField "Outlined" "outlinedTrailIcon"
                 |> TextField.withSupportingText "A outlined text field with trailing icon"
                 |> TextField.withTrailingIcon clear
                 |> TextField.withType TextField.Outlined
                 |> render
                 |> Element.map Explorer.bookMsg
-            , TextField.new "Outlined"
-                (OnChange "outlinedLeadTrailClickIcon"
+            , let
+                k =
+                    key "outlinedLeadTrailClickIcon"
+              in
+              TextField.new "Outlined"
+                (OnChange k
                     >> Explorer.bookMsg
                 )
-                (inputText "outlinedLeadTrailClickIcon" model)
+                (inputText k model)
                 |> TextField.onFocusBlur
-                    (OnFocus "outlinedLeadTrailClickIcon" |> Explorer.bookMsg)
-                    (OnLoseFocus "outlinedLeadTrailClickIcon" |> Explorer.bookMsg)
-                |> TextField.withFocused (inputHasFocus "outlinedLeadTrailClickIcon" model)
+                    (OnFocus k |> Explorer.bookMsg)
+                    (OnLoseFocus k |> Explorer.bookMsg)
+                |> TextField.withFocused (inputHasFocus k model)
                 |> TextField.withSupportingText "A outlined text field with clickable trailing icon"
                 |> TextField.withLeadingIcon check
                 |> TextField.withClickableTrailingIcon (Explorer.logEvent "Clicked !") clear
                 |> TextField.withType TextField.Outlined
                 |> render
-            , TextField.new "Outlined" (OnChange "outlinedError") (inputText "outlinedError" model)
-                |> TextField.onFocusBlur (OnFocus "outlinedError") (OnLoseFocus "outlinedError")
-                |> TextField.withFocused (inputHasFocus "outlinedError" model)
+            , textField "Outlined" "outlinedError"
                 |> TextField.withSupportingText "A outlined text field with error"
                 |> TextField.withType TextField.Outlined
                 |> TextField.withColor OUI.Error
                 |> render
                 |> Element.map Explorer.bookMsg
-            , TextField.new "Outlined" (OnChange "outlinedErrorIcon") (inputText "outlinedErrorIcon" model)
-                |> TextField.onFocusBlur (OnFocus "outlinedErrorIcon") (OnLoseFocus "outlinedErrorIcon")
-                |> TextField.withFocused (inputHasFocus "outlinedErrorIcon" model)
+            , textField "Outlined" "outlinedErrorIcon"
                 |> TextField.withSupportingText "A outlined text field with a error icon"
                 |> TextField.withType TextField.Outlined
                 |> TextField.withErrorIcon clear
