@@ -11844,6 +11844,23 @@ var $author$project$OUI$Material$Button$commonButtonAttrs = F4(
 					padding
 				]));
 	});
+var $mdgriffith$elm_ui$Element$el = F2(
+	function (attrs, child) {
+		return A4(
+			$mdgriffith$elm_ui$Internal$Model$element,
+			$mdgriffith$elm_ui$Internal$Model$asEl,
+			$mdgriffith$elm_ui$Internal$Model$div,
+			A2(
+				$elm$core$List$cons,
+				$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$shrink),
+				A2(
+					$elm$core$List$cons,
+					$mdgriffith$elm_ui$Element$height($mdgriffith$elm_ui$Element$shrink),
+					attrs)),
+			$mdgriffith$elm_ui$Internal$Model$Unkeyed(
+				_List_fromArray(
+					[child])));
+	});
 var $author$project$OUI$Button$Elevated = {$: 'Elevated'};
 var $author$project$OUI$Material$Color$getColor = function (c) {
 	switch (c.$) {
@@ -12701,23 +12718,6 @@ var $author$project$OUI$Button$properties = function (_v0) {
 	var props = _v0.a;
 	return props;
 };
-var $mdgriffith$elm_ui$Element$el = F2(
-	function (attrs, child) {
-		return A4(
-			$mdgriffith$elm_ui$Internal$Model$element,
-			$mdgriffith$elm_ui$Internal$Model$asEl,
-			$mdgriffith$elm_ui$Internal$Model$div,
-			A2(
-				$elm$core$List$cons,
-				$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$shrink),
-				A2(
-					$elm$core$List$cons,
-					$mdgriffith$elm_ui$Element$height($mdgriffith$elm_ui$Element$shrink),
-					attrs)),
-			$mdgriffith$elm_ui$Internal$Model$Unkeyed(
-				_List_fromArray(
-					[child])));
-	});
 var $elm$core$Basics$always = F2(
 	function (a, _v0) {
 		return a;
@@ -12975,7 +12975,11 @@ var $author$project$OUI$Material$Button$render = F5(
 		var label = function () {
 			var _v29 = props.icon;
 			if (_v29.$ === 'Nothing') {
-				return $mdgriffith$elm_ui$Element$text(props.text);
+				return A2(
+					$mdgriffith$elm_ui$Element$el,
+					_List_fromArray(
+						[$mdgriffith$elm_ui$Element$centerX, $mdgriffith$elm_ui$Element$centerY]),
+					$mdgriffith$elm_ui$Element$text(props.text));
 			} else {
 				var icon = _v29.a;
 				var _v30 = A5(
@@ -13273,22 +13277,6 @@ var $author$project$OUI$Button$disabled = function (_v0) {
 	var props = _v0.a;
 	return $author$project$OUI$Button$Button(props);
 };
-var $author$project$OUI$Button$btntype = F2(
-	function (value, _v0) {
-		var props = _v0.a;
-		return $author$project$OUI$Button$Button(
-			_Utils_update(
-				props,
-				{type_: value}));
-	});
-var $author$project$OUI$Button$elevatedButton = $author$project$OUI$Button$btntype($author$project$OUI$Button$Elevated);
-var $author$project$OUI$Button$filledButton = $author$project$OUI$Button$btntype($author$project$OUI$Button$Filled);
-var $author$project$OUI$Button$FilledIcon = {$: 'FilledIcon'};
-var $author$project$OUI$Button$filledIconButton = $author$project$OUI$Button$btntype($author$project$OUI$Button$FilledIcon);
-var $author$project$OUI$Button$Icon = {$: 'Icon'};
-var $author$project$OUI$Button$iconButton = $author$project$OUI$Button$btntype($author$project$OUI$Button$Icon);
-var $author$project$OUI$Button$LargeFAB = {$: 'LargeFAB'};
-var $author$project$OUI$Button$largeFAB = $author$project$OUI$Button$btntype($author$project$OUI$Button$LargeFAB);
 var $author$project$OUI$Button$Link = function (a) {
 	return {$: 'Link', a: a};
 };
@@ -13312,8 +13300,6 @@ var $author$project$OUI$Explorer$logEvent = function (value) {
 	return $author$project$OUI$Explorer$SharedMsg(
 		$author$project$OUI$Explorer$Event(value));
 };
-var $author$project$OUI$Button$MediumFAB = {$: 'MediumFAB'};
-var $author$project$OUI$Button$mediumFAB = $author$project$OUI$Button$btntype($author$project$OUI$Button$MediumFAB);
 var $author$project$OUI$Button$new = function (label) {
 	return $author$project$OUI$Button$Button(
 		{action: $author$project$OUI$Button$Disabled, color: $author$project$OUI$Primary, icon: $elm$core$Maybe$Nothing, text: label, type_: $author$project$OUI$Button$Elevated});
@@ -13331,6 +13317,97 @@ var $author$project$OUI$Button$onClick = F2(
 					action: $author$project$OUI$Button$OnClick(msg)
 				}));
 	});
+var $author$project$OUI$Button$withIcon = F2(
+	function (value, _v0) {
+		var props = _v0.a;
+		return $author$project$OUI$Button$Button(
+			_Utils_update(
+				props,
+				{
+					icon: $elm$core$Maybe$Just(value)
+				}));
+	});
+var $author$project$OUI$Showcase$Buttons$commonButtonVariants = F3(
+	function (theme, label, btnType) {
+		return _List_fromArray(
+			[
+				A3(
+				$author$project$OUI$Material$button,
+				theme,
+				_List_fromArray(
+					[$mdgriffith$elm_ui$Element$centerX]),
+				A2(
+					$author$project$OUI$Button$onClick,
+					$author$project$OUI$Explorer$logEvent('Clicked ' + label),
+					btnType(
+						$author$project$OUI$Button$new(label)))),
+				A3(
+				$author$project$OUI$Material$button,
+				theme,
+				_List_fromArray(
+					[$mdgriffith$elm_ui$Element$centerX]),
+				A2(
+					$author$project$OUI$Button$onClick,
+					$author$project$OUI$Explorer$logEvent('Clicked ' + (label + ' + icon')),
+					A2(
+						$author$project$OUI$Button$withIcon,
+						$author$project$OUI$Icon$clear,
+						btnType(
+							$author$project$OUI$Button$new('with Icon'))))),
+				A3(
+				$author$project$OUI$Material$button,
+				theme,
+				_List_fromArray(
+					[$mdgriffith$elm_ui$Element$centerX]),
+				A2(
+					$author$project$OUI$Button$link,
+					'#/Basics/Buttons',
+					btnType(
+						$author$project$OUI$Button$new('Link')))),
+				A3(
+				$author$project$OUI$Material$button,
+				theme,
+				_List_fromArray(
+					[$mdgriffith$elm_ui$Element$centerX]),
+				A2(
+					$author$project$OUI$Button$link,
+					'#/Basics/Buttons',
+					A2(
+						$author$project$OUI$Button$withIcon,
+						$author$project$OUI$Icon$clear,
+						btnType(
+							$author$project$OUI$Button$new('Link Icon'))))),
+				A3(
+				$author$project$OUI$Material$button,
+				theme,
+				_List_fromArray(
+					[$mdgriffith$elm_ui$Element$centerX]),
+				$author$project$OUI$Button$disabled(
+					A2(
+						$author$project$OUI$Button$withIcon,
+						$author$project$OUI$Icon$clear,
+						btnType(
+							$author$project$OUI$Button$new('Disabled')))))
+			]);
+	});
+var $author$project$OUI$Button$btntype = F2(
+	function (value, _v0) {
+		var props = _v0.a;
+		return $author$project$OUI$Button$Button(
+			_Utils_update(
+				props,
+				{type_: value}));
+	});
+var $author$project$OUI$Button$elevatedButton = $author$project$OUI$Button$btntype($author$project$OUI$Button$Elevated);
+var $author$project$OUI$Button$filledButton = $author$project$OUI$Button$btntype($author$project$OUI$Button$Filled);
+var $author$project$OUI$Button$FilledIcon = {$: 'FilledIcon'};
+var $author$project$OUI$Button$filledIconButton = $author$project$OUI$Button$btntype($author$project$OUI$Button$FilledIcon);
+var $author$project$OUI$Button$Icon = {$: 'Icon'};
+var $author$project$OUI$Button$iconButton = $author$project$OUI$Button$btntype($author$project$OUI$Button$Icon);
+var $author$project$OUI$Button$LargeFAB = {$: 'LargeFAB'};
+var $author$project$OUI$Button$largeFAB = $author$project$OUI$Button$btntype($author$project$OUI$Button$LargeFAB);
+var $author$project$OUI$Button$MediumFAB = {$: 'MediumFAB'};
+var $author$project$OUI$Button$mediumFAB = $author$project$OUI$Button$btntype($author$project$OUI$Button$MediumFAB);
 var $author$project$OUI$Button$Outlined = {$: 'Outlined'};
 var $author$project$OUI$Button$outlinedButton = $author$project$OUI$Button$btntype($author$project$OUI$Button$Outlined);
 var $author$project$OUI$Button$OutlinedIcon = {$: 'OutlinedIcon'};
@@ -13344,18 +13421,29 @@ var $author$project$OUI$Button$tonalButton = A2(
 	$elm$core$Basics$composeR,
 	$author$project$OUI$Button$color($author$project$OUI$SecondaryContainer),
 	$author$project$OUI$Button$btntype($author$project$OUI$Button$Filled));
-var $author$project$OUI$Button$withIcon = F2(
-	function (value, _v0) {
-		var props = _v0.a;
-		return $author$project$OUI$Button$Button(
-			_Utils_update(
-				props,
-				{
-					icon: $elm$core$Maybe$Just(value)
-				}));
-	});
 var $author$project$OUI$Showcase$Buttons$commonButtons = function (_v0) {
 	var theme = _v0.theme;
+	var btnRow = F2(
+		function (label, btnType) {
+			return A2(
+				$mdgriffith$elm_ui$Element$row,
+				_List_fromArray(
+					[
+						$mdgriffith$elm_ui$Element$spacing(30)
+					]),
+				A2(
+					$elm$core$List$map,
+					$mdgriffith$elm_ui$Element$el(
+						_List_fromArray(
+							[
+								$mdgriffith$elm_ui$Element$width(
+								$mdgriffith$elm_ui$Element$px(100))
+							])),
+					A2(
+						$elm$core$List$cons,
+						$mdgriffith$elm_ui$Element$text(label),
+						A3($author$project$OUI$Showcase$Buttons$commonButtonVariants, theme, label, btnType))));
+		});
 	return A2(
 		$mdgriffith$elm_ui$Element$column,
 		_List_fromArray(
@@ -13366,243 +13454,18 @@ var $author$project$OUI$Showcase$Buttons$commonButtons = function (_v0) {
 			[
 				$mdgriffith$elm_ui$Element$text('Common buttons'),
 				A2(
-				$mdgriffith$elm_ui$Element$row,
+				$mdgriffith$elm_ui$Element$column,
 				_List_fromArray(
 					[
 						$mdgriffith$elm_ui$Element$spacing(30)
 					]),
 				_List_fromArray(
 					[
-						A2(
-						$mdgriffith$elm_ui$Element$column,
-						_List_fromArray(
-							[
-								$mdgriffith$elm_ui$Element$spacing(30)
-							]),
-						_List_fromArray(
-							[
-								A3(
-								$author$project$OUI$Material$button,
-								theme,
-								_List_fromArray(
-									[$mdgriffith$elm_ui$Element$centerX]),
-								$author$project$OUI$Button$elevatedButton(
-									A2(
-										$author$project$OUI$Button$onClick,
-										$author$project$OUI$Explorer$logEvent('Clicked Elevated'),
-										A2(
-											$author$project$OUI$Button$withIcon,
-											$author$project$OUI$Icon$clear,
-											$author$project$OUI$Button$new('Elevated'))))),
-								A3(
-								$author$project$OUI$Material$button,
-								theme,
-								_List_fromArray(
-									[$mdgriffith$elm_ui$Element$centerX]),
-								$author$project$OUI$Button$elevatedButton(
-									A2(
-										$author$project$OUI$Button$link,
-										'#/Basics/Buttons',
-										A2(
-											$author$project$OUI$Button$withIcon,
-											$author$project$OUI$Icon$clear,
-											$author$project$OUI$Button$new('Elevated'))))),
-								A3(
-								$author$project$OUI$Material$button,
-								theme,
-								_List_fromArray(
-									[$mdgriffith$elm_ui$Element$centerX]),
-								$author$project$OUI$Button$elevatedButton(
-									$author$project$OUI$Button$disabled(
-										A2(
-											$author$project$OUI$Button$withIcon,
-											$author$project$OUI$Icon$clear,
-											$author$project$OUI$Button$new('Elevated')))))
-							])),
-						A2(
-						$mdgriffith$elm_ui$Element$column,
-						_List_fromArray(
-							[
-								$mdgriffith$elm_ui$Element$spacing(30)
-							]),
-						_List_fromArray(
-							[
-								A3(
-								$author$project$OUI$Material$button,
-								theme,
-								_List_fromArray(
-									[$mdgriffith$elm_ui$Element$centerX]),
-								$author$project$OUI$Button$filledButton(
-									A2(
-										$author$project$OUI$Button$onClick,
-										$author$project$OUI$Explorer$logEvent('Clicked Filled'),
-										A2(
-											$author$project$OUI$Button$withIcon,
-											$author$project$OUI$Icon$clear,
-											$author$project$OUI$Button$new('Filled'))))),
-								A3(
-								$author$project$OUI$Material$button,
-								theme,
-								_List_fromArray(
-									[$mdgriffith$elm_ui$Element$centerX]),
-								$author$project$OUI$Button$filledButton(
-									A2(
-										$author$project$OUI$Button$link,
-										'#/Basics/Buttons',
-										A2(
-											$author$project$OUI$Button$withIcon,
-											$author$project$OUI$Icon$clear,
-											$author$project$OUI$Button$new('Filled'))))),
-								A3(
-								$author$project$OUI$Material$button,
-								theme,
-								_List_fromArray(
-									[$mdgriffith$elm_ui$Element$centerX]),
-								$author$project$OUI$Button$filledButton(
-									$author$project$OUI$Button$disabled(
-										A2(
-											$author$project$OUI$Button$withIcon,
-											$author$project$OUI$Icon$clear,
-											$author$project$OUI$Button$new('Filled')))))
-							])),
-						A2(
-						$mdgriffith$elm_ui$Element$column,
-						_List_fromArray(
-							[
-								$mdgriffith$elm_ui$Element$spacing(30)
-							]),
-						_List_fromArray(
-							[
-								A3(
-								$author$project$OUI$Material$button,
-								theme,
-								_List_fromArray(
-									[$mdgriffith$elm_ui$Element$centerX]),
-								$author$project$OUI$Button$tonalButton(
-									A2(
-										$author$project$OUI$Button$onClick,
-										$author$project$OUI$Explorer$logEvent('Clicked Tonal'),
-										A2(
-											$author$project$OUI$Button$withIcon,
-											$author$project$OUI$Icon$clear,
-											$author$project$OUI$Button$new('Tonal'))))),
-								A3(
-								$author$project$OUI$Material$button,
-								theme,
-								_List_fromArray(
-									[$mdgriffith$elm_ui$Element$centerX]),
-								$author$project$OUI$Button$tonalButton(
-									A2(
-										$author$project$OUI$Button$link,
-										'#/Basics/Buttons',
-										A2(
-											$author$project$OUI$Button$withIcon,
-											$author$project$OUI$Icon$clear,
-											$author$project$OUI$Button$new('Tonal'))))),
-								A3(
-								$author$project$OUI$Material$button,
-								theme,
-								_List_fromArray(
-									[$mdgriffith$elm_ui$Element$centerX]),
-								$author$project$OUI$Button$tonalButton(
-									$author$project$OUI$Button$disabled(
-										A2(
-											$author$project$OUI$Button$withIcon,
-											$author$project$OUI$Icon$clear,
-											$author$project$OUI$Button$new('Tonal')))))
-							])),
-						A2(
-						$mdgriffith$elm_ui$Element$column,
-						_List_fromArray(
-							[
-								$mdgriffith$elm_ui$Element$spacing(30)
-							]),
-						_List_fromArray(
-							[
-								A3(
-								$author$project$OUI$Material$button,
-								theme,
-								_List_fromArray(
-									[$mdgriffith$elm_ui$Element$centerX]),
-								$author$project$OUI$Button$outlinedButton(
-									A2(
-										$author$project$OUI$Button$onClick,
-										$author$project$OUI$Explorer$logEvent('Clicked Outlined'),
-										A2(
-											$author$project$OUI$Button$withIcon,
-											$author$project$OUI$Icon$clear,
-											$author$project$OUI$Button$new('Outlined'))))),
-								A3(
-								$author$project$OUI$Material$button,
-								theme,
-								_List_fromArray(
-									[$mdgriffith$elm_ui$Element$centerX]),
-								$author$project$OUI$Button$outlinedButton(
-									A2(
-										$author$project$OUI$Button$link,
-										'#/Basics/Buttons',
-										A2(
-											$author$project$OUI$Button$withIcon,
-											$author$project$OUI$Icon$clear,
-											$author$project$OUI$Button$new('Outlined'))))),
-								A3(
-								$author$project$OUI$Material$button,
-								theme,
-								_List_fromArray(
-									[$mdgriffith$elm_ui$Element$centerX]),
-								$author$project$OUI$Button$outlinedButton(
-									$author$project$OUI$Button$disabled(
-										A2(
-											$author$project$OUI$Button$withIcon,
-											$author$project$OUI$Icon$clear,
-											$author$project$OUI$Button$new('Outlined')))))
-							])),
-						A2(
-						$mdgriffith$elm_ui$Element$column,
-						_List_fromArray(
-							[
-								$mdgriffith$elm_ui$Element$spacing(30)
-							]),
-						_List_fromArray(
-							[
-								A3(
-								$author$project$OUI$Material$button,
-								theme,
-								_List_fromArray(
-									[$mdgriffith$elm_ui$Element$centerX]),
-								$author$project$OUI$Button$textButton(
-									A2(
-										$author$project$OUI$Button$onClick,
-										$author$project$OUI$Explorer$logEvent('Clicked Text'),
-										A2(
-											$author$project$OUI$Button$withIcon,
-											$author$project$OUI$Icon$clear,
-											$author$project$OUI$Button$new('Text'))))),
-								A3(
-								$author$project$OUI$Material$button,
-								theme,
-								_List_fromArray(
-									[$mdgriffith$elm_ui$Element$centerX]),
-								$author$project$OUI$Button$textButton(
-									A2(
-										$author$project$OUI$Button$link,
-										'#/Basics/Buttons',
-										A2(
-											$author$project$OUI$Button$withIcon,
-											$author$project$OUI$Icon$clear,
-											$author$project$OUI$Button$new('Text'))))),
-								A3(
-								$author$project$OUI$Material$button,
-								theme,
-								_List_fromArray(
-									[$mdgriffith$elm_ui$Element$centerX]),
-								$author$project$OUI$Button$textButton(
-									$author$project$OUI$Button$disabled(
-										A2(
-											$author$project$OUI$Button$withIcon,
-											$author$project$OUI$Icon$clear,
-											$author$project$OUI$Button$new('Text')))))
-							]))
+						A2(btnRow, 'Elevated', $author$project$OUI$Button$elevatedButton),
+						A2(btnRow, 'Filled', $author$project$OUI$Button$filledButton),
+						A2(btnRow, 'Tonal', $author$project$OUI$Button$tonalButton),
+						A2(btnRow, 'Outlined', $author$project$OUI$Button$outlinedButton),
+						A2(btnRow, 'Text', $author$project$OUI$Button$textButton)
 					])),
 				$mdgriffith$elm_ui$Element$text('FAB'),
 				A2(

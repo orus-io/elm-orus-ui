@@ -562,7 +562,12 @@ render typescale colorscheme theme attrs button =
         label =
             case props.icon of
                 Nothing ->
-                    Element.text props.text
+                    Element.el
+                        [ Element.centerX
+                        , Element.centerY
+                        ]
+                    <|
+                        Element.text props.text
 
                 Just icon ->
                     let
@@ -578,7 +583,9 @@ render typescale colorscheme theme attrs button =
                             icon
 
                     else
-                        Element.row [ Element.spacing theme.common.paddingBetweenElements ]
+                        Element.row
+                            [ Element.spacing theme.common.paddingBetweenElements
+                            ]
                             [ Icon.renderWithSizeColor size
                                 color
                                 [ Element.centerX
