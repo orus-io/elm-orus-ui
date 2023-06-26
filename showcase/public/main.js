@@ -26364,63 +26364,72 @@ var $elm$core$Task$perform = F2(
 				A2($elm$core$Task$map, toMessage, task)));
 	});
 var $elm$browser$Browser$application = _Browser_application;
-var $author$project$OUI$Material$Icon$render = F3(
-	function (colorscheme, attrs, icon) {
-		var properties = $author$project$OUI$Icon$properties(icon);
-		var size = A2($elm$core$Maybe$withDefault, 24, properties.size);
-		var color = A2(
-			$author$project$OUI$Material$Color$getColor,
-			A2($elm$core$Maybe$withDefault, $author$project$OUI$Primary, properties.color),
-			colorscheme);
-		return A4($author$project$OUI$Material$Icon$renderWithSizeColor, size, color, attrs, icon);
-	});
-var $author$project$OUI$Material$icon = function (_v0) {
-	var colorscheme = _v0.colorscheme;
-	return $author$project$OUI$Material$Icon$render(colorscheme);
+var $author$project$OUI$Showcase$Icons$FilterChange = function (a) {
+	return {$: 'FilterChange', a: a};
 };
-var $author$project$OUI$Showcase$Icons$book = F2(
-	function (title, iconList) {
-		return A2(
-			$author$project$OUI$Explorer$withStaticChapter,
-			function (_v1) {
-				var theme = _v1.theme;
-				return A2(
-					$mdgriffith$elm_ui$Element$row,
-					_List_fromArray(
-						[
-							$mdgriffith$elm_ui$Element$spacing(20)
-						]),
-					A2(
-						$elm$core$List$map,
-						function (_v2) {
-							var label = _v2.a;
-							var icon = _v2.b;
-							return A2(
-								$mdgriffith$elm_ui$Element$column,
-								_List_fromArray(
-									[
-										$mdgriffith$elm_ui$Element$spacing(10)
-									]),
-								_List_fromArray(
-									[
-										A3(
-										$author$project$OUI$Material$icon,
-										theme,
-										_List_fromArray(
-											[$mdgriffith$elm_ui$Element$centerX]),
-										icon),
-										$mdgriffith$elm_ui$Element$text(label)
-									]));
-						},
-						iconList));
-			},
+var $author$project$OUI$Showcase$Icons$FilterFocus = function (a) {
+	return {$: 'FilterFocus', a: a};
+};
+var $author$project$OUI$Showcase$Icons$filterChapter = F2(
+	function (shared, model) {
+		return A3(
+			$author$project$OUI$Material$textField,
+			shared.theme,
+			_List_fromArray(
+				[
+					$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill)
+				]),
 			A2(
-				$author$project$OUI$Explorer$withStaticChapter,
-				function (_v0) {
-					return $mdgriffith$elm_ui$Element$text(title);
-				},
-				$author$project$OUI$Explorer$book(title)));
+				$author$project$OUI$TextField$withFocused,
+				model.filterFocused,
+				A3(
+					$author$project$OUI$TextField$onFocusBlur,
+					$author$project$OUI$Explorer$bookMsg(
+						$author$project$OUI$Showcase$Icons$FilterFocus(true)),
+					$author$project$OUI$Explorer$bookMsg(
+						$author$project$OUI$Showcase$Icons$FilterFocus(false)),
+					A3(
+						$author$project$OUI$TextField$new,
+						'Search icon',
+						A2($elm$core$Basics$composeL, $author$project$OUI$Explorer$bookMsg, $author$project$OUI$Showcase$Icons$FilterChange),
+						model.filter))));
 	});
+var $author$project$OUI$Showcase$Icons$init = function (_v0) {
+	return $orus_io$elm_spa$Effect$withNone(
+		{filter: '', filterFocused: false});
+};
+var $author$project$OUI$Showcase$Icons$update = F3(
+	function (_v0, msg, model) {
+		if (msg.$ === 'FilterFocus') {
+			var focused = msg.a;
+			return $orus_io$elm_spa$Effect$withNone(
+				_Utils_update(
+					model,
+					{filterFocused: focused}));
+		} else {
+			var filter = msg.a;
+			return $orus_io$elm_spa$Effect$withNone(
+				_Utils_update(
+					model,
+					{filter: filter}));
+		}
+	});
+var $author$project$OUI$Showcase$Icons$book = function (title) {
+	return A2(
+		$author$project$OUI$Explorer$withChapter,
+		$author$project$OUI$Showcase$Icons$filterChapter,
+		A2(
+			$author$project$OUI$Explorer$statefulBook,
+			title,
+			{
+				init: $author$project$OUI$Showcase$Icons$init,
+				subscriptions: F2(
+					function (_v0, _v1) {
+						return $elm$core$Platform$Sub$none;
+					}),
+				update: $author$project$OUI$Showcase$Icons$update
+			}));
+};
 var $author$project$OUI$Icon$Html = function (a) {
 	return {$: 'Html', a: a};
 };
@@ -27474,13 +27483,116 @@ var $author$project$OUI$Explorer$finalize = function (expl) {
 		expl.app);
 };
 var $elm$json$Json$Decode$value = _Json_decodeValue;
+var $elm_community$list_extra$List$Extra$greedyGroupsOfWithStep = F3(
+	function (size, step, list) {
+		if ((size <= 0) || (step <= 0)) {
+			return _List_Nil;
+		} else {
+			var go = F2(
+				function (xs, acc) {
+					go:
+					while (true) {
+						if ($elm$core$List$isEmpty(xs)) {
+							return $elm$core$List$reverse(acc);
+						} else {
+							var $temp$xs = A2($elm$core$List$drop, step, xs),
+								$temp$acc = A2(
+								$elm$core$List$cons,
+								A2($elm$core$List$take, size, xs),
+								acc);
+							xs = $temp$xs;
+							acc = $temp$acc;
+							continue go;
+						}
+					}
+				});
+			return A2(go, list, _List_Nil);
+		}
+	});
+var $elm_community$list_extra$List$Extra$greedyGroupsOf = F2(
+	function (size, xs) {
+		return A3($elm_community$list_extra$List$Extra$greedyGroupsOfWithStep, size, size, xs);
+	});
+var $author$project$OUI$Material$Icon$render = F3(
+	function (colorscheme, attrs, icon) {
+		var properties = $author$project$OUI$Icon$properties(icon);
+		var size = A2($elm$core$Maybe$withDefault, 24, properties.size);
+		var color = A2(
+			$author$project$OUI$Material$Color$getColor,
+			A2($elm$core$Maybe$withDefault, $author$project$OUI$Primary, properties.color),
+			colorscheme);
+		return A4($author$project$OUI$Material$Icon$renderWithSizeColor, size, color, attrs, icon);
+	});
+var $author$project$OUI$Material$icon = function (_v0) {
+	var colorscheme = _v0.colorscheme;
+	return $author$project$OUI$Material$Icon$render(colorscheme);
+};
+var $author$project$OUI$Showcase$Icons$iconChapter = F4(
+	function (title, iconList, shared, model) {
+		return A2(
+			$mdgriffith$elm_ui$Element$column,
+			_List_fromArray(
+				[
+					$mdgriffith$elm_ui$Element$spacing(10)
+				]),
+			A2(
+				$elm$core$List$cons,
+				A2(
+					$author$project$OUI$Material$text,
+					shared.theme,
+					$author$project$OUI$Text$titleLarge(title)),
+				A2(
+					$elm$core$List$map,
+					$mdgriffith$elm_ui$Element$row(
+						_List_fromArray(
+							[
+								$mdgriffith$elm_ui$Element$spacing(20)
+							])),
+					A2(
+						$elm_community$list_extra$List$Extra$greedyGroupsOf,
+						10,
+						A2(
+							$elm$core$List$map,
+							function (_v1) {
+								var label = _v1.a;
+								var icon = _v1.b;
+								return A2(
+									$mdgriffith$elm_ui$Element$column,
+									_List_fromArray(
+										[
+											$mdgriffith$elm_ui$Element$spacing(10)
+										]),
+									_List_fromArray(
+										[
+											A3(
+											$author$project$OUI$Material$icon,
+											shared.theme,
+											_List_fromArray(
+												[$mdgriffith$elm_ui$Element$centerX]),
+											icon),
+											$mdgriffith$elm_ui$Element$text(label)
+										]));
+							},
+							A2(
+								$elm$core$List$filter,
+								function (_v0) {
+									var label = _v0.a;
+									return A2($elm$core$String$contains, model.filter, label);
+								},
+								iconList))))));
+	});
+var $author$project$OUI$Showcase$Icons$withChapter = F2(
+	function (title, iconList) {
+		return $author$project$OUI$Explorer$withChapter(
+			A2($author$project$OUI$Showcase$Icons$iconChapter, title, iconList));
+	});
 var $author$project$Main$main = $elm$browser$Browser$application(
 	$author$project$OUI$Explorer$finalize(
 		A2(
 			$author$project$OUI$Explorer$addBook,
-			A2(
-				$author$project$OUI$Showcase$Icons$book,
-				'Material Icons',
+			A3(
+				$author$project$OUI$Showcase$Icons$withChapter,
+				'basics',
 				_List_fromArray(
 					[
 						_Utils_Tuple2(
@@ -27489,6 +27601,7 @@ var $author$project$Main$main = $elm$browser$Browser$application(
 						_Utils_Tuple2(
 						'face',
 						A2($author$project$OUI$Icon$elmMaterialIcons, $icidasset$elm_material_icons$Material$Icons$Types$Color, $icidasset$elm_material_icons$Material$Icons$Outlined$face))
-					])),
+					]),
+				$author$project$OUI$Showcase$Icons$book('Material Icons')),
 			$author$project$OUI$Showcase$addPages($author$project$OUI$Explorer$explorer))));
 _Platform_export({'Main':{'init':$author$project$Main$main($elm$json$Json$Decode$value)(0)}});}(this));

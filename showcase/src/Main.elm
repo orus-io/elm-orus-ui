@@ -14,6 +14,7 @@ main =
         |> Showcase.addPages
         |> Explorer.addBook
             (Icons.book "Material Icons"
+            |> Icons.withChapter "basics"
                 [ ( "anchor", OUI.Icon.elmMaterialIcons Color Outlined.anchor )
                 , ( "face", OUI.Icon.elmMaterialIcons Color Outlined.face )
                 ]
