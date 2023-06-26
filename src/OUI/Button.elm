@@ -1,7 +1,7 @@
 module OUI.Button exposing
     ( Button, Type(..), Action(..)
     , new
-    , withText, withIcon, color
+    , withIcon, color
     , onClick, link, disabled
     , elevatedButton, filledButton, tonalButton, outlinedButton, textButton, smallFAB, mediumFAB, largeFAB, extendedFAB, iconButton, filledIconButton, outlinedIconButton
     , properties
@@ -19,7 +19,7 @@ module OUI.Button exposing
 
 # Basic properties
 
-@docs withText, withIcon, color
+@docs withIcon, color
 
 
 # Actions
@@ -87,18 +87,21 @@ type Button constraints msg
     = Button (Props msg)
 
 
-{-| Create an empty button
+{-| Create a button with the given label
 
 A text and an action (onClick, link or disabled) must be set before it can be
 rendered
 
+The text is mandatory for icon buttons too and will be used as a 'aria-label'
+property.
+
 By default, the button is of the 'Elevated' type, and its color is 'Primary'
 
 -}
-new : Button { needOnClickOrDisabled : (), needText : (), hasNoIcon : () } msg
-new =
+new : String -> Button { needOnClickOrDisabled : (), hasNoIcon : () } msg
+new label =
     Button
-        { text = ""
+        { text = label
         , icon = Nothing
         , action = Disabled
         , color = Primary
@@ -203,19 +206,6 @@ iconButton =
     btntype Icon
 
 
-{-| Set the button text
-
-Can only be called once
-
--}
-withText :
-    String
-    -> Button { a | needText : () } msg
-    -> Button { a | hasText : () } msg
-withText value (Button props) =
-    Button { props | text = value }
-
-
 {-| Set the button icon
 
 Can only be called once
@@ -255,7 +245,7 @@ link url (Button props) =
 
 {-| -}
 properties :
-    Button { constraints | hasText : (), hasAction : () } msg
+    Button { constraints | hasAction : () } msg
     ->
         { text : String
         , icon : Maybe Icon

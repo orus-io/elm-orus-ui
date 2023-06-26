@@ -544,7 +544,7 @@ render :
     -> OUI.Material.Color.Scheme
     -> Theme
     -> List (Attribute msg)
-    -> Button { constraints | hasText : (), hasAction : () } msg
+    -> Button { constraints | hasAction : () } msg
     -> Element msg
 render typescale colorscheme theme attrs button =
     let

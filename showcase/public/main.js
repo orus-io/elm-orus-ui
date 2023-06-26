@@ -13314,8 +13314,10 @@ var $author$project$OUI$Explorer$logEvent = function (value) {
 };
 var $author$project$OUI$Button$MediumFAB = {$: 'MediumFAB'};
 var $author$project$OUI$Button$mediumFAB = $author$project$OUI$Button$btntype($author$project$OUI$Button$MediumFAB);
-var $author$project$OUI$Button$new = $author$project$OUI$Button$Button(
-	{action: $author$project$OUI$Button$Disabled, color: $author$project$OUI$Primary, icon: $elm$core$Maybe$Nothing, text: '', type_: $author$project$OUI$Button$Elevated});
+var $author$project$OUI$Button$new = function (label) {
+	return $author$project$OUI$Button$Button(
+		{action: $author$project$OUI$Button$Disabled, color: $author$project$OUI$Primary, icon: $elm$core$Maybe$Nothing, text: label, type_: $author$project$OUI$Button$Elevated});
+};
 var $author$project$OUI$Button$OnClick = function (a) {
 	return {$: 'OnClick', a: a};
 };
@@ -13351,14 +13353,6 @@ var $author$project$OUI$Button$withIcon = F2(
 				{
 					icon: $elm$core$Maybe$Just(value)
 				}));
-	});
-var $author$project$OUI$Button$withText = F2(
-	function (value, _v0) {
-		var props = _v0.a;
-		return $author$project$OUI$Button$Button(
-			_Utils_update(
-				props,
-				{text: value}));
 	});
 var $author$project$OUI$Showcase$Buttons$commonButtons = function (_v0) {
 	var theme = _v0.theme;
@@ -13399,7 +13393,7 @@ var $author$project$OUI$Showcase$Buttons$commonButtons = function (_v0) {
 										A2(
 											$author$project$OUI$Button$withIcon,
 											$author$project$OUI$Icon$clear,
-											A2($author$project$OUI$Button$withText, 'Elevated', $author$project$OUI$Button$new))))),
+											$author$project$OUI$Button$new('Elevated'))))),
 								A3(
 								$author$project$OUI$Material$button,
 								theme,
@@ -13412,7 +13406,7 @@ var $author$project$OUI$Showcase$Buttons$commonButtons = function (_v0) {
 										A2(
 											$author$project$OUI$Button$withIcon,
 											$author$project$OUI$Icon$clear,
-											A2($author$project$OUI$Button$withText, 'Elevated', $author$project$OUI$Button$new))))),
+											$author$project$OUI$Button$new('Elevated'))))),
 								A3(
 								$author$project$OUI$Material$button,
 								theme,
@@ -13423,7 +13417,7 @@ var $author$project$OUI$Showcase$Buttons$commonButtons = function (_v0) {
 										A2(
 											$author$project$OUI$Button$withIcon,
 											$author$project$OUI$Icon$clear,
-											A2($author$project$OUI$Button$withText, 'Elevated', $author$project$OUI$Button$new)))))
+											$author$project$OUI$Button$new('Elevated')))))
 							])),
 						A2(
 						$mdgriffith$elm_ui$Element$column,
@@ -13445,7 +13439,7 @@ var $author$project$OUI$Showcase$Buttons$commonButtons = function (_v0) {
 										A2(
 											$author$project$OUI$Button$withIcon,
 											$author$project$OUI$Icon$clear,
-											A2($author$project$OUI$Button$withText, 'Filled', $author$project$OUI$Button$new))))),
+											$author$project$OUI$Button$new('Filled'))))),
 								A3(
 								$author$project$OUI$Material$button,
 								theme,
@@ -13458,7 +13452,7 @@ var $author$project$OUI$Showcase$Buttons$commonButtons = function (_v0) {
 										A2(
 											$author$project$OUI$Button$withIcon,
 											$author$project$OUI$Icon$clear,
-											A2($author$project$OUI$Button$withText, 'Filled', $author$project$OUI$Button$new))))),
+											$author$project$OUI$Button$new('Filled'))))),
 								A3(
 								$author$project$OUI$Material$button,
 								theme,
@@ -13469,7 +13463,7 @@ var $author$project$OUI$Showcase$Buttons$commonButtons = function (_v0) {
 										A2(
 											$author$project$OUI$Button$withIcon,
 											$author$project$OUI$Icon$clear,
-											A2($author$project$OUI$Button$withText, 'Filled', $author$project$OUI$Button$new)))))
+											$author$project$OUI$Button$new('Filled')))))
 							])),
 						A2(
 						$mdgriffith$elm_ui$Element$column,
@@ -13491,7 +13485,7 @@ var $author$project$OUI$Showcase$Buttons$commonButtons = function (_v0) {
 										A2(
 											$author$project$OUI$Button$withIcon,
 											$author$project$OUI$Icon$clear,
-											A2($author$project$OUI$Button$withText, 'Tonal', $author$project$OUI$Button$new))))),
+											$author$project$OUI$Button$new('Tonal'))))),
 								A3(
 								$author$project$OUI$Material$button,
 								theme,
@@ -13504,7 +13498,7 @@ var $author$project$OUI$Showcase$Buttons$commonButtons = function (_v0) {
 										A2(
 											$author$project$OUI$Button$withIcon,
 											$author$project$OUI$Icon$clear,
-											A2($author$project$OUI$Button$withText, 'Tonal', $author$project$OUI$Button$new))))),
+											$author$project$OUI$Button$new('Tonal'))))),
 								A3(
 								$author$project$OUI$Material$button,
 								theme,
@@ -13515,7 +13509,7 @@ var $author$project$OUI$Showcase$Buttons$commonButtons = function (_v0) {
 										A2(
 											$author$project$OUI$Button$withIcon,
 											$author$project$OUI$Icon$clear,
-											A2($author$project$OUI$Button$withText, 'Tonal', $author$project$OUI$Button$new)))))
+											$author$project$OUI$Button$new('Tonal')))))
 							])),
 						A2(
 						$mdgriffith$elm_ui$Element$column,
@@ -13537,7 +13531,7 @@ var $author$project$OUI$Showcase$Buttons$commonButtons = function (_v0) {
 										A2(
 											$author$project$OUI$Button$withIcon,
 											$author$project$OUI$Icon$clear,
-											A2($author$project$OUI$Button$withText, 'Outlined', $author$project$OUI$Button$new))))),
+											$author$project$OUI$Button$new('Outlined'))))),
 								A3(
 								$author$project$OUI$Material$button,
 								theme,
@@ -13550,7 +13544,7 @@ var $author$project$OUI$Showcase$Buttons$commonButtons = function (_v0) {
 										A2(
 											$author$project$OUI$Button$withIcon,
 											$author$project$OUI$Icon$clear,
-											A2($author$project$OUI$Button$withText, 'Outlined', $author$project$OUI$Button$new))))),
+											$author$project$OUI$Button$new('Outlined'))))),
 								A3(
 								$author$project$OUI$Material$button,
 								theme,
@@ -13561,7 +13555,7 @@ var $author$project$OUI$Showcase$Buttons$commonButtons = function (_v0) {
 										A2(
 											$author$project$OUI$Button$withIcon,
 											$author$project$OUI$Icon$clear,
-											A2($author$project$OUI$Button$withText, 'Outlined', $author$project$OUI$Button$new)))))
+											$author$project$OUI$Button$new('Outlined')))))
 							])),
 						A2(
 						$mdgriffith$elm_ui$Element$column,
@@ -13583,7 +13577,7 @@ var $author$project$OUI$Showcase$Buttons$commonButtons = function (_v0) {
 										A2(
 											$author$project$OUI$Button$withIcon,
 											$author$project$OUI$Icon$clear,
-											A2($author$project$OUI$Button$withText, 'Text', $author$project$OUI$Button$new))))),
+											$author$project$OUI$Button$new('Text'))))),
 								A3(
 								$author$project$OUI$Material$button,
 								theme,
@@ -13596,7 +13590,7 @@ var $author$project$OUI$Showcase$Buttons$commonButtons = function (_v0) {
 										A2(
 											$author$project$OUI$Button$withIcon,
 											$author$project$OUI$Icon$clear,
-											A2($author$project$OUI$Button$withText, 'Text', $author$project$OUI$Button$new))))),
+											$author$project$OUI$Button$new('Text'))))),
 								A3(
 								$author$project$OUI$Material$button,
 								theme,
@@ -13607,7 +13601,7 @@ var $author$project$OUI$Showcase$Buttons$commonButtons = function (_v0) {
 										A2(
 											$author$project$OUI$Button$withIcon,
 											$author$project$OUI$Icon$clear,
-											A2($author$project$OUI$Button$withText, 'Text', $author$project$OUI$Button$new)))))
+											$author$project$OUI$Button$new('Text')))))
 							]))
 					])),
 				$mdgriffith$elm_ui$Element$text('FAB'),
@@ -13622,7 +13616,7 @@ var $author$project$OUI$Showcase$Buttons$commonButtons = function (_v0) {
 						return A2(
 							$author$project$OUI$Button$withIcon,
 							$author$project$OUI$Icon$clear,
-							A2($author$project$OUI$Button$withText, s + 'FAB', $author$project$OUI$Button$new));
+							$author$project$OUI$Button$new(s + 'FAB'));
 					};
 					var clickBtn = function (s) {
 						return A2(
@@ -13706,7 +13700,7 @@ var $author$project$OUI$Showcase$Buttons$commonButtons = function (_v0) {
 						return A2(
 							$author$project$OUI$Button$withIcon,
 							$author$project$OUI$Icon$clear,
-							A2($author$project$OUI$Button$withText, s + ' Icon', $author$project$OUI$Button$new));
+							$author$project$OUI$Button$new(s + ' Icon'));
 					};
 					var clickBtn = function (s) {
 						return A2(
@@ -25476,7 +25470,7 @@ var $author$project$OUI$Material$TextField$render = F6(
 											A2(
 												$author$project$OUI$Button$withIcon,
 												icon,
-												A2($author$project$OUI$Button$withText, p.label, $author$project$OUI$Button$new))))));
+												$author$project$OUI$Button$new(p.label))))));
 						}
 					},
 					p.trailingIcon);

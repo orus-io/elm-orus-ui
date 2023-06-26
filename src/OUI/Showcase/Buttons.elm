@@ -19,100 +19,85 @@ commonButtons { theme } =
         [ Element.text "Common buttons"
         , Element.row [ Element.spacing 30 ]
             [ Element.column [ Element.spacing 30 ]
-                [ Button.new
-                    |> Button.withText "Elevated"
+                [ Button.new "Elevated"
                     |> Button.withIcon clear
                     |> Button.onClick (Explorer.logEvent "Clicked Elevated")
                     |> Button.elevatedButton
                     |> Material.button theme [ Element.centerX ]
-                , Button.new
-                    |> Button.withText "Elevated"
+                , Button.new "Elevated"
                     |> Button.withIcon clear
                     |> Button.link "#/Basics/Buttons"
                     |> Button.elevatedButton
                     |> Material.button theme [ Element.centerX ]
-                , Button.new
-                    |> Button.withText "Elevated"
+                , Button.new "Elevated"
                     |> Button.withIcon clear
                     |> Button.disabled
                     |> Button.elevatedButton
                     |> Material.button theme [ Element.centerX ]
                 ]
             , Element.column [ Element.spacing 30 ]
-                [ Button.new
-                    |> Button.withText "Filled"
+                [ Button.new "Filled"
                     |> Button.withIcon clear
                     |> Button.onClick (Explorer.logEvent "Clicked Filled")
                     |> Button.filledButton
                     |> Material.button theme [ Element.centerX ]
-                , Button.new
-                    |> Button.withText "Filled"
+                , Button.new "Filled"
                     |> Button.withIcon clear
                     |> Button.link "#/Basics/Buttons"
                     |> Button.filledButton
                     |> Material.button theme [ Element.centerX ]
-                , Button.new
-                    |> Button.withText "Filled"
+                , Button.new "Filled"
                     |> Button.withIcon clear
                     |> Button.disabled
                     |> Button.filledButton
                     |> Material.button theme [ Element.centerX ]
                 ]
             , Element.column [ Element.spacing 30 ]
-                [ Button.new
-                    |> Button.withText "Tonal"
+                [ Button.new "Tonal"
                     |> Button.withIcon clear
                     |> Button.onClick (Explorer.logEvent "Clicked Tonal")
                     |> Button.tonalButton
                     |> Material.button theme [ Element.centerX ]
-                , Button.new
-                    |> Button.withText "Tonal"
+                , Button.new "Tonal"
                     |> Button.withIcon clear
                     |> Button.link "#/Basics/Buttons"
                     |> Button.tonalButton
                     |> Material.button theme [ Element.centerX ]
-                , Button.new
-                    |> Button.withText "Tonal"
+                , Button.new "Tonal"
                     |> Button.withIcon clear
                     |> Button.disabled
                     |> Button.tonalButton
                     |> Material.button theme [ Element.centerX ]
                 ]
             , Element.column [ Element.spacing 30 ]
-                [ Button.new
-                    |> Button.withText "Outlined"
+                [ Button.new "Outlined"
                     |> Button.withIcon clear
                     |> Button.onClick (Explorer.logEvent "Clicked Outlined")
                     |> Button.outlinedButton
                     |> Material.button theme [ Element.centerX ]
-                , Button.new
-                    |> Button.withText "Outlined"
+                , Button.new "Outlined"
                     |> Button.withIcon clear
                     |> Button.link "#/Basics/Buttons"
                     |> Button.outlinedButton
                     |> Material.button theme [ Element.centerX ]
-                , Button.new
-                    |> Button.withText "Outlined"
+                , Button.new "Outlined"
                     |> Button.withIcon clear
                     |> Button.disabled
                     |> Button.outlinedButton
                     |> Material.button theme [ Element.centerX ]
                 ]
             , Element.column [ Element.spacing 30 ]
-                [ Button.new
-                    |> Button.withText "Text"
+                [ Button.new "Text"
                     |> Button.withIcon clear
                     |> Button.onClick (Explorer.logEvent "Clicked Text")
                     |> Button.textButton
                     |> Material.button theme [ Element.centerX ]
-                , Button.new
-                    |> Button.withText "Text"
+                , Button.new "Text"
                     |> Button.withIcon clear
                     |> Button.link "#/Basics/Buttons"
                     |> Button.textButton
                     |> Material.button theme [ Element.centerX ]
-                , Button.new
-                    |> Button.withText "Text"
+                , Button.new "Text"
                     |> Button.withIcon clear
                     |> Button.disabled
                     |> Button.textButton
@@ -123,8 +108,7 @@ commonButtons { theme } =
         , Element.row [ Element.spacing 30 ]
             (let
                 btn s =
-                    Button.new
-                        |> Button.withText (s ++ "FAB")
+                    Button.new (s ++ "FAB")
                         |> Button.withIcon clear
 
                 clickBtn s =
@@ -163,8 +147,7 @@ commonButtons { theme } =
         , Element.row [ Element.spacing 30 ]
             (let
                 btn s =
-                    Button.new
-                        |> Button.withText (s ++ " Icon")
+                    Button.new (s ++ " Icon")
                         |> Button.withIcon clear
 
                 clickBtn s =

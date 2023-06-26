@@ -379,8 +379,7 @@ render typescale colorscheme buttonTheme theme attrs textfield =
                                         OUI.Material.Icon.renderWithSizeColor 24 colorscheme.onSurfaceVariant [] icon
 
                                     Just onClick ->
-                                        Button.new
-                                            |> Button.withText p.label
+                                        Button.new p.label
                                             |> Button.withIcon icon
                                             |> Button.onClick onClick
                                             |> Button.color (ifThenElse p.hasFocus p.color OUI.Neutral)
