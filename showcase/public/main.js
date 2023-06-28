@@ -26372,27 +26372,34 @@ var $author$project$OUI$Showcase$Icons$FilterFocus = function (a) {
 };
 var $author$project$OUI$Showcase$Icons$filterChapter = F2(
 	function (shared, model) {
-		return A3(
-			$author$project$OUI$Material$textField,
-			shared.theme,
+		return A2(
+			$mdgriffith$elm_ui$Element$el,
 			_List_fromArray(
 				[
+					$mdgriffith$elm_ui$Element$padding(20),
 					$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill)
 				]),
-			A2(
-				$author$project$OUI$TextField$withFocused,
-				model.filterFocused,
-				A3(
-					$author$project$OUI$TextField$onFocusBlur,
-					$author$project$OUI$Explorer$bookMsg(
-						$author$project$OUI$Showcase$Icons$FilterFocus(true)),
-					$author$project$OUI$Explorer$bookMsg(
-						$author$project$OUI$Showcase$Icons$FilterFocus(false)),
+			A3(
+				$author$project$OUI$Material$textField,
+				shared.theme,
+				_List_fromArray(
+					[
+						$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill)
+					]),
+				A2(
+					$author$project$OUI$TextField$withFocused,
+					model.filterFocused,
 					A3(
-						$author$project$OUI$TextField$new,
-						'Search icon',
-						A2($elm$core$Basics$composeL, $author$project$OUI$Explorer$bookMsg, $author$project$OUI$Showcase$Icons$FilterChange),
-						model.filter))));
+						$author$project$OUI$TextField$onFocusBlur,
+						$author$project$OUI$Explorer$bookMsg(
+							$author$project$OUI$Showcase$Icons$FilterFocus(true)),
+						$author$project$OUI$Explorer$bookMsg(
+							$author$project$OUI$Showcase$Icons$FilterFocus(false)),
+						A3(
+							$author$project$OUI$TextField$new,
+							'Search icon',
+							A2($elm$core$Basics$composeL, $author$project$OUI$Explorer$bookMsg, $author$project$OUI$Showcase$Icons$FilterChange),
+							model.filter)))));
 	});
 var $author$project$OUI$Showcase$Icons$init = function (_v0) {
 	return $orus_io$elm_spa$Effect$withNone(
@@ -27482,37 +27489,23 @@ var $author$project$OUI$Explorer$finalize = function (expl) {
 		},
 		expl.app);
 };
+var $author$project$Main$get_started = '\n# Get Started\n\nElm Orus UI is still in a alpha state, and is not yet released on Elm packages.\n\nTo use it, you have to clone the project, and add its \'src\' subdirectory into\nyour own project \'src\' list.\n\n';
+var $author$project$Main$intro = '\n# Elm Orus UI\n\nElm Orus UI is a toolkit for building user interface. It provides an elegant*\nAPI to create and configure components and a rendering module name \'Material\'.\n\nThe design is based on the Material Design 3, and is fully customizable with\na \'Theme\' type that holds all the layout key values for each component, and \na colorscheme.\n\nThe colorscheme can be generated from a few key colors as specified in\nMaterial design.\n\nThis UI Explorer is a little crude for now but will get nicer when new components\nget implemented.\n\n*This is of course our feeling about it, and we hope you make yours\n';
 var $elm$json$Json$Decode$value = _Json_decodeValue;
-var $elm_community$list_extra$List$Extra$greedyGroupsOfWithStep = F3(
-	function (size, step, list) {
-		if ((size <= 0) || (step <= 0)) {
-			return _List_Nil;
-		} else {
-			var go = F2(
-				function (xs, acc) {
-					go:
-					while (true) {
-						if ($elm$core$List$isEmpty(xs)) {
-							return $elm$core$List$reverse(acc);
-						} else {
-							var $temp$xs = A2($elm$core$List$drop, step, xs),
-								$temp$acc = A2(
-								$elm$core$List$cons,
-								A2($elm$core$List$take, size, xs),
-								acc);
-							xs = $temp$xs;
-							acc = $temp$acc;
-							continue go;
-						}
-					}
-				});
-			return A2(go, list, _List_Nil);
-		}
-	});
-var $elm_community$list_extra$List$Extra$greedyGroupsOf = F2(
-	function (size, xs) {
-		return A3($elm_community$list_extra$List$Extra$greedyGroupsOfWithStep, size, size, xs);
-	});
+var $elm$core$String$toUpper = _String_toUpper;
+var $author$project$OUI$Showcase$Icons$capitalize = A2(
+	$elm$core$Basics$composeR,
+	$elm$core$String$split('_'),
+	A2(
+		$elm$core$Basics$composeR,
+		$elm$core$List$map(
+			function (s) {
+				return _Utils_ap(
+					$elm$core$String$toUpper(
+						A2($elm$core$String$left, 1, s)),
+					A2($elm$core$String$dropLeft, 1, s));
+			}),
+		$elm$core$String$join(' ')));
 var $author$project$OUI$Material$Icon$render = F3(
 	function (colorscheme, attrs, icon) {
 		var properties = $author$project$OUI$Icon$properties(icon);
@@ -27527,59 +27520,271 @@ var $author$project$OUI$Material$icon = function (_v0) {
 	var colorscheme = _v0.colorscheme;
 	return $author$project$OUI$Material$Icon$render(colorscheme);
 };
+var $mdgriffith$elm_ui$Internal$Model$Max = F2(
+	function (a, b) {
+		return {$: 'Max', a: a, b: b};
+	});
+var $mdgriffith$elm_ui$Element$maximum = F2(
+	function (i, l) {
+		return A2($mdgriffith$elm_ui$Internal$Model$Max, i, l);
+	});
+var $author$project$OUI$Icon$withSize = F2(
+	function (value, _v0) {
+		var icon = _v0.a;
+		return $author$project$OUI$Icon$Icon(
+			_Utils_update(
+				icon,
+				{
+					size: $elm$core$Maybe$Just(value)
+				}));
+	});
+var $mdgriffith$elm_ui$Internal$Model$Padding = F5(
+	function (a, b, c, d, e) {
+		return {$: 'Padding', a: a, b: b, c: c, d: d, e: e};
+	});
+var $mdgriffith$elm_ui$Internal$Model$Spaced = F3(
+	function (a, b, c) {
+		return {$: 'Spaced', a: a, b: b, c: c};
+	});
+var $mdgriffith$elm_ui$Internal$Model$extractSpacingAndPadding = function (attrs) {
+	return A3(
+		$elm$core$List$foldr,
+		F2(
+			function (attr, _v0) {
+				var pad = _v0.a;
+				var spacing = _v0.b;
+				return _Utils_Tuple2(
+					function () {
+						if (pad.$ === 'Just') {
+							var x = pad.a;
+							return pad;
+						} else {
+							if ((attr.$ === 'StyleClass') && (attr.b.$ === 'PaddingStyle')) {
+								var _v3 = attr.b;
+								var name = _v3.a;
+								var t = _v3.b;
+								var r = _v3.c;
+								var b = _v3.d;
+								var l = _v3.e;
+								return $elm$core$Maybe$Just(
+									A5($mdgriffith$elm_ui$Internal$Model$Padding, name, t, r, b, l));
+							} else {
+								return $elm$core$Maybe$Nothing;
+							}
+						}
+					}(),
+					function () {
+						if (spacing.$ === 'Just') {
+							var x = spacing.a;
+							return spacing;
+						} else {
+							if ((attr.$ === 'StyleClass') && (attr.b.$ === 'SpacingStyle')) {
+								var _v6 = attr.b;
+								var name = _v6.a;
+								var x = _v6.b;
+								var y = _v6.c;
+								return $elm$core$Maybe$Just(
+									A3($mdgriffith$elm_ui$Internal$Model$Spaced, name, x, y));
+							} else {
+								return $elm$core$Maybe$Nothing;
+							}
+						}
+					}());
+			}),
+		_Utils_Tuple2($elm$core$Maybe$Nothing, $elm$core$Maybe$Nothing),
+		attrs);
+};
+var $mdgriffith$elm_ui$Element$wrappedRow = F2(
+	function (attrs, children) {
+		var _v0 = $mdgriffith$elm_ui$Internal$Model$extractSpacingAndPadding(attrs);
+		var padded = _v0.a;
+		var spaced = _v0.b;
+		if (spaced.$ === 'Nothing') {
+			return A4(
+				$mdgriffith$elm_ui$Internal$Model$element,
+				$mdgriffith$elm_ui$Internal$Model$asRow,
+				$mdgriffith$elm_ui$Internal$Model$div,
+				A2(
+					$elm$core$List$cons,
+					$mdgriffith$elm_ui$Internal$Model$htmlClass($mdgriffith$elm_ui$Internal$Style$classes.contentLeft + (' ' + ($mdgriffith$elm_ui$Internal$Style$classes.contentCenterY + (' ' + $mdgriffith$elm_ui$Internal$Style$classes.wrapped)))),
+					A2(
+						$elm$core$List$cons,
+						$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$shrink),
+						A2(
+							$elm$core$List$cons,
+							$mdgriffith$elm_ui$Element$height($mdgriffith$elm_ui$Element$shrink),
+							attrs))),
+				$mdgriffith$elm_ui$Internal$Model$Unkeyed(children));
+		} else {
+			var _v2 = spaced.a;
+			var spaceName = _v2.a;
+			var x = _v2.b;
+			var y = _v2.c;
+			var newPadding = function () {
+				if (padded.$ === 'Just') {
+					var _v5 = padded.a;
+					var name = _v5.a;
+					var t = _v5.b;
+					var r = _v5.c;
+					var b = _v5.d;
+					var l = _v5.e;
+					if ((_Utils_cmp(r, x / 2) > -1) && (_Utils_cmp(b, y / 2) > -1)) {
+						var newTop = t - (y / 2);
+						var newRight = r - (x / 2);
+						var newLeft = l - (x / 2);
+						var newBottom = b - (y / 2);
+						return $elm$core$Maybe$Just(
+							A2(
+								$mdgriffith$elm_ui$Internal$Model$StyleClass,
+								$mdgriffith$elm_ui$Internal$Flag$padding,
+								A5(
+									$mdgriffith$elm_ui$Internal$Model$PaddingStyle,
+									A4($mdgriffith$elm_ui$Internal$Model$paddingNameFloat, newTop, newRight, newBottom, newLeft),
+									newTop,
+									newRight,
+									newBottom,
+									newLeft)));
+					} else {
+						return $elm$core$Maybe$Nothing;
+					}
+				} else {
+					return $elm$core$Maybe$Nothing;
+				}
+			}();
+			if (newPadding.$ === 'Just') {
+				var pad = newPadding.a;
+				return A4(
+					$mdgriffith$elm_ui$Internal$Model$element,
+					$mdgriffith$elm_ui$Internal$Model$asRow,
+					$mdgriffith$elm_ui$Internal$Model$div,
+					A2(
+						$elm$core$List$cons,
+						$mdgriffith$elm_ui$Internal$Model$htmlClass($mdgriffith$elm_ui$Internal$Style$classes.contentLeft + (' ' + ($mdgriffith$elm_ui$Internal$Style$classes.contentCenterY + (' ' + $mdgriffith$elm_ui$Internal$Style$classes.wrapped)))),
+						A2(
+							$elm$core$List$cons,
+							$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$shrink),
+							A2(
+								$elm$core$List$cons,
+								$mdgriffith$elm_ui$Element$height($mdgriffith$elm_ui$Element$shrink),
+								_Utils_ap(
+									attrs,
+									_List_fromArray(
+										[pad]))))),
+					$mdgriffith$elm_ui$Internal$Model$Unkeyed(children));
+			} else {
+				var halfY = -(y / 2);
+				var halfX = -(x / 2);
+				return A4(
+					$mdgriffith$elm_ui$Internal$Model$element,
+					$mdgriffith$elm_ui$Internal$Model$asEl,
+					$mdgriffith$elm_ui$Internal$Model$div,
+					attrs,
+					$mdgriffith$elm_ui$Internal$Model$Unkeyed(
+						_List_fromArray(
+							[
+								A4(
+								$mdgriffith$elm_ui$Internal$Model$element,
+								$mdgriffith$elm_ui$Internal$Model$asRow,
+								$mdgriffith$elm_ui$Internal$Model$div,
+								A2(
+									$elm$core$List$cons,
+									$mdgriffith$elm_ui$Internal$Model$htmlClass($mdgriffith$elm_ui$Internal$Style$classes.contentLeft + (' ' + ($mdgriffith$elm_ui$Internal$Style$classes.contentCenterY + (' ' + $mdgriffith$elm_ui$Internal$Style$classes.wrapped)))),
+									A2(
+										$elm$core$List$cons,
+										$mdgriffith$elm_ui$Internal$Model$Attr(
+											A2(
+												$elm$html$Html$Attributes$style,
+												'margin',
+												$elm$core$String$fromFloat(halfY) + ('px' + (' ' + ($elm$core$String$fromFloat(halfX) + 'px'))))),
+										A2(
+											$elm$core$List$cons,
+											$mdgriffith$elm_ui$Internal$Model$Attr(
+												A2(
+													$elm$html$Html$Attributes$style,
+													'width',
+													'calc(100% + ' + ($elm$core$String$fromInt(x) + 'px)'))),
+											A2(
+												$elm$core$List$cons,
+												$mdgriffith$elm_ui$Internal$Model$Attr(
+													A2(
+														$elm$html$Html$Attributes$style,
+														'height',
+														'calc(100% + ' + ($elm$core$String$fromInt(y) + 'px)'))),
+												A2(
+													$elm$core$List$cons,
+													A2(
+														$mdgriffith$elm_ui$Internal$Model$StyleClass,
+														$mdgriffith$elm_ui$Internal$Flag$spacing,
+														A3($mdgriffith$elm_ui$Internal$Model$SpacingStyle, spaceName, x, y)),
+													_List_Nil))))),
+								$mdgriffith$elm_ui$Internal$Model$Unkeyed(children))
+							])));
+			}
+		}
+	});
 var $author$project$OUI$Showcase$Icons$iconChapter = F4(
 	function (title, iconList, shared, model) {
 		return A2(
 			$mdgriffith$elm_ui$Element$column,
 			_List_fromArray(
 				[
-					$mdgriffith$elm_ui$Element$spacing(10)
+					$mdgriffith$elm_ui$Element$spacing(20),
+					A2($mdgriffith$elm_ui$Element$paddingXY, 20, 0),
+					$mdgriffith$elm_ui$Element$width(
+					A2($mdgriffith$elm_ui$Element$maximum, 1200, $mdgriffith$elm_ui$Element$fill))
 				]),
-			A2(
-				$elm$core$List$cons,
-				A2(
+			_List_fromArray(
+				[
+					A2(
 					$author$project$OUI$Material$text,
 					shared.theme,
 					$author$project$OUI$Text$titleLarge(title)),
-				A2(
-					$elm$core$List$map,
-					$mdgriffith$elm_ui$Element$row(
-						_List_fromArray(
-							[
-								$mdgriffith$elm_ui$Element$spacing(20)
-							])),
 					A2(
-						$elm_community$list_extra$List$Extra$greedyGroupsOf,
-						10,
-						A2(
-							$elm$core$List$map,
-							function (_v1) {
-								var label = _v1.a;
-								var icon = _v1.b;
-								return A2(
-									$mdgriffith$elm_ui$Element$column,
-									_List_fromArray(
-										[
-											$mdgriffith$elm_ui$Element$spacing(10)
-										]),
-									_List_fromArray(
-										[
-											A3(
-											$author$project$OUI$Material$icon,
+					$mdgriffith$elm_ui$Element$wrappedRow,
+					_List_fromArray(
+						[$mdgriffith$elm_ui$Element$centerX]),
+					A2(
+						$elm$core$List$map,
+						function (_v1) {
+							var label = _v1.a;
+							var icon = _v1.b;
+							return A2(
+								$mdgriffith$elm_ui$Element$column,
+								_List_fromArray(
+									[
+										$mdgriffith$elm_ui$Element$spacing(25),
+										$mdgriffith$elm_ui$Element$width(
+										$mdgriffith$elm_ui$Element$px(128)),
+										$mdgriffith$elm_ui$Element$height(
+										$mdgriffith$elm_ui$Element$px(128))
+									]),
+								_List_fromArray(
+									[
+										A3(
+										$author$project$OUI$Material$icon,
+										shared.theme,
+										_List_fromArray(
+											[$mdgriffith$elm_ui$Element$centerX, $mdgriffith$elm_ui$Element$centerY]),
+										A2($author$project$OUI$Icon$withSize, 40, icon)),
+										A2(
+										$mdgriffith$elm_ui$Element$el,
+										_List_fromArray(
+											[$mdgriffith$elm_ui$Element$centerX, $mdgriffith$elm_ui$Element$centerY]),
+										A2(
+											$author$project$OUI$Material$text,
 											shared.theme,
-											_List_fromArray(
-												[$mdgriffith$elm_ui$Element$centerX]),
-											icon),
-											$mdgriffith$elm_ui$Element$text(label)
-										]));
+											$author$project$OUI$Text$bodySmall(
+												$author$project$OUI$Showcase$Icons$capitalize(label))))
+									]));
+						},
+						A2(
+							$elm$core$List$filter,
+							function (_v0) {
+								var label = _v0.a;
+								return A2($elm$core$String$contains, model.filter, label);
 							},
-							A2(
-								$elm$core$List$filter,
-								function (_v0) {
-									var label = _v0.a;
-									return A2($elm$core$String$contains, model.filter, label);
-								},
-								iconList))))));
+							iconList)))
+				]));
 	});
 var $author$project$OUI$Showcase$Icons$withChapter = F2(
 	function (title, iconList) {
@@ -27603,5 +27808,18 @@ var $author$project$Main$main = $elm$browser$Browser$application(
 						A2($author$project$OUI$Icon$elmMaterialIcons, $icidasset$elm_material_icons$Material$Icons$Types$Color, $icidasset$elm_material_icons$Material$Icons$Outlined$face))
 					]),
 				$author$project$OUI$Showcase$Icons$book('Material Icons')),
-			$author$project$OUI$Showcase$addPages($author$project$OUI$Explorer$explorer))));
+			$author$project$OUI$Showcase$addPages(
+				A2(
+					$author$project$OUI$Explorer$addBook,
+					A2(
+						$author$project$OUI$Explorer$withMarkdownChapter,
+						$author$project$Main$get_started,
+						$author$project$OUI$Explorer$book('Get Started')),
+					A2(
+						$author$project$OUI$Explorer$addBook,
+						A2(
+							$author$project$OUI$Explorer$withMarkdownChapter,
+							$author$project$Main$intro,
+							$author$project$OUI$Explorer$book('')),
+						$author$project$OUI$Explorer$explorer))))));
 _Platform_export({'Main':{'init':$author$project$Main$main($elm$json$Json$Decode$value)(0)}});}(this));
