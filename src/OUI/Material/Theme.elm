@@ -1,19 +1,20 @@
 module OUI.Material.Theme exposing
     ( Theme, defaultTheme, Typescale, defaultTypescale
-    , ButtonTheme, CheckboxTheme, MenuTheme, NavigationTheme, SwitchTheme, TextFieldTheme, RadioButtonTheme
+    , ButtonTheme, CheckboxTheme, DividerTheme, MenuTheme, NavigationTheme, SwitchTheme, TextFieldTheme, RadioButtonTheme
     )
 
 {-|
 
 @docs Theme, defaultTheme, Typescale, defaultTypescale
 
-@docs ButtonTheme, CheckboxTheme, MenuTheme, NavigationTheme, SwitchTheme, TextFieldTheme, RadioButtonTheme
+@docs ButtonTheme, CheckboxTheme, DividerTheme, MenuTheme, NavigationTheme, SwitchTheme, TextFieldTheme, RadioButtonTheme
 
 -}
 
 import OUI.Material.Button
 import OUI.Material.Checkbox
 import OUI.Material.Color
+import OUI.Material.Divider
 import OUI.Material.Menu
 import OUI.Material.Navigation
 import OUI.Material.RadioButton
@@ -64,6 +65,12 @@ type alias TextFieldTheme =
     OUI.Material.TextField.Theme
 
 
+{-| A Divider theme
+-}
+type alias DividerTheme =
+    OUI.Material.Divider.Theme
+
+
 {-| A font typescale
 -}
 type alias Typescale =
@@ -80,6 +87,7 @@ type alias Theme ext =
     , typescale : Typescale
     , button : ButtonTheme
     , checkbox : CheckboxTheme
+    , divider : DividerTheme
     , menu : MenuTheme
     , navigation : NavigationTheme
     , switch : SwitchTheme
@@ -96,6 +104,7 @@ defaultTheme =
     { colorscheme = OUI.Material.Color.defaultLightScheme
     , typescale = defaultTypescale
     , button = OUI.Material.Button.defaultTheme
+    , divider = OUI.Material.Divider.defaultTheme
     , checkbox = OUI.Material.Checkbox.defaultTheme
     , menu = OUI.Material.Menu.defaultTheme
     , navigation = OUI.Material.Navigation.defaultTheme

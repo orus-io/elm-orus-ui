@@ -1,5 +1,5 @@
 module OUI.Material exposing
-    ( text, icon
+    ( text, icon, divider
     , button, checkbox, switch, textField, radiobutton, menu
     , menuButton, navigation
     )
@@ -9,7 +9,7 @@ module OUI.Material exposing
 
 # Basics
 
-@docs text, icon
+@docs text, icon, divider
 
 
 # Inputs
@@ -27,10 +27,11 @@ import Color
 import Element exposing (Attribute, Element)
 import OUI.Button
 import OUI.Checkbox
+import OUI.Divider
 import OUI.Icon exposing (Icon)
 import OUI.Material.Button
 import OUI.Material.Checkbox
-import OUI.Material.Color
+import OUI.Material.Divider
 import OUI.Material.Icon
 import OUI.Material.Menu
 import OUI.Material.MenuButton
@@ -165,3 +166,10 @@ textField :
     -> Element msg
 textField theme =
     OUI.Material.TextField.render theme.typescale theme.colorscheme theme.button theme.textfield
+
+
+{-| Render a divider
+-}
+divider : Theme themeExt -> List (Attribute msg) -> OUI.Divider.Divider -> Element msg
+divider theme =
+    OUI.Material.Divider.render theme.colorscheme theme.divider

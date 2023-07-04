@@ -24342,6 +24342,158 @@ var $author$project$OUI$Showcase$Colors$book = A2(
 			$author$project$OUI$Explorer$withMarkdownChapter,
 			'\nThe two default color schemes\n    ',
 			$author$project$OUI$Explorer$book('Colors'))));
+var $author$project$OUI$Divider$Divider = function (a) {
+	return {$: 'Divider', a: a};
+};
+var $author$project$OUI$Divider$color = F2(
+	function (value, _v0) {
+		var props = _v0.a;
+		return $author$project$OUI$Divider$Divider(
+			_Utils_update(
+				props,
+				{
+					color: $elm$core$Maybe$Just(value)
+				}));
+	});
+var $author$project$OUI$Divider$properties = function (_v0) {
+	var props = _v0.a;
+	return props;
+};
+var $author$project$OUI$Material$Divider$render = F4(
+	function (colorscheme, theme, attrs, divider) {
+		var properties = $author$project$OUI$Divider$properties(divider);
+		var color = A2(
+			$author$project$OUI$Material$Color$getColor,
+			A2($elm$core$Maybe$withDefault, $author$project$OUI$Primary, properties.color),
+			colorscheme);
+		var all_attrs = _Utils_ap(
+			_List_fromArray(
+				[
+					$mdgriffith$elm_ui$Element$height(
+					$mdgriffith$elm_ui$Element$px(theme.thickness)),
+					$mdgriffith$elm_ui$Element$Background$color(
+					$author$project$OUI$Material$Color$toElementColor(color)),
+					$mdgriffith$elm_ui$Element$centerX
+				]),
+			attrs);
+		var _v0 = properties.type_;
+		if (_v0.$ === 'FullWidth') {
+			return A2(
+				$mdgriffith$elm_ui$Element$el,
+				_Utils_ap(
+					all_attrs,
+					_List_fromArray(
+						[
+							$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill)
+						])),
+				$mdgriffith$elm_ui$Element$none);
+		} else {
+			return A2(
+				$mdgriffith$elm_ui$Element$row,
+				_List_fromArray(
+					[
+						$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill)
+					]),
+				_List_fromArray(
+					[
+						A2(
+						$mdgriffith$elm_ui$Element$el,
+						_List_fromArray(
+							[
+								$mdgriffith$elm_ui$Element$width(
+								$mdgriffith$elm_ui$Element$px(theme.margin))
+							]),
+						$mdgriffith$elm_ui$Element$none),
+						A2(
+						$mdgriffith$elm_ui$Element$el,
+						_Utils_ap(
+							all_attrs,
+							_List_fromArray(
+								[
+									$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill)
+								])),
+						$mdgriffith$elm_ui$Element$none),
+						A2(
+						$mdgriffith$elm_ui$Element$el,
+						_List_fromArray(
+							[
+								$mdgriffith$elm_ui$Element$width(
+								$mdgriffith$elm_ui$Element$px(theme.margin))
+							]),
+						$mdgriffith$elm_ui$Element$none)
+					]));
+		}
+	});
+var $author$project$OUI$Material$divider = function (theme) {
+	return A2($author$project$OUI$Material$Divider$render, theme.colorscheme, theme.divider);
+};
+var $author$project$OUI$Divider$FullWidth = {$: 'FullWidth'};
+var $author$project$OUI$Divider$dvdtype = F2(
+	function (value, _v0) {
+		var props = _v0.a;
+		return $author$project$OUI$Divider$Divider(
+			_Utils_update(
+				props,
+				{type_: value}));
+	});
+var $author$project$OUI$Divider$fullWidthDivider = $author$project$OUI$Divider$dvdtype($author$project$OUI$Divider$FullWidth);
+var $author$project$OUI$Divider$Inset = {$: 'Inset'};
+var $author$project$OUI$Divider$insetDivider = $author$project$OUI$Divider$dvdtype($author$project$OUI$Divider$Inset);
+var $author$project$OUI$Divider$new = $author$project$OUI$Divider$Divider(
+	{color: $elm$core$Maybe$Nothing, type_: $author$project$OUI$Divider$FullWidth});
+var $mdgriffith$elm_ui$Internal$Flag$borderStyle = $mdgriffith$elm_ui$Internal$Flag$flag(11);
+var $mdgriffith$elm_ui$Element$Border$solid = A2($mdgriffith$elm_ui$Internal$Model$Class, $mdgriffith$elm_ui$Internal$Flag$borderStyle, $mdgriffith$elm_ui$Internal$Style$classes.borderSolid);
+var $avh4$elm_color$Color$white = A4($avh4$elm_color$Color$RgbaSpace, 255 / 255, 255 / 255, 255 / 255, 1.0);
+var $author$project$OUI$Showcase$Dividers$commonDividers = function (_v0) {
+	var theme = _v0.theme;
+	return A2(
+		$mdgriffith$elm_ui$Element$column,
+		_List_fromArray(
+			[
+				$mdgriffith$elm_ui$Element$spacing(30),
+				$mdgriffith$elm_ui$Element$width(
+				$mdgriffith$elm_ui$Element$px(400)),
+				$mdgriffith$elm_ui$Element$padding(10),
+				$mdgriffith$elm_ui$Element$Border$solid,
+				$mdgriffith$elm_ui$Element$Border$width(2),
+				$mdgriffith$elm_ui$Element$Border$color(
+				$author$project$OUI$Material$Color$toElementColor($avh4$elm_color$Color$white))
+			]),
+		_List_fromArray(
+			[
+				$mdgriffith$elm_ui$Element$text('Common dividers'),
+				A2(
+				$mdgriffith$elm_ui$Element$column,
+				_List_fromArray(
+					[
+						$mdgriffith$elm_ui$Element$spacing(30),
+						$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill)
+					]),
+				_List_fromArray(
+					[
+						$mdgriffith$elm_ui$Element$text('Full width divider'),
+						A3(
+						$author$project$OUI$Material$divider,
+						theme,
+						_List_Nil,
+						A2(
+							$author$project$OUI$Divider$color,
+							$author$project$OUI$Error,
+							$author$project$OUI$Divider$fullWidthDivider($author$project$OUI$Divider$new))),
+						$mdgriffith$elm_ui$Element$text('Part width divider'),
+						A3(
+						$author$project$OUI$Material$divider,
+						theme,
+						_List_Nil,
+						$author$project$OUI$Divider$insetDivider($author$project$OUI$Divider$new)),
+						$mdgriffith$elm_ui$Element$text('lorem ipsum')
+					]))
+			]));
+};
+var $author$project$OUI$Showcase$Dividers$book = A2(
+	$author$project$OUI$Explorer$withStaticChapter,
+	$author$project$OUI$Showcase$Dividers$commonDividers,
+	$author$project$OUI$Explorer$book('Dividers'));
 var $author$project$OUI$Showcase$MenuButtons$MenuButtonMsg = F2(
 	function (a, b) {
 		return {$: 'MenuButtonMsg', a: a, b: b};
@@ -32901,11 +33053,14 @@ var $author$project$OUI$Showcase$addPages = A2(
 										$author$project$OUI$Explorer$addBook($author$project$OUI$Showcase$TextFields$book),
 										A2(
 											$elm$core$Basics$composeR,
-											$author$project$OUI$Explorer$category('Complex'),
+											$author$project$OUI$Explorer$addBook($author$project$OUI$Showcase$Dividers$book),
 											A2(
 												$elm$core$Basics$composeR,
-												$author$project$OUI$Explorer$addBook($author$project$OUI$Showcase$MenuButtons$book),
-												$author$project$OUI$Explorer$addBook($author$project$OUI$Showcase$Navigation$book)))))))))))));
+												$author$project$OUI$Explorer$category('Complex'),
+												A2(
+													$elm$core$Basics$composeR,
+													$author$project$OUI$Explorer$addBook($author$project$OUI$Showcase$MenuButtons$book),
+													$author$project$OUI$Explorer$addBook($author$project$OUI$Showcase$Navigation$book))))))))))))));
 var $icidasset$elm_material_icons$Material$Icons$Internal$b = $elm$svg$Svg$Attributes$enableBackground;
 var $icidasset$elm_material_icons$Material$Icons$Internal$f = $elm$svg$Svg$Attributes$fill;
 var $icidasset$elm_material_icons$Material$Icons$Internal$icon = F4(
@@ -33117,6 +33272,7 @@ var $author$project$OUI$Material$Button$defaultTheme = {
 	icon: {containerSize: 40, iconSize: 24}
 };
 var $author$project$OUI$Material$Checkbox$defaultTheme = {containerHeight: 18, containerShape: 2, containerWidth: 18, iconSize: 18, stateLayerSize: 40};
+var $author$project$OUI$Material$Divider$defaultTheme = {margin: 16, thickness: 1};
 var $author$project$OUI$Material$Menu$defaultTheme = {iconSize: 24, itemHeight: 48, leftRightPadding: 12, maxWidth: 280, minWidth: 112, paddingWithinItem: 12, radius: 4, topBottomPadding: 8};
 var $author$project$OUI$Material$Navigation$defaultTheme = {
 	drawer: {activeIndicatorHeight: 56, activeIndicatorPadding: 12, activeIndicatorShape: 28, activeIndicatorWidth: 336, badgeRightPadding: 16, containerWidth: 360, iconSize: 24, leftPadding: 28, paddingBetweenElements: 0, rightPadding: 28},
@@ -33169,7 +33325,7 @@ var $author$project$OUI$Material$Theme$defaultTypescale = {
 		small: {font: 'Roboto', lineHeight: 20, size: 14, tracking: 0.1, weight: 500}
 	}
 };
-var $author$project$OUI$Material$Theme$defaultTheme = {button: $author$project$OUI$Material$Button$defaultTheme, checkbox: $author$project$OUI$Material$Checkbox$defaultTheme, colorscheme: $author$project$OUI$Material$Color$defaultLightScheme, ext: $elm$core$Maybe$Nothing, menu: $author$project$OUI$Material$Menu$defaultTheme, navigation: $author$project$OUI$Material$Navigation$defaultTheme, radiobutton: $author$project$OUI$Material$RadioButton$defaultTheme, _switch: $author$project$OUI$Material$Switch$defaultTheme, textfield: $author$project$OUI$Material$TextField$defaultTheme, typescale: $author$project$OUI$Material$Theme$defaultTypescale};
+var $author$project$OUI$Material$Theme$defaultTheme = {button: $author$project$OUI$Material$Button$defaultTheme, checkbox: $author$project$OUI$Material$Checkbox$defaultTheme, colorscheme: $author$project$OUI$Material$Color$defaultLightScheme, divider: $author$project$OUI$Material$Divider$defaultTheme, ext: $elm$core$Maybe$Nothing, menu: $author$project$OUI$Material$Menu$defaultTheme, navigation: $author$project$OUI$Material$Navigation$defaultTheme, radiobutton: $author$project$OUI$Material$RadioButton$defaultTheme, _switch: $author$project$OUI$Material$Switch$defaultTheme, textfield: $author$project$OUI$Material$TextField$defaultTheme, typescale: $author$project$OUI$Material$Theme$defaultTypescale};
 var $author$project$OUI$Explorer$defaultView = {
 	content: $mdgriffith$elm_ui$Element$text('invalid view'),
 	title: 'Invalid'
@@ -34431,4 +34587,4 @@ var $author$project$Main$main = $elm$browser$Browser$application(
 							$author$project$Main$intro,
 							$author$project$OUI$Explorer$book('Introduction')),
 						$author$project$OUI$Explorer$explorer))))));
-_Platform_export({'Main':{'init':$author$project$Main$main($elm$json$Json$Decode$value)({"versions":{"elm":"0.19.1"},"types":{"message":"Spa.Msg OUI.Explorer.SharedMsg (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg OUI.Showcase.Icons.Msg) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg OUI.Showcase.Navigation.Msg) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg OUI.Showcase.MenuButtons.Msg) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg OUI.Showcase.TextFields.Msg) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg OUI.Showcase.Switches.Msg) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg ()) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg ()) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg ()) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg ()) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg ()) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg ()) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg ()) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg ()) (Spa.PageStack.Msg String.String () ()))))))))))))))","aliases":{"Url.Url":{"args":[],"type":"{ protocol : Url.Protocol, host : String.String, port_ : Maybe.Maybe Basics.Int, path : String.String, query : Maybe.Maybe String.String, fragment : Maybe.Maybe String.String }"}},"unions":{"OUI.Explorer.BookMsg":{"args":["msg"],"tags":{"SharedMsg":["OUI.Explorer.SharedMsg"],"BookMsg":["msg"]}},"OUI.Showcase.Icons.Msg":{"args":[],"tags":{"FilterChange":["String.String"],"FilterFocus":["Basics.Bool"]}},"OUI.Showcase.MenuButtons.Msg":{"args":[],"tags":{"OnSelect":["String.String","String.String"],"MenuButtonMsg":["String.String","OUI.MenuButton.Msg OUI.Showcase.MenuButtons.Msg"]}},"OUI.Showcase.Navigation.Msg":{"args":[],"tags":{"Expand":["Basics.Bool"]}},"OUI.Showcase.Switches.Msg":{"args":[],"tags":{"SetSwitch":["String.String","Basics.Bool"]}},"OUI.Showcase.TextFields.Msg":{"args":[],"tags":{"OnChange":["String.String","String.String"],"OnFocus":["String.String"],"OnLoseFocus":["String.String"]}},"Spa.Msg":{"args":["sharedMsg","pageMsg"],"tags":{"SharedMsg":["sharedMsg"],"PageMsg":["pageMsg"],"UrlRequest":["Browser.UrlRequest"],"UrlChange":["Url.Url"]}},"Spa.PageStack.Msg":{"args":["route","current","previous"],"tags":{"CurrentMsg":["current"],"PreviousMsg":["previous"],"RouteChange":["route"]}},"OUI.Explorer.SharedMsg":{"args":[],"tags":{"Event":["String.String"],"SelectColorScheme":["Basics.Int","OUI.Explorer.ColorSchemeType"],"OnBookClick":["String.String"],"OnRouteChange":["String.String"]}},"String.String":{"args":[],"tags":{"String":[]}},"Basics.Bool":{"args":[],"tags":{"True":[],"False":[]}},"OUI.Explorer.ColorSchemeType":{"args":[],"tags":{"Light":[],"Dark":[]}},"Basics.Int":{"args":[],"tags":{"Int":[]}},"Maybe.Maybe":{"args":["a"],"tags":{"Just":["a"],"Nothing":[]}},"OUI.MenuButton.Msg":{"args":["msg"],"tags":{"OnClickOutside":[],"OnClickButton":[],"OnClickItem":["msg"]}},"Url.Protocol":{"args":[],"tags":{"Http":[],"Https":[]}},"Browser.UrlRequest":{"args":[],"tags":{"Internal":["Url.Url"],"External":["String.String"]}}}}})}});}(this));
+_Platform_export({'Main':{'init':$author$project$Main$main($elm$json$Json$Decode$value)({"versions":{"elm":"0.19.1"},"types":{"message":"Spa.Msg OUI.Explorer.SharedMsg (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg OUI.Showcase.Icons.Msg) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg OUI.Showcase.Navigation.Msg) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg OUI.Showcase.MenuButtons.Msg) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg ()) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg OUI.Showcase.TextFields.Msg) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg OUI.Showcase.Switches.Msg) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg ()) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg ()) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg ()) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg ()) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg ()) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg ()) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg ()) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg ()) (Spa.PageStack.Msg String.String () ())))))))))))))))","aliases":{"Url.Url":{"args":[],"type":"{ protocol : Url.Protocol, host : String.String, port_ : Maybe.Maybe Basics.Int, path : String.String, query : Maybe.Maybe String.String, fragment : Maybe.Maybe String.String }"}},"unions":{"OUI.Explorer.BookMsg":{"args":["msg"],"tags":{"SharedMsg":["OUI.Explorer.SharedMsg"],"BookMsg":["msg"]}},"OUI.Showcase.Icons.Msg":{"args":[],"tags":{"FilterChange":["String.String"],"FilterFocus":["Basics.Bool"]}},"OUI.Showcase.MenuButtons.Msg":{"args":[],"tags":{"OnSelect":["String.String","String.String"],"MenuButtonMsg":["String.String","OUI.MenuButton.Msg OUI.Showcase.MenuButtons.Msg"]}},"OUI.Showcase.Navigation.Msg":{"args":[],"tags":{"Expand":["Basics.Bool"]}},"OUI.Showcase.Switches.Msg":{"args":[],"tags":{"SetSwitch":["String.String","Basics.Bool"]}},"OUI.Showcase.TextFields.Msg":{"args":[],"tags":{"OnChange":["String.String","String.String"],"OnFocus":["String.String"],"OnLoseFocus":["String.String"]}},"Spa.Msg":{"args":["sharedMsg","pageMsg"],"tags":{"SharedMsg":["sharedMsg"],"PageMsg":["pageMsg"],"UrlRequest":["Browser.UrlRequest"],"UrlChange":["Url.Url"]}},"Spa.PageStack.Msg":{"args":["route","current","previous"],"tags":{"CurrentMsg":["current"],"PreviousMsg":["previous"],"RouteChange":["route"]}},"OUI.Explorer.SharedMsg":{"args":[],"tags":{"Event":["String.String"],"SelectColorScheme":["Basics.Int","OUI.Explorer.ColorSchemeType"],"OnBookClick":["String.String"],"OnRouteChange":["String.String"]}},"String.String":{"args":[],"tags":{"String":[]}},"Basics.Bool":{"args":[],"tags":{"True":[],"False":[]}},"OUI.Explorer.ColorSchemeType":{"args":[],"tags":{"Light":[],"Dark":[]}},"Basics.Int":{"args":[],"tags":{"Int":[]}},"Maybe.Maybe":{"args":["a"],"tags":{"Just":["a"],"Nothing":[]}},"OUI.MenuButton.Msg":{"args":["msg"],"tags":{"OnClickOutside":[],"OnClickButton":[],"OnClickItem":["msg"]}},"Url.Protocol":{"args":[],"tags":{"Http":[],"Https":[]}},"Browser.UrlRequest":{"args":[],"tags":{"Internal":["Url.Url"],"External":["String.String"]}}}}})}});}(this));
