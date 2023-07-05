@@ -1,6 +1,6 @@
 module OUI.Material exposing
     ( text, icon
-    , button, checkbox, switch, textField
+    , button, checkbox, switch, textField, radiobutton
     , navigation
     )
 
@@ -14,7 +14,7 @@ module OUI.Material exposing
 
 # Inputs
 
-@docs button, checkbox, switch, textField
+@docs button, checkbox, switch, textField, radiobutton
 
 
 # Complex
@@ -32,11 +32,13 @@ import OUI.Material.Button
 import OUI.Material.Checkbox
 import OUI.Material.Icon
 import OUI.Material.Navigation
+import OUI.Material.RadioButton
 import OUI.Material.Switch
 import OUI.Material.TextField
 import OUI.Material.Theme exposing (Theme)
 import OUI.Material.Typography
 import OUI.Navigation
+import OUI.RadioButton
 import OUI.Switch
 import OUI.Text
 import OUI.TextField
@@ -87,6 +89,13 @@ checkbox theme =
 navigation : Theme -> List (Attribute msg) -> OUI.Navigation.Navigation btnC key msg -> Element msg
 navigation theme =
     OUI.Material.Navigation.render theme.typescale theme.colorscheme theme.navigation
+
+
+{-| Render a radiobutton
+-}
+radiobutton : Theme -> List (Attribute msg) -> OUI.RadioButton.RadioButton { hasAction : (), withSelected : () } msg -> Element msg
+radiobutton theme =
+    OUI.Material.RadioButton.render theme.colorscheme theme.radiobutton
 
 
 {-| Render a Switch

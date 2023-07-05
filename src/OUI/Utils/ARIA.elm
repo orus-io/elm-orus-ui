@@ -1,6 +1,6 @@
 module OUI.Utils.ARIA exposing
     ( Role, ElementSemantics
-    , roleButton, roleImage, rolePresentation, roleCheckbox, roleTab, roleSwitch, roleToggleButton
+    , roleButton, roleImage, rolePresentation, roleCheckbox, roleRadioButton, roleTab, roleSwitch, roleToggleButton
     , roleRadioGroup, roleRadio
     , withLabel
     , toElementAttributes
@@ -15,7 +15,7 @@ This module is copied from [Paack-ui](https://package.elm-lang.org/packages/Paac
 
 # Building
 
-@docs roleButton, roleImage, rolePresentation, roleCheckbox, roleTab, roleSwitch, roleToggleButton
+@docs roleButton, roleImage, rolePresentation, roleCheckbox, roleRadioButton, roleTab, roleSwitch, roleToggleButton
 
 
 ## Radio buttons
@@ -68,6 +68,7 @@ type alias ElementSemantics =
 type Role
     = RoleButton
     | RoleCheckbox Bool
+    | RoleRadioButton Bool
     | RoleSwitch Bool
     | RoleImage
     | RolePresentation
@@ -115,6 +116,20 @@ roleToggleButton pressed =
 roleCheckbox : Bool -> ElementSemantics
 roleCheckbox checked =
     fromRole (RoleCheckbox checked)
+
+
+{-| "The radioButton role is used for checkable interactive controls." -MDN
+
+    Element.row
+        (ARIA.toElementAttributes <| ARIA.roleRadioButton False)
+        [ notCheckedIcon
+        , Element.text "I accept the Terms of Service"
+        ]
+
+-}
+roleRadioButton : Bool -> ElementSemantics
+roleRadioButton checked =
+    fromRole (RoleRadioButton checked)
 
 
 {-| "The ARIA switch role is functionally identical to the checkbox role,
@@ -249,8 +264,13 @@ toElementAttributes { role, label } =
                 , checkedAttr checked
                 ]
 
+            RoleRadioButton checked ->
+                [ roleAttr "radio"
+                , checkedAttr checked
+                ]
+
             RoleSwitch state ->
-                [ roleAttr "checkbox"
+                [ roleAttr "switch"
                 , checkedAttr state
                 ]
 

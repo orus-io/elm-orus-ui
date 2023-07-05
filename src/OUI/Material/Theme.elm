@@ -1,13 +1,13 @@
 module OUI.Material.Theme exposing
     ( Theme, defaultTheme, Typescale, defaultTypescale
-    , ButtonTheme, CheckboxTheme, NavigationTheme, SwitchTheme, TextFieldTheme
+    , ButtonTheme, CheckboxTheme, NavigationTheme, SwitchTheme, TextFieldTheme, RadioButtonTheme
     )
 
 {-|
 
 @docs Theme, defaultTheme, Typescale, defaultTypescale
 
-@docs ButtonTheme, CheckboxTheme, NavigationTheme, SwitchTheme, TextFieldTheme
+@docs ButtonTheme, CheckboxTheme, NavigationTheme, SwitchTheme, TextFieldTheme, RadioButtonTheme
 
 -}
 
@@ -15,6 +15,7 @@ import OUI.Material.Button
 import OUI.Material.Checkbox
 import OUI.Material.Color
 import OUI.Material.Navigation
+import OUI.Material.RadioButton
 import OUI.Material.Switch
 import OUI.Material.TextField
 import OUI.Material.Typography
@@ -24,6 +25,12 @@ import OUI.Material.Typography
 -}
 type alias ButtonTheme =
     OUI.Material.Button.Theme
+
+
+{-| A RadioButton theme
+-}
+type alias RadioButtonTheme =
+    OUI.Material.RadioButton.Theme
 
 
 {-| A Checkbox theme
@@ -69,6 +76,7 @@ type alias Theme =
     , navigation : NavigationTheme
     , switch : SwitchTheme
     , textfield : TextFieldTheme
+    , radiobutton : RadioButtonTheme
     }
 
 
@@ -81,6 +89,7 @@ defaultTheme =
     , button = OUI.Material.Button.defaultTheme
     , checkbox = OUI.Material.Checkbox.defaultTheme
     , navigation = OUI.Material.Navigation.defaultTheme
+    , radiobutton = OUI.Material.RadioButton.defaultTheme
     , switch = OUI.Material.Switch.defaultTheme
     , textfield = OUI.Material.TextField.defaultTheme
     }

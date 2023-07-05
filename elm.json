@@ -7,6 +7,7 @@
     "exposed-modules": [
         "OUI",
         "OUI.Button",
+        "OUI.RadioButton",
         "OUI.Checkbox",
         "OUI.Explorer",
         "OUI.Icon",

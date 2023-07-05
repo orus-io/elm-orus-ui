@@ -11,6 +11,7 @@ import OUI.Showcase.Buttons as Buttons
 import OUI.Showcase.Checkbox as Checkbox
 import OUI.Showcase.Colors as Colors
 import OUI.Showcase.Navigation as Navigation
+import OUI.Showcase.RadioButtons as RadioButtons
 import OUI.Showcase.Switches as Switches
 import OUI.Showcase.TextFields as TextFields
 import OUI.Showcase.Typography as Typography
@@ -21,7 +22,13 @@ import Spa.PageStack
 {-| add the default showcase pages to a Explorer
 -}
 addPages :
-    Explorer Explorer.Shared Explorer.SharedMsg current previous currentMsg previousMsg
+    Explorer
+        Explorer.Shared
+        Explorer.SharedMsg
+        current
+        previous
+        currentMsg
+        previousMsg
     ->
         Explorer
             Explorer.Shared
@@ -47,8 +54,12 @@ addPages :
                                     ()
                                     (Spa.PageStack.Model
                                         Spa.SetupError
-                                        current
-                                        previous
+                                        ()
+                                        (Spa.PageStack.Model
+                                            Spa.SetupError
+                                            current
+                                            previous
+                                        )
                                     )
                                 )
                             )
@@ -77,8 +88,12 @@ addPages :
                                     (Explorer.BookMsg ())
                                     (Spa.PageStack.Msg
                                         Explorer.Route
-                                        currentMsg
-                                        previousMsg
+                                        (Explorer.BookMsg ())
+                                        (Spa.PageStack.Msg
+                                            Explorer.Route
+                                            currentMsg
+                                            previousMsg
+                                        )
                                     )
                                 )
                             )
@@ -93,6 +108,7 @@ addPages =
         >> Explorer.category "Basics"
         >> Explorer.addBook Buttons.book
         >> Explorer.addBook Checkbox.book
+        >> Explorer.addBook RadioButtons.book
         >> Explorer.addBook Switches.book
         >> Explorer.addBook TextFields.book
         >> Explorer.category "Complex"
