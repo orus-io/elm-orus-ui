@@ -10,6 +10,7 @@
         "OUI.Checkbox",
         "OUI.Explorer",
         "OUI.Icon",
+        "OUI.Navigation",
         "OUI.Text",
         "OUI.TextField",
         "OUI.Switch",

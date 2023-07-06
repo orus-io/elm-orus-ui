@@ -1,8 +1,25 @@
-module OUI.Material exposing (text, button, checkbox, icon, switch, textField)
+module OUI.Material exposing
+    ( text, icon
+    , button, checkbox, switch, textField
+    , navigation
+    )
 
 {-| A elm-ui based renderer API
 
-@docs text, button, checkbox, icon, switch, textField
+
+# Basics
+
+@docs text, icon
+
+
+# Inputs
+
+@docs button, checkbox, switch, textField
+
+
+# Complex
+
+@docs navigation
 
 -}
 
@@ -14,10 +31,12 @@ import OUI.Icon exposing (Icon)
 import OUI.Material.Button
 import OUI.Material.Checkbox
 import OUI.Material.Icon
+import OUI.Material.Navigation
 import OUI.Material.Switch
 import OUI.Material.TextField
 import OUI.Material.Theme exposing (Theme)
 import OUI.Material.Typography
+import OUI.Navigation
 import OUI.Switch
 import OUI.Text
 import OUI.TextField
@@ -61,6 +80,13 @@ icon { colorscheme } =
 checkbox : Theme -> List (Attribute msg) -> OUI.Checkbox.Checkbox { hasAction : (), withChecked : () } msg -> Element msg
 checkbox theme =
     OUI.Material.Checkbox.render theme.colorscheme theme.checkbox
+
+
+{-| Render a navigation trail/drawer
+-}
+navigation : Theme -> List (Attribute msg) -> OUI.Navigation.Navigation btnC key msg -> Element msg
+navigation theme =
+    OUI.Material.Navigation.render theme.typescale theme.colorscheme theme.navigation
 
 
 {-| Render a Switch

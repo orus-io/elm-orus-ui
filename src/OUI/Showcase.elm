@@ -10,6 +10,7 @@ import OUI.Explorer as Explorer exposing (Explorer)
 import OUI.Showcase.Buttons as Buttons
 import OUI.Showcase.Checkbox as Checkbox
 import OUI.Showcase.Colors as Colors
+import OUI.Showcase.Navigation as Navigation
 import OUI.Showcase.Switches as Switches
 import OUI.Showcase.TextFields as TextFields
 import OUI.Showcase.Typography as Typography
@@ -25,13 +26,13 @@ addPages :
         Explorer
             Explorer.Shared
             Explorer.SharedMsg
-            TextFields.Model
+            Navigation.Model
             (Spa.PageStack.Model
                 Spa.SetupError
-                Switches.Model
+                TextFields.Model
                 (Spa.PageStack.Model
                     Spa.SetupError
-                    ()
+                    Switches.Model
                     (Spa.PageStack.Model
                         Spa.SetupError
                         ()
@@ -41,19 +42,27 @@ addPages :
                             (Spa.PageStack.Model
                                 Spa.SetupError
                                 ()
-                                (Spa.PageStack.Model Spa.SetupError current previous)
+                                (Spa.PageStack.Model
+                                    Spa.SetupError
+                                    ()
+                                    (Spa.PageStack.Model
+                                        Spa.SetupError
+                                        current
+                                        previous
+                                    )
+                                )
                             )
                         )
                     )
                 )
             )
-            (Explorer.BookMsg TextFields.Msg)
+            (Explorer.BookMsg Navigation.Msg)
             (Spa.PageStack.Msg
                 Explorer.Route
-                (Explorer.BookMsg Switches.Msg)
+                (Explorer.BookMsg TextFields.Msg)
                 (Spa.PageStack.Msg
                     Explorer.Route
-                    (Explorer.BookMsg ())
+                    (Explorer.BookMsg Switches.Msg)
                     (Spa.PageStack.Msg
                         Explorer.Route
                         (Explorer.BookMsg ())
@@ -65,8 +74,12 @@ addPages :
                                 (Explorer.BookMsg ())
                                 (Spa.PageStack.Msg
                                     Explorer.Route
-                                    currentMsg
-                                    previousMsg
+                                    (Explorer.BookMsg ())
+                                    (Spa.PageStack.Msg
+                                        Explorer.Route
+                                        currentMsg
+                                        previousMsg
+                                    )
                                 )
                             )
                         )
@@ -82,3 +95,5 @@ addPages =
         >> Explorer.addBook Checkbox.book
         >> Explorer.addBook Switches.book
         >> Explorer.addBook TextFields.book
+        >> Explorer.category "Complex"
+        >> Explorer.addBook Navigation.book

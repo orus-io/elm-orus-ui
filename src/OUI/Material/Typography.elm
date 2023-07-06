@@ -106,13 +106,7 @@ render typescale (OUI.Text.Text type_ size text) =
 renderWithAttrs : Typescale -> List (Attribute msg) -> OUI.Text.Text -> Element msg
 renderWithAttrs typescale customAttrs (OUI.Text.Text type_ size text) =
     Element.el
-        ((typescale
-            |> getTypo type_ size
-            |> .lineHeight
-            |> Element.px
-            |> Element.height
-         )
-            :: attrs type_ size typescale
+        (attrs type_ size typescale
             ++ customAttrs
         )
     <|
