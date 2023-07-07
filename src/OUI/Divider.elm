@@ -1,8 +1,13 @@
-module OUI.Divider exposing (..)
+module OUI.Divider exposing
+    ( Divider(..), Type(..)
+    , new
+    , fullWidthDivider, insetDivider
+    , properties, Props, dvdtype
+    )
 
 {-| A divider creation API
 
-@docs Divider
+@docs Divider, Type
 
 A divider is a thin line that groups content in lists and containers
 
@@ -12,14 +17,14 @@ A divider is a thin line that groups content in lists and containers
 @docs new
 
 
-# Basic properties
+# Divider Type
 
-@docs withThickness, color
+@docs fullWidthDivider, insetDivider
 
 
 # Internal
 
-@docs properties
+@docs properties, Props, dvdtype
 
 -}
 
@@ -36,9 +41,7 @@ type Type
 {-| underlying properties of the divider
 -}
 type alias Props =
-    { color : Maybe Color
-    , type_ : Type
-    }
+    { type_ : Type }
 
 
 {-| A divider
@@ -49,22 +52,13 @@ type Divider
 
 {-| Create a divider with the given thickness
 
-By default, the divider has a thickness of 1dp and it's color is TODO idk
+By default, the divider has a thickness of 1dp and it's color is outline variant
 
 -}
 new : Divider
 new =
     Divider
-        { color = Nothing
-        , type_ = FullWidth
-        }
-
-
-{-| Set the divider color
--}
-color : Color -> Divider -> Divider
-color value (Divider props) =
-    Divider { props | color = Just value }
+        { type_ = FullWidth }
 
 
 {-| Set the divider type
@@ -91,9 +85,6 @@ insetDivider =
 {-| -}
 properties :
     Divider
-    ->
-        { color : Maybe Color
-        , type_ : Type
-        }
+    -> { type_ : Type }
 properties (Divider props) =
     props

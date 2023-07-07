@@ -1,9 +1,8 @@
-module OUI.Material.Divider exposing (..)
+module OUI.Material.Divider exposing (Theme, defaultTheme, render)
 
 import Element exposing (Attribute, Element)
 import Element.Background
-import OUI
-import OUI.Divider as Divider exposing (Divider)
+import OUI.Divider as Divider exposing (Divider, Type)
 import OUI.Material.Color
 
 
@@ -28,17 +27,14 @@ render :
     -> Element msg
 render colorscheme theme attrs divider =
     let
+        properties : { type_ : Type }
         properties =
             Divider.properties divider
 
-        color =
-            OUI.Material.Color.getColor
-                (properties.color |> Maybe.withDefault OUI.Primary)
-                colorscheme
-
+        all_attrs : List (Attribute msg)
         all_attrs =
             [ Element.height <| Element.px theme.thickness
-            , Element.Background.color <| OUI.Material.Color.toElementColor color
+            , Element.Background.color <| OUI.Material.Color.toElementColor colorscheme.outlineVariant
             , Element.centerX
             ]
                 ++ attrs

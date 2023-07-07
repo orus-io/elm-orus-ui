@@ -1,4 +1,4 @@
-module OUI.Showcase.Dividers exposing (..)
+module OUI.Showcase.Dividers exposing (book, commonDividers)
 
 import Color
 import Element exposing (Element)
@@ -25,19 +25,21 @@ commonDividers { theme } =
         , Element.padding 10
         , Element.Border.solid
         , Element.Border.width 2
-        , Element.Border.color <| OUI.Material.Color.toElementColor Color.white
+        , Element.Border.color <| OUI.Material.Color.getElementColor OUI.Neutral theme.colorscheme
         ]
         [ Element.text "Common dividers"
         , Element.column [ Element.spacing 30, Element.width Element.fill ]
             [ Element.text "Full width divider"
             , Divider.new
                 |> Divider.fullWidthDivider
-                |> Divider.color OUI.Error
                 |> Material.divider theme []
-            , Element.text "Part width divider"
+            , Element.text "inset divider"
             , Divider.new
                 |> Divider.insetDivider
                 |> Material.divider theme []
-            , Element.text "lorem ipsum"
+            , Element.text "thick inset divider"
+            , Divider.new
+                |> Divider.insetDivider
+                |> Material.divider theme [ Element.height <| Element.px 5 ]
             ]
         ]

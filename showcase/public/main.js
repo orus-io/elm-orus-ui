@@ -24342,19 +24342,7 @@ var $author$project$OUI$Showcase$Colors$book = A2(
 			$author$project$OUI$Explorer$withMarkdownChapter,
 			'\nThe two default color schemes\n    ',
 			$author$project$OUI$Explorer$book('Colors'))));
-var $author$project$OUI$Divider$Divider = function (a) {
-	return {$: 'Divider', a: a};
-};
-var $author$project$OUI$Divider$color = F2(
-	function (value, _v0) {
-		var props = _v0.a;
-		return $author$project$OUI$Divider$Divider(
-			_Utils_update(
-				props,
-				{
-					color: $elm$core$Maybe$Just(value)
-				}));
-	});
+var $author$project$OUI$Neutral = {$: 'Neutral'};
 var $author$project$OUI$Divider$properties = function (_v0) {
 	var props = _v0.a;
 	return props;
@@ -24362,17 +24350,13 @@ var $author$project$OUI$Divider$properties = function (_v0) {
 var $author$project$OUI$Material$Divider$render = F4(
 	function (colorscheme, theme, attrs, divider) {
 		var properties = $author$project$OUI$Divider$properties(divider);
-		var color = A2(
-			$author$project$OUI$Material$Color$getColor,
-			A2($elm$core$Maybe$withDefault, $author$project$OUI$Primary, properties.color),
-			colorscheme);
 		var all_attrs = _Utils_ap(
 			_List_fromArray(
 				[
 					$mdgriffith$elm_ui$Element$height(
 					$mdgriffith$elm_ui$Element$px(theme.thickness)),
 					$mdgriffith$elm_ui$Element$Background$color(
-					$author$project$OUI$Material$Color$toElementColor(color)),
+					$author$project$OUI$Material$Color$toElementColor(colorscheme.outlineVariant)),
 					$mdgriffith$elm_ui$Element$centerX
 				]),
 			attrs);
@@ -24428,6 +24412,9 @@ var $author$project$OUI$Material$divider = function (theme) {
 	return A2($author$project$OUI$Material$Divider$render, theme.colorscheme, theme.divider);
 };
 var $author$project$OUI$Divider$FullWidth = {$: 'FullWidth'};
+var $author$project$OUI$Divider$Divider = function (a) {
+	return {$: 'Divider', a: a};
+};
 var $author$project$OUI$Divider$dvdtype = F2(
 	function (value, _v0) {
 		var props = _v0.a;
@@ -24440,10 +24427,9 @@ var $author$project$OUI$Divider$fullWidthDivider = $author$project$OUI$Divider$d
 var $author$project$OUI$Divider$Inset = {$: 'Inset'};
 var $author$project$OUI$Divider$insetDivider = $author$project$OUI$Divider$dvdtype($author$project$OUI$Divider$Inset);
 var $author$project$OUI$Divider$new = $author$project$OUI$Divider$Divider(
-	{color: $elm$core$Maybe$Nothing, type_: $author$project$OUI$Divider$FullWidth});
+	{type_: $author$project$OUI$Divider$FullWidth});
 var $mdgriffith$elm_ui$Internal$Flag$borderStyle = $mdgriffith$elm_ui$Internal$Flag$flag(11);
 var $mdgriffith$elm_ui$Element$Border$solid = A2($mdgriffith$elm_ui$Internal$Model$Class, $mdgriffith$elm_ui$Internal$Flag$borderStyle, $mdgriffith$elm_ui$Internal$Style$classes.borderSolid);
-var $avh4$elm_color$Color$white = A4($avh4$elm_color$Color$RgbaSpace, 255 / 255, 255 / 255, 255 / 255, 1.0);
 var $author$project$OUI$Showcase$Dividers$commonDividers = function (_v0) {
 	var theme = _v0.theme;
 	return A2(
@@ -24457,7 +24443,7 @@ var $author$project$OUI$Showcase$Dividers$commonDividers = function (_v0) {
 				$mdgriffith$elm_ui$Element$Border$solid,
 				$mdgriffith$elm_ui$Element$Border$width(2),
 				$mdgriffith$elm_ui$Element$Border$color(
-				$author$project$OUI$Material$Color$toElementColor($avh4$elm_color$Color$white))
+				A2($author$project$OUI$Material$Color$getElementColor, $author$project$OUI$Neutral, theme.colorscheme))
 			]),
 		_List_fromArray(
 			[
@@ -24476,17 +24462,23 @@ var $author$project$OUI$Showcase$Dividers$commonDividers = function (_v0) {
 						$author$project$OUI$Material$divider,
 						theme,
 						_List_Nil,
-						A2(
-							$author$project$OUI$Divider$color,
-							$author$project$OUI$Error,
-							$author$project$OUI$Divider$fullWidthDivider($author$project$OUI$Divider$new))),
-						$mdgriffith$elm_ui$Element$text('Part width divider'),
+						$author$project$OUI$Divider$fullWidthDivider($author$project$OUI$Divider$new)),
+						$mdgriffith$elm_ui$Element$text('inset divider'),
 						A3(
 						$author$project$OUI$Material$divider,
 						theme,
 						_List_Nil,
 						$author$project$OUI$Divider$insetDivider($author$project$OUI$Divider$new)),
-						$mdgriffith$elm_ui$Element$text('lorem ipsum')
+						$mdgriffith$elm_ui$Element$text('thick inset divider'),
+						A3(
+						$author$project$OUI$Material$divider,
+						theme,
+						_List_fromArray(
+							[
+								$mdgriffith$elm_ui$Element$height(
+								$mdgriffith$elm_ui$Element$px(5))
+							]),
+						$author$project$OUI$Divider$insetDivider($author$project$OUI$Divider$new))
 					]))
 			]));
 };
@@ -31314,7 +31306,6 @@ var $author$project$OUI$TextField$onFocusBlur = F3(
 					onLoseFocus: $elm$core$Maybe$Just(onLoseFocus)
 				}));
 	});
-var $author$project$OUI$Neutral = {$: 'Neutral'};
 var $author$project$OUI$Text$bodyLarge = A2($author$project$OUI$Text$Text, $author$project$OUI$Text$Body, $author$project$OUI$Text$Large);
 var $author$project$OUI$Text$bodySmall = A2($author$project$OUI$Text$Text, $author$project$OUI$Text$Body, $author$project$OUI$Text$Small);
 var $author$project$OUI$Material$TextField$filterMaybe = $elm$core$List$filterMap($elm$core$Basics$identity);

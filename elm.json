@@ -8,6 +8,7 @@
         "OUI",
         "OUI.Button",
         "OUI.Checkbox",
+        "OUI.Divider",
         "OUI.Explorer",
         "OUI.Icon",
         "OUI.Image",
