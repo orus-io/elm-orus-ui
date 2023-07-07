@@ -11452,8 +11452,9 @@ var $author$project$OUI$Explorer$book = function (title) {
 	};
 };
 var $author$project$OUI$Primary = {$: 'Primary'};
-var $author$project$OUI$Secondary = {$: 'Secondary'};
-var $author$project$OUI$Tertiary = {$: 'Tertiary'};
+var $author$project$OUI$PrimaryContainer = {$: 'PrimaryContainer'};
+var $author$project$OUI$SecondaryContainer = {$: 'SecondaryContainer'};
+var $author$project$OUI$TertiaryContainer = {$: 'TertiaryContainer'};
 var $author$project$OUI$Button$Disabled = {$: 'Disabled'};
 var $mdgriffith$elm_ui$Internal$Model$Button = {$: 'Button'};
 var $mdgriffith$elm_ui$Internal$Model$Describe = function (a) {
@@ -11617,233 +11618,6 @@ var $mdgriffith$elm_ui$Internal$Model$AlignY = function (a) {
 };
 var $mdgriffith$elm_ui$Internal$Model$CenterY = {$: 'CenterY'};
 var $mdgriffith$elm_ui$Element$centerY = $mdgriffith$elm_ui$Internal$Model$AlignY($mdgriffith$elm_ui$Internal$Model$CenterY);
-var $author$project$OUI$Text$Label = {$: 'Label'};
-var $author$project$OUI$Text$Large = {$: 'Large'};
-var $author$project$OUI$Material$Typography$getTypo = F2(
-	function (type_, size) {
-		return A2(
-			$elm$core$Basics$composeR,
-			function () {
-				switch (type_.$) {
-					case 'Display':
-						return function ($) {
-							return $.display;
-						};
-					case 'Headline':
-						return function ($) {
-							return $.headline;
-						};
-					case 'Title':
-						return function ($) {
-							return $.title;
-						};
-					case 'Label':
-						return function ($) {
-							return $.label;
-						};
-					default:
-						return function ($) {
-							return $.body;
-						};
-				}
-			}(),
-			function () {
-				switch (size.$) {
-					case 'Small':
-						return function ($) {
-							return $.small;
-						};
-					case 'Medium':
-						return function ($) {
-							return $.medium;
-						};
-					default:
-						return function ($) {
-							return $.large;
-						};
-				}
-			}());
-	});
-var $mdgriffith$elm_ui$Internal$Model$FontFamily = F2(
-	function (a, b) {
-		return {$: 'FontFamily', a: a, b: b};
-	});
-var $mdgriffith$elm_ui$Internal$Flag$fontFamily = $mdgriffith$elm_ui$Internal$Flag$flag(5);
-var $elm$core$String$toLower = _String_toLower;
-var $elm$core$String$words = _String_words;
-var $mdgriffith$elm_ui$Internal$Model$renderFontClassName = F2(
-	function (font, current) {
-		return _Utils_ap(
-			current,
-			function () {
-				switch (font.$) {
-					case 'Serif':
-						return 'serif';
-					case 'SansSerif':
-						return 'sans-serif';
-					case 'Monospace':
-						return 'monospace';
-					case 'Typeface':
-						var name = font.a;
-						return A2(
-							$elm$core$String$join,
-							'-',
-							$elm$core$String$words(
-								$elm$core$String$toLower(name)));
-					case 'ImportFont':
-						var name = font.a;
-						var url = font.b;
-						return A2(
-							$elm$core$String$join,
-							'-',
-							$elm$core$String$words(
-								$elm$core$String$toLower(name)));
-					default:
-						var name = font.a.name;
-						return A2(
-							$elm$core$String$join,
-							'-',
-							$elm$core$String$words(
-								$elm$core$String$toLower(name)));
-				}
-			}());
-	});
-var $mdgriffith$elm_ui$Element$Font$family = function (families) {
-	return A2(
-		$mdgriffith$elm_ui$Internal$Model$StyleClass,
-		$mdgriffith$elm_ui$Internal$Flag$fontFamily,
-		A2(
-			$mdgriffith$elm_ui$Internal$Model$FontFamily,
-			A3($elm$core$List$foldl, $mdgriffith$elm_ui$Internal$Model$renderFontClassName, 'ff-', families),
-			families));
-};
-var $mdgriffith$elm_ui$Internal$Flag$fontWeight = $mdgriffith$elm_ui$Internal$Flag$flag(13);
-var $mdgriffith$elm_ui$Element$Font$medium = A2($mdgriffith$elm_ui$Internal$Model$Class, $mdgriffith$elm_ui$Internal$Flag$fontWeight, $mdgriffith$elm_ui$Internal$Style$classes.textMedium);
-var $mdgriffith$elm_ui$Element$Font$regular = A2($mdgriffith$elm_ui$Internal$Model$Class, $mdgriffith$elm_ui$Internal$Flag$fontWeight, $mdgriffith$elm_ui$Internal$Style$classes.textNormalWeight);
-var $mdgriffith$elm_ui$Internal$Model$FontSize = function (a) {
-	return {$: 'FontSize', a: a};
-};
-var $mdgriffith$elm_ui$Internal$Flag$fontSize = $mdgriffith$elm_ui$Internal$Flag$flag(4);
-var $mdgriffith$elm_ui$Element$Font$size = function (i) {
-	return A2(
-		$mdgriffith$elm_ui$Internal$Model$StyleClass,
-		$mdgriffith$elm_ui$Internal$Flag$fontSize,
-		$mdgriffith$elm_ui$Internal$Model$FontSize(i));
-};
-var $mdgriffith$elm_ui$Internal$Model$Typeface = function (a) {
-	return {$: 'Typeface', a: a};
-};
-var $mdgriffith$elm_ui$Element$Font$typeface = $mdgriffith$elm_ui$Internal$Model$Typeface;
-var $author$project$OUI$Material$Typography$typographyAttrs = function (typography) {
-	return _List_fromArray(
-		[
-			$mdgriffith$elm_ui$Element$Font$family(
-			_List_fromArray(
-				[
-					$mdgriffith$elm_ui$Element$Font$typeface(typography.font)
-				])),
-			$mdgriffith$elm_ui$Element$Font$size(typography.size),
-			(typography.weight === 500) ? $mdgriffith$elm_ui$Element$Font$medium : $mdgriffith$elm_ui$Element$Font$regular
-		]);
-};
-var $author$project$OUI$Material$Typography$attrs = F2(
-	function (type_, size) {
-		return A2(
-			$elm$core$Basics$composeR,
-			A2($author$project$OUI$Material$Typography$getTypo, type_, size),
-			$author$project$OUI$Material$Typography$typographyAttrs);
-	});
-var $mdgriffith$elm_ui$Internal$Model$PaddingStyle = F5(
-	function (a, b, c, d, e) {
-		return {$: 'PaddingStyle', a: a, b: b, c: c, d: d, e: e};
-	});
-var $mdgriffith$elm_ui$Internal$Flag$padding = $mdgriffith$elm_ui$Internal$Flag$flag(2);
-var $mdgriffith$elm_ui$Internal$Model$paddingName = F4(
-	function (top, right, bottom, left) {
-		return 'pad-' + ($elm$core$String$fromInt(top) + ('-' + ($elm$core$String$fromInt(right) + ('-' + ($elm$core$String$fromInt(bottom) + ('-' + $elm$core$String$fromInt(left)))))));
-	});
-var $mdgriffith$elm_ui$Element$paddingEach = function (_v0) {
-	var top = _v0.top;
-	var right = _v0.right;
-	var bottom = _v0.bottom;
-	var left = _v0.left;
-	if (_Utils_eq(top, right) && (_Utils_eq(top, bottom) && _Utils_eq(top, left))) {
-		var topFloat = top;
-		return A2(
-			$mdgriffith$elm_ui$Internal$Model$StyleClass,
-			$mdgriffith$elm_ui$Internal$Flag$padding,
-			A5(
-				$mdgriffith$elm_ui$Internal$Model$PaddingStyle,
-				'p-' + $elm$core$String$fromInt(top),
-				topFloat,
-				topFloat,
-				topFloat,
-				topFloat));
-	} else {
-		return A2(
-			$mdgriffith$elm_ui$Internal$Model$StyleClass,
-			$mdgriffith$elm_ui$Internal$Flag$padding,
-			A5(
-				$mdgriffith$elm_ui$Internal$Model$PaddingStyle,
-				A4($mdgriffith$elm_ui$Internal$Model$paddingName, top, right, bottom, left),
-				top,
-				right,
-				bottom,
-				left));
-	}
-};
-var $mdgriffith$elm_ui$Element$paddingXY = F2(
-	function (x, y) {
-		if (_Utils_eq(x, y)) {
-			var f = x;
-			return A2(
-				$mdgriffith$elm_ui$Internal$Model$StyleClass,
-				$mdgriffith$elm_ui$Internal$Flag$padding,
-				A5(
-					$mdgriffith$elm_ui$Internal$Model$PaddingStyle,
-					'p-' + $elm$core$String$fromInt(x),
-					f,
-					f,
-					f,
-					f));
-		} else {
-			var yFloat = y;
-			var xFloat = x;
-			return A2(
-				$mdgriffith$elm_ui$Internal$Model$StyleClass,
-				$mdgriffith$elm_ui$Internal$Flag$padding,
-				A5(
-					$mdgriffith$elm_ui$Internal$Model$PaddingStyle,
-					'p-' + ($elm$core$String$fromInt(x) + ('-' + $elm$core$String$fromInt(y))),
-					yFloat,
-					xFloat,
-					yFloat,
-					xFloat));
-		}
-	});
-var $mdgriffith$elm_ui$Internal$Flag$borderRound = $mdgriffith$elm_ui$Internal$Flag$flag(17);
-var $mdgriffith$elm_ui$Element$Border$rounded = function (radius) {
-	return A2(
-		$mdgriffith$elm_ui$Internal$Model$StyleClass,
-		$mdgriffith$elm_ui$Internal$Flag$borderRound,
-		A3(
-			$mdgriffith$elm_ui$Internal$Model$Single,
-			'br-' + $elm$core$String$fromInt(radius),
-			'border-radius',
-			$elm$core$String$fromInt(radius) + 'px'));
-};
-var $author$project$OUI$Material$Button$commonButtonAttrs = F4(
-	function (typescale, colorscheme, layout, hasIcon) {
-		var padding = hasIcon ? $mdgriffith$elm_ui$Element$paddingEach(
-			{bottom: 0, left: layout.leftPaddingWithIcon, right: layout.rightPaddingWithIcon, top: 0}) : A2($mdgriffith$elm_ui$Element$paddingXY, layout.leftRightPadding, 0);
-		return _Utils_ap(
-			A3($author$project$OUI$Material$Typography$attrs, $author$project$OUI$Text$Label, $author$project$OUI$Text$Large, typescale),
-			_List_fromArray(
-				[
-					$mdgriffith$elm_ui$Element$Border$rounded(layout.containerRadius),
-					padding
-				]));
-	});
 var $mdgriffith$elm_ui$Element$el = F2(
 	function (attrs, child) {
 		return A4(
@@ -11985,6 +11759,26 @@ var $author$project$OUI$Material$Button$btnColors = F4(
 						A2($author$project$OUI$Material$Color$getColor, color, colorscheme));
 				case 'FilledIcon':
 					var _v3 = _v0.a;
+					return _Utils_Tuple2(
+						A2($author$project$OUI$Material$Color$getOnColor, color, colorscheme),
+						A2($author$project$OUI$Material$Color$getColor, color, colorscheme));
+				case 'SmallFAB':
+					var _v4 = _v0.a;
+					return _Utils_Tuple2(
+						A2($author$project$OUI$Material$Color$getOnColor, color, colorscheme),
+						A2($author$project$OUI$Material$Color$getColor, color, colorscheme));
+				case 'MediumFAB':
+					var _v5 = _v0.a;
+					return _Utils_Tuple2(
+						A2($author$project$OUI$Material$Color$getOnColor, color, colorscheme),
+						A2($author$project$OUI$Material$Color$getColor, color, colorscheme));
+				case 'LargeFAB':
+					var _v6 = _v0.a;
+					return _Utils_Tuple2(
+						A2($author$project$OUI$Material$Color$getOnColor, color, colorscheme),
+						A2($author$project$OUI$Material$Color$getColor, color, colorscheme));
+				case 'ExtendedFAB':
+					var _v7 = _v0.a;
 					return _Utils_Tuple2(
 						A2($author$project$OUI$Material$Color$getOnColor, color, colorscheme),
 						A2($author$project$OUI$Material$Color$getColor, color, colorscheme));
@@ -12395,43 +12189,15 @@ var $author$project$OUI$Material$Button$elevatedDisabledAttrs = F3(
 					]))
 			]);
 	});
-var $mdgriffith$elm_ui$Internal$Model$Px = function (a) {
-	return {$: 'Px', a: a};
-};
-var $mdgriffith$elm_ui$Element$px = $mdgriffith$elm_ui$Internal$Model$Px;
-var $author$project$OUI$Material$Button$fabAttrs = F3(
-	function (colorscheme, layout, color) {
-		var _v0 = function () {
-			switch (color.$) {
-				case 'Primary':
-					return _Utils_Tuple2(colorscheme.primaryContainer, colorscheme.onPrimaryContainer);
-				case 'PrimaryContainer':
-					return _Utils_Tuple2(colorscheme.primaryContainer, colorscheme.onPrimaryContainer);
-				case 'Secondary':
-					return _Utils_Tuple2(colorscheme.secondaryContainer, colorscheme.onSecondaryContainer);
-				case 'SecondaryContainer':
-					return _Utils_Tuple2(colorscheme.secondaryContainer, colorscheme.onSecondaryContainer);
-				case 'Tertiary':
-					return _Utils_Tuple2(colorscheme.tertiaryContainer, colorscheme.onTertiaryContainer);
-				case 'TertiaryContainer':
-					return _Utils_Tuple2(colorscheme.tertiaryContainer, colorscheme.onTertiaryContainer);
-				case 'Neutral':
-					return _Utils_Tuple2(colorscheme.surfaceContainer, colorscheme.onSurfaceVariant);
-				case 'Error':
-					return _Utils_Tuple2(colorscheme.errorContainer, colorscheme.onErrorContainer);
-				default:
-					return _Utils_Tuple2(colorscheme.errorContainer, colorscheme.onErrorContainer);
-			}
-		}();
-		var bgColor = _v0.a;
-		var stateLayerColor = _v0.b;
+var $author$project$OUI$Button$SmallFAB = {$: 'SmallFAB'};
+var $author$project$OUI$Material$Button$fabColorsAttrs = F2(
+	function (colorscheme, color) {
+		var _v0 = A4($author$project$OUI$Material$Button$btnColors, colorscheme, $author$project$OUI$Button$SmallFAB, color, false);
+		var frontColor = _v0.a;
+		var bgColor = _v0.b;
+		var stateLayerColor = frontColor;
 		return _List_fromArray(
 			[
-				$mdgriffith$elm_ui$Element$Border$rounded(layout.containerShape),
-				$mdgriffith$elm_ui$Element$height(
-				$mdgriffith$elm_ui$Element$px(layout.containerHeight)),
-				$mdgriffith$elm_ui$Element$width(
-				$mdgriffith$elm_ui$Element$px(layout.containerWidth)),
 				$mdgriffith$elm_ui$Element$Border$shadow(
 				{
 					blur: 1,
@@ -12441,6 +12207,8 @@ var $author$project$OUI$Material$Button$fabAttrs = F3(
 				}),
 				$mdgriffith$elm_ui$Element$Background$color(
 				$author$project$OUI$Material$Color$toElementColor(bgColor)),
+				$mdgriffith$elm_ui$Element$Font$color(
+				$author$project$OUI$Material$Color$toElementColor(frontColor)),
 				$mdgriffith$elm_ui$Element$focused(
 				_List_fromArray(
 					[
@@ -12464,6 +12232,31 @@ var $author$project$OUI$Material$Button$fabAttrs = F3(
 					]))
 			]);
 	});
+var $mdgriffith$elm_ui$Internal$Model$Px = function (a) {
+	return {$: 'Px', a: a};
+};
+var $mdgriffith$elm_ui$Element$px = $mdgriffith$elm_ui$Internal$Model$Px;
+var $mdgriffith$elm_ui$Internal$Flag$borderRound = $mdgriffith$elm_ui$Internal$Flag$flag(17);
+var $mdgriffith$elm_ui$Element$Border$rounded = function (radius) {
+	return A2(
+		$mdgriffith$elm_ui$Internal$Model$StyleClass,
+		$mdgriffith$elm_ui$Internal$Flag$borderRound,
+		A3(
+			$mdgriffith$elm_ui$Internal$Model$Single,
+			'br-' + $elm$core$String$fromInt(radius),
+			'border-radius',
+			$elm$core$String$fromInt(radius) + 'px'));
+};
+var $author$project$OUI$Material$Button$fabLayoutAttrs = function (layout) {
+	return _List_fromArray(
+		[
+			$mdgriffith$elm_ui$Element$Border$rounded(layout.containerShape),
+			$mdgriffith$elm_ui$Element$height(
+			$mdgriffith$elm_ui$Element$px(layout.containerHeight)),
+			$mdgriffith$elm_ui$Element$width(
+			$mdgriffith$elm_ui$Element$px(layout.containerWidth))
+		]);
+};
 var $author$project$OUI$Button$Filled = {$: 'Filled'};
 var $author$project$OUI$Material$Button$filledAttrs = F4(
 	function (typescale, colorscheme, layout, color) {
@@ -12570,6 +12363,8 @@ var $author$project$OUI$Material$Button$iconSizeColor = F5(
 				return _Utils_Tuple2(theme.fab.medium.iconSize, frontColor);
 			case 'LargeFAB':
 				return _Utils_Tuple2(theme.fab.large.iconSize, frontColor);
+			case 'ExtendedFAB':
+				return _Utils_Tuple2(theme.fab.extended.iconSize, frontColor);
 			case 'Icon':
 				return _Utils_Tuple2(theme.icon.iconSize, frontColor);
 			case 'FilledIcon':
@@ -12579,6 +12374,224 @@ var $author$project$OUI$Material$Button$iconSizeColor = F5(
 			default:
 				return _Utils_Tuple2(theme.common.iconSize, frontColor);
 		}
+	});
+var $author$project$OUI$Material$Typography$getTypo = F2(
+	function (type_, size) {
+		return A2(
+			$elm$core$Basics$composeR,
+			function () {
+				switch (type_.$) {
+					case 'Display':
+						return function ($) {
+							return $.display;
+						};
+					case 'Headline':
+						return function ($) {
+							return $.headline;
+						};
+					case 'Title':
+						return function ($) {
+							return $.title;
+						};
+					case 'Label':
+						return function ($) {
+							return $.label;
+						};
+					default:
+						return function ($) {
+							return $.body;
+						};
+				}
+			}(),
+			function () {
+				switch (size.$) {
+					case 'Small':
+						return function ($) {
+							return $.small;
+						};
+					case 'Medium':
+						return function ($) {
+							return $.medium;
+						};
+					default:
+						return function ($) {
+							return $.large;
+						};
+				}
+			}());
+	});
+var $mdgriffith$elm_ui$Internal$Model$FontFamily = F2(
+	function (a, b) {
+		return {$: 'FontFamily', a: a, b: b};
+	});
+var $mdgriffith$elm_ui$Internal$Flag$fontFamily = $mdgriffith$elm_ui$Internal$Flag$flag(5);
+var $elm$core$String$toLower = _String_toLower;
+var $elm$core$String$words = _String_words;
+var $mdgriffith$elm_ui$Internal$Model$renderFontClassName = F2(
+	function (font, current) {
+		return _Utils_ap(
+			current,
+			function () {
+				switch (font.$) {
+					case 'Serif':
+						return 'serif';
+					case 'SansSerif':
+						return 'sans-serif';
+					case 'Monospace':
+						return 'monospace';
+					case 'Typeface':
+						var name = font.a;
+						return A2(
+							$elm$core$String$join,
+							'-',
+							$elm$core$String$words(
+								$elm$core$String$toLower(name)));
+					case 'ImportFont':
+						var name = font.a;
+						var url = font.b;
+						return A2(
+							$elm$core$String$join,
+							'-',
+							$elm$core$String$words(
+								$elm$core$String$toLower(name)));
+					default:
+						var name = font.a.name;
+						return A2(
+							$elm$core$String$join,
+							'-',
+							$elm$core$String$words(
+								$elm$core$String$toLower(name)));
+				}
+			}());
+	});
+var $mdgriffith$elm_ui$Element$Font$family = function (families) {
+	return A2(
+		$mdgriffith$elm_ui$Internal$Model$StyleClass,
+		$mdgriffith$elm_ui$Internal$Flag$fontFamily,
+		A2(
+			$mdgriffith$elm_ui$Internal$Model$FontFamily,
+			A3($elm$core$List$foldl, $mdgriffith$elm_ui$Internal$Model$renderFontClassName, 'ff-', families),
+			families));
+};
+var $mdgriffith$elm_ui$Internal$Flag$fontWeight = $mdgriffith$elm_ui$Internal$Flag$flag(13);
+var $mdgriffith$elm_ui$Element$Font$medium = A2($mdgriffith$elm_ui$Internal$Model$Class, $mdgriffith$elm_ui$Internal$Flag$fontWeight, $mdgriffith$elm_ui$Internal$Style$classes.textMedium);
+var $mdgriffith$elm_ui$Element$Font$regular = A2($mdgriffith$elm_ui$Internal$Model$Class, $mdgriffith$elm_ui$Internal$Flag$fontWeight, $mdgriffith$elm_ui$Internal$Style$classes.textNormalWeight);
+var $mdgriffith$elm_ui$Internal$Model$FontSize = function (a) {
+	return {$: 'FontSize', a: a};
+};
+var $mdgriffith$elm_ui$Internal$Flag$fontSize = $mdgriffith$elm_ui$Internal$Flag$flag(4);
+var $mdgriffith$elm_ui$Element$Font$size = function (i) {
+	return A2(
+		$mdgriffith$elm_ui$Internal$Model$StyleClass,
+		$mdgriffith$elm_ui$Internal$Flag$fontSize,
+		$mdgriffith$elm_ui$Internal$Model$FontSize(i));
+};
+var $mdgriffith$elm_ui$Internal$Model$Typeface = function (a) {
+	return {$: 'Typeface', a: a};
+};
+var $mdgriffith$elm_ui$Element$Font$typeface = $mdgriffith$elm_ui$Internal$Model$Typeface;
+var $author$project$OUI$Material$Typography$typographyAttrs = function (typography) {
+	return _List_fromArray(
+		[
+			$mdgriffith$elm_ui$Element$Font$family(
+			_List_fromArray(
+				[
+					$mdgriffith$elm_ui$Element$Font$typeface(typography.font)
+				])),
+			$mdgriffith$elm_ui$Element$Font$size(typography.size),
+			(typography.weight === 500) ? $mdgriffith$elm_ui$Element$Font$medium : $mdgriffith$elm_ui$Element$Font$regular
+		]);
+};
+var $author$project$OUI$Material$Typography$attrs = F2(
+	function (type_, size) {
+		return A2(
+			$elm$core$Basics$composeR,
+			A2($author$project$OUI$Material$Typography$getTypo, type_, size),
+			$author$project$OUI$Material$Typography$typographyAttrs);
+	});
+var $mdgriffith$elm_ui$Internal$Model$PaddingStyle = F5(
+	function (a, b, c, d, e) {
+		return {$: 'PaddingStyle', a: a, b: b, c: c, d: d, e: e};
+	});
+var $mdgriffith$elm_ui$Internal$Flag$padding = $mdgriffith$elm_ui$Internal$Flag$flag(2);
+var $mdgriffith$elm_ui$Internal$Model$paddingName = F4(
+	function (top, right, bottom, left) {
+		return 'pad-' + ($elm$core$String$fromInt(top) + ('-' + ($elm$core$String$fromInt(right) + ('-' + ($elm$core$String$fromInt(bottom) + ('-' + $elm$core$String$fromInt(left)))))));
+	});
+var $mdgriffith$elm_ui$Element$paddingEach = function (_v0) {
+	var top = _v0.top;
+	var right = _v0.right;
+	var bottom = _v0.bottom;
+	var left = _v0.left;
+	if (_Utils_eq(top, right) && (_Utils_eq(top, bottom) && _Utils_eq(top, left))) {
+		var topFloat = top;
+		return A2(
+			$mdgriffith$elm_ui$Internal$Model$StyleClass,
+			$mdgriffith$elm_ui$Internal$Flag$padding,
+			A5(
+				$mdgriffith$elm_ui$Internal$Model$PaddingStyle,
+				'p-' + $elm$core$String$fromInt(top),
+				topFloat,
+				topFloat,
+				topFloat,
+				topFloat));
+	} else {
+		return A2(
+			$mdgriffith$elm_ui$Internal$Model$StyleClass,
+			$mdgriffith$elm_ui$Internal$Flag$padding,
+			A5(
+				$mdgriffith$elm_ui$Internal$Model$PaddingStyle,
+				A4($mdgriffith$elm_ui$Internal$Model$paddingName, top, right, bottom, left),
+				top,
+				right,
+				bottom,
+				left));
+	}
+};
+var $mdgriffith$elm_ui$Element$paddingXY = F2(
+	function (x, y) {
+		if (_Utils_eq(x, y)) {
+			var f = x;
+			return A2(
+				$mdgriffith$elm_ui$Internal$Model$StyleClass,
+				$mdgriffith$elm_ui$Internal$Flag$padding,
+				A5(
+					$mdgriffith$elm_ui$Internal$Model$PaddingStyle,
+					'p-' + $elm$core$String$fromInt(x),
+					f,
+					f,
+					f,
+					f));
+		} else {
+			var yFloat = y;
+			var xFloat = x;
+			return A2(
+				$mdgriffith$elm_ui$Internal$Model$StyleClass,
+				$mdgriffith$elm_ui$Internal$Flag$padding,
+				A5(
+					$mdgriffith$elm_ui$Internal$Model$PaddingStyle,
+					'p-' + ($elm$core$String$fromInt(x) + ('-' + $elm$core$String$fromInt(y))),
+					yFloat,
+					xFloat,
+					yFloat,
+					xFloat));
+		}
+	});
+var $author$project$OUI$Material$Button$layoutAttrs = F4(
+	function (typescale, colorscheme, layout, hasIcon) {
+		var padding = hasIcon ? $mdgriffith$elm_ui$Element$paddingEach(
+			{bottom: 0, left: layout.leftPaddingWithIcon, right: layout.rightPaddingWithIcon, top: 0}) : A2($mdgriffith$elm_ui$Element$paddingXY, layout.leftRightPadding, 0);
+		return A2(
+			$elm$core$List$cons,
+			$mdgriffith$elm_ui$Element$height(
+				$mdgriffith$elm_ui$Element$px(layout.containerHeight)),
+			_Utils_ap(
+				A3($author$project$OUI$Material$Typography$attrs, layout.textType, layout.textSize, typescale),
+				_List_fromArray(
+					[
+						$mdgriffith$elm_ui$Element$Border$rounded(layout.containerRadius),
+						padding
+					])));
 	});
 var $elm$html$Html$Attributes$href = function (url) {
 	return A2(
@@ -13019,134 +13032,134 @@ var $author$project$OUI$Material$Button$render = F5(
 		var hasIcon = !_Utils_eq(props.icon, $elm$core$Maybe$Nothing);
 		var aria = $author$project$OUI$Utils$ARIA$toElementAttributes(
 			A2($author$project$OUI$Utils$ARIA$withLabel, props.text, $author$project$OUI$Utils$ARIA$roleButton));
-		var all_attrs = A2(
-			$elm$core$List$cons,
-			$mdgriffith$elm_ui$Element$height(
-				$mdgriffith$elm_ui$Element$px(theme.common.containerHeight)),
+		var all_attrs = _Utils_ap(
+			aria,
 			_Utils_ap(
-				aria,
-				_Utils_ap(
-					attrs,
-					function () {
-						var _v1 = _Utils_Tuple2(props.type_, props.action);
-						switch (_v1.a.$) {
-							case 'Elevated':
-								if (_v1.b.$ === 'Disabled') {
-									var _v2 = _v1.a;
-									var _v3 = _v1.b;
-									return _Utils_ap(
-										A4($author$project$OUI$Material$Button$commonButtonAttrs, typescale, colorscheme, theme.common, hasIcon),
-										A3($author$project$OUI$Material$Button$elevatedDisabledAttrs, typescale, colorscheme, theme.common));
-								} else {
-									var _v4 = _v1.a;
-									return _Utils_ap(
-										A4($author$project$OUI$Material$Button$commonButtonAttrs, typescale, colorscheme, theme.common, hasIcon),
-										A4($author$project$OUI$Material$Button$elevatedAttrs, typescale, colorscheme, theme.common, props.color));
-								}
-							case 'Filled':
-								if (_v1.b.$ === 'Disabled') {
-									var _v5 = _v1.a;
-									var _v6 = _v1.b;
-									return _Utils_ap(
-										A4($author$project$OUI$Material$Button$commonButtonAttrs, typescale, colorscheme, theme.common, hasIcon),
-										A3($author$project$OUI$Material$Button$filledDisabledAttrs, typescale, colorscheme, theme.common));
-								} else {
-									var _v7 = _v1.a;
-									return _Utils_ap(
-										A4($author$project$OUI$Material$Button$commonButtonAttrs, typescale, colorscheme, theme.common, hasIcon),
-										A4($author$project$OUI$Material$Button$filledAttrs, typescale, colorscheme, theme.common, props.color));
-								}
-							case 'FilledIcon':
-								if (_v1.b.$ === 'Disabled') {
-									var _v8 = _v1.a;
-									var _v9 = _v1.b;
-									return _Utils_ap(
-										$author$project$OUI$Material$Button$iconButtonAttrs(theme.icon),
-										A3($author$project$OUI$Material$Button$filledDisabledAttrs, typescale, colorscheme, theme.common));
-								} else {
-									var _v10 = _v1.a;
-									return _Utils_ap(
-										$author$project$OUI$Material$Button$iconButtonAttrs(theme.icon),
-										A4($author$project$OUI$Material$Button$filledAttrs, typescale, colorscheme, theme.common, props.color));
-								}
-							case 'Tonal':
-								if (_v1.b.$ === 'Disabled') {
-									var _v11 = _v1.a;
-									var _v12 = _v1.b;
-									return _Utils_ap(
-										A4($author$project$OUI$Material$Button$commonButtonAttrs, typescale, colorscheme, theme.common, hasIcon),
-										A3($author$project$OUI$Material$Button$filledDisabledAttrs, typescale, colorscheme, theme.common));
-								} else {
-									var _v13 = _v1.a;
-									return _Utils_ap(
-										A4($author$project$OUI$Material$Button$commonButtonAttrs, typescale, colorscheme, theme.common, hasIcon),
-										A4($author$project$OUI$Material$Button$filledAttrs, typescale, colorscheme, theme.common, props.color));
-								}
-							case 'Outlined':
-								if (_v1.b.$ === 'Disabled') {
-									var _v14 = _v1.a;
-									var _v15 = _v1.b;
-									return _Utils_ap(
-										A4($author$project$OUI$Material$Button$commonButtonAttrs, typescale, colorscheme, theme.common, hasIcon),
-										A3($author$project$OUI$Material$Button$outlinedDisabledAttrs, typescale, colorscheme, theme.common));
-								} else {
-									var _v16 = _v1.a;
-									return _Utils_ap(
-										A4($author$project$OUI$Material$Button$commonButtonAttrs, typescale, colorscheme, theme.common, hasIcon),
-										A4($author$project$OUI$Material$Button$outlinedAttrs, typescale, colorscheme, theme.common, props.color));
-								}
-							case 'OutlinedIcon':
-								if (_v1.b.$ === 'Disabled') {
-									var _v17 = _v1.a;
-									var _v18 = _v1.b;
-									return _Utils_ap(
-										$author$project$OUI$Material$Button$iconButtonAttrs(theme.icon),
-										A3($author$project$OUI$Material$Button$outlinedDisabledAttrs, typescale, colorscheme, theme.common));
-								} else {
-									var _v19 = _v1.a;
-									return _Utils_ap(
-										$author$project$OUI$Material$Button$iconButtonAttrs(theme.icon),
-										A4($author$project$OUI$Material$Button$outlinedAttrs, typescale, colorscheme, theme.common, props.color));
-								}
-							case 'Text':
-								if (_v1.b.$ === 'Disabled') {
-									var _v20 = _v1.a;
-									var _v21 = _v1.b;
-									return _Utils_ap(
-										A4($author$project$OUI$Material$Button$commonButtonAttrs, typescale, colorscheme, theme.common, hasIcon),
-										A3($author$project$OUI$Material$Button$textDisabledAttrs, typescale, colorscheme, theme.common));
-								} else {
-									var _v22 = _v1.a;
-									return _Utils_ap(
-										A4($author$project$OUI$Material$Button$commonButtonAttrs, typescale, colorscheme, theme.common, hasIcon),
-										A4($author$project$OUI$Material$Button$textAttrs, typescale, colorscheme, theme.common, props.color));
-								}
-							case 'Icon':
-								if (_v1.b.$ === 'Disabled') {
-									var _v23 = _v1.a;
-									var _v24 = _v1.b;
-									return _Utils_ap(
-										$author$project$OUI$Material$Button$iconButtonAttrs(theme.icon),
-										A3($author$project$OUI$Material$Button$textDisabledAttrs, typescale, colorscheme, theme.common));
-								} else {
-									var _v25 = _v1.a;
-									return _Utils_ap(
-										$author$project$OUI$Material$Button$iconButtonAttrs(theme.icon),
-										A4($author$project$OUI$Material$Button$textAttrs, typescale, colorscheme, theme.common, props.color));
-								}
-							case 'SmallFAB':
+				attrs,
+				function () {
+					var _v1 = _Utils_Tuple2(props.type_, props.action);
+					switch (_v1.a.$) {
+						case 'Elevated':
+							if (_v1.b.$ === 'Disabled') {
+								var _v2 = _v1.a;
+								var _v3 = _v1.b;
+								return _Utils_ap(
+									A4($author$project$OUI$Material$Button$layoutAttrs, typescale, colorscheme, theme.common, hasIcon),
+									A3($author$project$OUI$Material$Button$elevatedDisabledAttrs, typescale, colorscheme, theme.common));
+							} else {
+								var _v4 = _v1.a;
+								return _Utils_ap(
+									A4($author$project$OUI$Material$Button$layoutAttrs, typescale, colorscheme, theme.common, hasIcon),
+									A4($author$project$OUI$Material$Button$elevatedAttrs, typescale, colorscheme, theme.common, props.color));
+							}
+						case 'Filled':
+							if (_v1.b.$ === 'Disabled') {
+								var _v5 = _v1.a;
+								var _v6 = _v1.b;
+								return _Utils_ap(
+									A4($author$project$OUI$Material$Button$layoutAttrs, typescale, colorscheme, theme.common, hasIcon),
+									A3($author$project$OUI$Material$Button$filledDisabledAttrs, typescale, colorscheme, theme.common));
+							} else {
+								var _v7 = _v1.a;
+								return _Utils_ap(
+									A4($author$project$OUI$Material$Button$layoutAttrs, typescale, colorscheme, theme.common, hasIcon),
+									A4($author$project$OUI$Material$Button$filledAttrs, typescale, colorscheme, theme.common, props.color));
+							}
+						case 'FilledIcon':
+							if (_v1.b.$ === 'Disabled') {
+								var _v8 = _v1.a;
+								var _v9 = _v1.b;
+								return _Utils_ap(
+									$author$project$OUI$Material$Button$iconButtonAttrs(theme.icon),
+									A3($author$project$OUI$Material$Button$filledDisabledAttrs, typescale, colorscheme, theme.common));
+							} else {
+								var _v10 = _v1.a;
+								return _Utils_ap(
+									$author$project$OUI$Material$Button$iconButtonAttrs(theme.icon),
+									A4($author$project$OUI$Material$Button$filledAttrs, typescale, colorscheme, theme.common, props.color));
+							}
+						case 'Outlined':
+							if (_v1.b.$ === 'Disabled') {
+								var _v11 = _v1.a;
+								var _v12 = _v1.b;
+								return _Utils_ap(
+									A4($author$project$OUI$Material$Button$layoutAttrs, typescale, colorscheme, theme.common, hasIcon),
+									A3($author$project$OUI$Material$Button$outlinedDisabledAttrs, typescale, colorscheme, theme.common));
+							} else {
+								var _v13 = _v1.a;
+								return _Utils_ap(
+									A4($author$project$OUI$Material$Button$layoutAttrs, typescale, colorscheme, theme.common, hasIcon),
+									A4($author$project$OUI$Material$Button$outlinedAttrs, typescale, colorscheme, theme.common, props.color));
+							}
+						case 'OutlinedIcon':
+							if (_v1.b.$ === 'Disabled') {
+								var _v14 = _v1.a;
+								var _v15 = _v1.b;
+								return _Utils_ap(
+									$author$project$OUI$Material$Button$iconButtonAttrs(theme.icon),
+									A3($author$project$OUI$Material$Button$outlinedDisabledAttrs, typescale, colorscheme, theme.common));
+							} else {
+								var _v16 = _v1.a;
+								return _Utils_ap(
+									$author$project$OUI$Material$Button$iconButtonAttrs(theme.icon),
+									A4($author$project$OUI$Material$Button$outlinedAttrs, typescale, colorscheme, theme.common, props.color));
+							}
+						case 'Text':
+							if (_v1.b.$ === 'Disabled') {
+								var _v17 = _v1.a;
+								var _v18 = _v1.b;
+								return _Utils_ap(
+									A4($author$project$OUI$Material$Button$layoutAttrs, typescale, colorscheme, theme.common, hasIcon),
+									A3($author$project$OUI$Material$Button$textDisabledAttrs, typescale, colorscheme, theme.common));
+							} else {
+								var _v19 = _v1.a;
+								return _Utils_ap(
+									A4($author$project$OUI$Material$Button$layoutAttrs, typescale, colorscheme, theme.common, hasIcon),
+									A4($author$project$OUI$Material$Button$textAttrs, typescale, colorscheme, theme.common, props.color));
+							}
+						case 'Icon':
+							if (_v1.b.$ === 'Disabled') {
+								var _v20 = _v1.a;
+								var _v21 = _v1.b;
+								return _Utils_ap(
+									$author$project$OUI$Material$Button$iconButtonAttrs(theme.icon),
+									A3($author$project$OUI$Material$Button$textDisabledAttrs, typescale, colorscheme, theme.common));
+							} else {
+								var _v22 = _v1.a;
+								return _Utils_ap(
+									$author$project$OUI$Material$Button$iconButtonAttrs(theme.icon),
+									A4($author$project$OUI$Material$Button$textAttrs, typescale, colorscheme, theme.common, props.color));
+							}
+						case 'SmallFAB':
+							var _v23 = _v1.a;
+							return _Utils_ap(
+								$author$project$OUI$Material$Button$fabLayoutAttrs(theme.fab.small),
+								A2($author$project$OUI$Material$Button$fabColorsAttrs, colorscheme, props.color));
+						case 'MediumFAB':
+							var _v24 = _v1.a;
+							return _Utils_ap(
+								$author$project$OUI$Material$Button$fabLayoutAttrs(theme.fab.medium),
+								A2($author$project$OUI$Material$Button$fabColorsAttrs, colorscheme, props.color));
+						case 'LargeFAB':
+							var _v25 = _v1.a;
+							return _Utils_ap(
+								$author$project$OUI$Material$Button$fabLayoutAttrs(theme.fab.large),
+								A2($author$project$OUI$Material$Button$fabColorsAttrs, colorscheme, props.color));
+						default:
+							if (_v1.b.$ === 'Disabled') {
 								var _v26 = _v1.a;
-								return A3($author$project$OUI$Material$Button$fabAttrs, colorscheme, theme.fab.small, props.color);
-							case 'MediumFAB':
-								var _v27 = _v1.a;
-								return A3($author$project$OUI$Material$Button$fabAttrs, colorscheme, theme.fab.medium, props.color);
-							case 'LargeFAB':
+								var _v27 = _v1.b;
+								return _Utils_ap(
+									A4($author$project$OUI$Material$Button$layoutAttrs, typescale, colorscheme, theme.fab.extended, hasIcon),
+									A2($author$project$OUI$Material$Button$fabColorsAttrs, colorscheme, props.color));
+							} else {
 								var _v28 = _v1.a;
-								return A3($author$project$OUI$Material$Button$fabAttrs, colorscheme, theme.fab.large, props.color);
-							default:
-								return A3($author$project$OUI$Material$Button$textDisabledAttrs, typescale, colorscheme, theme.common);
-						}
-					}())));
+								return _Utils_ap(
+									A4($author$project$OUI$Material$Button$layoutAttrs, typescale, colorscheme, theme.fab.extended, hasIcon),
+									A2($author$project$OUI$Material$Button$fabColorsAttrs, colorscheme, props.color));
+							}
+					}
+				}()));
 		var _v0 = props.action;
 		switch (_v0.$) {
 			case 'Link':
@@ -13399,6 +13412,8 @@ var $author$project$OUI$Button$btntype = F2(
 				{type_: value}));
 	});
 var $author$project$OUI$Button$elevatedButton = $author$project$OUI$Button$btntype($author$project$OUI$Button$Elevated);
+var $author$project$OUI$Button$ExtendedFAB = {$: 'ExtendedFAB'};
+var $author$project$OUI$Button$extendedFAB = $author$project$OUI$Button$btntype($author$project$OUI$Button$ExtendedFAB);
 var $author$project$OUI$Button$filledButton = $author$project$OUI$Button$btntype($author$project$OUI$Button$Filled);
 var $author$project$OUI$Button$FilledIcon = {$: 'FilledIcon'};
 var $author$project$OUI$Button$filledIconButton = $author$project$OUI$Button$btntype($author$project$OUI$Button$FilledIcon);
@@ -13412,15 +13427,9 @@ var $author$project$OUI$Button$Outlined = {$: 'Outlined'};
 var $author$project$OUI$Button$outlinedButton = $author$project$OUI$Button$btntype($author$project$OUI$Button$Outlined);
 var $author$project$OUI$Button$OutlinedIcon = {$: 'OutlinedIcon'};
 var $author$project$OUI$Button$outlinedIconButton = $author$project$OUI$Button$btntype($author$project$OUI$Button$OutlinedIcon);
-var $author$project$OUI$Button$SmallFAB = {$: 'SmallFAB'};
 var $author$project$OUI$Button$smallFAB = $author$project$OUI$Button$btntype($author$project$OUI$Button$SmallFAB);
 var $author$project$OUI$Button$Text = {$: 'Text'};
 var $author$project$OUI$Button$textButton = $author$project$OUI$Button$btntype($author$project$OUI$Button$Text);
-var $author$project$OUI$SecondaryContainer = {$: 'SecondaryContainer'};
-var $author$project$OUI$Button$tonalButton = A2(
-	$elm$core$Basics$composeR,
-	$author$project$OUI$Button$color($author$project$OUI$SecondaryContainer),
-	$author$project$OUI$Button$btntype($author$project$OUI$Button$Filled));
 var $author$project$OUI$Showcase$Buttons$commonButtons = function (_v0) {
 	var theme = _v0.theme;
 	var btnRow = F2(
@@ -13463,7 +13472,6 @@ var $author$project$OUI$Showcase$Buttons$commonButtons = function (_v0) {
 					[
 						A2(btnRow, 'Elevated', $author$project$OUI$Button$elevatedButton),
 						A2(btnRow, 'Filled', $author$project$OUI$Button$filledButton),
-						A2(btnRow, 'Tonal', $author$project$OUI$Button$tonalButton),
 						A2(btnRow, 'Outlined', $author$project$OUI$Button$outlinedButton),
 						A2(btnRow, 'Text', $author$project$OUI$Button$textButton)
 					])),
@@ -13490,7 +13498,7 @@ var $author$project$OUI$Showcase$Buttons$commonButtons = function (_v0) {
 					var linkBtn = function (s) {
 						return A2(
 							$author$project$OUI$Button$link,
-							'#/Basics/Button',
+							'#/Basics/Buttons',
 							btn(s));
 					};
 					return _List_fromArray(
@@ -13500,15 +13508,11 @@ var $author$project$OUI$Showcase$Buttons$commonButtons = function (_v0) {
 							theme,
 							_List_fromArray(
 								[$mdgriffith$elm_ui$Element$centerX]),
-							$author$project$OUI$Button$smallFAB(
-								clickBtn('Small'))),
-							A3(
-							$author$project$OUI$Material$button,
-							theme,
-							_List_fromArray(
-								[$mdgriffith$elm_ui$Element$centerX]),
-							$author$project$OUI$Button$smallFAB(
-								linkBtn('Small'))),
+							A2(
+								$author$project$OUI$Button$color,
+								$author$project$OUI$PrimaryContainer,
+								$author$project$OUI$Button$smallFAB(
+									clickBtn('Small')))),
 							A3(
 							$author$project$OUI$Material$button,
 							theme,
@@ -13516,7 +13520,17 @@ var $author$project$OUI$Showcase$Buttons$commonButtons = function (_v0) {
 								[$mdgriffith$elm_ui$Element$centerX]),
 							A2(
 								$author$project$OUI$Button$color,
-								$author$project$OUI$Secondary,
+								$author$project$OUI$PrimaryContainer,
+								$author$project$OUI$Button$smallFAB(
+									linkBtn('Small')))),
+							A3(
+							$author$project$OUI$Material$button,
+							theme,
+							_List_fromArray(
+								[$mdgriffith$elm_ui$Element$centerX]),
+							A2(
+								$author$project$OUI$Button$color,
+								$author$project$OUI$SecondaryContainer,
 								$author$project$OUI$Button$mediumFAB(
 									clickBtn('Medium')))),
 							A3(
@@ -13526,7 +13540,7 @@ var $author$project$OUI$Showcase$Buttons$commonButtons = function (_v0) {
 								[$mdgriffith$elm_ui$Element$centerX]),
 							A2(
 								$author$project$OUI$Button$color,
-								$author$project$OUI$Secondary,
+								$author$project$OUI$SecondaryContainer,
 								$author$project$OUI$Button$mediumFAB(
 									linkBtn('Medium')))),
 							A3(
@@ -13536,7 +13550,7 @@ var $author$project$OUI$Showcase$Buttons$commonButtons = function (_v0) {
 								[$mdgriffith$elm_ui$Element$centerX]),
 							A2(
 								$author$project$OUI$Button$color,
-								$author$project$OUI$Tertiary,
+								$author$project$OUI$TertiaryContainer,
 								$author$project$OUI$Button$largeFAB(
 									clickBtn('Large')))),
 							A3(
@@ -13546,9 +13560,29 @@ var $author$project$OUI$Showcase$Buttons$commonButtons = function (_v0) {
 								[$mdgriffith$elm_ui$Element$centerX]),
 							A2(
 								$author$project$OUI$Button$color,
-								$author$project$OUI$Tertiary,
+								$author$project$OUI$TertiaryContainer,
 								$author$project$OUI$Button$largeFAB(
-									linkBtn('Large'))))
+									linkBtn('Large')))),
+							A3(
+							$author$project$OUI$Material$button,
+							theme,
+							_List_fromArray(
+								[$mdgriffith$elm_ui$Element$centerX]),
+							A2(
+								$author$project$OUI$Button$color,
+								$author$project$OUI$Primary,
+								$author$project$OUI$Button$extendedFAB(
+									clickBtn('Extended')))),
+							A3(
+							$author$project$OUI$Material$button,
+							theme,
+							_List_fromArray(
+								[$mdgriffith$elm_ui$Element$centerX]),
+							A2(
+								$author$project$OUI$Button$color,
+								$author$project$OUI$Primary,
+								$author$project$OUI$Button$extendedFAB(
+									linkBtn('Extended'))))
 						]);
 				}()),
 				$mdgriffith$elm_ui$Element$text('Icon Buttons'),
@@ -23716,6 +23750,7 @@ var $author$project$OUI$Showcase$Colors$book = A2(
 			$author$project$OUI$Explorer$withMarkdownChapter,
 			'\n# Colors\nThe two default color schemes\n    ',
 			$author$project$OUI$Explorer$book('Colors'))));
+var $author$project$OUI$Secondary = {$: 'Secondary'};
 var $author$project$OUI$Showcase$Switches$SetSwitch = F2(
 	function (a, b) {
 		return {$: 'SetSwitch', a: a, b: b};
@@ -24291,6 +24326,7 @@ var $author$project$OUI$TextField$onFocusBlur = F3(
 				}));
 	});
 var $author$project$OUI$Text$Body = {$: 'Body'};
+var $author$project$OUI$Text$Large = {$: 'Large'};
 var $author$project$OUI$Neutral = {$: 'Neutral'};
 var $author$project$OUI$Text$Text = F3(
 	function (a, b, c) {
@@ -25980,6 +26016,7 @@ var $author$project$OUI$Text$Headline = {$: 'Headline'};
 var $author$project$OUI$Text$headlineLarge = A2($author$project$OUI$Text$Text, $author$project$OUI$Text$Headline, $author$project$OUI$Text$Large);
 var $author$project$OUI$Text$headlineMedium = A2($author$project$OUI$Text$Text, $author$project$OUI$Text$Headline, $author$project$OUI$Text$Medium);
 var $author$project$OUI$Text$headlineSmall = A2($author$project$OUI$Text$Text, $author$project$OUI$Text$Headline, $author$project$OUI$Text$Small);
+var $author$project$OUI$Text$Label = {$: 'Label'};
 var $author$project$OUI$Text$labelLarge = A2($author$project$OUI$Text$Text, $author$project$OUI$Text$Label, $author$project$OUI$Text$Large);
 var $author$project$OUI$Text$labelMedium = A2($author$project$OUI$Text$Text, $author$project$OUI$Text$Label, $author$project$OUI$Text$Medium);
 var $author$project$OUI$Text$labelSmall = A2($author$project$OUI$Text$Text, $author$project$OUI$Text$Label, $author$project$OUI$Text$Small);
@@ -26499,8 +26536,9 @@ var $author$project$OUI$Material$Color$darkFromKeyColors = function (keyColors) 
 };
 var $author$project$OUI$Material$Color$defaultDarkScheme = $author$project$OUI$Material$Color$darkFromKeyColors($author$project$OUI$Material$Color$defaultKeyColors);
 var $author$project$OUI$Material$Button$defaultTheme = {
-	common: {containerHeight: 40, containerRadius: 20, iconSize: 18, leftPaddingWithIcon: 16, leftRightPadding: 24, paddingBetweenElements: 8, rightPaddingWithIcon: 16},
+	common: {containerHeight: 40, containerRadius: 20, iconSize: 18, leftPaddingWithIcon: 16, leftRightPadding: 24, paddingBetweenElements: 8, rightPaddingWithIcon: 16, textSize: $author$project$OUI$Text$Large, textType: $author$project$OUI$Text$Label},
 	fab: {
+		extended: {containerHeight: 56, containerRadius: 16, iconSize: 24, leftPaddingWithIcon: 16, leftRightPadding: 24, paddingBetweenElements: 8, rightPaddingWithIcon: 16, textSize: $author$project$OUI$Text$Large, textType: $author$project$OUI$Text$Label},
 		large: {containerHeight: 96, containerShape: 28, containerWidth: 96, iconSize: 36},
 		medium: {containerHeight: 56, containerShape: 16, containerWidth: 56, iconSize: 24},
 		small: {containerHeight: 40, containerShape: 12, containerWidth: 40, iconSize: 24}

@@ -21,6 +21,7 @@ type alias Theme =
         { small : FABLayout
         , medium : FABLayout
         , large : FABLayout
+        , extended : Layout
         }
     , icon : IconLayout
     }
@@ -36,6 +37,8 @@ defaultTheme =
         , leftPaddingWithIcon = 16
         , rightPaddingWithIcon = 16
         , paddingBetweenElements = 8
+        , textType = OUI.Text.Label
+        , textSize = OUI.Text.Large
 
         --, labelTextAlignment =
         }
@@ -58,6 +61,19 @@ defaultTheme =
             , containerWidth = 96
             , iconSize = 36
             }
+        , extended =
+            { containerHeight = 56
+            , containerRadius = 16
+            , iconSize = 24
+            , leftRightPadding = 24
+            , leftPaddingWithIcon = 16
+            , rightPaddingWithIcon = 16
+            , paddingBetweenElements = 8
+            , textType = OUI.Text.Label
+            , textSize = OUI.Text.Large
+
+            --, labelTextAlignment =
+            }
         }
     , icon =
         { iconSize = 24
@@ -74,6 +90,8 @@ type alias Layout =
     , leftPaddingWithIcon : Int
     , rightPaddingWithIcon : Int
     , paddingBetweenElements : Int
+    , textType : OUI.Text.Type
+    , textSize : OUI.Text.Size
 
     -- Label text alignment Center-aligned
     }
@@ -120,6 +138,26 @@ btnColors colorscheme type_ color disabled =
             , OUI.Material.Color.getColor color colorscheme
             )
 
+        ( OUI.Button.SmallFAB, False ) ->
+            ( OUI.Material.Color.getOnColor color colorscheme
+            , OUI.Material.Color.getColor color colorscheme
+            )
+
+        ( OUI.Button.MediumFAB, False ) ->
+            ( OUI.Material.Color.getOnColor color colorscheme
+            , OUI.Material.Color.getColor color colorscheme
+            )
+
+        ( OUI.Button.LargeFAB, False ) ->
+            ( OUI.Material.Color.getOnColor color colorscheme
+            , OUI.Material.Color.getColor color colorscheme
+            )
+
+        ( OUI.Button.ExtendedFAB, False ) ->
+            ( OUI.Material.Color.getOnColor color colorscheme
+            , OUI.Material.Color.getColor color colorscheme
+            )
+
         ( _, True ) ->
             ( OUI.Material.Color.setAlpha 0.38 colorscheme.onSurface
             , OUI.Material.Color.setAlpha 0.12 colorscheme.onSurface
@@ -131,13 +169,13 @@ btnColors colorscheme type_ color disabled =
             )
 
 
-commonButtonAttrs :
+layoutAttrs :
     OUI.Material.Typography.Typescale
     -> OUI.Material.Color.Scheme
     -> Layout
     -> Bool
     -> List (Attribute msg)
-commonButtonAttrs typescale colorscheme layout hasIcon =
+layoutAttrs typescale colorscheme layout hasIcon =
     let
         padding =
             if hasIcon then
@@ -151,7 +189,8 @@ commonButtonAttrs typescale colorscheme layout hasIcon =
             else
                 Element.paddingXY layout.leftRightPadding 0
     in
-    OUI.Material.Typography.attrs OUI.Text.Label OUI.Text.Large typescale
+    (Element.height <| Element.px layout.containerHeight)
+        :: OUI.Material.Typography.attrs layout.textType layout.textSize typescale
         ++ [ Border.rounded layout.containerRadius
            , padding
            ]
@@ -409,55 +448,36 @@ textDisabledAttrs typescale colorscheme layout =
     ]
 
 
-fabAttrs :
-    OUI.Material.Color.Scheme
-    -> FABLayout
-    -> OUI.Color
+fabLayoutAttrs :
+    FABLayout
     -> List (Attribute msg)
-fabAttrs colorscheme layout color =
-    let
-        -- TODO The fab colors mappings are primary, secondary, tertiary and surface
-        -- so the 'OUI.Color' is not adapted here. We'll need to make things differently
-        -- for fabs
-        ( bgColor, stateLayerColor ) =
-            case color of
-                OUI.Primary ->
-                    ( colorscheme.primaryContainer, colorscheme.onPrimaryContainer )
-
-                OUI.PrimaryContainer ->
-                    ( colorscheme.primaryContainer, colorscheme.onPrimaryContainer )
-
-                OUI.Secondary ->
-                    ( colorscheme.secondaryContainer, colorscheme.onSecondaryContainer )
-
-                OUI.SecondaryContainer ->
-                    ( colorscheme.secondaryContainer, colorscheme.onSecondaryContainer )
-
-                OUI.Tertiary ->
-                    ( colorscheme.tertiaryContainer, colorscheme.onTertiaryContainer )
-
-                OUI.TertiaryContainer ->
-                    ( colorscheme.tertiaryContainer, colorscheme.onTertiaryContainer )
-
-                OUI.Neutral ->
-                    ( colorscheme.surfaceContainer, colorscheme.onSurfaceVariant )
-
-                OUI.Error ->
-                    ( colorscheme.errorContainer, colorscheme.onErrorContainer )
-
-                OUI.ErrorContainer ->
-                    ( colorscheme.errorContainer, colorscheme.onErrorContainer )
-    in
+fabLayoutAttrs layout =
     [ Border.rounded layout.containerShape
     , Element.height <| Element.px layout.containerHeight
     , Element.width <| Element.px layout.containerWidth
-    , Border.shadow
+    ]
+
+
+fabColorsAttrs :
+    OUI.Material.Color.Scheme
+    -> OUI.Color
+    -> List (Attribute msg)
+fabColorsAttrs colorscheme color =
+    let
+        stateLayerColor =
+            frontColor
+
+        ( frontColor, bgColor ) =
+            btnColors colorscheme OUI.Button.SmallFAB color False
+    in
+    [ Border.shadow
         { offset = ( 1, 1 )
         , size = 1
         , blur = 1
         , color = OUI.Material.Color.toElementColor colorscheme.shadow
         }
     , Background.color <| OUI.Material.Color.toElementColor bgColor
+    , Font.color <| OUI.Material.Color.toElementColor frontColor
     , Element.focused
         [ bgColor
             |> OUI.Material.Color.withShade
@@ -525,6 +545,9 @@ iconSizeColor colorscheme theme type_ color disabled =
 
         OUI.Button.LargeFAB ->
             ( theme.fab.large.iconSize, frontColor )
+
+        OUI.Button.ExtendedFAB ->
+            ( theme.fab.extended.iconSize, frontColor )
 
         OUI.Button.Icon ->
             ( theme.icon.iconSize, frontColor )
@@ -596,24 +619,24 @@ render typescale colorscheme theme attrs button =
                             ]
 
         all_attrs =
-            (Element.height <| Element.px theme.common.containerHeight)
-                :: aria
+            --(Element.height <| Element.px theme.common.containerHeight) ::
+            aria
                 ++ attrs
                 ++ (case ( props.type_, props.action ) of
                         ( OUI.Button.Elevated, OUI.Button.Disabled ) ->
-                            commonButtonAttrs typescale colorscheme theme.common hasIcon
+                            layoutAttrs typescale colorscheme theme.common hasIcon
                                 ++ elevatedDisabledAttrs typescale colorscheme theme.common
 
                         ( OUI.Button.Elevated, _ ) ->
-                            commonButtonAttrs typescale colorscheme theme.common hasIcon
+                            layoutAttrs typescale colorscheme theme.common hasIcon
                                 ++ elevatedAttrs typescale colorscheme theme.common props.color
 
                         ( OUI.Button.Filled, OUI.Button.Disabled ) ->
-                            commonButtonAttrs typescale colorscheme theme.common hasIcon
+                            layoutAttrs typescale colorscheme theme.common hasIcon
                                 ++ filledDisabledAttrs typescale colorscheme theme.common
 
                         ( OUI.Button.Filled, _ ) ->
-                            commonButtonAttrs typescale colorscheme theme.common hasIcon
+                            layoutAttrs typescale colorscheme theme.common hasIcon
                                 ++ filledAttrs typescale colorscheme theme.common props.color
 
                         ( OUI.Button.FilledIcon, OUI.Button.Disabled ) ->
@@ -624,20 +647,12 @@ render typescale colorscheme theme attrs button =
                             iconButtonAttrs theme.icon
                                 ++ filledAttrs typescale colorscheme theme.common props.color
 
-                        ( OUI.Button.Tonal, OUI.Button.Disabled ) ->
-                            commonButtonAttrs typescale colorscheme theme.common hasIcon
-                                ++ filledDisabledAttrs typescale colorscheme theme.common
-
-                        ( OUI.Button.Tonal, _ ) ->
-                            commonButtonAttrs typescale colorscheme theme.common hasIcon
-                                ++ filledAttrs typescale colorscheme theme.common props.color
-
                         ( OUI.Button.Outlined, OUI.Button.Disabled ) ->
-                            commonButtonAttrs typescale colorscheme theme.common hasIcon
+                            layoutAttrs typescale colorscheme theme.common hasIcon
                                 ++ outlinedDisabledAttrs typescale colorscheme theme.common
 
                         ( OUI.Button.Outlined, _ ) ->
-                            commonButtonAttrs typescale colorscheme theme.common hasIcon
+                            layoutAttrs typescale colorscheme theme.common hasIcon
                                 ++ outlinedAttrs typescale colorscheme theme.common props.color
 
                         ( OUI.Button.OutlinedIcon, OUI.Button.Disabled ) ->
@@ -649,11 +664,11 @@ render typescale colorscheme theme attrs button =
                                 ++ outlinedAttrs typescale colorscheme theme.common props.color
 
                         ( OUI.Button.Text, OUI.Button.Disabled ) ->
-                            commonButtonAttrs typescale colorscheme theme.common hasIcon
+                            layoutAttrs typescale colorscheme theme.common hasIcon
                                 ++ textDisabledAttrs typescale colorscheme theme.common
 
                         ( OUI.Button.Text, _ ) ->
-                            commonButtonAttrs typescale colorscheme theme.common hasIcon
+                            layoutAttrs typescale colorscheme theme.common hasIcon
                                 ++ textAttrs typescale colorscheme theme.common props.color
 
                         ( OUI.Button.Icon, OUI.Button.Disabled ) ->
@@ -665,16 +680,24 @@ render typescale colorscheme theme attrs button =
                                 ++ textAttrs typescale colorscheme theme.common props.color
 
                         ( OUI.Button.SmallFAB, _ ) ->
-                            fabAttrs colorscheme theme.fab.small props.color
+                            fabLayoutAttrs theme.fab.small
+                                ++ fabColorsAttrs colorscheme props.color
 
                         ( OUI.Button.MediumFAB, _ ) ->
-                            fabAttrs colorscheme theme.fab.medium props.color
+                            fabLayoutAttrs theme.fab.medium
+                                ++ fabColorsAttrs colorscheme props.color
 
                         ( OUI.Button.LargeFAB, _ ) ->
-                            fabAttrs colorscheme theme.fab.large props.color
+                            fabLayoutAttrs theme.fab.large
+                                ++ fabColorsAttrs colorscheme props.color
 
-                        _ ->
-                            textDisabledAttrs typescale colorscheme theme.common
+                        ( OUI.Button.ExtendedFAB, OUI.Button.Disabled ) ->
+                            layoutAttrs typescale colorscheme theme.fab.extended hasIcon
+                                ++ fabColorsAttrs colorscheme props.color
+
+                        ( OUI.Button.ExtendedFAB, _ ) ->
+                            layoutAttrs typescale colorscheme theme.fab.extended hasIcon
+                                ++ fabColorsAttrs colorscheme props.color
                    )
     in
     case props.action of

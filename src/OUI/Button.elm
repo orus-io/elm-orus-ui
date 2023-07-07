@@ -3,7 +3,7 @@ module OUI.Button exposing
     , new
     , withIcon, color
     , onClick, link, disabled
-    , elevatedButton, filledButton, tonalButton, outlinedButton, textButton, smallFAB, mediumFAB, largeFAB, extendedFAB, iconButton, filledIconButton, outlinedIconButton
+    , elevatedButton, filledButton, outlinedButton, textButton, smallFAB, mediumFAB, largeFAB, extendedFAB, iconButton, filledIconButton, outlinedIconButton
     , properties
     )
 
@@ -32,7 +32,7 @@ following functions.
 
 # Button types
 
-@docs elevatedButton, filledButton, tonalButton, outlinedButton, textButton, smallFAB, mediumFAB, largeFAB, extendedFAB, iconButton, filledIconButton, outlinedIconButton
+@docs elevatedButton, filledButton, outlinedButton, textButton, smallFAB, mediumFAB, largeFAB, extendedFAB, iconButton, filledIconButton, outlinedIconButton
 
 
 # Internal
@@ -50,7 +50,6 @@ import OUI.Icon exposing (Icon)
 type Type
     = Elevated
     | Filled
-    | Tonal
     | Outlined
     | Text
     | SmallFAB
@@ -133,14 +132,6 @@ elevatedButton =
 filledButton : Button a msg -> Button a msg
 filledButton =
     btntype Filled
-
-
-{-| Set the button type to 'Tonal'
--}
-tonalButton : Button a msg -> Button a msg
-tonalButton =
-    color SecondaryContainer
-        >> btntype Filled
 
 
 {-| Set the button type to 'Outlined'

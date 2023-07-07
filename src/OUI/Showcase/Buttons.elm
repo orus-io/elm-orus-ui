@@ -67,7 +67,6 @@ commonButtons { theme } =
         , Element.column [ Element.spacing 30 ]
             [ btnRow "Elevated" Button.elevatedButton
             , btnRow "Filled" Button.filledButton
-            , btnRow "Tonal" Button.tonalButton
             , btnRow "Outlined" Button.outlinedButton
             , btnRow "Text" Button.textButton
             ]
@@ -84,29 +83,39 @@ commonButtons { theme } =
 
                 linkBtn s =
                     btn s
-                        |> Button.link "#/Basics/Button"
+                        |> Button.link "#/Basics/Buttons"
              in
              [ clickBtn "Small"
                 |> Button.smallFAB
+                |> Button.color OUI.PrimaryContainer
                 |> Material.button theme [ Element.centerX ]
              , linkBtn "Small"
                 |> Button.smallFAB
+                |> Button.color OUI.PrimaryContainer
                 |> Material.button theme [ Element.centerX ]
              , clickBtn "Medium"
                 |> Button.mediumFAB
-                |> Button.color OUI.Secondary
+                |> Button.color OUI.SecondaryContainer
                 |> Material.button theme [ Element.centerX ]
              , linkBtn "Medium"
                 |> Button.mediumFAB
-                |> Button.color OUI.Secondary
+                |> Button.color OUI.SecondaryContainer
                 |> Material.button theme [ Element.centerX ]
              , clickBtn "Large"
                 |> Button.largeFAB
-                |> Button.color OUI.Tertiary
+                |> Button.color OUI.TertiaryContainer
                 |> Material.button theme [ Element.centerX ]
              , linkBtn "Large"
                 |> Button.largeFAB
-                |> Button.color OUI.Tertiary
+                |> Button.color OUI.TertiaryContainer
+                |> Material.button theme [ Element.centerX ]
+             , clickBtn "Extended"
+                |> Button.extendedFAB
+                |> Button.color OUI.Primary
+                |> Material.button theme [ Element.centerX ]
+             , linkBtn "Extended"
+                |> Button.extendedFAB
+                |> Button.color OUI.Primary
                 |> Material.button theme [ Element.centerX ]
              ]
             )
