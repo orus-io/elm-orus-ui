@@ -4,6 +4,7 @@ module OUI.Utils.ARIA exposing
     , roleRadioGroup, roleRadio
     , withLabel
     , toElementAttributes
+    , Role
     )
 
 {-| Interface for [HTML's ARIA](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA).

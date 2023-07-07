@@ -2,13 +2,10 @@ module OUI.Showcase.Icons exposing (book, withChapter)
 
 import Effect exposing (Effect)
 import Element exposing (Element)
-import Element.Border as Border
 import List.Extra as List
 import OUI.Explorer as Explorer
 import OUI.Icon as Icon exposing (Icon)
 import OUI.Material as Material
-import OUI.Material.Color
-import OUI.Material.Theme as Theme
 import OUI.Text as Text
 import OUI.TextField as TextField
 

@@ -1,4 +1,4 @@
-module OUI.Material.Button exposing (..)
+module OUI.Material.Button exposing (FABLayout, IconLayout, Layout, Theme, btnColors, commonButtonAttrs, defaultTheme, elevatedAttrs, elevatedDisabledAttrs, fabAttrs, filledAttrs, filledDisabledAttrs, iconButtonAttrs, iconOnly, iconSizeColor, outlinedAttrs, outlinedDisabledAttrs, render, textAttrs, textDisabledAttrs)
 
 import Color
 import Element exposing (Attribute, Element)
@@ -8,7 +8,7 @@ import Element.Font as Font
 import Element.Input as Input
 import OUI
 import OUI.Button exposing (Button, properties)
-import OUI.Material.Color exposing (getOnColor)
+import OUI.Material.Color
 import OUI.Material.Icon as Icon
 import OUI.Material.Typography
 import OUI.Text

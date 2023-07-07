@@ -1,14 +1,15 @@
-module OUI.Showcase.Buttons exposing (..)
+module OUI.Showcase.Buttons exposing (book, commonButtonVariants, commonButtons)
 
 import Element exposing (Element)
 import OUI
-import OUI.Button as Button exposing (Button)
-import OUI.Explorer as Explorer exposing (Explorer)
+import OUI.Button as Button exposing (Button, Type)
+import OUI.Explorer as Explorer
 import OUI.Icon exposing (clear)
 import OUI.Material as Material
 import OUI.Material.Theme
 
 
+book : Explorer.Book () ()
 book =
     Explorer.book "Buttons"
         |> Explorer.withStaticChapter commonButtons
@@ -56,6 +57,7 @@ commonButtonVariants theme label btnType =
 commonButtons : Explorer.Shared -> Element (Explorer.BookMsg ())
 commonButtons { theme } =
     let
+        btnRow : String -> (Button { hasNoIcon : (), needOnClickOrDisabled : () } (Explorer.BookMsg msg) -> Button { hasNoIcon : (), needOnClickOrDisabled : () } (Explorer.BookMsg msg)) -> Element (Explorer.BookMsg msg)
         btnRow label btnType =
             commonButtonVariants theme label btnType
                 |> (::) (Element.text label)
@@ -73,14 +75,17 @@ commonButtons { theme } =
         , Element.text "FAB"
         , Element.row [ Element.spacing 30 ]
             (let
+                btn : String -> Button { hasIcon : (), needOnClickOrDisabled : () } (Explorer.BookMsg msg)
                 btn s =
                     Button.new (s ++ "FAB")
                         |> Button.withIcon clear
 
+                clickBtn : String -> Button { hasAction : (), hasIcon : () } (Explorer.BookMsg msg)
                 clickBtn s =
                     btn s
                         |> Button.onClick (Explorer.logEvent <| "Clicked " ++ s ++ " FAB")
 
+                linkBtn : String -> Button { hasAction : (), hasIcon : () } (Explorer.BookMsg msg)
                 linkBtn s =
                     btn s
                         |> Button.link "#/Basics/Buttons"
@@ -122,14 +127,17 @@ commonButtons { theme } =
         , Element.text "Icon Buttons"
         , Element.row [ Element.spacing 30 ]
             (let
+                btn : String -> Button { hasIcon : (), needOnClickOrDisabled : () } (Explorer.BookMsg msg)
                 btn s =
                     Button.new (s ++ " Icon")
                         |> Button.withIcon clear
 
+                clickBtn : String -> Button { hasAction : (), hasIcon : () } (Explorer.BookMsg msg)
                 clickBtn s =
                     btn s
                         |> Button.onClick (Explorer.logEvent <| "Clicked " ++ s ++ " Icon")
 
+                linkBtn : String -> Button { hasAction : (), hasIcon : () } (Explorer.BookMsg msg)
                 linkBtn s =
                     btn s
                         |> Button.link "#/Basics/Button"

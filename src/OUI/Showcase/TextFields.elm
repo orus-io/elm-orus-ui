@@ -1,4 +1,4 @@
-module OUI.Showcase.TextFields exposing (..)
+module OUI.Showcase.TextFields exposing (InputState, Model, Msg(..), book, inputHasFocus, inputText, newInputState, textfields, update)
 
 import Dict exposing (Dict)
 import Effect exposing (Effect)
@@ -6,11 +6,11 @@ import Element exposing (Element)
 import Element.Background as Background
 import Element.Border as Border
 import OUI
-import OUI.Explorer as Explorer exposing (Explorer)
+import OUI.Explorer as Explorer
 import OUI.Icon exposing (check, clear)
 import OUI.Material as Material
 import OUI.Material.Color
-import OUI.TextField as TextField exposing (multiline)
+import OUI.TextField as TextField exposing (TextField, multiline)
 
 
 book : Explorer.Book Model Msg
@@ -66,10 +66,12 @@ type Msg
     | OnLoseFocus String
 
 
+update : a -> Msg -> Model -> ( Model, Effect sharedMsg msg )
 update _ msg model =
     case msg of
         OnChange name value ->
             let
+                input : InputState
                 input =
                     Dict.get name model.inputs
                         |> Maybe.withDefault newInputState
@@ -84,6 +86,7 @@ update _ msg model =
 
         OnFocus name ->
             let
+                input : InputState
                 input =
                     Dict.get name model.inputs
                         |> Maybe.withDefault newInputState
@@ -98,6 +101,7 @@ update _ msg model =
 
         OnLoseFocus name ->
             let
+                input : InputState
                 input =
                     Dict.get name model.inputs
                         |> Maybe.withDefault newInputState
@@ -114,6 +118,7 @@ update _ msg model =
 textfields : Bool -> Explorer.Shared -> Model -> Element (Explorer.BookMsg Msg)
 textfields multiline { theme } model =
     let
+        key : String -> String
         key name =
             name
                 ++ (if multiline then
@@ -123,11 +128,13 @@ textfields multiline { theme } model =
                         ""
                    )
 
+        textField : String -> String -> TextField Msg
         textField label name =
             TextField.new label (OnChange (key name)) (inputText (key name) model)
                 |> TextField.onFocusBlur (OnFocus (key name)) (OnLoseFocus (key name))
                 |> TextField.withFocused (inputHasFocus (key name) model)
 
+        render : TextField msg -> Element msg
         render =
             (if multiline then
                 TextField.multiline True
@@ -173,6 +180,7 @@ textfields multiline { theme } model =
                 |> render
                 |> Element.map Explorer.bookMsg
             , let
+                k : String
                 k =
                     key "filledLeadTrailClickIcon"
               in
@@ -227,6 +235,7 @@ textfields multiline { theme } model =
                 |> render
                 |> Element.map Explorer.bookMsg
             , let
+                k : String
                 k =
                     key "outlinedLeadTrailClickIcon"
               in

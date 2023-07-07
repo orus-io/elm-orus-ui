@@ -5,7 +5,6 @@ import Element exposing (Element)
 import Element.Background as Background
 import Element.Font as Font
 import OUI.Explorer as Explorer
-import OUI.Material
 import OUI.Material.Color
 
 
@@ -105,6 +104,7 @@ showColorScheme title scheme =
         ]
 
 
+book : Explorer.Book () ()
 book =
     Explorer.book "Colors"
         |> Explorer.withMarkdownChapter """

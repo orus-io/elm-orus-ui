@@ -8,6 +8,7 @@ import OUI.Icon exposing (clear)
 import OUI.Material as Material
 
 
+book : Explorer.Book () ()
 book =
     Explorer.book "Checkbox"
         |> Explorer.withStaticChapter checkbox

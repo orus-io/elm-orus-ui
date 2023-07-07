@@ -2,6 +2,7 @@ module OUI.Explorer exposing
     ( Book, BookMsg, Page, Route, Shared, SharedMsg, Explorer
     , setTheme, setColorScheme, addBook, book, statefulBook, category, bookMsg, logEvent, explorer, finalize
     , withMarkdownChapter, withStaticChapter, withChapter
+    , ColorSchemeType
     )
 
 {-|
@@ -12,7 +13,6 @@ module OUI.Explorer exposing
 
 -}
 
-import Browser
 import Effect exposing (Effect)
 import Element exposing (Element)
 import Element.Background as Background
@@ -463,7 +463,7 @@ finalize expl =
                         , Cmd.none
                         )
         , subscriptions = \_ -> Sub.none
-        , protectPage = \s -> "/"
+        , protectPage = \_ -> "/"
         , toDocument =
             \shared b ->
                 { title = b.title

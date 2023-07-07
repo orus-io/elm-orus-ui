@@ -1,4 +1,4 @@
-module OUI.Material.Typography exposing (..)
+module OUI.Material.Typography exposing (Typescale, Typography, attrs, getTypo, render, renderWithAttrs, renderWithTypography, typographyAttrs)
 
 import Element exposing (Attribute, Element)
 import Element.Font as Font

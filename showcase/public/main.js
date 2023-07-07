@@ -25241,7 +25241,6 @@ var $mdgriffith$elm_ui$Element$Border$widthEach = function (_v0) {
 var $author$project$OUI$Material$TextField$render = F6(
 	function (typescale, colorscheme, buttonTheme, theme, attrs, textfield) {
 		var p = $author$project$OUI$TextField$properties(textfield);
-		var label = p.label;
 		var isOutlined = _Utils_eq(p.type_, $author$project$OUI$TextField$Outlined);
 		var leftBorderWidth = isOutlined ? A3($author$project$OUI$Material$TextField$ifThenElse, p.hasFocus, 2, 1) : 0;
 		var rightBorderWidth = isOutlined ? A3($author$project$OUI$Material$TextField$ifThenElse, p.hasFocus, 2, 1) : 0;
@@ -25259,12 +25258,10 @@ var $author$project$OUI$Material$TextField$render = F6(
 				$mdgriffith$elm_ui$Element$height(
 				$mdgriffith$elm_ui$Element$px(theme.height))
 			]);
-		var hasTrailingIcon = !_Utils_eq(p.trailingIcon, $elm$core$Maybe$Nothing);
 		var hasLeadingIcon = !_Utils_eq(p.leadingIcon, $elm$core$Maybe$Nothing);
-		var inputLeftOffset = hasLeadingIcon ? ((theme.leftRightPaddingWithIcon + theme.iconSize) + theme.paddingBetweenIconAndText) : theme.leftRightPaddingWithoutIcon;
 		var hasError = $author$project$OUI$Material$Color$isError(p.color);
-		var labelColor = (hasError || p.hasFocus) ? A2($author$project$OUI$Material$Color$getElementColor, p.color, colorscheme) : $author$project$OUI$Material$Color$toElementColor(colorscheme.onSurface);
 		var labelElement = function () {
+			var labelColor = (hasError || p.hasFocus) ? A2($author$project$OUI$Material$Color$getElementColor, p.color, colorscheme) : $author$project$OUI$Material$Color$toElementColor(colorscheme.onSurface);
 			var staticAttrs = _List_fromArray(
 				[
 					$author$project$OUI$Material$TextField$transition('all 0.15s'),
@@ -25272,6 +25269,8 @@ var $author$project$OUI$Material$TextField$render = F6(
 					$mdgriffith$elm_ui$Element$htmlAttribute(
 					A2($elm$html$Html$Attributes$style, 'pointer-events', 'none'))
 				]);
+			var label = p.label;
+			var inputLeftOffset = hasLeadingIcon ? ((theme.leftRightPaddingWithIcon + theme.iconSize) + theme.paddingBetweenIconAndText) : theme.leftRightPaddingWithoutIcon;
 			if (labelHoldPlace) {
 				return A2(
 					$mdgriffith$elm_ui$Element$el,
@@ -25375,8 +25374,6 @@ var $author$project$OUI$Material$TextField$render = F6(
 					p.trailingIcon);
 			}
 		}();
-		var hasClickableTrailingIcon = (!_Utils_eq(p.trailingIcon, $elm$core$Maybe$Nothing)) && (!_Utils_eq(p.onTrailingIconClick, $elm$core$Maybe$Nothing));
-		var trailingIconOffset = hasClickableTrailingIcon ? (((buttonTheme.icon.containerSize - buttonTheme.icon.iconSize) / 2) | 0) : 0;
 		var fontColorAttr = $mdgriffith$elm_ui$Element$Font$color(
 			$author$project$OUI$Material$Color$toElementColor(colorscheme.onSurface));
 		var focusEvents = A2(
@@ -25389,9 +25386,12 @@ var $author$project$OUI$Material$TextField$render = F6(
 				]));
 		var bottomBorderWidth = A3($author$project$OUI$Material$TextField$ifThenElse, p.hasFocus, 2, 1);
 		var paddingAttrs = function () {
-			var baseverticalPadding = p.isMultiline ? 0 : 0;
+			var hasTrailingIcon = !_Utils_eq(p.trailingIcon, $elm$core$Maybe$Nothing);
+			var hasClickableTrailingIcon = (!_Utils_eq(p.trailingIcon, $elm$core$Maybe$Nothing)) && (!_Utils_eq(p.onTrailingIconClick, $elm$core$Maybe$Nothing));
+			var trailingIconOffset = hasClickableTrailingIcon ? (((buttonTheme.icon.containerSize - buttonTheme.icon.iconSize) / 2) | 0) : 0;
 			var _v3 = p.type_;
 			if (_v3.$ === 'Filled') {
+				var baseverticalPadding = p.isMultiline ? 0 : 0;
 				return _List_fromArray(
 					[
 						$mdgriffith$elm_ui$Element$paddingEach(
@@ -27337,10 +27337,10 @@ var $author$project$OUI$Explorer$finalize = function (expl) {
 							expl.initialShared),
 						$elm$core$Platform$Cmd$none);
 				}),
-			protectPage: function (s) {
+			protectPage: function (_v1) {
 				return '/';
 			},
-			subscriptions: function (_v1) {
+			subscriptions: function (_v2) {
 				return $elm$core$Platform$Sub$none;
 			},
 			toDocument: F2(
@@ -27439,9 +27439,9 @@ var $author$project$OUI$Explorer$finalize = function (expl) {
 																])),
 														A2(
 															$elm$core$List$concatMap,
-															function (_v2) {
-																var cat = _v2.a;
-																var books = _v2.b;
+															function (_v3) {
+																var cat = _v3.a;
+																var books = _v3.b;
 																return A2(
 																	$elm$core$List$cons,
 																	$mdgriffith$elm_ui$Element$text(cat),

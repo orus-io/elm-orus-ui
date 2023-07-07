@@ -1,4 +1,4 @@
-module OUI.Material.TextField exposing (..)
+module OUI.Material.TextField exposing (Theme, defaultTheme, filterMaybe, ifThenElse, render, transition)
 
 import Color
 import Element exposing (Attribute, Element)
@@ -6,11 +6,10 @@ import Element.Background as Background
 import Element.Border as Border
 import Element.Events as Events
 import Element.Font as Font
-import Element.Input as Input exposing (labelHidden)
+import Element.Input as Input
 import Html.Attributes
 import OUI
 import OUI.Button as Button
-import OUI.Icon exposing (Icon)
 import OUI.Material.Button as Button
 import OUI.Material.Color
 import OUI.Material.Icon
@@ -109,12 +108,6 @@ render typescale colorscheme buttonTheme theme attrs textfield =
         hasLeadingIcon =
             p.leadingIcon /= Nothing
 
-        hasTrailingIcon =
-            p.trailingIcon /= Nothing
-
-        hasClickableTrailingIcon =
-            p.trailingIcon /= Nothing && p.onTrailingIconClick /= Nothing
-
         focusEvents =
             List.filterMap identity
                 [ p.onFocus |> Maybe.map Events.onFocus
@@ -156,13 +149,6 @@ render typescale colorscheme buttonTheme theme attrs textfield =
 
             else
                 0
-
-        inputLeftOffset =
-            if hasLeadingIcon then
-                theme.leftRightPaddingWithIcon + theme.iconSize + theme.paddingBetweenIconAndText
-
-            else
-                theme.leftRightPaddingWithoutIcon
 
         inputMoveDownBy =
             if isFilled && not labelHoldPlace then
@@ -212,24 +198,31 @@ render typescale colorscheme buttonTheme theme attrs textfield =
             else
                 [ Element.height <| Element.px theme.height ]
 
-        trailingIconOffset =
-            if hasClickableTrailingIcon then
-                (buttonTheme.icon.containerSize - buttonTheme.icon.iconSize) // 2
-
-            else
-                0
-
         paddingAttrs =
             let
-                baseverticalPadding =
-                    if p.isMultiline then
-                        0
+                hasTrailingIcon =
+                    p.trailingIcon /= Nothing
+
+                hasClickableTrailingIcon =
+                    p.trailingIcon /= Nothing && p.onTrailingIconClick /= Nothing
+
+                trailingIconOffset =
+                    if hasClickableTrailingIcon then
+                        (buttonTheme.icon.containerSize - buttonTheme.icon.iconSize) // 2
 
                     else
                         0
             in
             case p.type_ of
                 OUI.TextField.Filled ->
+                    let
+                        baseverticalPadding =
+                            if p.isMultiline then
+                                0
+
+                            else
+                                0
+                    in
                     [ Element.paddingEach
                         { top =
                             baseverticalPadding
@@ -280,18 +273,25 @@ render typescale colorscheme buttonTheme theme attrs textfield =
                     , Element.spacing theme.paddingBetweenIconAndText
                     ]
 
-        label =
-            p.label
-
-        labelColor =
-            if hasError || p.hasFocus then
-                OUI.Material.Color.getElementColor p.color colorscheme
-
-            else
-                OUI.Material.Color.toElementColor colorscheme.onSurface
-
         labelElement =
             let
+                inputLeftOffset =
+                    if hasLeadingIcon then
+                        theme.leftRightPaddingWithIcon + theme.iconSize + theme.paddingBetweenIconAndText
+
+                    else
+                        theme.leftRightPaddingWithoutIcon
+
+                label =
+                    p.label
+
+                labelColor =
+                    if hasError || p.hasFocus then
+                        OUI.Material.Color.getElementColor p.color colorscheme
+
+                    else
+                        OUI.Material.Color.toElementColor colorscheme.onSurface
+
                 staticAttrs =
                     [ transition "all 0.15s"
                     , Font.color labelColor

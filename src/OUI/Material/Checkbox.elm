@@ -1,10 +1,9 @@
-module OUI.Material.Checkbox exposing (..)
+module OUI.Material.Checkbox exposing (Theme, defaultTheme, render)
 
 import Element exposing (Attribute, Element)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Input as Input
-import Html.Attributes
 import OUI
 import OUI.Checkbox
 import OUI.Material.Color exposing (toElementColor)

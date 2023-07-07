@@ -1,11 +1,12 @@
-module OUI.Showcase.Typography exposing (..)
+module OUI.Showcase.Typography exposing (book)
 
-import Element exposing (Element)
+import Element
 import OUI.Explorer as Explorer
 import OUI.Material as Material
 import OUI.Text as Text
 
 
+book : Explorer.Book () ()
 book =
     Explorer.book "Typography"
         |> Explorer.withMarkdownChapter """
