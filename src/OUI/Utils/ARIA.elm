@@ -1,17 +1,16 @@
 module OUI.Utils.ARIA exposing
-    ( ElementSemantics
+    ( Role, ElementSemantics
     , roleButton, roleImage, rolePresentation, roleCheckbox, roleTab, roleSwitch, roleToggleButton
     , roleRadioGroup, roleRadio
     , withLabel
     , toElementAttributes
-    , Role
     )
 
 {-| Interface for [HTML's ARIA](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA).
 
 This module is copied from [Paack-ui](https://package.elm-lang.org/packages/PaackEng/paack-ui/latest/UI-Utils-ARIA)
 
-@docs ElementSemantics
+@docs Role, ElementSemantics
 
 
 # Building
@@ -64,6 +63,8 @@ type alias ElementSemantics =
     { role : Role, label : Maybe String }
 
 
+{-| Aria roles
+-}
 type Role
     = RoleButton
     | RoleCheckbox Bool

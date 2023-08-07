@@ -23,6 +23,7 @@ import OUI
 import OUI.Icon exposing (Icon)
 
 
+{-| -}
 type alias Properties msg =
     { checked : Bool
     , icon : Icon

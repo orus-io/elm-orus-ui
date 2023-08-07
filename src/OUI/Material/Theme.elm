@@ -1,11 +1,13 @@
 module OUI.Material.Theme exposing
-    ( Theme, defaultTheme, defaultTypescale
-    , ButtonTheme, CheckboxTheme, SwitchTheme, TextFieldTheme, Typescale
+    ( Theme, defaultTheme, Typescale, defaultTypescale
+    , ButtonTheme, CheckboxTheme, SwitchTheme, TextFieldTheme
     )
 
 {-|
 
-@docs Theme, defaultTheme, defaultTypescale
+@docs Theme, defaultTheme, Typescale, defaultTypescale
+
+@docs ButtonTheme, CheckboxTheme, SwitchTheme, TextFieldTheme
 
 -}
 
@@ -17,22 +19,32 @@ import OUI.Material.TextField
 import OUI.Material.Typography
 
 
+{-| A Button theme
+-}
 type alias ButtonTheme =
     OUI.Material.Button.Theme
 
 
+{-| A Checkbox theme
+-}
 type alias CheckboxTheme =
     OUI.Material.Checkbox.Theme
 
 
+{-| A Switch theme
+-}
 type alias SwitchTheme =
     OUI.Material.Switch.Theme
 
 
+{-| A TextField theme
+-}
 type alias TextFieldTheme =
     OUI.Material.TextField.Theme
 
 
+{-| A font typescale
+-}
 type alias Typescale =
     OUI.Material.Typography.Typescale
 

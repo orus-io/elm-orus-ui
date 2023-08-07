@@ -1,14 +1,13 @@
 module OUI.Explorer exposing
     ( Book, BookMsg, Page, Route, Shared, SharedMsg, Explorer
-    , setTheme, setColorScheme, addBook, book, statefulBook, category, bookMsg, logEvent, explorer, finalize
+    , setTheme, ColorSchemeType, setColorScheme, addBook, book, statefulBook, category, bookMsg, logEvent, explorer, finalize
     , withMarkdownChapter, withStaticChapter, withChapter
-    , ColorSchemeType
     )
 
 {-|
 
 @docs Book, BookMsg, Page, Route, Shared, SharedMsg, Explorer
-@docs setTheme, setColorScheme, addBook, book, statefulBook, category, bookMsg, logEvent, explorer, finalize
+@docs setTheme, ColorSchemeType, setColorScheme, addBook, book, statefulBook, category, bookMsg, logEvent, explorer, finalize
 @docs withMarkdownChapter, withStaticChapter, withChapter
 
 -}
@@ -44,6 +43,8 @@ type alias Page msg =
     }
 
 
+{-| Color scheme light/dark
+-}
 type ColorSchemeType
     = Light
     | Dark
