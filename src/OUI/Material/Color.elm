@@ -236,6 +236,7 @@ getOnContainerColor c =
 setAlpha : Float -> Color.Color -> Color.Color
 setAlpha value color =
     let
+        rgba : { red : Float, green : Float, blue : Float, alpha : Float }
         rgba =
             Color.toRgba color
     in
@@ -283,15 +284,20 @@ fromCIELCH =
 withShade : Color -> Float -> Color -> Color
 withShade c2 amount c1 =
     let
+        alpha : Float
         alpha =
             c1
                 |> Color.toRgba
                 |> .alpha
 
+        fun :
+            { l : Float, c : Float, h : Float }
+            -> { l : Float, c : Float, h : Float }
+            -> { l : Float, c : Float, h : Float }
         fun a b =
-            { l = (a.l * (1 - amount) + b.l * amount) / 1
-            , c = (a.c * (1 - amount) + b.c * amount) / 1
-            , h = (a.h * (1 - amount) + b.h * amount) / 1
+            { l = a.l * (1 - amount) + b.l * amount
+            , c = a.c * (1 - amount) + b.c * amount
+            , h = a.h * (1 - amount) + b.h * amount
             }
     in
     fun (toCIELCH c1) (toCIELCH c2)
@@ -431,9 +437,11 @@ darkFromKeyColors keyColors =
 tone : Int -> Color -> Color
 tone light color =
     let
+        hsla : { hue : Float, saturation : Float, lightness : Float, alpha : Float }
         hsla =
             Color.toHsla color
 
+        fLight : Float
         fLight =
             if light <= 0 then
                 0.0

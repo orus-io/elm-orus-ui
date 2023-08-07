@@ -4,7 +4,7 @@ module OUI.Button exposing
     , withIcon, color
     , onClick, link, disabled
     , elevatedButton, filledButton, outlinedButton, textButton, smallFAB, mediumFAB, largeFAB, extendedFAB, iconButton, filledIconButton, outlinedIconButton
-    , properties
+    , Properties, properties
     )
 
 {-| A button creation API
@@ -37,7 +37,7 @@ following functions.
 
 # Internal
 
-@docs properties
+@docs Properties, properties
 
 -}
 
@@ -235,14 +235,18 @@ link url (Button props) =
 
 
 {-| -}
+type alias Properties msg =
+    { text : String
+    , icon : Maybe Icon
+    , action : Action msg
+    , color : Color
+    , type_ : Type
+    }
+
+
+{-| -}
 properties :
     Button { constraints | hasAction : () } msg
-    ->
-        { text : String
-        , icon : Maybe Icon
-        , action : Action msg
-        , color : Color
-        , type_ : Type
-        }
+    -> Properties msg
 properties (Button props) =
     props

@@ -2,7 +2,7 @@ module OUI.TextField exposing
     ( TextField, Type(..), new
     , multiline, withColor, withType, withSupportingText, withFocused, withLeadingIcon, withTrailingIcon, withClickableTrailingIcon, withErrorIcon
     , onFocusBlur
-    , properties
+    , Properties, properties
     )
 
 {-| A [Text Field](https://m3.material.io/components/text-fields) component
@@ -10,7 +10,7 @@ module OUI.TextField exposing
 @docs TextField, Type, new
 @docs multiline, withColor, withType, withSupportingText, withFocused, withLeadingIcon, withTrailingIcon, withClickableTrailingIcon, withErrorIcon
 @docs onFocusBlur
-@docs properties
+@docs Properties, properties
 
 -}
 
@@ -30,23 +30,7 @@ type Type
 {-| A Text input component
 -}
 type TextField msg
-    = TextField
-        { onChange : String -> msg
-        , label : String
-        , isMultiline : Bool
-        , spellcheck : Bool
-        , value : String
-        , onFocus : Maybe msg
-        , onLoseFocus : Maybe msg
-        , hasFocus : Bool
-        , supportingText : Maybe String
-        , color : OUI.Color
-        , type_ : Type
-        , leadingIcon : Maybe Icon
-        , trailingIcon : Maybe Icon
-        , onTrailingIconClick : Maybe msg
-        , errorIcon : Maybe Icon
-        }
+    = TextField (Properties msg)
 
 
 {-| Create a new text input
@@ -177,24 +161,28 @@ multiline spellcheck (TextField props) =
 
 
 {-| -}
+type alias Properties msg =
+    { onChange : String -> msg
+    , label : String
+    , isMultiline : Bool
+    , spellcheck : Bool
+    , value : String
+    , onFocus : Maybe msg
+    , onLoseFocus : Maybe msg
+    , hasFocus : Bool
+    , supportingText : Maybe String
+    , color : OUI.Color
+    , type_ : Type
+    , leadingIcon : Maybe Icon
+    , trailingIcon : Maybe Icon
+    , onTrailingIconClick : Maybe msg
+    , errorIcon : Maybe Icon
+    }
+
+
+{-| -}
 properties :
     TextField msg
-    ->
-        { onChange : String -> msg
-        , label : String
-        , isMultiline : Bool
-        , spellcheck : Bool
-        , value : String
-        , onFocus : Maybe msg
-        , onLoseFocus : Maybe msg
-        , hasFocus : Bool
-        , supportingText : Maybe String
-        , color : OUI.Color
-        , type_ : Type
-        , leadingIcon : Maybe Icon
-        , trailingIcon : Maybe Icon
-        , onTrailingIconClick : Maybe msg
-        , errorIcon : Maybe Icon
-        }
+    -> Properties msg
 properties (TextField props) =
     props

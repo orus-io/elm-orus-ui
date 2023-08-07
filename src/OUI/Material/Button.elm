@@ -1,4 +1,4 @@
-module OUI.Material.Button exposing (FABLayout, IconLayout, Layout, Theme, btnColors, commonButtonAttrs, defaultTheme, elevatedAttrs, elevatedDisabledAttrs, fabAttrs, filledAttrs, filledDisabledAttrs, iconButtonAttrs, iconOnly, iconSizeColor, outlinedAttrs, outlinedDisabledAttrs, render, textAttrs, textDisabledAttrs)
+module OUI.Material.Button exposing (FABLayout, IconLayout, Layout, Theme, defaultTheme, render)
 
 import Color
 import Element exposing (Attribute, Element)
@@ -175,8 +175,9 @@ layoutAttrs :
     -> Layout
     -> Bool
     -> List (Attribute msg)
-layoutAttrs typescale colorscheme layout hasIcon =
+layoutAttrs typescale _ layout hasIcon =
     let
+        padding : Attribute msg
         padding =
             if hasIcon then
                 Element.paddingEach
@@ -210,7 +211,7 @@ elevatedAttrs :
     -> Layout
     -> OUI.Color
     -> List (Attribute msg)
-elevatedAttrs typescale colorscheme layout color =
+elevatedAttrs _ colorscheme _ color =
     let
         ( frontColor, backColor ) =
             btnColors colorscheme OUI.Button.Elevated color False
@@ -255,7 +256,7 @@ elevatedDisabledAttrs :
     -> OUI.Material.Color.Scheme
     -> Layout
     -> List (Attribute msg)
-elevatedDisabledAttrs typescale colorscheme layout =
+elevatedDisabledAttrs _ colorscheme _ =
     let
         ( frontColor, backColor ) =
             btnColors colorscheme OUI.Button.Elevated OUI.Primary True
@@ -278,7 +279,7 @@ filledAttrs :
     -> Layout
     -> OUI.Color
     -> List (Attribute msg)
-filledAttrs typescale colorscheme layout color =
+filledAttrs _ colorscheme _ color =
     let
         ( frontColor, backColor ) =
             btnColors colorscheme OUI.Button.Filled color False
@@ -317,7 +318,7 @@ filledDisabledAttrs :
     -> OUI.Material.Color.Scheme
     -> Layout
     -> List (Attribute msg)
-filledDisabledAttrs typescale colorscheme layout =
+filledDisabledAttrs _ colorscheme _ =
     let
         ( frontColor, backColor ) =
             btnColors colorscheme OUI.Button.Filled OUI.Primary True
@@ -340,7 +341,7 @@ outlinedAttrs :
     -> Layout
     -> OUI.Color
     -> List (Attribute msg)
-outlinedAttrs typescale colorscheme layout color =
+outlinedAttrs _ colorscheme _ color =
     [ Border.width 1
     , Border.color <| OUI.Material.Color.toElementColor colorscheme.outline
     , Font.color <| OUI.Material.Color.getElementColor color colorscheme
@@ -376,7 +377,7 @@ outlinedDisabledAttrs :
     -> OUI.Material.Color.Scheme
     -> Layout
     -> List (Attribute msg)
-outlinedDisabledAttrs typescale colorscheme layout =
+outlinedDisabledAttrs _ colorscheme _ =
     [ Border.width 1
     , Border.color <|
         OUI.Material.Color.toElementColor <|
@@ -400,7 +401,7 @@ textAttrs :
     -> Layout
     -> OUI.Color
     -> List (Attribute msg)
-textAttrs typescale colorscheme layout color =
+textAttrs _ colorscheme _ color =
     [ Font.color <| OUI.Material.Color.getElementColor color colorscheme
     , Element.focused
         [ colorscheme.surface
@@ -434,7 +435,7 @@ textDisabledAttrs :
     -> OUI.Material.Color.Scheme
     -> Layout
     -> List (Attribute msg)
-textDisabledAttrs typescale colorscheme layout =
+textDisabledAttrs _ colorscheme _ =
     [ Font.color <|
         OUI.Material.Color.toElementColor <|
             OUI.Material.Color.setAlpha 0.38 colorscheme.onSurface
@@ -464,6 +465,7 @@ fabColorsAttrs :
     -> List (Attribute msg)
 fabColorsAttrs colorscheme color =
     let
+        stateLayerColor : Color.Color
         stateLayerColor =
             frontColor
 
@@ -571,17 +573,21 @@ render :
     -> Element msg
 render typescale colorscheme theme attrs button =
     let
+        props : OUI.Button.Properties msg
         props =
             properties button
 
+        aria : List (Attribute msg)
         aria =
             ARIA.roleButton
                 |> ARIA.withLabel props.text
                 |> ARIA.toElementAttributes
 
+        hasIcon : Bool
         hasIcon =
             props.icon /= Nothing
 
+        label : Element msg
         label =
             case props.icon of
                 Nothing ->
@@ -618,6 +624,7 @@ render typescale colorscheme theme attrs button =
                             , Element.text props.text
                             ]
 
+        all_attrs : List (Attribute msg)
         all_attrs =
             --(Element.height <| Element.px theme.common.containerHeight) ::
             aria

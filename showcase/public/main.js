@@ -12100,7 +12100,7 @@ var $author$project$OUI$Material$Color$withShade = F3(
 	function (c2, amount, c1) {
 		var fun = F2(
 			function (a, b) {
-				return {c: ((a.c * (1 - amount)) + (b.c * amount)) / 1, h: ((a.h * (1 - amount)) + (b.h * amount)) / 1, l: ((a.l * (1 - amount)) + (b.l * amount)) / 1};
+				return {c: (a.c * (1 - amount)) + (b.c * amount), h: (a.h * (1 - amount)) + (b.h * amount), l: (a.l * (1 - amount)) + (b.l * amount)};
 			});
 		var alpha = $avh4$elm_color$Color$toRgba(c1).alpha;
 		return $avh4$elm_color$Color$fromRgba(
@@ -12117,10 +12117,10 @@ var $author$project$OUI$Material$Color$withShade = F3(
 							$author$project$OUI$Material$Color$toCIELCH(c2))))));
 	});
 var $author$project$OUI$Material$Button$elevatedAttrs = F4(
-	function (typescale, colorscheme, layout, color) {
-		var _v0 = A4($author$project$OUI$Material$Button$btnColors, colorscheme, $author$project$OUI$Button$Elevated, color, false);
-		var frontColor = _v0.a;
-		var backColor = _v0.b;
+	function (_v0, colorscheme, _v1, color) {
+		var _v2 = A4($author$project$OUI$Material$Button$btnColors, colorscheme, $author$project$OUI$Button$Elevated, color, false);
+		var frontColor = _v2.a;
+		var backColor = _v2.b;
 		return _List_fromArray(
 			[
 				$mdgriffith$elm_ui$Element$Border$shadow(
@@ -12170,10 +12170,10 @@ var $author$project$OUI$Material$Button$elevatedAttrs = F4(
 			]);
 	});
 var $author$project$OUI$Material$Button$elevatedDisabledAttrs = F3(
-	function (typescale, colorscheme, layout) {
-		var _v0 = A4($author$project$OUI$Material$Button$btnColors, colorscheme, $author$project$OUI$Button$Elevated, $author$project$OUI$Primary, true);
-		var frontColor = _v0.a;
-		var backColor = _v0.b;
+	function (_v0, colorscheme, _v1) {
+		var _v2 = A4($author$project$OUI$Material$Button$btnColors, colorscheme, $author$project$OUI$Button$Elevated, $author$project$OUI$Primary, true);
+		var frontColor = _v2.a;
+		var backColor = _v2.b;
 		return _List_fromArray(
 			[
 				$mdgriffith$elm_ui$Element$Background$color(
@@ -12259,10 +12259,10 @@ var $author$project$OUI$Material$Button$fabLayoutAttrs = function (layout) {
 };
 var $author$project$OUI$Button$Filled = {$: 'Filled'};
 var $author$project$OUI$Material$Button$filledAttrs = F4(
-	function (typescale, colorscheme, layout, color) {
-		var _v0 = A4($author$project$OUI$Material$Button$btnColors, colorscheme, $author$project$OUI$Button$Filled, color, false);
-		var frontColor = _v0.a;
-		var backColor = _v0.b;
+	function (_v0, colorscheme, _v1, color) {
+		var _v2 = A4($author$project$OUI$Material$Button$btnColors, colorscheme, $author$project$OUI$Button$Filled, color, false);
+		var frontColor = _v2.a;
+		var backColor = _v2.b;
 		return _List_fromArray(
 			[
 				$mdgriffith$elm_ui$Element$Background$color(
@@ -12305,10 +12305,10 @@ var $author$project$OUI$Material$Button$filledAttrs = F4(
 			]);
 	});
 var $author$project$OUI$Material$Button$filledDisabledAttrs = F3(
-	function (typescale, colorscheme, layout) {
-		var _v0 = A4($author$project$OUI$Material$Button$btnColors, colorscheme, $author$project$OUI$Button$Filled, $author$project$OUI$Primary, true);
-		var frontColor = _v0.a;
-		var backColor = _v0.b;
+	function (_v0, colorscheme, _v1) {
+		var _v2 = A4($author$project$OUI$Material$Button$btnColors, colorscheme, $author$project$OUI$Button$Filled, $author$project$OUI$Primary, true);
+		var frontColor = _v2.a;
+		var backColor = _v2.b;
 		return _List_fromArray(
 			[
 				$mdgriffith$elm_ui$Element$Background$color(
@@ -12578,7 +12578,7 @@ var $mdgriffith$elm_ui$Element$paddingXY = F2(
 		}
 	});
 var $author$project$OUI$Material$Button$layoutAttrs = F4(
-	function (typescale, colorscheme, layout, hasIcon) {
+	function (typescale, _v0, layout, hasIcon) {
 		var padding = hasIcon ? $mdgriffith$elm_ui$Element$paddingEach(
 			{bottom: 0, left: layout.leftPaddingWithIcon, right: layout.rightPaddingWithIcon, top: 0}) : A2($mdgriffith$elm_ui$Element$paddingXY, layout.leftRightPadding, 0);
 		return A2(
@@ -12664,7 +12664,7 @@ var $mdgriffith$elm_ui$Element$Border$width = function (v) {
 			v));
 };
 var $author$project$OUI$Material$Button$outlinedAttrs = F4(
-	function (typescale, colorscheme, layout, color) {
+	function (_v0, colorscheme, _v1, color) {
 		return _List_fromArray(
 			[
 				$mdgriffith$elm_ui$Element$Border$width(1),
@@ -12708,7 +12708,7 @@ var $author$project$OUI$Material$Button$outlinedAttrs = F4(
 			]);
 	});
 var $author$project$OUI$Material$Button$outlinedDisabledAttrs = F3(
-	function (typescale, colorscheme, layout) {
+	function (_v0, colorscheme, _v1) {
 		return _List_fromArray(
 			[
 				$mdgriffith$elm_ui$Element$Border$width(1),
@@ -12813,7 +12813,7 @@ var $mdgriffith$elm_ui$Element$text = function (content) {
 	return $mdgriffith$elm_ui$Internal$Model$Text(content);
 };
 var $author$project$OUI$Material$Button$textAttrs = F4(
-	function (typescale, colorscheme, layout, color) {
+	function (_v0, colorscheme, _v1, color) {
 		return _List_fromArray(
 			[
 				$mdgriffith$elm_ui$Element$Font$color(
@@ -12854,7 +12854,7 @@ var $author$project$OUI$Material$Button$textAttrs = F4(
 			]);
 	});
 var $author$project$OUI$Material$Button$textDisabledAttrs = F3(
-	function (typescale, colorscheme, layout) {
+	function (_v0, colorscheme, _v1) {
 		return _List_fromArray(
 			[
 				$mdgriffith$elm_ui$Element$Font$color(
@@ -13736,36 +13736,38 @@ var $author$project$OUI$Material$Checkbox$render = F4(
 		return A2(
 			$mdgriffith$elm_ui$Element$Input$button,
 			_Utils_ap(
-				aria,
-				_List_fromArray(
-					[
-						$mdgriffith$elm_ui$Element$width(
-						$mdgriffith$elm_ui$Element$px(theme.stateLayerSize)),
-						$mdgriffith$elm_ui$Element$height(
-						$mdgriffith$elm_ui$Element$px(theme.stateLayerSize)),
-						$mdgriffith$elm_ui$Element$Border$rounded((theme.stateLayerSize / 2) | 0),
-						$mdgriffith$elm_ui$Element$focused(
-						_List_fromArray(
-							[
-								$mdgriffith$elm_ui$Element$Background$color(
-								$author$project$OUI$Material$Color$toElementColor(
-									A2($author$project$OUI$Material$Color$setAlpha, $author$project$OUI$Material$Color$focusStateLayerOpacity, colorscheme.onSurface)))
-							])),
-						$mdgriffith$elm_ui$Element$mouseDown(
-						_List_fromArray(
-							[
-								$mdgriffith$elm_ui$Element$Background$color(
-								$author$project$OUI$Material$Color$toElementColor(
-									A2($author$project$OUI$Material$Color$setAlpha, $author$project$OUI$Material$Color$pressStateLayerOpacity, colorscheme.onSurface)))
-							])),
-						$mdgriffith$elm_ui$Element$mouseOver(
-						_List_fromArray(
-							[
-								$mdgriffith$elm_ui$Element$Background$color(
-								$author$project$OUI$Material$Color$toElementColor(
-									A2($author$project$OUI$Material$Color$setAlpha, $author$project$OUI$Material$Color$hoverStateLayerOpacity, colorscheme.onSurface)))
-							]))
-					])),
+				attrs,
+				_Utils_ap(
+					aria,
+					_List_fromArray(
+						[
+							$mdgriffith$elm_ui$Element$width(
+							$mdgriffith$elm_ui$Element$px(theme.stateLayerSize)),
+							$mdgriffith$elm_ui$Element$height(
+							$mdgriffith$elm_ui$Element$px(theme.stateLayerSize)),
+							$mdgriffith$elm_ui$Element$Border$rounded((theme.stateLayerSize / 2) | 0),
+							$mdgriffith$elm_ui$Element$focused(
+							_List_fromArray(
+								[
+									$mdgriffith$elm_ui$Element$Background$color(
+									$author$project$OUI$Material$Color$toElementColor(
+										A2($author$project$OUI$Material$Color$setAlpha, $author$project$OUI$Material$Color$focusStateLayerOpacity, colorscheme.onSurface)))
+								])),
+							$mdgriffith$elm_ui$Element$mouseDown(
+							_List_fromArray(
+								[
+									$mdgriffith$elm_ui$Element$Background$color(
+									$author$project$OUI$Material$Color$toElementColor(
+										A2($author$project$OUI$Material$Color$setAlpha, $author$project$OUI$Material$Color$pressStateLayerOpacity, colorscheme.onSurface)))
+								])),
+							$mdgriffith$elm_ui$Element$mouseOver(
+							_List_fromArray(
+								[
+									$mdgriffith$elm_ui$Element$Background$color(
+									$author$project$OUI$Material$Color$toElementColor(
+										A2($author$project$OUI$Material$Color$setAlpha, $author$project$OUI$Material$Color$hoverStateLayerOpacity, colorscheme.onSurface)))
+								]))
+						]))),
 			{
 				label: A2(
 					$mdgriffith$elm_ui$Element$el,
@@ -25391,7 +25393,7 @@ var $author$project$OUI$Material$TextField$render = F6(
 			var trailingIconOffset = hasClickableTrailingIcon ? (((buttonTheme.icon.containerSize - buttonTheme.icon.iconSize) / 2) | 0) : 0;
 			var _v3 = p.type_;
 			if (_v3.$ === 'Filled') {
-				var baseverticalPadding = p.isMultiline ? 0 : 0;
+				var baseverticalPadding = 0;
 				return _List_fromArray(
 					[
 						$mdgriffith$elm_ui$Element$paddingEach(

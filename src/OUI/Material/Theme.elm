@@ -1,4 +1,7 @@
-module OUI.Material.Theme exposing (Theme, defaultTheme, defaultTypescale)
+module OUI.Material.Theme exposing
+    ( Theme, defaultTheme, defaultTypescale
+    , ButtonTheme, CheckboxTheme, SwitchTheme, TextFieldTheme, Typescale
+    )
 
 {-|
 
@@ -14,6 +17,26 @@ import OUI.Material.TextField
 import OUI.Material.Typography
 
 
+type alias ButtonTheme =
+    OUI.Material.Button.Theme
+
+
+type alias CheckboxTheme =
+    OUI.Material.Checkbox.Theme
+
+
+type alias SwitchTheme =
+    OUI.Material.Switch.Theme
+
+
+type alias TextFieldTheme =
+    OUI.Material.TextField.Theme
+
+
+type alias Typescale =
+    OUI.Material.Typography.Typescale
+
+
 {-| A material theme
 
 Contains a color scheme, a typescale, and layouts for all the components
@@ -21,11 +44,11 @@ Contains a color scheme, a typescale, and layouts for all the components
 -}
 type alias Theme =
     { colorscheme : OUI.Material.Color.Scheme
-    , typescale : OUI.Material.Typography.Typescale
-    , button : OUI.Material.Button.Theme
-    , checkbox : OUI.Material.Checkbox.Theme
-    , switch : OUI.Material.Switch.Theme
-    , textfield : OUI.Material.TextField.Theme
+    , typescale : Typescale
+    , button : ButtonTheme
+    , checkbox : CheckboxTheme
+    , switch : SwitchTheme
+    , textfield : TextFieldTheme
     }
 
 
@@ -44,7 +67,7 @@ defaultTheme =
 
 {-| The default Material 3 Typescale
 -}
-defaultTypescale : OUI.Material.Typography.Typescale
+defaultTypescale : Typescale
 defaultTypescale =
     { display =
         { large =

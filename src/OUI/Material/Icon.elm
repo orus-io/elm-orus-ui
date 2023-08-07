@@ -11,6 +11,7 @@ import Svg
 renderWithSizeColor : Int -> Color -> List (Attribute msg) -> Icon -> Element msg
 renderWithSizeColor size color attrs icon =
     let
+        properties : OUI.Icon.Properties
         properties =
             OUI.Icon.properties icon
     in
@@ -37,12 +38,15 @@ renderWithSizeColor size color attrs icon =
 render : OUI.Material.Color.Scheme -> List (Attribute msg) -> Icon -> Element msg
 render colorscheme attrs icon =
     let
+        properties : OUI.Icon.Properties
         properties =
             OUI.Icon.properties icon
 
+        size : Int
         size =
             properties.size |> Maybe.withDefault 24
 
+        color : Color.Color
         color =
             OUI.Material.Color.getColor
                 (properties.color |> Maybe.withDefault OUI.Primary)

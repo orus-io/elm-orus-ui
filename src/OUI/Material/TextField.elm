@@ -87,33 +87,42 @@ render :
     -> Element msg
 render typescale colorscheme buttonTheme theme attrs textfield =
     let
+        p : OUI.TextField.Properties msg
         p =
             OUI.TextField.properties textfield
 
+        isEmpty : Bool
         isEmpty =
             p.value == ""
 
+        hasError : Bool
         hasError =
             OUI.Material.Color.isError p.color
 
+        isOutlined : Bool
         isOutlined =
             p.type_ == OUI.TextField.Outlined
 
+        isFilled : Bool
         isFilled =
             p.type_ == OUI.TextField.Filled
 
+        labelHoldPlace : Bool
         labelHoldPlace =
             isEmpty && not p.hasFocus
 
+        hasLeadingIcon : Bool
         hasLeadingIcon =
             p.leadingIcon /= Nothing
 
+        focusEvents : List (Attribute msg)
         focusEvents =
             List.filterMap identity
                 [ p.onFocus |> Maybe.map Events.onFocus
                 , p.onLoseFocus |> Maybe.map Events.onLoseFocus
                 ]
 
+        bgColorAttr : Attribute msg
         bgColorAttr =
             case p.type_ of
                 OUI.TextField.Filled ->
@@ -126,6 +135,7 @@ render typescale colorscheme buttonTheme theme attrs textfield =
                         |> OUI.Material.Color.toElementColor
                         |> Background.color
 
+        topBorderWidth : Int
         topBorderWidth =
             if isOutlined then
                 ifThenElse p.hasFocus 2 1
@@ -133,9 +143,11 @@ render typescale colorscheme buttonTheme theme attrs textfield =
             else
                 0
 
+        bottomBorderWidth : Int
         bottomBorderWidth =
             ifThenElse p.hasFocus 2 1
 
+        leftBorderWidth : Int
         leftBorderWidth =
             if isOutlined then
                 ifThenElse p.hasFocus 2 1
@@ -143,6 +155,7 @@ render typescale colorscheme buttonTheme theme attrs textfield =
             else
                 0
 
+        rightBorderWidth : Int
         rightBorderWidth =
             if isOutlined then
                 ifThenElse p.hasFocus 2 1
@@ -150,6 +163,7 @@ render typescale colorscheme buttonTheme theme attrs textfield =
             else
                 0
 
+        inputMoveDownBy : Int
         inputMoveDownBy =
             if isFilled && not labelHoldPlace then
                 (theme.height - theme.filled.topBottomPadding)
@@ -158,6 +172,7 @@ render typescale colorscheme buttonTheme theme attrs textfield =
             else
                 0
 
+        borderColor : Element.Color
         borderColor =
             if hasError || p.hasFocus then
                 OUI.Material.Color.getElementColor p.color colorscheme
@@ -165,6 +180,7 @@ render typescale colorscheme buttonTheme theme attrs textfield =
             else
                 OUI.Material.Color.toElementColor colorscheme.onSurfaceVariant
 
+        borderAttrs : List (Attribute msg)
         borderAttrs =
             transition "color 0.15s"
                 :: Border.color borderColor
@@ -189,6 +205,7 @@ render typescale colorscheme buttonTheme theme attrs textfield =
                             ]
                    )
 
+        heightAttr : List (Attribute msg)
         heightAttr =
             if p.isMultiline then
                 [ Element.scrollbarY
@@ -198,14 +215,18 @@ render typescale colorscheme buttonTheme theme attrs textfield =
             else
                 [ Element.height <| Element.px theme.height ]
 
+        paddingAttrs : List (Attribute msg)
         paddingAttrs =
             let
+                hasTrailingIcon : Bool
                 hasTrailingIcon =
                     p.trailingIcon /= Nothing
 
+                hasClickableTrailingIcon : Bool
                 hasClickableTrailingIcon =
                     p.trailingIcon /= Nothing && p.onTrailingIconClick /= Nothing
 
+                trailingIconOffset : Int
                 trailingIconOffset =
                     if hasClickableTrailingIcon then
                         (buttonTheme.icon.containerSize - buttonTheme.icon.iconSize) // 2
@@ -216,12 +237,9 @@ render typescale colorscheme buttonTheme theme attrs textfield =
             case p.type_ of
                 OUI.TextField.Filled ->
                     let
+                        baseverticalPadding : Int
                         baseverticalPadding =
-                            if p.isMultiline then
-                                0
-
-                            else
-                                0
+                            0
                     in
                     [ Element.paddingEach
                         { top =
@@ -248,6 +266,7 @@ render typescale colorscheme buttonTheme theme attrs textfield =
 
                 OUI.TextField.Outlined ->
                     let
+                        basePadding : Int
                         basePadding =
                             ((theme.height // 2 - typescale.body.large.lineHeight // 2)
                                 - 4
@@ -273,8 +292,10 @@ render typescale colorscheme buttonTheme theme attrs textfield =
                     , Element.spacing theme.paddingBetweenIconAndText
                     ]
 
+        labelElement : Element msg
         labelElement =
             let
+                inputLeftOffset : Int
                 inputLeftOffset =
                     if hasLeadingIcon then
                         theme.leftRightPaddingWithIcon + theme.iconSize + theme.paddingBetweenIconAndText
@@ -282,9 +303,11 @@ render typescale colorscheme buttonTheme theme attrs textfield =
                     else
                         theme.leftRightPaddingWithoutIcon
 
+                label : String
                 label =
                     p.label
 
+                labelColor : Element.Color
                 labelColor =
                     if hasError || p.hasFocus then
                         OUI.Material.Color.getElementColor p.color colorscheme
@@ -292,6 +315,7 @@ render typescale colorscheme buttonTheme theme attrs textfield =
                     else
                         OUI.Material.Color.toElementColor colorscheme.onSurface
 
+                staticAttrs : List (Attribute msg)
                 staticAttrs =
                     [ transition "all 0.15s"
                     , Font.color labelColor
@@ -316,6 +340,7 @@ render typescale colorscheme buttonTheme theme attrs textfield =
 
             else if isOutlined then
                 let
+                    topOffset : Int
                     topOffset =
                         typescale.body.small.size // 2
                 in
@@ -359,11 +384,13 @@ render typescale colorscheme buttonTheme theme attrs textfield =
                                ]
                         )
 
+        fontColorAttr : Attribute msg
         fontColorAttr =
             colorscheme.onSurface
                 |> OUI.Material.Color.toElementColor
                 |> Font.color
 
+        trailingIcon : Maybe (Element msg)
         trailingIcon =
             case ( hasError, p.errorIcon ) of
                 ( True, Just icon ) ->
@@ -387,6 +414,7 @@ render typescale colorscheme buttonTheme theme attrs textfield =
                                             |> Button.render typescale colorscheme buttonTheme [ Element.centerX, Element.centerY ]
                             )
 
+        input_attrs : List (Attribute msg)
         input_attrs =
             bgColorAttr
                 :: Border.width 0

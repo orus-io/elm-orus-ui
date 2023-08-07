@@ -2,7 +2,7 @@ module OUI.Icon exposing
     ( Icon, withSize, withColor
     , check, clear, light_mode, dark_mode
     , elmMaterialIcons, materialIcons
-    , Renderer(..), properties
+    , Renderer(..), Properties, properties
     )
 
 {-|
@@ -25,7 +25,7 @@ module OUI.Icon exposing
 
 # Internals
 
-@docs Renderer, properties
+@docs Renderer, Properties, properties
 
 -}
 
@@ -92,6 +92,7 @@ check =
         Svg
             (\size color ->
                 let
+                    sizeAsString : String
                     sizeAsString =
                         String.fromInt size
                 in
@@ -121,6 +122,7 @@ clear =
         Svg
             (\size color ->
                 let
+                    sizeAsString : String
                     sizeAsString =
                         String.fromInt size
                 in
@@ -150,6 +152,7 @@ dark_mode =
         Svg
             (\size color ->
                 let
+                    sizeAsString : String
                     sizeAsString =
                         String.fromInt size
                 in
@@ -181,6 +184,7 @@ light_mode =
         Svg
             (\size color ->
                 let
+                    sizeAsString : String
                     sizeAsString =
                         String.fromInt size
                 in
@@ -250,14 +254,18 @@ materialIcons fun =
             )
 
 
+{-| -}
+type alias Properties =
+    { size : Maybe Int
+    , color : Maybe OUI.Color
+    , renderer : Renderer
+    }
+
+
 {-| returns the properties of an icon
 -}
 properties :
     Icon
-    ->
-        { size : Maybe Int
-        , color : Maybe OUI.Color
-        , renderer : Renderer
-        }
+    -> Properties
 properties (Icon props) =
     props

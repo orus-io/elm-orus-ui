@@ -126,6 +126,7 @@ setTheme :
     -> Explorer shared sharedMsg c p cm pm
 setTheme theme expl =
     let
+        shared : Shared
         shared =
             expl.initialShared
     in
@@ -143,6 +144,7 @@ setColorScheme :
     -> Explorer shared sharedMsg c p cm pm
 setColorScheme light dark expl =
     let
+        shared : Shared
         shared =
             expl.initialShared
     in
@@ -175,6 +177,7 @@ addBook :
     -> Explorer Shared SharedMsg model (Spa.PageStack.Model Spa.SetupError current previous) (BookMsg msg) (Spa.PageStack.Msg Route currentMsg previousMsg)
 addBook b expl =
     let
+        cat : String
         cat =
             expl.categories
                 |> List.head
@@ -372,6 +375,7 @@ decodeFlags =
 changeColorScheme : Int -> ColorSchemeType -> Shared -> Shared
 changeColorScheme index type_ shared =
     let
+        realIndex : Int
         realIndex =
             if index < 0 then
                 0
@@ -382,6 +386,7 @@ changeColorScheme index type_ shared =
             else
                 index
 
+        colorScheme : Color.Scheme
         colorScheme =
             shared.colorSchemeList
                 |> (if realIndex > 0 then
@@ -402,6 +407,7 @@ changeColorScheme index type_ shared =
                     )
                 |> Maybe.withDefault Color.defaultLightScheme
 
+        theme : Theme.Theme
         theme =
             shared.theme
     in
@@ -421,6 +427,7 @@ finalize :
     -> Spa.Application Json.Decode.Value Shared SharedMsg String current previous currentMsg previousMsg
 finalize expl =
     let
+        categories : List ( String, List String )
         categories =
             expl.categories
                 |> List.map (Tuple.mapSecond List.reverse)
@@ -431,6 +438,7 @@ finalize expl =
         , init =
             \flags _ ->
                 let
+                    dFlags : { dark_mode : Bool }
                     dFlags =
                         Json.Decode.decodeValue decodeFlags flags
                             |> Result.withDefault { dark_mode = False }

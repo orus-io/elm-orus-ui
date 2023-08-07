@@ -68,6 +68,7 @@ render colorscheme theme attrs switch =
         { onChange, selected, color, iconSelected, iconUnselected } =
             Switch.properties switch
 
+        aria : List (Attribute msg)
         aria =
             ARIA.roleSwitch selected
                 |> ARIA.toElementAttributes
@@ -128,6 +129,7 @@ render colorscheme theme attrs switch =
                             |> Color.withShade colorscheme.surfaceContainerHighest 0.38
                     }
 
+        trackAttrs : List (Attribute msg)
         trackAttrs =
             [ Element.width <| Element.px theme.track.width
             , Element.height <| Element.px theme.track.height
@@ -137,9 +139,11 @@ render colorscheme theme attrs switch =
             , Background.color bgColor
             ]
 
+        withIcon : Bool
         withIcon =
             selected && iconSelected /= Nothing || not selected && iconUnselected /= Nothing
 
+        icon : Element msg
         icon =
             (if selected then
                 iconSelected
@@ -162,6 +166,7 @@ render colorscheme theme attrs switch =
                     )
                 |> Maybe.withDefault Element.none
 
+        thumbSize : Int
         thumbSize =
             theme.thumb.size
                 |> (if withIcon then
@@ -174,6 +179,7 @@ render colorscheme theme attrs switch =
                         .unselected
                    )
 
+        thumbAttrs : List (Attribute msg)
         thumbAttrs =
             [ Element.height <| Element.px theme.thumb.size.pressed
             , Element.width <| Element.px theme.thumb.size.pressed

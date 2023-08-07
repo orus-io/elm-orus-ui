@@ -1,7 +1,7 @@
 module OUI.Checkbox exposing
     ( new, Checkbox
     , withIcon, withColor, withChecked, onChange, disabled
-    , properties
+    , Properties, properties
     )
 
 {-|
@@ -15,7 +15,7 @@ module OUI.Checkbox exposing
 
 # Internals
 
-@docs properties
+@docs Properties, properties
 
 -}
 
@@ -23,7 +23,7 @@ import OUI
 import OUI.Icon exposing (Icon)
 
 
-type alias Props msg =
+type alias Properties msg =
     { checked : Bool
     , icon : Icon
     , onChange : Maybe (Bool -> msg)
@@ -34,7 +34,7 @@ type alias Props msg =
 {-| A Checkbox component
 -}
 type Checkbox constraints msg
-    = Checkbox (Props msg)
+    = Checkbox (Properties msg)
 
 
 {-| creates a checkbox. It must get a 'onChange' handler or be 'disabled'.
@@ -104,11 +104,6 @@ disabled (Checkbox props) =
 {-| -}
 properties :
     Checkbox { a | hasAction : (), withChecked : () } msg
-    ->
-        { checked : Bool
-        , icon : Icon
-        , onChange : Maybe (Bool -> msg)
-        , color : OUI.Color
-        }
+    -> Properties msg
 properties (Checkbox props) =
     props

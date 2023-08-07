@@ -44,9 +44,11 @@ render :
     -> Element msg
 render colorscheme theme attrs checkbox =
     let
+        properties : OUI.Checkbox.Properties msg
         properties =
             OUI.Checkbox.properties checkbox
 
+        aria : List (Attribute msg)
         aria =
             ARIA.roleCheckbox properties.checked
                 |> ARIA.toElementAttributes
@@ -74,7 +76,8 @@ render colorscheme theme attrs checkbox =
                     )
     in
     Input.button
-        (aria
+        (attrs
+            ++ aria
             ++ [ Element.width <| Element.px theme.stateLayerSize
                , Element.height <| Element.px theme.stateLayerSize
                , Border.rounded <| theme.stateLayerSize // 2
