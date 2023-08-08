@@ -2,10 +2,10 @@ module OUI.Showcase.Navigation exposing (Model, Msg, book)
 
 import Effect
 import Element exposing (Element)
-import OUI.Explorer as Explorer exposing (Explorer)
+import OUI.Explorer as Explorer
 import OUI.Icon
 import OUI.Material as Material
-import OUI.Navigation as Navigation
+import OUI.Navigation as Navigation exposing (Navigation)
 
 
 type alias Model =
@@ -34,6 +34,7 @@ book =
         |> Explorer.withChapter dynamic
 
 
+addEntries : Navigation btnC String msg -> Navigation btnC String msg
 addEntries =
     Navigation.addSectionHeader "Mail"
         >> Navigation.addEntryWithBadge "inbox" "Inbox" OUI.Icon.check "50"
@@ -42,6 +43,7 @@ addEntries =
         >> Navigation.addEntry "folder2" "Folder" OUI.Icon.light_mode
 
 
+nav : Navigation btnC String (Explorer.BookMsg msg)
 nav =
     Navigation.new Explorer.logEvent
         |> addEntries

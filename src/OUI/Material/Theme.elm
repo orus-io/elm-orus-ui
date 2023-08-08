@@ -1,13 +1,13 @@
 module OUI.Material.Theme exposing
     ( Theme, defaultTheme, Typescale, defaultTypescale
-    , ButtonTheme, CheckboxTheme, SwitchTheme, TextFieldTheme
+    , ButtonTheme, CheckboxTheme, NavigationTheme, SwitchTheme, TextFieldTheme
     )
 
 {-|
 
 @docs Theme, defaultTheme, Typescale, defaultTypescale
 
-@docs ButtonTheme, CheckboxTheme, SwitchTheme, TextFieldTheme
+@docs ButtonTheme, CheckboxTheme, NavigationTheme, SwitchTheme, TextFieldTheme
 
 -}
 

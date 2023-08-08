@@ -1,4 +1,4 @@
-module OUI.Material.Navigation exposing (..)
+module OUI.Material.Navigation exposing (Theme, defaultTheme, render)
 
 import Element exposing (Attribute, Element)
 import Element.Background as Background
@@ -10,7 +10,7 @@ import Html.Attributes
 import OUI.Material.Color exposing (toElementColor)
 import OUI.Material.Icon
 import OUI.Material.Typography
-import OUI.Navigation exposing (Navigation, NavigationProperties)
+import OUI.Navigation exposing (Navigation)
 import OUI.Text
 
 
@@ -125,14 +125,17 @@ render :
     -> List (Attribute msg)
     -> Navigation btnC key msg
     -> Element msg
-render typescale colorscheme theme attrs nav =
+render typescale colorscheme theme _ nav =
     let
+        props : OUI.Navigation.Properties btnC key msg
         props =
             OUI.Navigation.properties nav
 
+        isDrawer : Bool
         isDrawer =
             props.mode /= OUI.Navigation.Rail
 
+        width : Int
         width =
             if isDrawer then
                 theme.drawer.containerWidth
@@ -147,44 +150,44 @@ render typescale colorscheme theme attrs nav =
         , transitionAllEaseOut
         ]
     <|
-        [-- image header
-         -- text header
-         -- fab
-        ]
-            ++ List.indexedMap
-                (\i entry ->
-                    ( String.fromInt i
-                    , renderEntry typescale colorscheme theme props entry
-                    )
+        -- [image header
+        -- text header
+        -- fab
+        --]
+        --++
+        List.indexedMap
+            (\i entry ->
+                ( String.fromInt i
+                , renderEntry typescale colorscheme theme props entry
                 )
-                props.entries
+            )
+            props.entries
 
 
 renderEntry :
     OUI.Material.Typography.Typescale
     -> OUI.Material.Color.Scheme
     -> Theme
-    -> OUI.Navigation.NavigationProperties btnC key msg
+    -> OUI.Navigation.Properties btnC key msg
     -> OUI.Navigation.Entry key
     -> Element msg
 renderEntry typescale colorscheme theme props entry =
     let
+        isDrawer : Bool
         isDrawer =
             props.mode /= OUI.Navigation.Rail
     in
     case entry of
         OUI.Navigation.Entry key { label, icon, badge } ->
-            let
-                isActive =
-                    props.selected == Just key
-            in
             if isDrawer then
                 let
+                    badgeEl : Element msg
                     badgeEl =
                         badge
                             |> Maybe.map
                                 (\text ->
                                     let
+                                        large : Bool
                                         large =
                                             text /= ""
                                     in
@@ -260,11 +263,13 @@ renderEntry typescale colorscheme theme props entry =
 
             else
                 let
+                    badgeEl : Element msg
                     badgeEl =
                         badge
                             |> Maybe.map
                                 (\text ->
                                     let
+                                        large : Bool
                                         large =
                                             text /= ""
                                     in

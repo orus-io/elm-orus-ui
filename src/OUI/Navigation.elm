@@ -4,7 +4,7 @@ module OUI.Navigation exposing
     , withFAB, withHeader, withImageHeader
     , addEntry, addEntryWithBadge
     , addSectionHeader, addDivider
-    , Mode(..), Entry(..), EntryProperties, NavigationProperties, properties
+    , Mode(..), Entry(..), EntryProperties, Properties, properties
     )
 
 {-| A Navigation drawer(+rail) component
@@ -24,7 +24,7 @@ module OUI.Navigation exposing
 
 # Internals
 
-@docs Mode, Entry, EntryProperties, NavigationProperties, properties
+@docs Mode, Entry, EntryProperties, Properties, properties
 
 -}
 
@@ -57,7 +57,7 @@ type Mode
 
 
 {-| -}
-type alias NavigationProperties btnC key msg =
+type alias Properties btnC key msg =
     { imageHeader : Maybe Image
     , fab : Maybe (Button { btnC | hasAction : (), hasIcon : () } msg)
     , header : Maybe String
@@ -73,7 +73,7 @@ type alias NavigationProperties btnC key msg =
 {-| A Navigation component
 -}
 type Navigation btnC key msg
-    = Navigation (NavigationProperties btnC key msg)
+    = Navigation (Properties btnC key msg)
 
 
 {-| create a new empty Navigation drawer
@@ -182,6 +182,6 @@ addEntryWithBadge key label icon badge (Navigation props) =
 {-| -}
 properties :
     Navigation btnC key msg
-    -> NavigationProperties btnC key msg
+    -> Properties btnC key msg
 properties (Navigation props) =
     props

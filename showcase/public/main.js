@@ -24045,9 +24045,6 @@ var $author$project$OUI$Material$Navigation$renderEntry = F5(
 				var label = entry.b.label;
 				var icon = entry.b.icon;
 				var badge = entry.b.badge;
-				var isActive = _Utils_eq(
-					props.selected,
-					$elm$core$Maybe$Just(key));
 				if (isDrawer) {
 					var badgeEl = A2(
 						$elm$core$Maybe$withDefault,
@@ -24326,7 +24323,7 @@ var $author$project$OUI$Material$Navigation$renderEntry = F5(
 		}
 	});
 var $author$project$OUI$Material$Navigation$render = F5(
-	function (typescale, colorscheme, theme, attrs, nav) {
+	function (typescale, colorscheme, theme, _v0, nav) {
 		var props = $author$project$OUI$Navigation$properties(nav);
 		var isDrawer = !_Utils_eq(props.mode, $author$project$OUI$Navigation$Rail);
 		var width = isDrawer ? theme.drawer.containerWidth : theme.rail.containerWidth;
@@ -24341,17 +24338,15 @@ var $author$project$OUI$Material$Navigation$render = F5(
 					$mdgriffith$elm_ui$Element$height($mdgriffith$elm_ui$Element$fill),
 					$author$project$OUI$Material$Navigation$transitionAllEaseOut
 				]),
-			_Utils_ap(
-				_List_Nil,
-				A2(
-					$elm$core$List$indexedMap,
-					F2(
-						function (i, entry) {
-							return _Utils_Tuple2(
-								$elm$core$String$fromInt(i),
-								A5($author$project$OUI$Material$Navigation$renderEntry, typescale, colorscheme, theme, props, entry));
-						}),
-					props.entries)));
+			A2(
+				$elm$core$List$indexedMap,
+				F2(
+					function (i, entry) {
+						return _Utils_Tuple2(
+							$elm$core$String$fromInt(i),
+							A5($author$project$OUI$Material$Navigation$renderEntry, typescale, colorscheme, theme, props, entry));
+					}),
+				props.entries));
 	});
 var $author$project$OUI$Material$navigation = function (theme) {
 	return A3($author$project$OUI$Material$Navigation$render, theme.typescale, theme.colorscheme, theme.navigation);
