@@ -6,7 +6,7 @@ import OUI.Material as Material
 import OUI.Text as Text
 
 
-book : Explorer.Book () ()
+book : Explorer.Book themeExt () ()
 book =
     Explorer.book "Typography"
         |> Explorer.withMarkdownChapter """

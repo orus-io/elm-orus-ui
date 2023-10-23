@@ -104,7 +104,7 @@ showColorScheme title scheme =
         ]
 
 
-book : Explorer.Book () ()
+book : Explorer.Book themeExt () ()
 book =
     Explorer.book "Colors"
         |> Explorer.withMarkdownChapter """

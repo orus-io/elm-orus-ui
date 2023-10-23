@@ -16,7 +16,7 @@ type Msg
     = Expand Bool
 
 
-book : Explorer.Book Model Msg
+book : Explorer.Book themeExt Model Msg
 book =
     Explorer.statefulBook "Navigation"
         { init = \_ -> { expanded = False } |> Effect.withNone
@@ -49,7 +49,7 @@ nav =
         |> addEntries
 
 
-drawer : Explorer.Shared -> Element (Explorer.BookMsg Msg)
+drawer : Explorer.Shared themeExt -> Element (Explorer.BookMsg Msg)
 drawer { theme } =
     Element.el
         [ Element.width Element.fill
@@ -58,7 +58,7 @@ drawer { theme } =
         (nav |> Material.navigation theme [])
 
 
-rail : Explorer.Shared -> Element (Explorer.BookMsg Msg)
+rail : Explorer.Shared themeExt -> Element (Explorer.BookMsg Msg)
 rail { theme } =
     Element.el
         [ Element.width Element.fill
@@ -70,7 +70,7 @@ rail { theme } =
         )
 
 
-modal : Explorer.Shared -> Element (Explorer.BookMsg Msg)
+modal : Explorer.Shared themeExt -> Element (Explorer.BookMsg Msg)
 modal { theme } =
     Element.el
         [ Element.width Element.fill
@@ -82,7 +82,7 @@ modal { theme } =
         )
 
 
-dynamic : Explorer.Shared -> Model -> Element (Explorer.BookMsg Msg)
+dynamic : Explorer.Shared themeExt -> Model -> Element (Explorer.BookMsg Msg)
 dynamic { theme } { expanded } =
     Element.el
         [ Element.width Element.fill

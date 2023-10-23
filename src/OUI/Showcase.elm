@@ -23,16 +23,14 @@ import Spa.PageStack
 -}
 addPages :
     Explorer
-        Explorer.Shared
-        Explorer.SharedMsg
+        themeExt
         current
         previous
         currentMsg
         previousMsg
     ->
         Explorer
-            Explorer.Shared
-            Explorer.SharedMsg
+            themeExt
             Navigation.Model
             (Spa.PageStack.Model
                 Spa.SetupError

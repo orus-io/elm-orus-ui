@@ -13,7 +13,7 @@ import OUI.Material.Color
 import OUI.TextField as TextField exposing (TextField, multiline)
 
 
-book : Explorer.Book Model Msg
+book : Explorer.Book themeExt Model Msg
 book =
     Explorer.statefulBook "Text Fields"
         { init =
@@ -115,7 +115,7 @@ update _ msg model =
                 |> Effect.withNone
 
 
-textfields : Bool -> Explorer.Shared -> Model -> Element (Explorer.BookMsg Msg)
+textfields : Bool -> Explorer.Shared themeExt -> Model -> Element (Explorer.BookMsg Msg)
 textfields multiline { theme } model =
     let
         key : String -> String

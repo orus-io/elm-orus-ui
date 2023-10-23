@@ -10,7 +10,11 @@ import OUI.Text as Text
 import OUI.TextField as TextField
 
 
-withChapter : String -> List ( String, Icon ) -> Explorer.Book Model Msg -> Explorer.Book Model Msg
+withChapter :
+    String
+    -> List ( String, Icon )
+    -> Explorer.Book themeExt Model Msg
+    -> Explorer.Book themeExt Model Msg
 withChapter title iconList =
     Explorer.withChapter <| iconChapter title iconList
 
@@ -26,7 +30,7 @@ capitalize =
         >> String.join " "
 
 
-iconChapter : String -> List ( String, Icon ) -> Explorer.Shared -> Model -> Element msg
+iconChapter : String -> List ( String, Icon ) -> Explorer.Shared themeExt -> Model -> Element msg
 iconChapter title iconList shared model =
     Element.column [ Element.spacing 20, Element.paddingXY 20 0, Element.width <| Element.maximum 1200 <| Element.fill ] <|
         [ Text.titleLarge title
@@ -60,7 +64,7 @@ iconChapter title iconList shared model =
         ]
 
 
-filterChapter : Explorer.Shared -> Model -> Element (Explorer.BookMsg Msg)
+filterChapter : Explorer.Shared themeExt -> Model -> Element (Explorer.BookMsg Msg)
 filterChapter shared model =
     TextField.new "Search icon" (Explorer.bookMsg << FilterChange) model.filter
         |> TextField.onFocusBlur (Explorer.bookMsg <| FilterFocus True) (Explorer.bookMsg <| FilterFocus False)
@@ -69,7 +73,7 @@ filterChapter shared model =
         |> Element.el [ Element.padding 20, Element.width Element.fill ]
 
 
-book : String -> Explorer.Book Model Msg
+book : String -> Explorer.Book themeExt Model Msg
 book title =
     Explorer.statefulBook
         title
@@ -91,7 +95,7 @@ type Msg
     | FilterFocus Bool
 
 
-init : Explorer.Shared -> ( Model, Effect Explorer.SharedMsg Msg )
+init : Explorer.Shared themeExt -> ( Model, Effect Explorer.SharedMsg Msg )
 init _ =
     { filter = ""
     , filterFocused = False
@@ -99,7 +103,7 @@ init _ =
         |> Effect.withNone
 
 
-update : Explorer.Shared -> Msg -> Model -> ( Model, Effect Explorer.SharedMsg Msg )
+update : Explorer.Shared themeExt -> Msg -> Model -> ( Model, Effect Explorer.SharedMsg Msg )
 update _ msg model =
     case msg of
         FilterFocus focused ->

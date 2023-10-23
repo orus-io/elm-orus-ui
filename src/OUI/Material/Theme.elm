@@ -68,7 +68,7 @@ type alias Typescale =
 Contains a color scheme, a typescale, and layouts for all the components
 
 -}
-type alias Theme =
+type alias Theme ext =
     { colorscheme : OUI.Material.Color.Scheme
     , typescale : Typescale
     , button : ButtonTheme
@@ -77,12 +77,13 @@ type alias Theme =
     , switch : SwitchTheme
     , textfield : TextFieldTheme
     , radiobutton : RadioButtonTheme
+    , ext : Maybe ext
     }
 
 
 {-| The default Material 3 theme
 -}
-defaultTheme : Theme
+defaultTheme : Theme ext
 defaultTheme =
     { colorscheme = OUI.Material.Color.defaultLightScheme
     , typescale = defaultTypescale
@@ -92,6 +93,7 @@ defaultTheme =
     , radiobutton = OUI.Material.RadioButton.defaultTheme
     , switch = OUI.Material.Switch.defaultTheme
     , textfield = OUI.Material.TextField.defaultTheme
+    , ext = Nothing
     }
 
 

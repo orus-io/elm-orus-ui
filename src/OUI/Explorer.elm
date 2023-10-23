@@ -62,9 +62,9 @@ invertColorSchemeType t =
 
 {-| The shared state
 -}
-type alias Shared =
+type alias Shared themeExt =
     { lastEvents : List String
-    , theme : Theme
+    , theme : Theme themeExt
     , colorSchemeList : List ( Color.Scheme, Color.Scheme )
     , selectedColorScheme : ( Int, ColorSchemeType )
     }
@@ -92,16 +92,16 @@ mapView mapper abook =
 
 
 {-| -}
-type alias Explorer shared sharedMsg current previous currentMsg previousMsg =
-    { app : Spa.Builder Route () shared sharedMsg (Page (Spa.PageStack.Msg Route currentMsg previousMsg)) current previous currentMsg previousMsg
+type alias Explorer themeExt current previous currentMsg previousMsg =
+    { app : Spa.Builder Route () (Shared themeExt) SharedMsg (Page (Spa.PageStack.Msg Route currentMsg previousMsg)) current previous currentMsg previousMsg
     , categories : List ( String, List String )
-    , initialShared : Shared
+    , initialShared : Shared themeExt
     }
 
 
 {-| creates an empty Explorer
 -}
-explorer : Explorer shared sharedMsg () () () ()
+explorer : Explorer themeExt () () () ()
 explorer =
     { app =
         Spa.init
@@ -122,12 +122,12 @@ explorer =
 {-| set the theme
 -}
 setTheme :
-    Theme.Theme
-    -> Explorer shared sharedMsg c p cm pm
-    -> Explorer shared sharedMsg c p cm pm
+    Theme.Theme themeExt
+    -> Explorer themeExt c p cm pm
+    -> Explorer themeExt c p cm pm
 setTheme theme expl =
     let
-        shared : Shared
+        shared : Shared themeExt
         shared =
             expl.initialShared
     in
@@ -141,11 +141,11 @@ setTheme theme expl =
 setColorScheme :
     Color.Scheme
     -> Color.Scheme
-    -> Explorer shared sharedMsg c p cm pm
-    -> Explorer shared sharedMsg c p cm pm
+    -> Explorer themeExt c p cm pm
+    -> Explorer themeExt c p cm pm
 setColorScheme light dark expl =
     let
-        shared : Shared
+        shared : Shared themeExt
         shared =
             expl.initialShared
     in
@@ -162,8 +162,8 @@ added.
 -}
 category :
     String
-    -> Explorer shared sharedMsg current previous currentMsg previousMsg
-    -> Explorer shared sharedMsg current previous currentMsg previousMsg
+    -> Explorer themeExt current previous currentMsg previousMsg
+    -> Explorer themeExt current previous currentMsg previousMsg
 category name expl =
     { expl
         | categories = ( name, [] ) :: expl.categories
@@ -173,9 +173,9 @@ category name expl =
 {-| Add a book to the current category
 -}
 addBook :
-    Book model msg
-    -> Explorer Shared SharedMsg current previous currentMsg previousMsg
-    -> Explorer Shared SharedMsg model (Spa.PageStack.Model Spa.SetupError current previous) (BookMsg msg) (Spa.PageStack.Msg Route currentMsg previousMsg)
+    Book themeExt model msg
+    -> Explorer themeExt current previous currentMsg previousMsg
+    -> Explorer themeExt model (Spa.PageStack.Model Spa.SetupError current previous) (BookMsg msg) (Spa.PageStack.Msg Route currentMsg previousMsg)
 addBook b expl =
     let
         cat : String
@@ -238,12 +238,12 @@ addBook b expl =
 
 {-| A stateless book
 -}
-type alias Book model msg =
+type alias Book themeExt model msg =
     { title : String
-    , init : Shared -> ( model, Effect SharedMsg msg )
-    , update : Shared -> msg -> model -> ( model, Effect SharedMsg msg )
-    , subscriptions : Shared -> model -> Sub msg
-    , chapters : List (Shared -> model -> Element (BookMsg msg))
+    , init : Shared themeExt -> ( model, Effect SharedMsg msg )
+    , update : Shared themeExt -> msg -> model -> ( model, Effect SharedMsg msg )
+    , subscriptions : Shared themeExt -> model -> Sub msg
+    , chapters : List (Shared themeExt -> model -> Element (BookMsg msg))
     }
 
 
@@ -273,7 +273,7 @@ bookMsg =
 
 {-| Creates a new static book
 -}
-book : String -> Book () ()
+book : String -> Book themeExt () ()
 book title =
     { title = title
     , init = \_ -> () |> Effect.withNone
@@ -288,11 +288,11 @@ book title =
 statefulBook :
     String
     ->
-        { init : Shared -> ( model, Effect SharedMsg msg )
-        , update : Shared -> msg -> model -> ( model, Effect SharedMsg msg )
-        , subscriptions : Shared -> model -> Sub msg
+        { init : Shared themeExt -> ( model, Effect SharedMsg msg )
+        , update : Shared themeExt -> msg -> model -> ( model, Effect SharedMsg msg )
+        , subscriptions : Shared themeExt -> model -> Sub msg
         }
-    -> Book model msg
+    -> Book themeExt model msg
 statefulBook title { init, update, subscriptions } =
     { title = title
     , init = init
@@ -304,7 +304,7 @@ statefulBook title { init, update, subscriptions } =
 
 {-| Add a mardown chapter to a book
 -}
-withMarkdownChapter : String -> Book model msg -> Book model msg
+withMarkdownChapter : String -> Book themeExt model msg -> Book themeExt model msg
 withMarkdownChapter markdown b =
     { b
         | chapters =
@@ -329,7 +329,7 @@ withMarkdownChapter markdown b =
 
 {-| Add a static content chapter to a book
 -}
-withStaticChapter : (Shared -> Element (BookMsg msg)) -> Book model msg -> Book model msg
+withStaticChapter : (Shared themeExt -> Element (BookMsg msg)) -> Book themeExt model msg -> Book themeExt model msg
 withStaticChapter body b =
     { b
         | chapters = (\shared _ -> body shared) :: b.chapters
@@ -338,7 +338,7 @@ withStaticChapter body b =
 
 {-| Add a chapter to a book
 -}
-withChapter : (Shared -> model -> Element (BookMsg msg)) -> Book model msg -> Book model msg
+withChapter : (Shared themeExt -> model -> Element (BookMsg msg)) -> Book themeExt model msg -> Book themeExt model msg
 withChapter body b =
     { b
         | chapters = body :: b.chapters
@@ -373,7 +373,7 @@ decodeFlags =
         )
 
 
-changeColorScheme : Int -> ColorSchemeType -> Shared -> Shared
+changeColorScheme : Int -> ColorSchemeType -> Shared themeExt -> Shared themeExt
 changeColorScheme index type_ shared =
     let
         realIndex : Int
@@ -408,7 +408,7 @@ changeColorScheme index type_ shared =
                     )
                 |> Maybe.withDefault Color.defaultLightScheme
 
-        theme : Theme.Theme
+        theme : Theme.Theme themeExt
         theme =
             shared.theme
     in
@@ -424,8 +424,8 @@ changeColorScheme index type_ shared =
 {-| Finalize a explorer and returns Program
 -}
 finalize :
-    Explorer Shared SharedMsg current previous currentMsg previousMsg
-    -> Spa.Application Json.Decode.Value Shared SharedMsg String current previous currentMsg previousMsg
+    Explorer themeExt current previous currentMsg previousMsg
+    -> Spa.Application Json.Decode.Value (Shared themeExt) SharedMsg String current previous currentMsg previousMsg
 finalize expl =
     let
         categories : List ( String, List String )

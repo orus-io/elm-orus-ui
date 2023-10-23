@@ -9,7 +9,7 @@ import OUI.Material as Material
 import OUI.Material.Theme
 
 
-book : Explorer.Book () ()
+book : Explorer.Book themeExt () ()
 book =
     Explorer.book "Buttons"
         |> Explorer.withStaticChapter commonButtons
@@ -18,7 +18,7 @@ book =
 {-| A common button with/without icon, as a link, disabled
 -}
 commonButtonVariants :
-    OUI.Material.Theme.Theme
+    OUI.Material.Theme.Theme themeExt
     -> String
     -> (Button { hasNoIcon : (), needOnClickOrDisabled : () } (Explorer.BookMsg msg) -> Button { hasNoIcon : (), needOnClickOrDisabled : () } (Explorer.BookMsg msg))
     -> List (Element (Explorer.BookMsg msg))
@@ -54,7 +54,7 @@ commonButtonVariants theme label btnType =
     ]
 
 
-commonButtons : Explorer.Shared -> Element (Explorer.BookMsg ())
+commonButtons : Explorer.Shared themeExt -> Element (Explorer.BookMsg ())
 commonButtons { theme } =
     let
         btnRow : String -> (Button { hasNoIcon : (), needOnClickOrDisabled : () } (Explorer.BookMsg msg) -> Button { hasNoIcon : (), needOnClickOrDisabled : () } (Explorer.BookMsg msg)) -> Element (Explorer.BookMsg msg)

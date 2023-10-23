@@ -3,6 +3,7 @@ module OUI.Material.Color exposing
     , getColor, getOnColor, getElementColor, getContainerColor, getOnContainerColor, getOnElementColor, toElementColor, getContainerElementColor, getOnContainerElementColor
     , hoverStateLayerOpacity, focusStateLayerOpacity, pressStateLayerOpacity
     , setAlpha, withShade, isError
+    , tone
     )
 
 {-| Material 3 color utilities and scheme
@@ -434,6 +435,11 @@ darkFromKeyColors keyColors =
     }
 
 
+{-| Change the tone of a color
+
+See <https://m3.material.io/styles/color/the-color-system/key-colors-tones>
+
+-}
 tone : Int -> Color -> Color
 tone light color =
     let

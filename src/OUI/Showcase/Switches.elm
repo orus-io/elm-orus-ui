@@ -10,7 +10,7 @@ import OUI.Material as Material
 import OUI.Switch as Switch
 
 
-book : Explorer.Book Model Msg
+book : Explorer.Book themeExt Model Msg
 book =
     Explorer.statefulBook "Switch"
         { init =
@@ -50,7 +50,7 @@ onChange name selected =
                )
 
 
-checkbox : Explorer.Shared -> Model -> Element (Explorer.BookMsg Msg)
+checkbox : Explorer.Shared themeExt -> Model -> Element (Explorer.BookMsg Msg)
 checkbox { theme } { switches } =
     Element.column [ Element.spacing 30, Element.width <| Element.px 300 ]
         [ Element.text "Switches"

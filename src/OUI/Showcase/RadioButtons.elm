@@ -8,7 +8,7 @@ import OUI.Material as Material
 import OUI.RadioButton as RadioButton
 
 
-book : Explorer.Book () ()
+book : Explorer.Book themeExt () ()
 book =
     Explorer.book "RadioButton"
         |> Explorer.withStaticChapter radiobutton
@@ -27,7 +27,7 @@ onChange name selected =
                )
 
 
-radiobutton : Explorer.Shared -> Element (Explorer.BookMsg ())
+radiobutton : Explorer.Shared themeExt -> Element (Explorer.BookMsg ())
 radiobutton { theme } =
     Element.column [ Element.spacing 30 ]
         [ Element.text "RadioButton"
