@@ -13708,10 +13708,29 @@ var $author$project$OUI$Material$Checkbox$render = F4(
 		var aria = $author$project$OUI$Utils$ARIA$toElementAttributes(
 			$author$project$OUI$Utils$ARIA$roleCheckbox(properties.checked));
 		var _v0 = function () {
-			var _v1 = _Utils_Tuple2(properties.onChange, properties.color);
-			if (_v1.a.$ === 'Just') {
-				if (_v1.b.$ === 'Error') {
-					var _v2 = _v1.b;
+			var _v1 = _Utils_Tuple2(properties.onChange, properties.checked);
+			if (_v1.a.$ === 'Nothing') {
+				var _v2 = _v1.a;
+				return _Utils_Tuple2(colorscheme.onSurface, colorscheme.onSurface);
+			} else {
+				if (_v1.b) {
+					return _Utils_Tuple2(
+						A2($author$project$OUI$Material$Color$getColor, properties.color, colorscheme),
+						colorscheme.onSurface);
+				} else {
+					return _Utils_Tuple2(
+						colorscheme.onSurface,
+						A2($author$project$OUI$Material$Color$getColor, properties.color, colorscheme));
+				}
+			}
+		}();
+		var focusedAndHoveredColor = _v0.a;
+		var pressedColor = _v0.b;
+		var _v3 = function () {
+			var _v4 = _Utils_Tuple2(properties.onChange, properties.color);
+			if (_v4.a.$ === 'Just') {
+				if (_v4.b.$ === 'Error') {
+					var _v5 = _v4.b;
 					return _Utils_Tuple3(
 						A2($author$project$OUI$Material$Color$getOnColor, properties.color, colorscheme),
 						A2($author$project$OUI$Material$Color$getColor, properties.color, colorscheme),
@@ -13723,16 +13742,16 @@ var $author$project$OUI$Material$Checkbox$render = F4(
 						colorscheme.onSurface);
 				}
 			} else {
-				var _v3 = _v1.a;
+				var _v6 = _v4.a;
 				return _Utils_Tuple3(
 					colorscheme.surface,
 					A2($author$project$OUI$Material$Color$setAlpha, 0.38, colorscheme.onSurface),
 					A2($author$project$OUI$Material$Color$setAlpha, 0.38, colorscheme.onSurface));
 			}
 		}();
-		var frontColor = _v0.a;
-		var backColor = _v0.b;
-		var borderColor = _v0.c;
+		var frontColor = _v3.a;
+		var backColor = _v3.b;
+		var borderColor = _v3.c;
 		return A2(
 			$mdgriffith$elm_ui$Element$Input$button,
 			_Utils_ap(
@@ -13751,21 +13770,21 @@ var $author$project$OUI$Material$Checkbox$render = F4(
 								[
 									$mdgriffith$elm_ui$Element$Background$color(
 									$author$project$OUI$Material$Color$toElementColor(
-										A2($author$project$OUI$Material$Color$setAlpha, $author$project$OUI$Material$Color$focusStateLayerOpacity, colorscheme.onSurface)))
+										A2($author$project$OUI$Material$Color$setAlpha, $author$project$OUI$Material$Color$focusStateLayerOpacity, focusedAndHoveredColor)))
 								])),
 							$mdgriffith$elm_ui$Element$mouseDown(
 							_List_fromArray(
 								[
 									$mdgriffith$elm_ui$Element$Background$color(
 									$author$project$OUI$Material$Color$toElementColor(
-										A2($author$project$OUI$Material$Color$setAlpha, $author$project$OUI$Material$Color$pressStateLayerOpacity, colorscheme.onSurface)))
+										A2($author$project$OUI$Material$Color$setAlpha, $author$project$OUI$Material$Color$pressStateLayerOpacity, pressedColor)))
 								])),
 							$mdgriffith$elm_ui$Element$mouseOver(
 							_List_fromArray(
 								[
 									$mdgriffith$elm_ui$Element$Background$color(
 									$author$project$OUI$Material$Color$toElementColor(
-										A2($author$project$OUI$Material$Color$setAlpha, $author$project$OUI$Material$Color$hoverStateLayerOpacity, colorscheme.onSurface)))
+										A2($author$project$OUI$Material$Color$setAlpha, $author$project$OUI$Material$Color$hoverStateLayerOpacity, focusedAndHoveredColor)))
 								]))
 						]))),
 			{
