@@ -1,4 +1,4 @@
-module OUI.Showcase.Icons exposing (book, withChapter)
+module OUI.Showcase.Icons exposing (Model, Msg, book, withChapter)
 
 import Effect exposing (Effect)
 import Element exposing (Element)
