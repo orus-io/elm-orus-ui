@@ -9,11 +9,19 @@ import OUI.Text as Text
 book : Explorer.Book themeExt () ()
 book =
     Explorer.book "Typography"
-        |> Explorer.withMarkdownChapter """ The material typescale """
+        |> Explorer.withMarkdownChapter """
+The material typescale
+
+Type styles include: display, headline, title, body, and label
+
+Each type comes in three sizes: large, medium, small
+
+
+"""
         |> Explorer.withStaticChapter
             (\{ theme } ->
                 Element.column
-                    []
+                    [ Element.spacing 10 ]
                     [ Text.displayLarge "Display Large" |> Material.text theme
                     , Text.displayMedium "Display Medium" |> Material.text theme
                     , Text.displaySmall "Display Small" |> Material.text theme

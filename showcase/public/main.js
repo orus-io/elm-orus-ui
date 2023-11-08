@@ -15026,29 +15026,6 @@ var $dillonkearns$elm_markdown$Markdown$Parser$problemToString = function (probl
 var $dillonkearns$elm_markdown$Markdown$Parser$deadEndToString = function (deadEnd) {
 	return 'Problem at row ' + ($elm$core$String$fromInt(deadEnd.row) + ('\n' + $dillonkearns$elm_markdown$Markdown$Parser$problemToString(deadEnd.problem)));
 };
-var $elm$html$Html$a = _VirtualDom_node('a');
-var $elm$html$Html$Attributes$align = $elm$html$Html$Attributes$stringProperty('align');
-var $elm$html$Html$Attributes$alt = $elm$html$Html$Attributes$stringProperty('alt');
-var $elm$html$Html$blockquote = _VirtualDom_node('blockquote');
-var $elm$html$Html$br = _VirtualDom_node('br');
-var $elm$html$Html$Attributes$checked = $elm$html$Html$Attributes$boolProperty('checked');
-var $elm$html$Html$code = _VirtualDom_node('code');
-var $elm$html$Html$del = _VirtualDom_node('del');
-var $elm$html$Html$em = _VirtualDom_node('em');
-var $elm$html$Html$h1 = _VirtualDom_node('h1');
-var $elm$html$Html$h2 = _VirtualDom_node('h2');
-var $elm$html$Html$h3 = _VirtualDom_node('h3');
-var $elm$html$Html$h4 = _VirtualDom_node('h4');
-var $elm$html$Html$h5 = _VirtualDom_node('h5');
-var $elm$html$Html$h6 = _VirtualDom_node('h6');
-var $elm$html$Html$hr = _VirtualDom_node('hr');
-var $elm$html$Html$img = _VirtualDom_node('img');
-var $elm$html$Html$input = _VirtualDom_node('input');
-var $elm$html$Html$li = _VirtualDom_node('li');
-var $elm$html$Html$ol = _VirtualDom_node('ol');
-var $dillonkearns$elm_markdown$Markdown$HtmlRenderer$HtmlRenderer = function (a) {
-	return {$: 'HtmlRenderer', a: a};
-};
 var $elm$core$Result$mapError = F2(
 	function (f, result) {
 		if (result.$ === 'Ok') {
@@ -15060,357 +15037,6 @@ var $elm$core$Result$mapError = F2(
 				f(e));
 		}
 	});
-var $dillonkearns$elm_markdown$Markdown$Html$resultOr = F2(
-	function (ra, rb) {
-		if (ra.$ === 'Err') {
-			var singleError = ra.a;
-			if (rb.$ === 'Ok') {
-				var okValue = rb.a;
-				return $elm$core$Result$Ok(okValue);
-			} else {
-				var errorsSoFar = rb.a;
-				return $elm$core$Result$Err(
-					A2($elm$core$List$cons, singleError, errorsSoFar));
-			}
-		} else {
-			var okValue = ra.a;
-			return $elm$core$Result$Ok(okValue);
-		}
-	});
-var $dillonkearns$elm_markdown$Markdown$Html$attributesToString = function (attributes) {
-	return A2(
-		$elm$core$String$join,
-		' ',
-		A2(
-			$elm$core$List$map,
-			function (_v0) {
-				var name = _v0.name;
-				var value = _v0.value;
-				return name + ('=\"' + (value + '\"'));
-			},
-			attributes));
-};
-var $dillonkearns$elm_markdown$Markdown$Html$tagToString = F2(
-	function (tagName, attributes) {
-		return $elm$core$List$isEmpty(attributes) ? ('<' + (tagName + '>')) : ('<' + (tagName + (' ' + ($dillonkearns$elm_markdown$Markdown$Html$attributesToString(attributes) + '>'))));
-	});
-var $dillonkearns$elm_markdown$Markdown$Html$oneOf = function (decoders) {
-	var unwrappedDecoders = A2(
-		$elm$core$List$map,
-		function (_v4) {
-			var rawDecoder = _v4.a;
-			return rawDecoder;
-		},
-		decoders);
-	return function (rawDecoder) {
-		return $dillonkearns$elm_markdown$Markdown$HtmlRenderer$HtmlRenderer(
-			F3(
-				function (tagName, attributes, innerBlocks) {
-					return A2(
-						$elm$core$Result$mapError,
-						function (errors) {
-							if (!errors.b) {
-								return 'Ran into a oneOf with no possibilities!';
-							} else {
-								if (!errors.b.b) {
-									var singleError = errors.a;
-									return 'Problem with the given value:\n\n' + (A2($dillonkearns$elm_markdown$Markdown$Html$tagToString, tagName, attributes) + ('\n\n' + (singleError + '\n')));
-								} else {
-									return 'oneOf failed parsing this value:\n    ' + (A2($dillonkearns$elm_markdown$Markdown$Html$tagToString, tagName, attributes) + ('\n\nParsing failed in the following 2 ways:\n\n\n' + (A2(
-										$elm$core$String$join,
-										'\n\n',
-										A2(
-											$elm$core$List$indexedMap,
-											F2(
-												function (index, error) {
-													return '(' + ($elm$core$String$fromInt(index + 1) + (') ' + error));
-												}),
-											errors)) + '\n')));
-								}
-							}
-						},
-						A3(rawDecoder, tagName, attributes, innerBlocks));
-				}));
-	}(
-		A3(
-			$elm$core$List$foldl,
-			F2(
-				function (decoder, soFar) {
-					return F3(
-						function (tagName, attributes, children) {
-							return A2(
-								$dillonkearns$elm_markdown$Markdown$Html$resultOr,
-								A3(decoder, tagName, attributes, children),
-								A3(soFar, tagName, attributes, children));
-						});
-				}),
-			F3(
-				function (_v0, _v1, _v2) {
-					return $elm$core$Result$Err(_List_Nil);
-				}),
-			unwrappedDecoders));
-};
-var $elm$html$Html$pre = _VirtualDom_node('pre');
-var $elm$html$Html$Attributes$src = function (url) {
-	return A2(
-		$elm$html$Html$Attributes$stringProperty,
-		'src',
-		_VirtualDom_noJavaScriptOrHtmlUri(url));
-};
-var $elm$html$Html$Attributes$start = function (n) {
-	return A2(
-		$elm$html$Html$Attributes$stringProperty,
-		'start',
-		$elm$core$String$fromInt(n));
-};
-var $elm$html$Html$strong = _VirtualDom_node('strong');
-var $elm$html$Html$table = _VirtualDom_node('table');
-var $elm$html$Html$tbody = _VirtualDom_node('tbody');
-var $elm$html$Html$td = _VirtualDom_node('td');
-var $elm$html$Html$th = _VirtualDom_node('th');
-var $elm$html$Html$thead = _VirtualDom_node('thead');
-var $elm$html$Html$Attributes$title = $elm$html$Html$Attributes$stringProperty('title');
-var $elm$html$Html$tr = _VirtualDom_node('tr');
-var $elm$html$Html$Attributes$type_ = $elm$html$Html$Attributes$stringProperty('type');
-var $elm$html$Html$ul = _VirtualDom_node('ul');
-var $dillonkearns$elm_markdown$Markdown$Renderer$defaultHtmlRenderer = {
-	blockQuote: $elm$html$Html$blockquote(_List_Nil),
-	codeBlock: function (_v0) {
-		var body = _v0.body;
-		var language = _v0.language;
-		var classes = function () {
-			var _v1 = A2($elm$core$Maybe$map, $elm$core$String$words, language);
-			if ((_v1.$ === 'Just') && _v1.a.b) {
-				var _v2 = _v1.a;
-				var actualLanguage = _v2.a;
-				return _List_fromArray(
-					[
-						$elm$html$Html$Attributes$class('language-' + actualLanguage)
-					]);
-			} else {
-				return _List_Nil;
-			}
-		}();
-		return A2(
-			$elm$html$Html$pre,
-			_List_Nil,
-			_List_fromArray(
-				[
-					A2(
-					$elm$html$Html$code,
-					classes,
-					_List_fromArray(
-						[
-							$elm$html$Html$text(body)
-						]))
-				]));
-	},
-	codeSpan: function (content) {
-		return A2(
-			$elm$html$Html$code,
-			_List_Nil,
-			_List_fromArray(
-				[
-					$elm$html$Html$text(content)
-				]));
-	},
-	emphasis: function (children) {
-		return A2($elm$html$Html$em, _List_Nil, children);
-	},
-	hardLineBreak: A2($elm$html$Html$br, _List_Nil, _List_Nil),
-	heading: function (_v3) {
-		var level = _v3.level;
-		var children = _v3.children;
-		switch (level.$) {
-			case 'H1':
-				return A2($elm$html$Html$h1, _List_Nil, children);
-			case 'H2':
-				return A2($elm$html$Html$h2, _List_Nil, children);
-			case 'H3':
-				return A2($elm$html$Html$h3, _List_Nil, children);
-			case 'H4':
-				return A2($elm$html$Html$h4, _List_Nil, children);
-			case 'H5':
-				return A2($elm$html$Html$h5, _List_Nil, children);
-			default:
-				return A2($elm$html$Html$h6, _List_Nil, children);
-		}
-	},
-	html: $dillonkearns$elm_markdown$Markdown$Html$oneOf(_List_Nil),
-	image: function (imageInfo) {
-		var _v5 = imageInfo.title;
-		if (_v5.$ === 'Just') {
-			var title = _v5.a;
-			return A2(
-				$elm$html$Html$img,
-				_List_fromArray(
-					[
-						$elm$html$Html$Attributes$src(imageInfo.src),
-						$elm$html$Html$Attributes$alt(imageInfo.alt),
-						$elm$html$Html$Attributes$title(title)
-					]),
-				_List_Nil);
-		} else {
-			return A2(
-				$elm$html$Html$img,
-				_List_fromArray(
-					[
-						$elm$html$Html$Attributes$src(imageInfo.src),
-						$elm$html$Html$Attributes$alt(imageInfo.alt)
-					]),
-				_List_Nil);
-		}
-	},
-	link: F2(
-		function (link, content) {
-			var _v6 = link.title;
-			if (_v6.$ === 'Just') {
-				var title = _v6.a;
-				return A2(
-					$elm$html$Html$a,
-					_List_fromArray(
-						[
-							$elm$html$Html$Attributes$href(link.destination),
-							$elm$html$Html$Attributes$title(title)
-						]),
-					content);
-			} else {
-				return A2(
-					$elm$html$Html$a,
-					_List_fromArray(
-						[
-							$elm$html$Html$Attributes$href(link.destination)
-						]),
-					content);
-			}
-		}),
-	orderedList: F2(
-		function (startingIndex, items) {
-			return A2(
-				$elm$html$Html$ol,
-				function () {
-					if (startingIndex === 1) {
-						return _List_fromArray(
-							[
-								$elm$html$Html$Attributes$start(startingIndex)
-							]);
-					} else {
-						return _List_Nil;
-					}
-				}(),
-				A2(
-					$elm$core$List$map,
-					function (itemBlocks) {
-						return A2($elm$html$Html$li, _List_Nil, itemBlocks);
-					},
-					items));
-		}),
-	paragraph: $elm$html$Html$p(_List_Nil),
-	strikethrough: function (children) {
-		return A2($elm$html$Html$del, _List_Nil, children);
-	},
-	strong: function (children) {
-		return A2($elm$html$Html$strong, _List_Nil, children);
-	},
-	table: $elm$html$Html$table(_List_Nil),
-	tableBody: $elm$html$Html$tbody(_List_Nil),
-	tableCell: function (maybeAlignment) {
-		var attrs = A2(
-			$elm$core$Maybe$withDefault,
-			_List_Nil,
-			A2(
-				$elm$core$Maybe$map,
-				$elm$core$List$singleton,
-				A2(
-					$elm$core$Maybe$map,
-					$elm$html$Html$Attributes$align,
-					A2(
-						$elm$core$Maybe$map,
-						function (alignment) {
-							switch (alignment.$) {
-								case 'AlignLeft':
-									return 'left';
-								case 'AlignCenter':
-									return 'center';
-								default:
-									return 'right';
-							}
-						},
-						maybeAlignment))));
-		return $elm$html$Html$td(attrs);
-	},
-	tableHeader: $elm$html$Html$thead(_List_Nil),
-	tableHeaderCell: function (maybeAlignment) {
-		var attrs = A2(
-			$elm$core$Maybe$withDefault,
-			_List_Nil,
-			A2(
-				$elm$core$Maybe$map,
-				$elm$core$List$singleton,
-				A2(
-					$elm$core$Maybe$map,
-					$elm$html$Html$Attributes$align,
-					A2(
-						$elm$core$Maybe$map,
-						function (alignment) {
-							switch (alignment.$) {
-								case 'AlignLeft':
-									return 'left';
-								case 'AlignCenter':
-									return 'center';
-								default:
-									return 'right';
-							}
-						},
-						maybeAlignment))));
-		return $elm$html$Html$th(attrs);
-	},
-	tableRow: $elm$html$Html$tr(_List_Nil),
-	text: $elm$html$Html$text,
-	thematicBreak: A2($elm$html$Html$hr, _List_Nil, _List_Nil),
-	unorderedList: function (items) {
-		return A2(
-			$elm$html$Html$ul,
-			_List_Nil,
-			A2(
-				$elm$core$List$map,
-				function (item) {
-					var task = item.a;
-					var children = item.b;
-					var checkbox = function () {
-						switch (task.$) {
-							case 'NoTask':
-								return $elm$html$Html$text('');
-							case 'IncompleteTask':
-								return A2(
-									$elm$html$Html$input,
-									_List_fromArray(
-										[
-											$elm$html$Html$Attributes$disabled(true),
-											$elm$html$Html$Attributes$checked(false),
-											$elm$html$Html$Attributes$type_('checkbox')
-										]),
-									_List_Nil);
-							default:
-								return A2(
-									$elm$html$Html$input,
-									_List_fromArray(
-										[
-											$elm$html$Html$Attributes$disabled(true),
-											$elm$html$Html$Attributes$checked(true),
-											$elm$html$Html$Attributes$type_('checkbox')
-										]),
-									_List_Nil);
-						}
-					}();
-					return A2(
-						$elm$html$Html$li,
-						_List_Nil,
-						A2($elm$core$List$cons, checkbox, children));
-				},
-				items));
-	}
-};
 var $dillonkearns$elm_markdown$Markdown$RawBlock$BlankLine = {$: 'BlankLine'};
 var $dillonkearns$elm_markdown$Markdown$Block$BlockQuote = function (a) {
 	return {$: 'BlockQuote', a: a};
@@ -24271,6 +23897,379 @@ var $dillonkearns$elm_markdown$Markdown$Renderer$render = F2(
 		return $dillonkearns$elm_markdown$Markdown$Renderer$combineResults(
 			A2($dillonkearns$elm_markdown$Markdown$Renderer$renderHelper, renderer, ast));
 	});
+var $author$project$OUI$Text$Body = {$: 'Body'};
+var $author$project$OUI$Text$Display = {$: 'Display'};
+var $author$project$OUI$Text$Headline = {$: 'Headline'};
+var $author$project$OUI$Text$Large = {$: 'Large'};
+var $author$project$OUI$Text$Medium = {$: 'Medium'};
+var $author$project$OUI$Text$Small = {$: 'Small'};
+var $author$project$OUI$Text$Title = {$: 'Title'};
+var $mdgriffith$elm_ui$Element$Font$bold = A2($mdgriffith$elm_ui$Internal$Model$Class, $mdgriffith$elm_ui$Internal$Flag$fontWeight, $mdgriffith$elm_ui$Internal$Style$classes.bold);
+var $elm$html$Html$br = _VirtualDom_node('br');
+var $elm$html$Html$code = _VirtualDom_node('code');
+var $elm$html$Html$hr = _VirtualDom_node('hr');
+var $elm$html$Html$Attributes$alt = $elm$html$Html$Attributes$stringProperty('alt');
+var $elm$html$Html$Attributes$src = function (url) {
+	return A2(
+		$elm$html$Html$Attributes$stringProperty,
+		'src',
+		_VirtualDom_noJavaScriptOrHtmlUri(url));
+};
+var $mdgriffith$elm_ui$Element$image = F2(
+	function (attrs, _v0) {
+		var src = _v0.src;
+		var description = _v0.description;
+		var imageAttributes = A2(
+			$elm$core$List$filter,
+			function (a) {
+				switch (a.$) {
+					case 'Width':
+						return true;
+					case 'Height':
+						return true;
+					default:
+						return false;
+				}
+			},
+			attrs);
+		return A4(
+			$mdgriffith$elm_ui$Internal$Model$element,
+			$mdgriffith$elm_ui$Internal$Model$asEl,
+			$mdgriffith$elm_ui$Internal$Model$div,
+			A2(
+				$elm$core$List$cons,
+				$mdgriffith$elm_ui$Internal$Model$htmlClass($mdgriffith$elm_ui$Internal$Style$classes.imageContainer),
+				attrs),
+			$mdgriffith$elm_ui$Internal$Model$Unkeyed(
+				_List_fromArray(
+					[
+						A4(
+						$mdgriffith$elm_ui$Internal$Model$element,
+						$mdgriffith$elm_ui$Internal$Model$asEl,
+						$mdgriffith$elm_ui$Internal$Model$NodeName('img'),
+						_Utils_ap(
+							_List_fromArray(
+								[
+									$mdgriffith$elm_ui$Internal$Model$Attr(
+									$elm$html$Html$Attributes$src(src)),
+									$mdgriffith$elm_ui$Internal$Model$Attr(
+									$elm$html$Html$Attributes$alt(description))
+								]),
+							imageAttributes),
+						$mdgriffith$elm_ui$Internal$Model$Unkeyed(_List_Nil))
+					])));
+	});
+var $mdgriffith$elm_ui$Element$Font$italic = $mdgriffith$elm_ui$Internal$Model$htmlClass($mdgriffith$elm_ui$Internal$Style$classes.italic);
+var $mdgriffith$elm_ui$Internal$Model$Monospace = {$: 'Monospace'};
+var $mdgriffith$elm_ui$Element$Font$monospace = $mdgriffith$elm_ui$Internal$Model$Monospace;
+var $dillonkearns$elm_markdown$Markdown$HtmlRenderer$HtmlRenderer = function (a) {
+	return {$: 'HtmlRenderer', a: a};
+};
+var $dillonkearns$elm_markdown$Markdown$Html$resultOr = F2(
+	function (ra, rb) {
+		if (ra.$ === 'Err') {
+			var singleError = ra.a;
+			if (rb.$ === 'Ok') {
+				var okValue = rb.a;
+				return $elm$core$Result$Ok(okValue);
+			} else {
+				var errorsSoFar = rb.a;
+				return $elm$core$Result$Err(
+					A2($elm$core$List$cons, singleError, errorsSoFar));
+			}
+		} else {
+			var okValue = ra.a;
+			return $elm$core$Result$Ok(okValue);
+		}
+	});
+var $dillonkearns$elm_markdown$Markdown$Html$attributesToString = function (attributes) {
+	return A2(
+		$elm$core$String$join,
+		' ',
+		A2(
+			$elm$core$List$map,
+			function (_v0) {
+				var name = _v0.name;
+				var value = _v0.value;
+				return name + ('=\"' + (value + '\"'));
+			},
+			attributes));
+};
+var $dillonkearns$elm_markdown$Markdown$Html$tagToString = F2(
+	function (tagName, attributes) {
+		return $elm$core$List$isEmpty(attributes) ? ('<' + (tagName + '>')) : ('<' + (tagName + (' ' + ($dillonkearns$elm_markdown$Markdown$Html$attributesToString(attributes) + '>'))));
+	});
+var $dillonkearns$elm_markdown$Markdown$Html$oneOf = function (decoders) {
+	var unwrappedDecoders = A2(
+		$elm$core$List$map,
+		function (_v4) {
+			var rawDecoder = _v4.a;
+			return rawDecoder;
+		},
+		decoders);
+	return function (rawDecoder) {
+		return $dillonkearns$elm_markdown$Markdown$HtmlRenderer$HtmlRenderer(
+			F3(
+				function (tagName, attributes, innerBlocks) {
+					return A2(
+						$elm$core$Result$mapError,
+						function (errors) {
+							if (!errors.b) {
+								return 'Ran into a oneOf with no possibilities!';
+							} else {
+								if (!errors.b.b) {
+									var singleError = errors.a;
+									return 'Problem with the given value:\n\n' + (A2($dillonkearns$elm_markdown$Markdown$Html$tagToString, tagName, attributes) + ('\n\n' + (singleError + '\n')));
+								} else {
+									return 'oneOf failed parsing this value:\n    ' + (A2($dillonkearns$elm_markdown$Markdown$Html$tagToString, tagName, attributes) + ('\n\nParsing failed in the following 2 ways:\n\n\n' + (A2(
+										$elm$core$String$join,
+										'\n\n',
+										A2(
+											$elm$core$List$indexedMap,
+											F2(
+												function (index, error) {
+													return '(' + ($elm$core$String$fromInt(index + 1) + (') ' + error));
+												}),
+											errors)) + '\n')));
+								}
+							}
+						},
+						A3(rawDecoder, tagName, attributes, innerBlocks));
+				}));
+	}(
+		A3(
+			$elm$core$List$foldl,
+			F2(
+				function (decoder, soFar) {
+					return F3(
+						function (tagName, attributes, children) {
+							return A2(
+								$dillonkearns$elm_markdown$Markdown$Html$resultOr,
+								A3(decoder, tagName, attributes, children),
+								A3(soFar, tagName, attributes, children));
+						});
+				}),
+			F3(
+				function (_v0, _v1, _v2) {
+					return $elm$core$Result$Err(_List_Nil);
+				}),
+			unwrappedDecoders));
+};
+var $mdgriffith$elm_ui$Internal$Model$Paragraph = {$: 'Paragraph'};
+var $mdgriffith$elm_ui$Element$paragraph = F2(
+	function (attrs, children) {
+		return A4(
+			$mdgriffith$elm_ui$Internal$Model$element,
+			$mdgriffith$elm_ui$Internal$Model$asParagraph,
+			$mdgriffith$elm_ui$Internal$Model$div,
+			A2(
+				$elm$core$List$cons,
+				$mdgriffith$elm_ui$Internal$Model$Describe($mdgriffith$elm_ui$Internal$Model$Paragraph),
+				A2(
+					$elm$core$List$cons,
+					$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
+					A2(
+						$elm$core$List$cons,
+						$mdgriffith$elm_ui$Element$spacing(5),
+						attrs))),
+			$mdgriffith$elm_ui$Internal$Model$Unkeyed(children));
+	});
+var $elm$html$Html$pre = _VirtualDom_node('pre');
+var $mdgriffith$elm_ui$Element$Font$strike = $mdgriffith$elm_ui$Internal$Model$htmlClass($mdgriffith$elm_ui$Internal$Style$classes.strike);
+var $author$project$OUI$Material$Markdown$renderer = function (theme) {
+	var typescale = theme.typescale;
+	return {
+		blockQuote: $mdgriffith$elm_ui$Element$column(
+			_List_fromArray(
+				[
+					$mdgriffith$elm_ui$Element$Font$family(
+					_List_fromArray(
+						[$mdgriffith$elm_ui$Element$Font$monospace]))
+				])),
+		codeBlock: function (_v0) {
+			var body = _v0.body;
+			var language = _v0.language;
+			var classes = function () {
+				var _v1 = A2($elm$core$Maybe$map, $elm$core$String$words, language);
+				if ((_v1.$ === 'Just') && _v1.a.b) {
+					var _v2 = _v1.a;
+					var actualLanguage = _v2.a;
+					return _List_fromArray(
+						[
+							$elm$html$Html$Attributes$class('language-' + actualLanguage)
+						]);
+				} else {
+					return _List_Nil;
+				}
+			}();
+			return $mdgriffith$elm_ui$Element$html(
+				A2(
+					$elm$html$Html$pre,
+					_List_Nil,
+					_List_fromArray(
+						[
+							A2(
+							$elm$html$Html$code,
+							classes,
+							_List_fromArray(
+								[
+									$elm$html$Html$text(body)
+								]))
+						])));
+		},
+		codeSpan: A2(
+			$elm$core$Basics$composeL,
+			$mdgriffith$elm_ui$Element$el(
+				_List_fromArray(
+					[
+						$mdgriffith$elm_ui$Element$Font$family(
+						_List_fromArray(
+							[$mdgriffith$elm_ui$Element$Font$monospace]))
+					])),
+			$mdgriffith$elm_ui$Element$text),
+		emphasis: $mdgriffith$elm_ui$Element$paragraph(
+			_List_fromArray(
+				[$mdgriffith$elm_ui$Element$Font$italic])),
+		hardLineBreak: $mdgriffith$elm_ui$Element$html(
+			A2($elm$html$Html$br, _List_Nil, _List_Nil)),
+		heading: function (_v3) {
+			var level = _v3.level;
+			var children = _v3.children;
+			switch (level.$) {
+				case 'H1':
+					return A2(
+						$mdgriffith$elm_ui$Element$paragraph,
+						A3($author$project$OUI$Material$Typography$attrs, $author$project$OUI$Text$Display, $author$project$OUI$Text$Small, typescale),
+						children);
+				case 'H2':
+					return A2(
+						$mdgriffith$elm_ui$Element$paragraph,
+						A3($author$project$OUI$Material$Typography$attrs, $author$project$OUI$Text$Headline, $author$project$OUI$Text$Large, typescale),
+						children);
+				case 'H3':
+					return A2(
+						$mdgriffith$elm_ui$Element$paragraph,
+						A3($author$project$OUI$Material$Typography$attrs, $author$project$OUI$Text$Headline, $author$project$OUI$Text$Medium, typescale),
+						children);
+				case 'H4':
+					return A2(
+						$mdgriffith$elm_ui$Element$paragraph,
+						A3($author$project$OUI$Material$Typography$attrs, $author$project$OUI$Text$Headline, $author$project$OUI$Text$Small, typescale),
+						children);
+				case 'H5':
+					return A2(
+						$mdgriffith$elm_ui$Element$paragraph,
+						A3($author$project$OUI$Material$Typography$attrs, $author$project$OUI$Text$Title, $author$project$OUI$Text$Large, typescale),
+						children);
+				default:
+					return A2(
+						$mdgriffith$elm_ui$Element$paragraph,
+						A3($author$project$OUI$Material$Typography$attrs, $author$project$OUI$Text$Title, $author$project$OUI$Text$Medium, typescale),
+						children);
+			}
+		},
+		html: $dillonkearns$elm_markdown$Markdown$Html$oneOf(_List_Nil),
+		image: function (imageInfo) {
+			return A2(
+				$mdgriffith$elm_ui$Element$image,
+				_List_Nil,
+				{description: imageInfo.alt, src: imageInfo.src});
+		},
+		link: F2(
+			function (link, content) {
+				return A2(
+					$mdgriffith$elm_ui$Element$link,
+					_List_Nil,
+					{
+						label: A2($mdgriffith$elm_ui$Element$paragraph, _List_Nil, content),
+						url: link.destination
+					});
+			}),
+		orderedList: F2(
+			function (startingIndex, items) {
+				return A2(
+					$mdgriffith$elm_ui$Element$column,
+					_List_Nil,
+					A2(
+						$elm$core$List$indexedMap,
+						F2(
+							function (i, itemBlocks) {
+								return A2(
+									$mdgriffith$elm_ui$Element$row,
+									_List_Nil,
+									A2(
+										$elm$core$List$cons,
+										$mdgriffith$elm_ui$Element$text(
+											$elm$core$String$fromInt(i + startingIndex) + '.'),
+										itemBlocks));
+							}),
+						items));
+			}),
+		paragraph: $mdgriffith$elm_ui$Element$paragraph(
+			A3($author$project$OUI$Material$Typography$attrs, $author$project$OUI$Text$Body, $author$project$OUI$Text$Large, typescale)),
+		strikethrough: $mdgriffith$elm_ui$Element$paragraph(
+			_List_fromArray(
+				[$mdgriffith$elm_ui$Element$Font$strike])),
+		strong: $mdgriffith$elm_ui$Element$paragraph(
+			_List_fromArray(
+				[$mdgriffith$elm_ui$Element$Font$bold])),
+		table: $elm$core$Basics$always($mdgriffith$elm_ui$Element$none),
+		tableBody: $elm$core$Basics$always($mdgriffith$elm_ui$Element$none),
+		tableCell: F2(
+			function (_v5, _v6) {
+				return $mdgriffith$elm_ui$Element$none;
+			}),
+		tableHeader: $elm$core$Basics$always($mdgriffith$elm_ui$Element$none),
+		tableHeaderCell: F2(
+			function (_v7, _v8) {
+				return $mdgriffith$elm_ui$Element$none;
+			}),
+		tableRow: $elm$core$Basics$always($mdgriffith$elm_ui$Element$none),
+		text: $mdgriffith$elm_ui$Element$text,
+		thematicBreak: $mdgriffith$elm_ui$Element$html(
+			A2($elm$html$Html$hr, _List_Nil, _List_Nil)),
+		unorderedList: function (items) {
+			return A2(
+				$mdgriffith$elm_ui$Element$column,
+				_List_Nil,
+				A2(
+					$elm$core$List$map,
+					function (item) {
+						var task = item.a;
+						var children = item.b;
+						var checkbox = function () {
+							switch (task.$) {
+								case 'NoTask':
+									return $mdgriffith$elm_ui$Element$text('');
+								case 'IncompleteTask':
+									return A3(
+										$author$project$OUI$Material$checkbox,
+										theme,
+										_List_Nil,
+										A2(
+											$author$project$OUI$Checkbox$withChecked,
+											false,
+											$author$project$OUI$Checkbox$disabled($author$project$OUI$Checkbox$new)));
+								default:
+									return A3(
+										$author$project$OUI$Material$checkbox,
+										theme,
+										_List_Nil,
+										A2(
+											$author$project$OUI$Checkbox$withChecked,
+											true,
+											$author$project$OUI$Checkbox$disabled($author$project$OUI$Checkbox$new)));
+							}
+						}();
+						return A2(
+							$mdgriffith$elm_ui$Element$row,
+							_List_Nil,
+							A2($elm$core$List$cons, checkbox, children));
+					},
+					items));
+		}
+	};
+};
 var $author$project$OUI$Explorer$withMarkdownChapter = F2(
 	function (markdown, b) {
 		return _Utils_update(
@@ -24279,10 +24278,11 @@ var $author$project$OUI$Explorer$withMarkdownChapter = F2(
 				chapters: A2(
 					$elm$core$List$cons,
 					F2(
-						function (_v0, _v1) {
-							var _v2 = A2(
+						function (shared, _v0) {
+							var _v1 = A2(
 								$elm$core$Result$andThen,
-								$dillonkearns$elm_markdown$Markdown$Renderer$render($dillonkearns$elm_markdown$Markdown$Renderer$defaultHtmlRenderer),
+								$dillonkearns$elm_markdown$Markdown$Renderer$render(
+									$author$project$OUI$Material$Markdown$renderer(shared.theme)),
 								A2(
 									$elm$core$Result$mapError,
 									A2(
@@ -24290,14 +24290,17 @@ var $author$project$OUI$Explorer$withMarkdownChapter = F2(
 										$elm$core$List$map($dillonkearns$elm_markdown$Markdown$Parser$deadEndToString),
 										$elm$core$String$join(', ')),
 									$dillonkearns$elm_markdown$Markdown$Parser$parse(markdown)));
-							if (_v2.$ === 'Ok') {
-								var value = _v2.a;
+							if (_v1.$ === 'Ok') {
+								var value = _v1.a;
 								return A2(
 									$mdgriffith$elm_ui$Element$column,
-									_List_Nil,
-									A2($elm$core$List$map, $mdgriffith$elm_ui$Element$html, value));
+									_List_fromArray(
+										[
+											$mdgriffith$elm_ui$Element$spacing(5)
+										]),
+									value);
 							} else {
-								var err = _v2.a;
+								var err = _v1.a;
 								return $mdgriffith$elm_ui$Element$text('Error rendering markdown: ' + err);
 							}
 						}),
@@ -24604,7 +24607,6 @@ var $author$project$OUI$Material$menuButton = function (theme) {
 	return A4($author$project$OUI$Material$MenuButton$render, theme.typescale, theme.colorscheme, theme.button, theme.menu);
 };
 var $author$project$OUI$Text$Label = {$: 'Label'};
-var $author$project$OUI$Text$Large = {$: 'Large'};
 var $author$project$OUI$Menu$Menu = function (a) {
 	return {$: 'Menu', a: a};
 };
@@ -24929,8 +24931,10 @@ var $elm$browser$Debugger$Overlay$Choose = F2(
 var $elm$html$Html$span = _VirtualDom_node('span');
 var $elm$virtual_dom$VirtualDom$style = _VirtualDom_style;
 var $elm$html$Html$Attributes$style = $elm$virtual_dom$VirtualDom$style;
+var $elm$html$Html$a = _VirtualDom_node('a');
 var $elm$browser$Debugger$Overlay$goodNews1 = '\nThe good news is that having values like this in your message type is not\nso great in the long run. You are better off using simpler data, like\n';
 var $elm$browser$Debugger$Overlay$goodNews2 = '\nfunction can pattern match on that data and call whatever functions, JSON\ndecoders, etc. you need. This makes the code much more explicit and easy to\nfollow for other readers (or you in a few months!)\n';
+var $elm$html$Html$ul = _VirtualDom_node('ul');
 var $elm$browser$Debugger$Overlay$viewCode = function (name) {
 	return A2(
 		$elm$html$Html$code,
@@ -24967,6 +24971,7 @@ var $elm$browser$Debugger$Overlay$addCommas = function (items) {
 		}
 	}
 };
+var $elm$html$Html$li = _VirtualDom_node('li');
 var $elm$browser$Debugger$Overlay$problemToString = function (problem) {
 	switch (problem.$) {
 		case 'Function':
@@ -26503,6 +26508,7 @@ var $elm$html$Html$Lazy$lazy3 = $elm$virtual_dom$VirtualDom$lazy3;
 var $elm$browser$Debugger$History$idForMessageIndex = function (index) {
 	return 'msg-' + $elm$core$String$fromInt(index);
 };
+var $elm$html$Html$Attributes$title = $elm$html$Html$Attributes$stringProperty('title');
 var $elm$browser$Debugger$History$viewMessage = F3(
 	function (currentIndex, index, msg) {
 		var messageName = _Debugger_messageToString(msg);
@@ -27107,6 +27113,7 @@ var $elm$browser$Debugger$Main$viewHistoryOptions = function (layout) {
 var $elm$browser$Debugger$Main$SliderJump = function (a) {
 	return {$: 'SliderJump', a: a};
 };
+var $elm$html$Html$input = _VirtualDom_node('input');
 var $elm$browser$Debugger$Main$isPlaying = function (maybeIndex) {
 	if (maybeIndex.$ === 'Nothing') {
 		return true;
@@ -27133,6 +27140,7 @@ var $elm$html$Html$Events$onInput = function (tagger) {
 			$elm$html$Html$Events$alwaysStop,
 			A2($elm$json$Json$Decode$map, tagger, $elm$html$Html$Events$targetValue)));
 };
+var $elm$html$Html$Attributes$type_ = $elm$html$Html$Attributes$stringProperty('type');
 var $elm$html$Html$Attributes$value = $elm$html$Html$Attributes$stringProperty('value');
 var $elm$browser$Debugger$Main$viewPlayButton = function (playing) {
 	return A2(
@@ -29773,8 +29781,6 @@ var $mdgriffith$elm_ui$Element$Keyed$column = F2(
 						attrs))),
 			$mdgriffith$elm_ui$Internal$Model$Keyed(children));
 	});
-var $author$project$OUI$Text$Headline = {$: 'Headline'};
-var $author$project$OUI$Text$Small = {$: 'Small'};
 var $author$project$OUI$Text$Text = F3(
 	function (a, b, c) {
 		return {$: 'Text', a: a, b: b, c: c};
@@ -29822,7 +29828,6 @@ var $mdgriffith$elm_ui$Element$inFront = function (element) {
 	return A2($mdgriffith$elm_ui$Element$createNearby, $mdgriffith$elm_ui$Internal$Model$InFront, element);
 };
 var $author$project$OUI$Text$labelLarge = A2($author$project$OUI$Text$Text, $author$project$OUI$Text$Label, $author$project$OUI$Text$Large);
-var $author$project$OUI$Text$Medium = {$: 'Medium'};
 var $author$project$OUI$Text$labelMedium = A2($author$project$OUI$Text$Text, $author$project$OUI$Text$Label, $author$project$OUI$Text$Medium);
 var $author$project$OUI$Text$labelSmall = A2($author$project$OUI$Text$Text, $author$project$OUI$Text$Label, $author$project$OUI$Text$Small);
 var $mdgriffith$elm_ui$Internal$Model$MoveX = function (a) {
@@ -29877,7 +29882,6 @@ var $mdgriffith$elm_ui$Element$Keyed$row = F2(
 						attrs))),
 			$mdgriffith$elm_ui$Internal$Model$Keyed(children));
 	});
-var $author$project$OUI$Text$Title = {$: 'Title'};
 var $author$project$OUI$Text$titleSmall = A2($author$project$OUI$Text$Text, $author$project$OUI$Text$Title, $author$project$OUI$Text$Small);
 var $author$project$OUI$Material$Navigation$transition = A2(
 	$elm$core$Basics$composeR,
@@ -31157,7 +31161,6 @@ var $author$project$OUI$TextField$onFocusBlur = F3(
 					onLoseFocus: $elm$core$Maybe$Just(onLoseFocus)
 				}));
 	});
-var $author$project$OUI$Text$Body = {$: 'Body'};
 var $author$project$OUI$Neutral = {$: 'Neutral'};
 var $author$project$OUI$Text$bodyLarge = A2($author$project$OUI$Text$Text, $author$project$OUI$Text$Body, $author$project$OUI$Text$Large);
 var $author$project$OUI$Text$bodySmall = A2($author$project$OUI$Text$Text, $author$project$OUI$Text$Body, $author$project$OUI$Text$Small);
@@ -32763,7 +32766,6 @@ var $author$project$OUI$Showcase$TextFields$book = A2(
 				update: $author$project$OUI$Showcase$TextFields$update
 			})));
 var $author$project$OUI$Text$bodyMedium = A2($author$project$OUI$Text$Text, $author$project$OUI$Text$Body, $author$project$OUI$Text$Medium);
-var $author$project$OUI$Text$Display = {$: 'Display'};
 var $author$project$OUI$Text$displayLarge = A2($author$project$OUI$Text$Text, $author$project$OUI$Text$Display, $author$project$OUI$Text$Large);
 var $author$project$OUI$Text$displayMedium = A2($author$project$OUI$Text$Text, $author$project$OUI$Text$Display, $author$project$OUI$Text$Medium);
 var $author$project$OUI$Text$displaySmall = A2($author$project$OUI$Text$Text, $author$project$OUI$Text$Display, $author$project$OUI$Text$Small);
@@ -32781,7 +32783,10 @@ var $author$project$OUI$Showcase$Typography$book = A2(
 		var theme = _v0.theme;
 		return A2(
 			$mdgriffith$elm_ui$Element$column,
-			_List_Nil,
+			_List_fromArray(
+				[
+					$mdgriffith$elm_ui$Element$spacing(10)
+				]),
 			_List_fromArray(
 				[
 					A2(
@@ -32848,7 +32853,7 @@ var $author$project$OUI$Showcase$Typography$book = A2(
 	},
 	A2(
 		$author$project$OUI$Explorer$withMarkdownChapter,
-		' The material typescale ',
+		'\nThe material typescale\n\nType styles include: display, headline, title, body, and label\n\nEach type comes in three sizes: large, medium, small\n\n\n',
 		$author$project$OUI$Explorer$book('Typography')));
 var $author$project$OUI$Explorer$category = F2(
 	function (name, _v0) {

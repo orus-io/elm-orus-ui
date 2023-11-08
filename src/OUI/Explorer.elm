@@ -25,6 +25,7 @@ import Markdown.Renderer
 import OUI.Icon as Icon
 import OUI.Material as Material
 import OUI.Material.Color as Color
+import OUI.Material.Markdown
 import OUI.Material.Theme as Theme exposing (Theme)
 import OUI.Navigation exposing (Navigation)
 import OUI.Switch as Switch
@@ -341,17 +342,16 @@ withMarkdownChapter : String -> Book themeExt model msg -> Book themeExt model m
 withMarkdownChapter markdown b =
     { b
         | chapters =
-            (\_ _ ->
+            (\shared _ ->
                 case
                     Markdown.Parser.parse markdown
                         |> Result.mapError (List.map Markdown.Parser.deadEndToString >> String.join ", ")
                         |> Result.andThen
-                            (Markdown.Renderer.render Markdown.Renderer.defaultHtmlRenderer)
+                            (Markdown.Renderer.render (OUI.Material.Markdown.renderer shared.theme))
                 of
                     Ok value ->
                         value
-                            |> List.map Element.html
-                            |> Element.column []
+                            |> Element.column [ Element.spacing 5 ]
 
                     Err err ->
                         Element.text <| "Error rendering markdown: " ++ err
