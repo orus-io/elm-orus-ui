@@ -1,20 +1,34 @@
 module OUI.Menu exposing
     ( Menu
-    , new
-    , onClick
+    , new, onClick, withIcon, withItems, withTrailingIcon
     , properties
-    , withIcon
-    , withItems
-    , withTrailingIcon
     )
 
 {-| A general purpose menu
+
+
+# Types
+
+@docs Menu
+
+
+# Menu builders
+
+@docs new, onClick, withIcon, withItems, withTrailingIcon
+
+
+# Internals
+
+@docs properties
+
 -}
 
 import OUI.Icon exposing (Icon)
 import OUI.Text
 
 
+{-| A menu
+-}
 type Menu item msg
     = Menu
         { items : List item
@@ -28,6 +42,8 @@ type Menu item msg
         }
 
 
+{-| Creates a simple text menu
+-}
 new : (item -> String) -> Menu item msg
 new itemToText =
     Menu
@@ -42,6 +58,8 @@ new itemToText =
         }
 
 
+{-| Set an event handler for when an item is clicked
+-}
 onClick : (item -> msg) -> Menu item msg -> Menu item msg
 onClick msg (Menu props) =
     Menu
@@ -50,6 +68,8 @@ onClick msg (Menu props) =
         }
 
 
+{-| Set the menu items
+-}
 withItems : List item -> Menu item msg -> Menu item msg
 withItems items (Menu props) =
     Menu
@@ -58,6 +78,8 @@ withItems items (Menu props) =
         }
 
 
+{-| Add leading icons to the menu
+-}
 withIcon : (item -> Maybe Icon) -> Menu item msg -> Menu item msg
 withIcon itemToIcon (Menu props) =
     Menu
@@ -66,6 +88,8 @@ withIcon itemToIcon (Menu props) =
         }
 
 
+{-| Add trailing icons to the menu
+-}
 withTrailingIcon : (item -> Maybe Icon) -> Menu item msg -> Menu item msg
 withTrailingIcon itemToIcon (Menu props) =
     Menu
@@ -74,6 +98,8 @@ withTrailingIcon itemToIcon (Menu props) =
         }
 
 
+{-| properties
+-}
 properties :
     Menu item msg
     ->

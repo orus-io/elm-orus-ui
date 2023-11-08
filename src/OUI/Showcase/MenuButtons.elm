@@ -126,5 +126,5 @@ update _ msg model =
 
         OnSelect id entry ->
             model
-                |> Effect.withShared
-                    (Explorer.sharedLogEvent (id ++ "/" ++ entry))
+                |> Effect.with
+                    (Explorer.logEffect (id ++ "/" ++ entry))

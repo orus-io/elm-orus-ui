@@ -29249,7 +29249,7 @@ var $author$project$OUI$Showcase$MenuButtons$subscriptions = F2(
 					model.menu2State)
 				]));
 	});
-var $author$project$OUI$Explorer$sharedLogEvent = $author$project$OUI$Explorer$Event;
+var $author$project$OUI$Explorer$logEffect = A2($elm$core$Basics$composeR, $author$project$OUI$Explorer$Event, $orus_io$elm_spa$Effect$fromShared);
 var $author$project$OUI$MenuButton$performEffect = function (_v0) {
 	var msg = _v0.a;
 	return A2(
@@ -29295,18 +29295,16 @@ var $author$project$OUI$MenuButton$update = F2(
 				$elm$core$Maybe$withDefault($elm$core$Platform$Cmd$none)),
 			A2($author$project$OUI$MenuButton$updateWithoutPerform, msg, state));
 	});
+var $orus_io$elm_spa$Effect$with = F2(
+	function (effect, model) {
+		return _Utils_Tuple2(model, effect);
+	});
 var $orus_io$elm_spa$Effect$fromCmd = $orus_io$elm_spa$Effect$Cmd;
 var $orus_io$elm_spa$Effect$withCmd = F2(
 	function (cmd, model) {
 		return _Utils_Tuple2(
 			model,
 			$orus_io$elm_spa$Effect$fromCmd(cmd));
-	});
-var $orus_io$elm_spa$Effect$withShared = F2(
-	function (shared, model) {
-		return _Utils_Tuple2(
-			model,
-			$orus_io$elm_spa$Effect$fromShared(shared));
 	});
 var $author$project$OUI$Showcase$MenuButtons$update = F3(
 	function (_v0, msg, model) {
@@ -29341,8 +29339,8 @@ var $author$project$OUI$Showcase$MenuButtons$update = F3(
 			var id = msg.a;
 			var entry = msg.b;
 			return A2(
-				$orus_io$elm_spa$Effect$withShared,
-				$author$project$OUI$Explorer$sharedLogEvent(id + ('/' + entry)),
+				$orus_io$elm_spa$Effect$with,
+				$author$project$OUI$Explorer$logEffect(id + ('/' + entry)),
 				model);
 		}
 	});

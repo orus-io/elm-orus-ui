@@ -1,8 +1,7 @@
 module OUI.Material exposing
     ( text, icon
-    , button, checkbox, switch, textField, radiobutton
-    , navigation
-    , menu, menuButton
+    , button, checkbox, switch, textField, radiobutton, menu
+    , menuButton, navigation
     )
 
 {-| A elm-ui based renderer API
@@ -15,12 +14,12 @@ module OUI.Material exposing
 
 # Inputs
 
-@docs button, checkbox, switch, textField, radiobutton
+@docs button, checkbox, switch, textField, radiobutton, menu
 
 
 # Complex
 
-@docs navigation
+@docs menuButton, navigation
 
 -}
 
@@ -101,6 +100,8 @@ checkbox theme =
     OUI.Material.Checkbox.render theme.colorscheme theme.checkbox
 
 
+{-| Render a menu
+-}
 menu :
     Theme themeExt
     -> List (Attribute msg)
@@ -110,6 +111,8 @@ menu theme =
     OUI.Material.Menu.render theme.typescale theme.colorscheme theme.menu
 
 
+{-| Render a menu button
+-}
 menuButton :
     Theme themeExt
     -> OUI.MenuButton.State
