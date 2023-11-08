@@ -112,6 +112,7 @@ menu theme =
 
 menuButton :
     Theme themeExt
+    -> OUI.MenuButton.State
     -> List (Attribute msg)
     -> OUI.MenuButton.MenuButton btnC item msg
     -> Element msg

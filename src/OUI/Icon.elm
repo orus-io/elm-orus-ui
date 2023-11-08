@@ -85,11 +85,13 @@ fromRenderer renderer =
         }
 
 
+{-| A blank icon, used as a placeholder
+-}
 blank : Icon
 blank =
     fromRenderer <|
         Svg
-            (\size color ->
+            (\size _ ->
                 let
                     sizeAsString : String
                     sizeAsString =

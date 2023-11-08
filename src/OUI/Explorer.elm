@@ -2,6 +2,7 @@ module OUI.Explorer exposing
     ( Book, BookMsg, Page, Route, Shared, SharedMsg, Explorer
     , setTheme, ColorSchemeType, setColorScheme, addBook, book, statefulBook, category, bookMsg, logEvent, explorer, finalize
     , withMarkdownChapter, withStaticChapter, withChapter
+    , sharedLogEvent
     )
 
 {-|
@@ -262,6 +263,11 @@ The passed string will be logged in the log event window
 logEvent : String -> BookMsg msg
 logEvent value =
     SharedMsg <| Event value
+
+
+sharedLogEvent : String -> SharedMsg
+sharedLogEvent =
+    Event
 
 
 {-| wrap a book msg into a `BookMsg msg`. This is needed in views.

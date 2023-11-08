@@ -2,8 +2,7 @@ module OUI.Material.Color exposing
     ( KeyColors, Scheme, defaultKeyColors, defaultLightScheme, defaultDarkScheme, lightFromKeyColors, darkFromKeyColors
     , getColor, getOnColor, getElementColor, getContainerColor, getOnContainerColor, getOnElementColor, toElementColor, getContainerElementColor, getOnContainerElementColor
     , hoverStateLayerOpacity, focusStateLayerOpacity, pressStateLayerOpacity
-    , setAlpha, withShade, isError
-    , tone
+    , setAlpha, withShade, isError, tone
     )
 
 {-| Material 3 color utilities and scheme
@@ -14,7 +13,7 @@ module OUI.Material.Color exposing
 
 @docs hoverStateLayerOpacity, focusStateLayerOpacity, pressStateLayerOpacity
 
-@docs setAlpha, withShade, isError
+@docs setAlpha, withShade, isError, tone
 
 -}
 

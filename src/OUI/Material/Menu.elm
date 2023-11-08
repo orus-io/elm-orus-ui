@@ -1,16 +1,18 @@
-module OUI.Material.Menu exposing (..)
+module OUI.Material.Menu exposing (Theme, defaultTheme, passiveOnClick, render)
 
 import Element exposing (Attribute, Element)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Events as Events
 import Element.Font as Font
-import Html.Attributes
-import OUI.Icon
+import Html.Events
+import Json.Decode as Json
+import OUI.Icon exposing (Icon)
 import OUI.Material.Color
 import OUI.Material.Icon as Icon
 import OUI.Material.Typography
 import OUI.Menu exposing (Menu)
+import OUI.Text
 
 
 type alias Theme =
@@ -47,6 +49,16 @@ render :
     -> Element msg
 render typescale colorscheme theme attrs menu =
     let
+        props :
+            { items : List item
+            , itemToText : item -> String
+            , itemToIcon : item -> Maybe Icon
+            , itemToTrailingIcon : item -> Maybe Icon
+            , itemSelected : item -> Bool
+            , onClick : Maybe (item -> msg)
+            , textType : OUI.Text.Type
+            , textSize : OUI.Text.Size
+            }
         props =
             OUI.Menu.properties menu
 
@@ -104,7 +116,7 @@ render typescale colorscheme theme attrs menu =
                          ]
                             ++ (case props.onClick of
                                     Just msg ->
-                                        [ Events.onClick <| msg item ]
+                                        [ passiveOnClick <| msg item ]
 
                                     Nothing ->
                                         []
@@ -127,3 +139,9 @@ render typescale colorscheme theme attrs menu =
                         )
                 )
         )
+
+
+passiveOnClick : msg -> Attribute msg
+passiveOnClick msg =
+    Html.Events.stopPropagationOn "click" (Json.succeed ( msg, True ))
+        |> Element.htmlAttribute

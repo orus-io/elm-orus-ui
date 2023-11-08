@@ -25,7 +25,6 @@
     ],
     "elm-version": "0.19.0 <= v < 0.20.0",
     "dependencies": {
-        "PaackEng/elm-ui-dropdown": "3.3.0 <= v < 4.0.0",
         "avh4/elm-color": "1.0.0 <= v < 2.0.0",
         "dillonkearns/elm-markdown": "7.0.1 <= v < 8.0.0",
         "elm/browser": "1.0.2 <= v < 2.0.0",

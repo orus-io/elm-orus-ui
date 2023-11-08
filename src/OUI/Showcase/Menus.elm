@@ -1,4 +1,4 @@
-module OUI.Showcase.Menus exposing (..)
+module OUI.Showcase.Menus exposing (book, chapter)
 
 import Element exposing (Element)
 import OUI.Explorer as Explorer

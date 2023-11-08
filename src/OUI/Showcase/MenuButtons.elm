@@ -2,7 +2,7 @@ module OUI.Showcase.MenuButtons exposing (Model, Msg, book)
 
 import Dict exposing (Dict)
 import Effect exposing (Effect)
-import Element
+import Element exposing (Element)
 import OUI.Button as Button exposing (Button)
 import OUI.Explorer as Explorer exposing (Explorer)
 import OUI.Helpers
@@ -22,66 +22,109 @@ book =
         |> Explorer.withChapter chapter
 
 
+chapter : Explorer.Shared themeExt -> Model -> Element (Explorer.BookMsg Msg)
 chapter shared model =
-    let
-        menu1State =
-            Dict.get "menu1" model.menuState |> Maybe.withDefault MenuButton.initialState
-    in
-    MenuButton.new "menu1"
-        (Button.new
-            "click me"
-            |> Button.outlinedButton
-            |> Button.onClick (OnMenuOpened "menu1" (not menu1State))
-        )
-        (Menu.new identity
-            |> Menu.withItems [ "One", "Two", "Three" ]
-            |> Menu.withIcon
-                (\i ->
-                    if i /= "Two" then
-                        Just OUI.Icon.check
+    Element.row [ Element.spacing 10 ]
+        [ MenuButton.new (MenuButtonMsg "menu1")
+            (OnSelect "menu1")
+            (Button.new
+                "click me"
+                |> Button.outlinedButton
+            )
+            (Menu.new identity
+                |> Menu.withItems [ "One", "Two", "Three" ]
+                |> Menu.withIcon
+                    (\i ->
+                        if i /= "Two" then
+                            Just OUI.Icon.check
 
-                    else
-                        Nothing
-                )
-        )
-        |> MenuButton.withState menu1State
-        |> OUI.Material.menuButton shared.theme []
+                        else
+                            Nothing
+                    )
+            )
+            |> OUI.Material.menuButton shared.theme model.menu1State []
+        , MenuButton.new (MenuButtonMsg "menu2")
+            (OnSelect "menu2")
+            (Button.new
+                "click me"
+                |> Button.withIcon OUI.Icon.check
+                |> Button.iconButton
+            )
+            (Menu.new identity
+                |> Menu.withItems [ "One", "Two", "Three" ]
+                |> Menu.withIcon
+                    (\i ->
+                        if i /= "Two" then
+                            Just OUI.Icon.check
+
+                        else
+                            Nothing
+                    )
+            )
+            |> MenuButton.alignRight
+            |> OUI.Material.menuButton shared.theme model.menu2State []
+        ]
         |> Element.map Explorer.bookMsg
 
 
 type alias Model =
-    { menuState : Dict String MenuButton.State
+    { menu1State : MenuButton.State
+    , menu2State : MenuButton.State
     }
 
 
 type Msg
-    = OnMenuOpened String Bool
-    | OnSelect String (Maybe String)
+    = OnSelect String String
+    | MenuButtonMsg String (MenuButton.Msg Msg)
 
 
 init : Explorer.Shared themeExt -> ( Model, Effect Explorer.SharedMsg Msg )
 init _ =
-    ( { menuState = Dict.empty }, Effect.none )
+    ( { menu1State = MenuButton.init "menu1"
+      , menu2State = MenuButton.init "menu2"
+      }
+    , Effect.none
+    )
 
 
 subscriptions : Explorer.Shared themeExt -> Model -> Sub Msg
-subscriptions _ _ =
-    OUI.Helpers.onOutsideClick "menu1" (OnMenuOpened "menu1" False)
+subscriptions _ model =
+    Sub.batch
+        [ MenuButton.onOutsideClick (MenuButtonMsg "menu1") model.menu1State
+        , MenuButton.onOutsideClick (MenuButtonMsg "menu2") model.menu2State
+        ]
 
 
 update : Explorer.Shared themeExt -> Msg -> Model -> ( Model, Effect Explorer.SharedMsg Msg )
 update _ msg model =
     case msg of
-        OnMenuOpened id value ->
-            { model
-                | menuState =
-                    Dict.insert id value model.menuState
-            }
-                |> Effect.withNone
+        MenuButtonMsg id menuMsg ->
+            case id of
+                "menu1" ->
+                    let
+                        ( state, cmd ) =
+                            MenuButton.update menuMsg model.menu1State
+                    in
+                    { model
+                        | menu1State = state
+                    }
+                        |> Effect.withCmd cmd
 
-        OnSelect id _ ->
-            { model
-                | menuState =
-                    Dict.insert id False model.menuState
-            }
-                |> Effect.withNone
+                "menu2" ->
+                    let
+                        ( state, cmd ) =
+                            MenuButton.update menuMsg model.menu2State
+                    in
+                    { model
+                        | menu2State = state
+                    }
+                        |> Effect.withCmd cmd
+
+                _ ->
+                    model
+                        |> Effect.withNone
+
+        OnSelect id entry ->
+            model
+                |> Effect.withShared
+                    (Explorer.sharedLogEvent (id ++ "/" ++ entry))

@@ -239,15 +239,6 @@ link url (Button props) =
         }
 
 
-withMenu :
-    (Bool -> msg)
-    -> Menu item msg
-    -> Button { props | needOnClickOrDisabled : () } msg
-    -> MenuButton  item msg
-withMenu onOpened menu (Button props) =
-    MenuButton props menu
-
-
 {-| -}
 type alias Properties msg =
     { text : String
@@ -264,22 +255,3 @@ properties :
     -> Properties msg
 properties (Button props) =
     props
-
-
-{-| -}
-menuButtonProperties :
-    MenuButton item msg
-    ->
-        { button :
-            { text : String
-            , icon : Maybe Icon
-            , action : Action msg
-            , color : Color
-            , type_ : Type
-            }
-        , menu : Menu item msg
-        }
-menuButtonProperties (MenuButton props menu) =
-    { button = props
-    , menu = menu
-    }
