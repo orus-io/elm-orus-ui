@@ -33776,6 +33776,13 @@ var $mdgriffith$elm_ui$Internal$Model$FocusStyleOption = function (a) {
 	return {$: 'FocusStyleOption', a: a};
 };
 var $mdgriffith$elm_ui$Element$focusStyle = $mdgriffith$elm_ui$Internal$Model$FocusStyleOption;
+var $author$project$OUI$Explorer$invertColorSchemeType = function (t) {
+	if (t.$ === 'Light') {
+		return $author$project$OUI$Explorer$Dark;
+	} else {
+		return $author$project$OUI$Explorer$Light;
+	}
+};
 var $mdgriffith$elm_ui$Internal$Model$OnlyDynamic = F2(
 	function (a, b) {
 		return {$: 'OnlyDynamic', a: a, b: b};
@@ -34127,7 +34134,21 @@ var $author$project$OUI$Explorer$finalize = function (_v0) {
 																	$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
 																	$mdgriffith$elm_ui$Element$padding(15),
 																	$mdgriffith$elm_ui$Element$Background$color(
-																	$author$project$OUI$Material$Color$toElementColor(shared.theme.colorscheme.surfaceContainerLow))
+																	$author$project$OUI$Material$Color$toElementColor(shared.theme.colorscheme.surfaceContainerLow)),
+																	$mdgriffith$elm_ui$Element$pointer,
+																	$mdgriffith$elm_ui$Element$mouseOver(
+																	_List_fromArray(
+																		[
+																			$mdgriffith$elm_ui$Element$Background$color(
+																			$author$project$OUI$Material$Color$toElementColor(
+																				A3($author$project$OUI$Material$Color$withShade, shared.theme.colorscheme.onSurface, $author$project$OUI$Material$Color$hoverStateLayerOpacity, shared.theme.colorscheme.surfaceContainerLow)))
+																		])),
+																	$mdgriffith$elm_ui$Element$Events$onClick(
+																	$orus_io$elm_spa$Spa$mapSharedMsg(
+																		A2(
+																			$author$project$OUI$Explorer$SelectColorScheme,
+																			shared.selectedColorScheme.a,
+																			$author$project$OUI$Explorer$invertColorSchemeType(shared.selectedColorScheme.b))))
 																]),
 															_List_fromArray(
 																[

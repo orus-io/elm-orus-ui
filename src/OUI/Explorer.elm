@@ -17,6 +17,7 @@ import Browser.Navigation
 import Effect exposing (Effect)
 import Element exposing (Element)
 import Element.Background as Background
+import Element.Events as Events
 import Element.Font as Font
 import Json.Decode
 import Markdown.Parser
@@ -565,6 +566,23 @@ finalize (Explorer expl) =
                                         , shared.theme.colorscheme.surfaceContainerLow
                                             |> Color.toElementColor
                                             |> Background.color
+                                        , Element.pointer
+                                        , Element.mouseOver
+                                            [ shared.theme.colorscheme.surfaceContainerLow
+                                                |> Color.withShade shared.theme.colorscheme.onSurface
+                                                    Color.hoverStateLayerOpacity
+                                                |> Color.toElementColor
+                                                |> Background.color
+                                            ]
+                                        , Events.onClick
+                                            (SelectColorScheme
+                                                (Tuple.first shared.selectedColorScheme)
+                                                (shared.selectedColorScheme
+                                                    |> Tuple.second
+                                                    |> invertColorSchemeType
+                                                )
+                                                |> Spa.mapSharedMsg
+                                            )
                                         ]
                                         [ OUI.Text.labelLarge "Light/Dark"
                                             |> Material.text shared.theme
