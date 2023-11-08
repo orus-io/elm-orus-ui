@@ -108,7 +108,6 @@ book : Explorer.Book themeExt () ()
 book =
     Explorer.book "Colors"
         |> Explorer.withMarkdownChapter """
-# Colors
 The two default color schemes
     """
         |> Explorer.withStaticChapter

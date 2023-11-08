@@ -5287,12 +5287,21 @@ var $icidasset$elm_material_icons$Material$Icons$Types$Color = function (a) {
 var $author$project$OUI$Explorer$BookMsg = function (a) {
 	return {$: 'BookMsg', a: a};
 };
+var $elm$core$Basics$identity = function (x) {
+	return x;
+};
+var $author$project$OUI$Explorer$Explorer = function (a) {
+	return {$: 'Explorer', a: a};
+};
 var $elm$core$Maybe$Just = function (a) {
 	return {$: 'Just', a: a};
 };
 var $elm$core$Maybe$Nothing = {$: 'Nothing'};
 var $elm$core$Result$Ok = function (a) {
 	return {$: 'Ok', a: a};
+};
+var $orus_io$elm_spa$Spa$Builder = function (a) {
+	return {$: 'Builder', a: a};
 };
 var $orus_io$elm_spa$Spa$PageStack$Current = function (a) {
 	return {$: 'Current', a: a};
@@ -6099,9 +6108,11 @@ var $orus_io$elm_spa$Spa$PageStack$add = F4(
 		};
 	});
 var $orus_io$elm_spa$Spa$addPage = F4(
-	function (mappers, matchRoute, page, builder) {
+	function (mappers, matchRoute, page, _v0) {
+		var builder = _v0.a;
 		var pageStack = A4($orus_io$elm_spa$Spa$PageStack$add, mappers, matchRoute, page, builder.pageStack);
-		return {extractIdentity: builder.extractIdentity, pageStack: pageStack};
+		return $orus_io$elm_spa$Spa$Builder(
+			{beforeRouteChange: $elm$core$Maybe$Nothing, extractIdentity: builder.extractIdentity, pageStack: pageStack});
 	});
 var $orus_io$elm_spa$Spa$addPublicPage = F3(
 	function (mappers, matchRoute, page) {
@@ -6274,9 +6285,6 @@ var $elm$html$Html$Attributes$stringProperty = F2(
 	});
 var $elm$html$Html$Attributes$class = $elm$html$Html$Attributes$stringProperty('className');
 var $elm$html$Html$div = _VirtualDom_node('div');
-var $elm$core$Basics$identity = function (x) {
-	return x;
-};
 var $elm$core$Set$Set_elm_builtin = function (a) {
 	return {$: 'Set_elm_builtin', a: a};
 };
@@ -11791,7 +11799,7 @@ var $mdgriffith$elm_ui$Element$column = F2(
 						attrs))),
 			$mdgriffith$elm_ui$Internal$Model$Unkeyed(children));
 	});
-var $orus_io$elm_spa$Internal$Page = function (a) {
+var $orus_io$elm_spa$Spa$Internal$Page = function (a) {
 	return {$: 'Page', a: a};
 };
 var $orus_io$elm_spa$Spa$Page$element = function (_v0) {
@@ -11799,7 +11807,7 @@ var $orus_io$elm_spa$Spa$Page$element = function (_v0) {
 	var update = _v0.update;
 	var view = _v0.view;
 	var subscriptions = _v0.subscriptions;
-	return $orus_io$elm_spa$Internal$Page(
+	return $orus_io$elm_spa$Spa$Internal$Page(
 		{init: init, onNewFlags: $elm$core$Maybe$Nothing, subscriptions: subscriptions, update: update, view: view});
 };
 var $orus_io$elm_spa$Effect$fromShared = $orus_io$elm_spa$Effect$Shared;
@@ -11884,7 +11892,8 @@ var $mdgriffith$elm_ui$Element$spacing = function (x) {
 			x));
 };
 var $author$project$OUI$Explorer$addBook = F2(
-	function (b, expl) {
+	function (b, _v0) {
+		var expl = _v0.a;
 		var cat = A2(
 			$elm$core$Maybe$withDefault,
 			'',
@@ -11892,90 +11901,91 @@ var $author$project$OUI$Explorer$addBook = F2(
 				$elm$core$Maybe$map,
 				$elm$core$Tuple$first,
 				$elm$core$List$head(expl.categories)));
-		return {
-			app: A4(
-				$orus_io$elm_spa$Spa$addPublicPage,
-				_Utils_Tuple2($author$project$OUI$Explorer$mapView, $author$project$OUI$Explorer$mapView),
-				function (route) {
-					return _Utils_eq(
-						route,
-						A2($author$project$OUI$Explorer$bookPath, cat, b.title)) ? $elm$core$Maybe$Just(route) : $elm$core$Maybe$Nothing;
-				},
-				function (shared) {
-					return $orus_io$elm_spa$Spa$Page$element(
-						{
-							init: function (_v0) {
-								return A2(
-									$elm$core$Tuple$mapSecond,
-									$orus_io$elm_spa$Effect$map($author$project$OUI$Explorer$BookMsg),
-									b.init(shared));
-							},
-							subscriptions: function (model) {
-								return A2(
-									$elm$core$Platform$Sub$map,
-									$author$project$OUI$Explorer$BookMsg,
-									A2(b.subscriptions, shared, model));
-							},
-							update: F2(
-								function (msg, model) {
-									if (msg.$ === 'SharedMsg') {
-										var sharedMsg = msg.a;
-										return _Utils_Tuple2(
-											model,
-											$orus_io$elm_spa$Effect$fromShared(sharedMsg));
-									} else {
-										var subMsg = msg.a;
-										return A2(
-											$elm$core$Tuple$mapSecond,
-											$orus_io$elm_spa$Effect$map($author$project$OUI$Explorer$BookMsg),
-											A3(b.update, shared, subMsg, model));
-									}
-								}),
-							view: function (model) {
-								return {
-									content: A2(
-										$mdgriffith$elm_ui$Element$column,
-										_List_fromArray(
-											[
-												$mdgriffith$elm_ui$Element$spacing(20)
-											]),
-										A2(
-											$elm$core$List$map,
-											function (v) {
-												return A2(v, shared, model);
-											},
-											$elm$core$List$reverse(b.chapters))),
-									title: b.title
-								};
-							}
-						});
-				},
-				expl.app),
-			categories: function () {
-				var _v2 = expl.categories;
-				if (_v2.b) {
-					var _v3 = _v2.a;
-					var cat_ = _v3.a;
-					var pages = _v3.b;
-					var tail = _v2.b;
-					return A2(
-						$elm$core$List$cons,
-						_Utils_Tuple2(
-							cat_,
-							A2($elm$core$List$cons, b.title, pages)),
-						tail);
-				} else {
-					return _List_fromArray(
-						[
+		return $author$project$OUI$Explorer$Explorer(
+			{
+				app: A4(
+					$orus_io$elm_spa$Spa$addPublicPage,
+					_Utils_Tuple2($author$project$OUI$Explorer$mapView, $author$project$OUI$Explorer$mapView),
+					function (route) {
+						return _Utils_eq(
+							route,
+							A2($author$project$OUI$Explorer$bookPath, cat, b.title)) ? $elm$core$Maybe$Just(route) : $elm$core$Maybe$Nothing;
+					},
+					function (shared) {
+						return $orus_io$elm_spa$Spa$Page$element(
+							{
+								init: function (_v1) {
+									return A2(
+										$elm$core$Tuple$mapSecond,
+										$orus_io$elm_spa$Effect$map($author$project$OUI$Explorer$BookMsg),
+										b.init(shared));
+								},
+								subscriptions: function (model) {
+									return A2(
+										$elm$core$Platform$Sub$map,
+										$author$project$OUI$Explorer$BookMsg,
+										A2(b.subscriptions, shared, model));
+								},
+								update: F2(
+									function (msg, model) {
+										if (msg.$ === 'SharedMsg') {
+											var sharedMsg = msg.a;
+											return _Utils_Tuple2(
+												model,
+												$orus_io$elm_spa$Effect$fromShared(sharedMsg));
+										} else {
+											var subMsg = msg.a;
+											return A2(
+												$elm$core$Tuple$mapSecond,
+												$orus_io$elm_spa$Effect$map($author$project$OUI$Explorer$BookMsg),
+												A3(b.update, shared, subMsg, model));
+										}
+									}),
+								view: function (model) {
+									return {
+										content: A2(
+											$mdgriffith$elm_ui$Element$column,
+											_List_fromArray(
+												[
+													$mdgriffith$elm_ui$Element$spacing(20)
+												]),
+											A2(
+												$elm$core$List$map,
+												function (v) {
+													return A2(v, shared, model);
+												},
+												$elm$core$List$reverse(b.chapters))),
+										title: b.title
+									};
+								}
+							});
+					},
+					expl.app),
+				categories: function () {
+					var _v3 = expl.categories;
+					if (_v3.b) {
+						var _v4 = _v3.a;
+						var cat_ = _v4.a;
+						var pages = _v4.b;
+						var tail = _v3.b;
+						return A2(
+							$elm$core$List$cons,
 							_Utils_Tuple2(
-							'',
-							_List_fromArray(
-								[b.title]))
-						]);
-				}
-			}(),
-			initialShared: expl.initialShared
-		};
+								cat_,
+								A2($elm$core$List$cons, b.title, pages)),
+							tail);
+					} else {
+						return _List_fromArray(
+							[
+								_Utils_Tuple2(
+								'',
+								_List_fromArray(
+									[b.title]))
+							]);
+					}
+				}(),
+				initialShared: expl.initialShared
+			});
 	});
 var $orus_io$elm_spa$Effect$withNone = function (model) {
 	return _Utils_Tuple2(model, $orus_io$elm_spa$Effect$none);
@@ -24326,7 +24336,7 @@ var $author$project$OUI$Showcase$Colors$book = A2(
 		},
 		A2(
 			$author$project$OUI$Explorer$withMarkdownChapter,
-			'\n# Colors\nThe two default color schemes\n    ',
+			'\nThe two default color schemes\n    ',
 			$author$project$OUI$Explorer$book('Colors'))));
 var $author$project$OUI$Showcase$MenuButtons$MenuButtonMsg = F2(
 	function (a, b) {
@@ -29763,10 +29773,27 @@ var $mdgriffith$elm_ui$Element$Keyed$column = F2(
 						attrs))),
 			$mdgriffith$elm_ui$Internal$Model$Keyed(children));
 	});
+var $author$project$OUI$Text$Headline = {$: 'Headline'};
+var $author$project$OUI$Text$Small = {$: 'Small'};
+var $author$project$OUI$Text$Text = F3(
+	function (a, b, c) {
+		return {$: 'Text', a: a, b: b, c: c};
+	});
+var $author$project$OUI$Text$headlineSmall = A2($author$project$OUI$Text$Text, $author$project$OUI$Text$Headline, $author$project$OUI$Text$Small);
 var $author$project$OUI$Navigation$properties = function (_v0) {
 	var props = _v0.a;
 	return props;
 };
+var $author$project$OUI$Material$Typography$render = F2(
+	function (typescale, _v0) {
+		var type_ = _v0.a;
+		var size = _v0.b;
+		var text = _v0.c;
+		return A2(
+			$mdgriffith$elm_ui$Element$el,
+			A3($author$project$OUI$Material$Typography$attrs, type_, size, typescale),
+			$mdgriffith$elm_ui$Element$text(text));
+	});
 var $mdgriffith$elm_ui$Internal$Model$Bottom = {$: 'Bottom'};
 var $mdgriffith$elm_ui$Element$alignBottom = $mdgriffith$elm_ui$Internal$Model$AlignY($mdgriffith$elm_ui$Internal$Model$Bottom);
 var $mdgriffith$elm_ui$Element$Keyed$el = F2(
@@ -29794,14 +29821,9 @@ var $mdgriffith$elm_ui$Internal$Model$InFront = {$: 'InFront'};
 var $mdgriffith$elm_ui$Element$inFront = function (element) {
 	return A2($mdgriffith$elm_ui$Element$createNearby, $mdgriffith$elm_ui$Internal$Model$InFront, element);
 };
-var $author$project$OUI$Text$Text = F3(
-	function (a, b, c) {
-		return {$: 'Text', a: a, b: b, c: c};
-	});
 var $author$project$OUI$Text$labelLarge = A2($author$project$OUI$Text$Text, $author$project$OUI$Text$Label, $author$project$OUI$Text$Large);
 var $author$project$OUI$Text$Medium = {$: 'Medium'};
 var $author$project$OUI$Text$labelMedium = A2($author$project$OUI$Text$Text, $author$project$OUI$Text$Label, $author$project$OUI$Text$Medium);
-var $author$project$OUI$Text$Small = {$: 'Small'};
 var $author$project$OUI$Text$labelSmall = A2($author$project$OUI$Text$Text, $author$project$OUI$Text$Label, $author$project$OUI$Text$Small);
 var $mdgriffith$elm_ui$Internal$Model$MoveX = function (a) {
 	return {$: 'MoveX', a: a};
@@ -29920,11 +29942,15 @@ var $author$project$OUI$Material$Navigation$renderEntry = F5(
 											$mdgriffith$elm_ui$Element$height(
 											$mdgriffith$elm_ui$Element$px(theme.drawer.activeIndicatorHeight)),
 											$mdgriffith$elm_ui$Element$Border$rounded(theme.drawer.activeIndicatorShape),
-											$mdgriffith$elm_ui$Element$mouseOver(
+											_Utils_eq(
+											props.selected,
+											$elm$core$Maybe$Just(key)) ? $mdgriffith$elm_ui$Element$Background$color(
+											A2($author$project$OUI$Material$Color$getElementColor, props.activeColor, colorscheme)) : $mdgriffith$elm_ui$Element$mouseOver(
 											_List_fromArray(
 												[
 													$mdgriffith$elm_ui$Element$Background$color(
-													A2($author$project$OUI$Material$Color$getElementColor, props.activeColor, colorscheme))
+													$author$project$OUI$Material$Color$toElementColor(
+														A3($author$project$OUI$Material$Color$withShade, colorscheme.onSurface, $author$project$OUI$Material$Color$hoverStateLayerOpacity, colorscheme.surfaceContainerLow)))
 												])),
 											$author$project$OUI$Material$Navigation$transitionAllEaseOut
 										]),
@@ -30047,7 +30073,10 @@ var $author$project$OUI$Material$Navigation$renderEntry = F5(
 											$mdgriffith$elm_ui$Element$height(
 											$mdgriffith$elm_ui$Element$px(theme.rail.activeIndicatorHeight)),
 											$mdgriffith$elm_ui$Element$Border$rounded(theme.rail.activeIndicatorShape),
-											$mdgriffith$elm_ui$Element$mouseOver(
+											_Utils_eq(
+											props.selected,
+											$elm$core$Maybe$Just(key)) ? $mdgriffith$elm_ui$Element$Background$color(
+											A2($author$project$OUI$Material$Color$getElementColor, props.activeColor, colorscheme)) : $mdgriffith$elm_ui$Element$mouseOver(
 											_List_fromArray(
 												[
 													$mdgriffith$elm_ui$Element$Background$color(
@@ -30165,14 +30194,37 @@ var $author$project$OUI$Material$Navigation$render = F5(
 					$author$project$OUI$Material$Navigation$transitionAllEaseOut
 				]),
 			A2(
-				$elm$core$List$indexedMap,
-				F2(
-					function (i, entry) {
+				$elm$core$List$cons,
+				function () {
+					var _v1 = props.header;
+					if (_v1.$ === 'Just') {
+						var s = _v1.a;
 						return _Utils_Tuple2(
-							$elm$core$String$fromInt(i),
-							A5($author$project$OUI$Material$Navigation$renderEntry, typescale, colorscheme, theme, props, entry));
-					}),
-				props.entries));
+							'header',
+							A2(
+								$mdgriffith$elm_ui$Element$el,
+								_List_fromArray(
+									[
+										$mdgriffith$elm_ui$Element$centerX,
+										$mdgriffith$elm_ui$Element$padding(15)
+									]),
+								A2(
+									$author$project$OUI$Material$Typography$render,
+									typescale,
+									$author$project$OUI$Text$headlineSmall(s))));
+					} else {
+						return _Utils_Tuple2('', $mdgriffith$elm_ui$Element$none);
+					}
+				}(),
+				A2(
+					$elm$core$List$indexedMap,
+					F2(
+						function (i, entry) {
+							return _Utils_Tuple2(
+								$elm$core$String$fromInt(i),
+								A5($author$project$OUI$Material$Navigation$renderEntry, typescale, colorscheme, theme, props, entry));
+						}),
+					props.entries)));
 	});
 var $author$project$OUI$Material$navigation = function (theme) {
 	return A3($author$project$OUI$Material$Navigation$render, theme.typescale, theme.colorscheme, theme.navigation);
@@ -31900,16 +31952,6 @@ var $author$project$OUI$TextField$properties = function (_v0) {
 	var props = _v0.a;
 	return props;
 };
-var $author$project$OUI$Material$Typography$render = F2(
-	function (typescale, _v0) {
-		var type_ = _v0.a;
-		var size = _v0.b;
-		var text = _v0.c;
-		return A2(
-			$mdgriffith$elm_ui$Element$el,
-			A3($author$project$OUI$Material$Typography$attrs, type_, size, typescale),
-			$mdgriffith$elm_ui$Element$text(text));
-	});
 var $mdgriffith$elm_ui$Element$Input$TextInputNode = function (a) {
 	return {$: 'TextInputNode', a: a};
 };
@@ -32725,10 +32767,8 @@ var $author$project$OUI$Text$Display = {$: 'Display'};
 var $author$project$OUI$Text$displayLarge = A2($author$project$OUI$Text$Text, $author$project$OUI$Text$Display, $author$project$OUI$Text$Large);
 var $author$project$OUI$Text$displayMedium = A2($author$project$OUI$Text$Text, $author$project$OUI$Text$Display, $author$project$OUI$Text$Medium);
 var $author$project$OUI$Text$displaySmall = A2($author$project$OUI$Text$Text, $author$project$OUI$Text$Display, $author$project$OUI$Text$Small);
-var $author$project$OUI$Text$Headline = {$: 'Headline'};
 var $author$project$OUI$Text$headlineLarge = A2($author$project$OUI$Text$Text, $author$project$OUI$Text$Headline, $author$project$OUI$Text$Large);
 var $author$project$OUI$Text$headlineMedium = A2($author$project$OUI$Text$Text, $author$project$OUI$Text$Headline, $author$project$OUI$Text$Medium);
-var $author$project$OUI$Text$headlineSmall = A2($author$project$OUI$Text$Text, $author$project$OUI$Text$Headline, $author$project$OUI$Text$Small);
 var $author$project$OUI$Material$text = function (_v0) {
 	var typescale = _v0.typescale;
 	return $author$project$OUI$Material$Typography$render(typescale);
@@ -32808,18 +32848,20 @@ var $author$project$OUI$Showcase$Typography$book = A2(
 	},
 	A2(
 		$author$project$OUI$Explorer$withMarkdownChapter,
-		'\n# Typography\n\nThe material typescale\n    ',
+		' The material typescale ',
 		$author$project$OUI$Explorer$book('Typography')));
 var $author$project$OUI$Explorer$category = F2(
-	function (name, expl) {
-		return _Utils_update(
-			expl,
-			{
-				categories: A2(
-					$elm$core$List$cons,
-					_Utils_Tuple2(name, _List_Nil),
-					expl.categories)
-			});
+	function (name, _v0) {
+		var expl = _v0.a;
+		return $author$project$OUI$Explorer$Explorer(
+			_Utils_update(
+				expl,
+				{
+					categories: A2(
+						$elm$core$List$cons,
+						_Utils_Tuple2(name, _List_Nil),
+						expl.categories)
+				}));
 	});
 var $author$project$OUI$Showcase$addPages = A2(
 	$elm$core$Basics$composeR,
@@ -33148,29 +33190,31 @@ var $orus_io$elm_spa$Spa$PageStack$setup = function (_v0) {
 	};
 };
 var $orus_io$elm_spa$Spa$init = function (shared) {
-	return {
-		extractIdentity: shared.extractIdentity,
-		pageStack: $orus_io$elm_spa$Spa$PageStack$setup(
-			{defaultView: shared.defaultView})
-	};
-};
-var $author$project$OUI$Explorer$explorer = {
-	app: $orus_io$elm_spa$Spa$init(
+	return $orus_io$elm_spa$Spa$Builder(
 		{
-			defaultView: $author$project$OUI$Explorer$defaultView,
-			extractIdentity: $elm$core$Basics$always($elm$core$Maybe$Nothing)
-		}),
-	categories: _List_Nil,
-	initialShared: {
-		colorSchemeList: _List_fromArray(
-			[
-				_Utils_Tuple2($author$project$OUI$Material$Color$defaultLightScheme, $author$project$OUI$Material$Color$defaultDarkScheme)
-			]),
-		lastEvents: _List_Nil,
-		selectedColorScheme: _Utils_Tuple2(0, $author$project$OUI$Explorer$Light),
-		theme: $author$project$OUI$Material$Theme$defaultTheme
-	}
+			beforeRouteChange: $elm$core$Maybe$Nothing,
+			extractIdentity: shared.extractIdentity,
+			pageStack: $orus_io$elm_spa$Spa$PageStack$setup(
+				{defaultView: shared.defaultView})
+		});
 };
+var $author$project$OUI$Explorer$explorer = $author$project$OUI$Explorer$Explorer(
+	{
+		app: $orus_io$elm_spa$Spa$init(
+			{
+				defaultView: $author$project$OUI$Explorer$defaultView,
+				extractIdentity: $elm$core$Basics$always($elm$core$Maybe$Nothing)
+			}),
+		categories: _List_Nil,
+		initialShared: {
+			colorSchemeList: _List_fromArray(
+				[
+					_Utils_Tuple2($author$project$OUI$Material$Color$defaultLightScheme, $author$project$OUI$Material$Color$defaultDarkScheme)
+				]),
+			selectedColorScheme: _Utils_Tuple2(0, $author$project$OUI$Explorer$Light),
+			theme: $author$project$OUI$Material$Theme$defaultTheme
+		}
+	});
 var $icidasset$elm_material_icons$Material$Icons$Outlined$face = A2(
 	$icidasset$elm_material_icons$Material$Icons$Internal$icon,
 	_List_fromArray(
@@ -33196,6 +33240,12 @@ var $icidasset$elm_material_icons$Material$Icons$Outlined$face = A2(
 			_List_Nil)
 		]));
 var $author$project$OUI$Explorer$Dark = {$: 'Dark'};
+var $author$project$OUI$Explorer$OnBookClick = function (a) {
+	return {$: 'OnBookClick', a: a};
+};
+var $author$project$OUI$Explorer$OnRouteChange = function (a) {
+	return {$: 'OnRouteChange', a: a};
+};
 var $author$project$OUI$Explorer$SelectColorScheme = F2(
 	function (a, b) {
 		return {$: 'SelectColorScheme', a: a, b: b};
@@ -33212,7 +33262,46 @@ var $orus_io$elm_spa$Spa$UrlChange = function (a) {
 var $orus_io$elm_spa$Spa$UrlRequest = function (a) {
 	return {$: 'UrlRequest', a: a};
 };
+var $orus_io$elm_spa$Spa$addCmd = function (cmd) {
+	return $elm$core$Tuple$mapSecond(
+		function (c) {
+			return $elm$core$Platform$Cmd$batch(
+				_List_fromArray(
+					[c, cmd]));
+		});
+};
+var $orus_io$elm_spa$Spa$addMapCmd = function (tomsg) {
+	return A2(
+		$elm$core$Basics$composeL,
+		$orus_io$elm_spa$Spa$addCmd,
+		$elm$core$Platform$Cmd$map(tomsg));
+};
 var $orus_io$elm_spa$Spa$PageStack$empty = $orus_io$elm_spa$Spa$PageStack$NoPage;
+var $orus_io$elm_spa$Effect$batch = $orus_io$elm_spa$Effect$Batch;
+var $orus_io$elm_spa$Effect$extractShared = A2(
+	$elm$core$Basics$composeR,
+	$orus_io$elm_spa$Effect$flatten,
+	A2(
+		$elm$core$Basics$composeR,
+		A2(
+			$elm$core$List$foldl,
+			F2(
+				function (effect, _v0) {
+					var sharedList = _v0.a;
+					var otherList = _v0.b;
+					if (effect.$ === 'Shared') {
+						var sharedMsg = effect.a;
+						return _Utils_Tuple2(
+							A2($elm$core$List$cons, sharedMsg, sharedList),
+							otherList);
+					} else {
+						return _Utils_Tuple2(
+							sharedList,
+							A2($elm$core$List$cons, effect, otherList));
+					}
+				}),
+			_Utils_Tuple2(_List_Nil, _List_Nil)),
+		$elm$core$Tuple$mapSecond($orus_io$elm_spa$Effect$batch)));
 var $orus_io$elm_spa$Spa$PageStack$getError = function (model) {
 	if (model.$ === 'SetupError') {
 		var err = model.a;
@@ -33316,47 +33405,154 @@ var $elm$url$Url$toString = function (url) {
 				url.path)));
 };
 var $orus_io$elm_spa$Spa$application = F3(
-	function (viewMap, app, builder) {
-		var initPage = F3(
-			function (route, key, shared) {
-				var _v10 = A2(builder.pageStack.init, shared, route);
-				var page = _v10.a;
-				var effect = _v10.b;
-				var _v11 = $orus_io$elm_spa$Spa$PageStack$getError(page);
-				if (_v11.$ === 'Just') {
-					return _Utils_Tuple2(
-						$orus_io$elm_spa$Spa$PageStack$empty,
-						A2(
-							$elm$browser$Browser$Navigation$replaceUrl,
-							key,
-							app.protectPage(route)));
+	function (viewMap, app, _v0) {
+		var builder = _v0.a;
+		var updateShared = F2(
+			function (sharedMsg, model) {
+				var _v20 = A2(app.update, sharedMsg, model.shared);
+				var newShared = _v20.a;
+				var sharedCmd = _v20.b;
+				var identityChanged = !_Utils_eq(
+					builder.extractIdentity(newShared),
+					builder.extractIdentity(model.shared));
+				if (identityChanged) {
+					var _v21 = A3(
+						builder.pageStack.update,
+						newShared,
+						$orus_io$elm_spa$Spa$PageStack$routeChange(model.currentRoute),
+						model.page);
+					var page = _v21.a;
+					var pageEffect = _v21.b;
+					var _v22 = $orus_io$elm_spa$Spa$PageStack$getError(page);
+					if (_v22.$ === 'Just') {
+						return _Utils_Tuple2(
+							_Utils_update(
+								model,
+								{page: page, shared: newShared}),
+							$elm$core$Platform$Cmd$batch(
+								_List_fromArray(
+									[
+										A2($elm$core$Platform$Cmd$map, $orus_io$elm_spa$Spa$SharedMsg, sharedCmd),
+										A2(
+										$elm$browser$Browser$Navigation$replaceUrl,
+										model.key,
+										app.protectPage(model.currentRoute))
+									])));
+					} else {
+						return _Utils_Tuple2(
+							_Utils_update(
+								model,
+								{page: page, shared: newShared}),
+							$elm$core$Platform$Cmd$batch(
+								_List_fromArray(
+									[
+										A2($elm$core$Platform$Cmd$map, $orus_io$elm_spa$Spa$SharedMsg, sharedCmd),
+										A2(
+										$orus_io$elm_spa$Effect$toCmd,
+										_Utils_Tuple2($orus_io$elm_spa$Spa$SharedMsg, $orus_io$elm_spa$Spa$PageMsg),
+										pageEffect)
+									])));
+					}
 				} else {
 					return _Utils_Tuple2(
-						page,
-						A2(
-							$orus_io$elm_spa$Effect$toCmd,
-							_Utils_Tuple2($orus_io$elm_spa$Spa$SharedMsg, $orus_io$elm_spa$Spa$PageMsg),
-							effect));
+						_Utils_update(
+							model,
+							{shared: newShared}),
+						A2($elm$core$Platform$Cmd$map, $orus_io$elm_spa$Spa$SharedMsg, sharedCmd));
 				}
+			});
+		var initPage = F3(
+			function (route, key, shared) {
+				var _v18 = A2(builder.pageStack.init, shared, route);
+				var page = _v18.a;
+				var effect = _v18.b;
+				var _v19 = $orus_io$elm_spa$Spa$PageStack$getError(page);
+				if (_v19.$ === 'Just') {
+					return _Utils_Tuple2(
+						$orus_io$elm_spa$Spa$PageStack$empty,
+						$orus_io$elm_spa$Effect$fromCmd(
+							A2(
+								$elm$browser$Browser$Navigation$replaceUrl,
+								key,
+								app.protectPage(route))));
+				} else {
+					return _Utils_Tuple2(page, effect);
+				}
+			});
+		var applyEffect = F2(
+			function (effect, model) {
+				var _v14 = $orus_io$elm_spa$Effect$extractShared(effect);
+				var sharedMsgList = _v14.a;
+				var otherEffect = _v14.b;
+				var _v15 = A3(
+					$elm$core$List$foldl,
+					F2(
+						function (sharedMsg, _v16) {
+							var prevModel = _v16.a;
+							var prevCmd = _v16.b;
+							var _v17 = A2(updateShared, sharedMsg, prevModel);
+							var nextModel = _v17.a;
+							var nextCmd = _v17.b;
+							return _Utils_Tuple2(
+								nextModel,
+								A2($elm$core$List$cons, nextCmd, prevCmd));
+						}),
+					_Utils_Tuple2(model, _List_Nil),
+					sharedMsgList);
+				var newModel = _v15.a;
+				var cmd = _v15.b;
+				return _Utils_Tuple2(
+					newModel,
+					$elm$core$Platform$Cmd$batch(
+						A2(
+							$elm$core$List$cons,
+							A2(
+								$orus_io$elm_spa$Effect$toCmd,
+								_Utils_Tuple2($orus_io$elm_spa$Spa$SharedMsg, $orus_io$elm_spa$Spa$PageMsg),
+								otherEffect),
+							cmd)));
 			});
 		return {
 			init: F3(
 				function (flags, url, key) {
 					var route = app.toRoute(url);
-					var _v0 = A2(app.init, flags, key);
-					var shared = _v0.a;
-					var sharedCmd = _v0.b;
-					var _v1 = A3(initPage, route, key, shared);
-					var page = _v1.a;
-					var pageCmd = _v1.b;
-					return _Utils_Tuple2(
-						{currentRoute: route, key: key, page: page, shared: shared},
-						$elm$core$Platform$Cmd$batch(
-							_List_fromArray(
-								[
-									A2($elm$core$Platform$Cmd$map, $orus_io$elm_spa$Spa$SharedMsg, sharedCmd),
-									pageCmd
-								])));
+					var _v1 = function () {
+						var _v2 = builder.beforeRouteChange;
+						if (_v2.$ === 'Just') {
+							var toSharedMsg = _v2.a;
+							return function (_v3) {
+								var s = _v3.a;
+								var sCmd = _v3.b;
+								var _v4 = A2(
+									app.update,
+									toSharedMsg(route),
+									s);
+								var newShared = _v4.a;
+								var cmd = _v4.b;
+								return _Utils_Tuple2(
+									newShared,
+									$elm$core$Platform$Cmd$batch(
+										_List_fromArray(
+											[sCmd, cmd])));
+							};
+						} else {
+							return $elm$core$Basics$identity;
+						}
+					}()(
+						A2(app.init, flags, key));
+					var shared = _v1.a;
+					var sharedCmd = _v1.b;
+					var _v5 = A3(initPage, route, key, shared);
+					var page = _v5.a;
+					var pageEffect = _v5.b;
+					return A3(
+						$orus_io$elm_spa$Spa$addMapCmd,
+						$orus_io$elm_spa$Spa$SharedMsg,
+						sharedCmd,
+						A2(
+							applyEffect,
+							pageEffect,
+							{currentRoute: route, key: key, page: page, shared: shared}));
 				}),
 			onUrlChange: $orus_io$elm_spa$Spa$UrlChange,
 			onUrlRequest: $orus_io$elm_spa$Spa$UrlRequest,
@@ -33379,70 +33575,21 @@ var $orus_io$elm_spa$Spa$application = F3(
 					switch (msg.$) {
 						case 'SharedMsg':
 							var sharedMsg = msg.a;
-							var _v3 = A2(app.update, sharedMsg, model.shared);
-							var newShared = _v3.a;
-							var sharedCmd = _v3.b;
-							var identityChanged = !_Utils_eq(
-								builder.extractIdentity(newShared),
-								builder.extractIdentity(model.shared));
-							if (identityChanged) {
-								var _v4 = A3(
-									builder.pageStack.update,
-									newShared,
-									$orus_io$elm_spa$Spa$PageStack$routeChange(model.currentRoute),
-									model.page);
-								var page = _v4.a;
-								var pageEffect = _v4.b;
-								var _v5 = $orus_io$elm_spa$Spa$PageStack$getError(page);
-								if (_v5.$ === 'Just') {
-									return _Utils_Tuple2(
-										_Utils_update(
-											model,
-											{page: page, shared: newShared}),
-										$elm$core$Platform$Cmd$batch(
-											_List_fromArray(
-												[
-													A2($elm$core$Platform$Cmd$map, $orus_io$elm_spa$Spa$SharedMsg, sharedCmd),
-													A2(
-													$elm$browser$Browser$Navigation$replaceUrl,
-													model.key,
-													app.protectPage(model.currentRoute))
-												])));
-								} else {
-									return _Utils_Tuple2(
-										_Utils_update(
-											model,
-											{page: page, shared: newShared}),
-										$elm$core$Platform$Cmd$batch(
-											_List_fromArray(
-												[
-													A2($elm$core$Platform$Cmd$map, $orus_io$elm_spa$Spa$SharedMsg, sharedCmd),
-													A2(
-													$orus_io$elm_spa$Effect$toCmd,
-													_Utils_Tuple2($orus_io$elm_spa$Spa$SharedMsg, $orus_io$elm_spa$Spa$PageMsg),
-													pageEffect)
-												])));
-								}
-							} else {
-								return _Utils_Tuple2(
-									_Utils_update(
-										model,
-										{shared: newShared}),
-									A2($elm$core$Platform$Cmd$map, $orus_io$elm_spa$Spa$SharedMsg, sharedCmd));
-							}
+							var _v7 = A2(updateShared, sharedMsg, model);
+							var nextModel = _v7.a;
+							var nextCmd = _v7.b;
+							return _Utils_Tuple2(nextModel, nextCmd);
 						case 'PageMsg':
 							var pageMsg = msg.a;
-							var _v6 = A3(builder.pageStack.update, model.shared, pageMsg, model.page);
-							var newPage = _v6.a;
-							var pageEffect = _v6.b;
-							return _Utils_Tuple2(
+							var _v8 = A3(builder.pageStack.update, model.shared, pageMsg, model.page);
+							var newPage = _v8.a;
+							var pageEffect = _v8.b;
+							return A2(
+								applyEffect,
+								pageEffect,
 								_Utils_update(
 									model,
-									{page: newPage}),
-								A2(
-									$orus_io$elm_spa$Effect$toCmd,
-									_Utils_Tuple2($orus_io$elm_spa$Spa$SharedMsg, $orus_io$elm_spa$Spa$PageMsg),
-									pageEffect));
+									{page: newPage}));
 						case 'UrlRequest':
 							var urlRequest = msg.a;
 							if (urlRequest.$ === 'Internal') {
@@ -33462,32 +33609,59 @@ var $orus_io$elm_spa$Spa$application = F3(
 						default:
 							var url = msg.a;
 							var route = app.toRoute(url);
-							var _v8 = A3(
+							var _v10 = function () {
+								var _v11 = builder.beforeRouteChange;
+								if (_v11.$ === 'Just') {
+									var toSharedMsg = _v11.a;
+									return A2(
+										app.update,
+										toSharedMsg(route),
+										model.shared);
+								} else {
+									return _Utils_Tuple2(model.shared, $elm$core$Platform$Cmd$none);
+								}
+							}();
+							var nextShared = _v10.a;
+							var nextSharedCmd = _v10.b;
+							var _v12 = A3(
 								builder.pageStack.update,
-								model.shared,
+								nextShared,
 								$orus_io$elm_spa$Spa$PageStack$routeChange(route),
 								model.page);
-							var page = _v8.a;
-							var pageEffect = _v8.b;
-							var _v9 = $orus_io$elm_spa$Spa$PageStack$getError(page);
-							if (_v9.$ === 'Just') {
+							var page = _v12.a;
+							var pageEffect = _v12.b;
+							var _v13 = $orus_io$elm_spa$Spa$PageStack$getError(page);
+							if (_v13.$ === 'Just') {
 								return _Utils_Tuple2(
 									_Utils_update(
 										model,
-										{currentRoute: route, page: page}),
-									A2(
-										$elm$browser$Browser$Navigation$replaceUrl,
-										model.key,
-										app.protectPage(route)));
+										{currentRoute: route, page: page, shared: nextShared}),
+									$elm$core$Platform$Cmd$batch(
+										_List_fromArray(
+											[
+												A2($elm$core$Platform$Cmd$map, $orus_io$elm_spa$Spa$SharedMsg, nextSharedCmd),
+												A2(
+												$elm$browser$Browser$Navigation$replaceUrl,
+												model.key,
+												app.protectPage(route))
+											])));
 							} else {
-								return _Utils_Tuple2(
-									_Utils_update(
-										model,
-										{currentRoute: route, page: page}),
+								return A2(
+									$elm$core$Tuple$mapSecond,
+									function (cmd) {
+										return $elm$core$Platform$Cmd$batch(
+											_List_fromArray(
+												[
+													A2($elm$core$Platform$Cmd$map, $orus_io$elm_spa$Spa$SharedMsg, nextSharedCmd),
+													cmd
+												]));
+									},
 									A2(
-										$orus_io$elm_spa$Effect$toCmd,
-										_Utils_Tuple2($orus_io$elm_spa$Spa$SharedMsg, $orus_io$elm_spa$Spa$PageMsg),
-										pageEffect));
+										applyEffect,
+										pageEffect,
+										_Utils_update(
+											model,
+											{currentRoute: route, page: page, shared: nextShared})));
 							}
 					}
 				}),
@@ -33501,6 +33675,16 @@ var $orus_io$elm_spa$Spa$application = F3(
 						A2(builder.pageStack.view, model.shared, model.page)));
 			}
 		};
+	});
+var $orus_io$elm_spa$Spa$beforeRouteChange = F2(
+	function (toSharedMsg, _v0) {
+		var builder = _v0.a;
+		return $orus_io$elm_spa$Spa$Builder(
+			_Utils_update(
+				builder,
+				{
+					beforeRouteChange: $elm$core$Maybe$Just(toSharedMsg)
+				}));
 	});
 var $author$project$OUI$Explorer$changeColorScheme = F3(
 	function (index, type_, shared) {
@@ -33796,7 +33980,28 @@ var $mdgriffith$elm_ui$Element$layoutWith = F3(
 			child);
 	});
 var $orus_io$elm_spa$Spa$mapSharedMsg = $orus_io$elm_spa$Spa$SharedMsg;
-var $author$project$OUI$Explorer$finalize = function (expl) {
+var $author$project$OUI$Navigation$withHeader = F2(
+	function (text, _v0) {
+		var props = _v0.a;
+		return $author$project$OUI$Navigation$Navigation(
+			_Utils_update(
+				props,
+				{
+					header: $elm$core$Maybe$Just(text)
+				}));
+	});
+var $author$project$OUI$Navigation$withSelected = F2(
+	function (key, _v0) {
+		var props = _v0.a;
+		return $author$project$OUI$Navigation$Navigation(
+			_Utils_update(
+				props,
+				{
+					selected: $elm$core$Maybe$Just(key)
+				}));
+	});
+var $author$project$OUI$Explorer$finalize = function (_v0) {
+	var expl = _v0.a;
 	var categories = $elm$core$List$reverse(
 		A2(
 			$elm$core$List$map,
@@ -33807,7 +34012,7 @@ var $author$project$OUI$Explorer$finalize = function (expl) {
 		$author$project$OUI$Explorer$mapView,
 		{
 			init: F2(
-				function (flags, _v0) {
+				function (flags, key) {
 					var dFlags = A2(
 						$elm$core$Result$withDefault,
 						{dark_mode: false},
@@ -33817,7 +34022,7 @@ var $author$project$OUI$Explorer$finalize = function (expl) {
 							$author$project$OUI$Explorer$changeColorScheme,
 							0,
 							dFlags.dark_mode ? $author$project$OUI$Explorer$Dark : $author$project$OUI$Explorer$Light,
-							expl.initialShared),
+							{colorSchemeList: expl.initialShared.colorSchemeList, lastEvents: _List_Nil, navKey: key, selectedBook: '', selectedColorScheme: expl.initialShared.selectedColorScheme, theme: expl.initialShared.theme}),
 						$elm$core$Platform$Cmd$none);
 				}),
 			protectPage: function (_v1) {
@@ -33860,14 +34065,6 @@ var $author$project$OUI$Explorer$finalize = function (expl) {
 									_List_fromArray(
 										[
 											A2(
-											$mdgriffith$elm_ui$Element$el,
-											_List_fromArray(
-												[
-													$mdgriffith$elm_ui$Element$padding(15),
-													$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill)
-												]),
-											$mdgriffith$elm_ui$Element$text('Orus UI Explorer')),
-											A2(
 											$mdgriffith$elm_ui$Element$row,
 											_List_fromArray(
 												[
@@ -33880,23 +34077,64 @@ var $author$project$OUI$Explorer$finalize = function (expl) {
 													$mdgriffith$elm_ui$Element$column,
 													_List_fromArray(
 														[
-															$mdgriffith$elm_ui$Element$padding(10),
 															$mdgriffith$elm_ui$Element$alignTop,
-															$mdgriffith$elm_ui$Element$width(
-															$mdgriffith$elm_ui$Element$px(200)),
 															$mdgriffith$elm_ui$Element$height($mdgriffith$elm_ui$Element$fill)
 														]),
-													A2(
-														$elm$core$List$cons,
-														A2(
+													_List_fromArray(
+														[
+															A3(
+															$author$project$OUI$Material$navigation,
+															shared.theme,
+															_List_Nil,
+															function (nav) {
+																return A3(
+																	$elm$core$List$foldl,
+																	function (_v3) {
+																		var cat = _v3.a;
+																		var books = _v3.b;
+																		return A2(
+																			$elm$core$Basics$composeR,
+																			$author$project$OUI$Navigation$addSectionHeader(cat),
+																			function (bn) {
+																				return A3(
+																					$elm$core$List$foldl,
+																					function (bookName) {
+																						return A3(
+																							$author$project$OUI$Navigation$addEntry,
+																							A2($author$project$OUI$Explorer$bookPath, cat, bookName),
+																							bookName,
+																							$author$project$OUI$Icon$blank);
+																					},
+																					bn,
+																					books);
+																			});
+																	},
+																	nav,
+																	categories);
+															}(
+																A2(
+																	$author$project$OUI$Navigation$withSelected,
+																	shared.selectedBook,
+																	A2(
+																		$author$project$OUI$Navigation$withHeader,
+																		'Orus UI Explorer',
+																		$author$project$OUI$Navigation$new(
+																			A2($elm$core$Basics$composeL, $orus_io$elm_spa$Spa$mapSharedMsg, $author$project$OUI$Explorer$OnBookClick)))))),
+															A2(
 															$mdgriffith$elm_ui$Element$row,
 															_List_fromArray(
 																[
-																	$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill)
+																	$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
+																	$mdgriffith$elm_ui$Element$padding(15),
+																	$mdgriffith$elm_ui$Element$Background$color(
+																	$author$project$OUI$Material$Color$toElementColor(shared.theme.colorscheme.surfaceContainerLow))
 																]),
 															_List_fromArray(
 																[
-																	$mdgriffith$elm_ui$Element$text('Light/Dark'),
+																	A2(
+																	$author$project$OUI$Material$text,
+																	shared.theme,
+																	$author$project$OUI$Text$labelLarge('Light/Dark')),
 																	A3(
 																	$author$project$OUI$Material$switch,
 																	shared.theme,
@@ -33919,42 +34157,28 @@ var $author$project$OUI$Explorer$finalize = function (expl) {
 																				},
 																				$author$project$OUI$Switch$new(
 																					_Utils_eq(shared.selectedColorScheme.b, $author$project$OUI$Explorer$Dark))))))
-																])),
-														A2(
-															$elm$core$List$concatMap,
-															function (_v3) {
-																var cat = _v3.a;
-																var books = _v3.b;
-																return A2(
-																	$elm$core$List$cons,
-																	$mdgriffith$elm_ui$Element$text(cat),
-																	A2(
-																		$elm$core$List$map,
-																		function (name) {
-																			return A2(
-																				$mdgriffith$elm_ui$Element$link,
-																				_List_fromArray(
-																					[
-																						$mdgriffith$elm_ui$Element$padding(10),
-																						$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill)
-																					]),
-																				{
-																					label: $mdgriffith$elm_ui$Element$text(name),
-																					url: '#' + A2($author$project$OUI$Explorer$bookPath, cat, name)
-																				});
-																		},
-																		books));
-															},
-															categories))),
+																]))
+														])),
 													A2(
 													$mdgriffith$elm_ui$Element$column,
 													_List_fromArray(
 														[
 															$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
-															$mdgriffith$elm_ui$Element$height($mdgriffith$elm_ui$Element$fill)
+															$mdgriffith$elm_ui$Element$height($mdgriffith$elm_ui$Element$fill),
+															$mdgriffith$elm_ui$Element$padding(20)
 														]),
 													_List_fromArray(
 														[
+															A2(
+															$mdgriffith$elm_ui$Element$el,
+															_List_fromArray(
+																[
+																	A2($mdgriffith$elm_ui$Element$paddingXY, 0, 30)
+																]),
+															A2(
+																$author$project$OUI$Material$text,
+																shared.theme,
+																$author$project$OUI$Text$displayLarge(b.title))),
 															A2(
 															$mdgriffith$elm_ui$Element$el,
 															_List_fromArray(
@@ -33968,13 +34192,28 @@ var $author$project$OUI$Explorer$finalize = function (expl) {
 															$mdgriffith$elm_ui$Element$column,
 															_List_fromArray(
 																[
-																	$mdgriffith$elm_ui$Element$height(
-																	$mdgriffith$elm_ui$Element$px(200)),
+																	$mdgriffith$elm_ui$Element$height($mdgriffith$elm_ui$Element$shrink),
 																	$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
 																	$mdgriffith$elm_ui$Element$Background$color(
-																	$author$project$OUI$Material$Color$toElementColor(shared.theme.colorscheme.surfaceContainerLow))
+																	$author$project$OUI$Material$Color$toElementColor(shared.theme.colorscheme.surfaceContainerLow)),
+																	$mdgriffith$elm_ui$Element$padding(15),
+																	$mdgriffith$elm_ui$Element$spacing(8)
 																]),
-															A2($elm$core$List$map, $mdgriffith$elm_ui$Element$text, shared.lastEvents))
+															A2(
+																$elm$core$List$indexedMap,
+																F2(
+																	function (i, event) {
+																		return A2(
+																			$mdgriffith$elm_ui$Element$el,
+																			_List_fromArray(
+																				[
+																					$mdgriffith$elm_ui$Element$Font$color(
+																					$author$project$OUI$Material$Color$toElementColor(
+																						A2($author$project$OUI$Material$Color$setAlpha, 1.0 - (i / 5.0), shared.theme.colorscheme.onSurface)))
+																				]),
+																			$mdgriffith$elm_ui$Element$text(event));
+																	}),
+																shared.lastEvents))
 														]))
 												]))
 										])))
@@ -33987,31 +34226,46 @@ var $author$project$OUI$Explorer$finalize = function (expl) {
 			},
 			update: F2(
 				function (msg, shared) {
-					if (msg.$ === 'Event') {
-						var value = msg.a;
-						return _Utils_Tuple2(
-							_Utils_update(
-								shared,
-								{
-									lastEvents: A2(
-										$elm$core$List$take,
-										10,
-										A2($elm$core$List$cons, value, shared.lastEvents))
-								}),
-							$elm$core$Platform$Cmd$none);
-					} else {
-						var index = msg.a;
-						var type_ = msg.b;
-						return _Utils_Tuple2(
-							A3($author$project$OUI$Explorer$changeColorScheme, index, type_, shared),
-							$elm$core$Platform$Cmd$none);
+					switch (msg.$) {
+						case 'Event':
+							var value = msg.a;
+							return _Utils_Tuple2(
+								_Utils_update(
+									shared,
+									{
+										lastEvents: A2(
+											$elm$core$List$take,
+											5,
+											A2($elm$core$List$cons, value, shared.lastEvents))
+									}),
+								$elm$core$Platform$Cmd$none);
+						case 'SelectColorScheme':
+							var index = msg.a;
+							var type_ = msg.b;
+							return _Utils_Tuple2(
+								A3($author$project$OUI$Explorer$changeColorScheme, index, type_, shared),
+								$elm$core$Platform$Cmd$none);
+						case 'OnBookClick':
+							var path = msg.a;
+							return _Utils_Tuple2(
+								_Utils_update(
+									shared,
+									{selectedBook: path}),
+								A2($elm$browser$Browser$Navigation$pushUrl, shared.navKey, '#' + path));
+						default:
+							var route = msg.a;
+							return _Utils_Tuple2(
+								_Utils_update(
+									shared,
+									{selectedBook: route}),
+								$elm$core$Platform$Cmd$none);
 					}
 				})
 		},
-		expl.app);
+		A2($orus_io$elm_spa$Spa$beforeRouteChange, $author$project$OUI$Explorer$OnRouteChange, expl.app));
 };
-var $author$project$Main$get_started = '\n# Get Started\n\nElm Orus UI is still in a alpha state, and is not yet released on Elm packages.\n\nTo use it, you have to clone the project, and add its \'src\' subdirectory into\nyour own project \'src\' list.\n\n';
-var $author$project$Main$intro = '\n# Elm Orus UI\n\nElm Orus UI is a toolkit for building user interface. It provides an elegant*\nAPI to create and configure components and a rendering module name \'Material\'.\n\nThe design is based on the Material Design 3, and is fully customizable with\na \'Theme\' type that holds all the layout key values for each component, and \na colorscheme.\n\nThe colorscheme can be generated from a few key colors as specified in\nMaterial design.\n\nThis UI Explorer is a little crude for now but will get nicer when new components\nget implemented.\n\n*This is of course our feeling about it, and we hope you make yours\n';
+var $author$project$Main$get_started = '\nElm Orus UI is still in a alpha state, and is not yet released on Elm packages.\n\nTo use it, you have to clone the project, and add its \'src\' subdirectory into\nyour own project \'src\' list.\n\n';
+var $author$project$Main$intro = '\nElm Orus UI is a toolkit for building user interface. It provides an elegant*\nAPI to create and configure components and a rendering module name \'Material\'.\n\nThe design is based on the Material Design 3, and is fully customizable with\na \'Theme\' type that holds all the layout key values for each component, and \na colorscheme.\n\nThe colorscheme can be generated from a few key colors as specified in\nMaterial design.\n\nThis UI Explorer is a little crude for now but will get nicer when new components\nget implemented.\n\n*This is of course our feeling about it, and we hope you make yours\n';
 var $elm$core$String$toUpper = _String_toUpper;
 var $author$project$OUI$Showcase$Icons$capitalize = A2(
 	$elm$core$Basics$composeR,
@@ -34148,6 +34402,6 @@ var $author$project$Main$main = $elm$browser$Browser$application(
 						A2(
 							$author$project$OUI$Explorer$withMarkdownChapter,
 							$author$project$Main$intro,
-							$author$project$OUI$Explorer$book('')),
+							$author$project$OUI$Explorer$book('Introduction')),
 						$author$project$OUI$Explorer$explorer))))));
-_Platform_export({'Main':{'init':$author$project$Main$main($elm$json$Json$Decode$value)({"versions":{"elm":"0.19.1"},"types":{"message":"Spa.Msg OUI.Explorer.SharedMsg (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg OUI.Showcase.Icons.Msg) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg OUI.Showcase.Navigation.Msg) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg OUI.Showcase.MenuButtons.Msg) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg OUI.Showcase.TextFields.Msg) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg OUI.Showcase.Switches.Msg) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg ()) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg ()) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg ()) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg ()) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg ()) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg ()) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg ()) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg ()) (Spa.PageStack.Msg String.String () ()))))))))))))))","aliases":{"Url.Url":{"args":[],"type":"{ protocol : Url.Protocol, host : String.String, port_ : Maybe.Maybe Basics.Int, path : String.String, query : Maybe.Maybe String.String, fragment : Maybe.Maybe String.String }"}},"unions":{"OUI.Explorer.BookMsg":{"args":["msg"],"tags":{"SharedMsg":["OUI.Explorer.SharedMsg"],"BookMsg":["msg"]}},"OUI.Showcase.Icons.Msg":{"args":[],"tags":{"FilterChange":["String.String"],"FilterFocus":["Basics.Bool"]}},"OUI.Showcase.MenuButtons.Msg":{"args":[],"tags":{"OnSelect":["String.String","String.String"],"MenuButtonMsg":["String.String","OUI.MenuButton.Msg OUI.Showcase.MenuButtons.Msg"]}},"OUI.Showcase.Navigation.Msg":{"args":[],"tags":{"Expand":["Basics.Bool"]}},"OUI.Showcase.Switches.Msg":{"args":[],"tags":{"SetSwitch":["String.String","Basics.Bool"]}},"OUI.Showcase.TextFields.Msg":{"args":[],"tags":{"OnChange":["String.String","String.String"],"OnFocus":["String.String"],"OnLoseFocus":["String.String"]}},"Spa.Msg":{"args":["sharedMsg","pageMsg"],"tags":{"SharedMsg":["sharedMsg"],"PageMsg":["pageMsg"],"UrlRequest":["Browser.UrlRequest"],"UrlChange":["Url.Url"]}},"Spa.PageStack.Msg":{"args":["route","current","previous"],"tags":{"CurrentMsg":["current"],"PreviousMsg":["previous"],"RouteChange":["route"]}},"OUI.Explorer.SharedMsg":{"args":[],"tags":{"Event":["String.String"],"SelectColorScheme":["Basics.Int","OUI.Explorer.ColorSchemeType"]}},"String.String":{"args":[],"tags":{"String":[]}},"Basics.Bool":{"args":[],"tags":{"True":[],"False":[]}},"OUI.Explorer.ColorSchemeType":{"args":[],"tags":{"Light":[],"Dark":[]}},"Basics.Int":{"args":[],"tags":{"Int":[]}},"Maybe.Maybe":{"args":["a"],"tags":{"Just":["a"],"Nothing":[]}},"OUI.MenuButton.Msg":{"args":["msg"],"tags":{"OnClickOutside":[],"OnClickButton":[],"OnClickItem":["msg"]}},"Url.Protocol":{"args":[],"tags":{"Http":[],"Https":[]}},"Browser.UrlRequest":{"args":[],"tags":{"Internal":["Url.Url"],"External":["String.String"]}}}}})}});}(this));
+_Platform_export({'Main':{'init':$author$project$Main$main($elm$json$Json$Decode$value)({"versions":{"elm":"0.19.1"},"types":{"message":"Spa.Msg OUI.Explorer.SharedMsg (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg OUI.Showcase.Icons.Msg) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg OUI.Showcase.Navigation.Msg) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg OUI.Showcase.MenuButtons.Msg) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg OUI.Showcase.TextFields.Msg) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg OUI.Showcase.Switches.Msg) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg ()) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg ()) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg ()) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg ()) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg ()) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg ()) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg ()) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg ()) (Spa.PageStack.Msg String.String () ()))))))))))))))","aliases":{"Url.Url":{"args":[],"type":"{ protocol : Url.Protocol, host : String.String, port_ : Maybe.Maybe Basics.Int, path : String.String, query : Maybe.Maybe String.String, fragment : Maybe.Maybe String.String }"}},"unions":{"OUI.Explorer.BookMsg":{"args":["msg"],"tags":{"SharedMsg":["OUI.Explorer.SharedMsg"],"BookMsg":["msg"]}},"OUI.Showcase.Icons.Msg":{"args":[],"tags":{"FilterChange":["String.String"],"FilterFocus":["Basics.Bool"]}},"OUI.Showcase.MenuButtons.Msg":{"args":[],"tags":{"OnSelect":["String.String","String.String"],"MenuButtonMsg":["String.String","OUI.MenuButton.Msg OUI.Showcase.MenuButtons.Msg"]}},"OUI.Showcase.Navigation.Msg":{"args":[],"tags":{"Expand":["Basics.Bool"]}},"OUI.Showcase.Switches.Msg":{"args":[],"tags":{"SetSwitch":["String.String","Basics.Bool"]}},"OUI.Showcase.TextFields.Msg":{"args":[],"tags":{"OnChange":["String.String","String.String"],"OnFocus":["String.String"],"OnLoseFocus":["String.String"]}},"Spa.Msg":{"args":["sharedMsg","pageMsg"],"tags":{"SharedMsg":["sharedMsg"],"PageMsg":["pageMsg"],"UrlRequest":["Browser.UrlRequest"],"UrlChange":["Url.Url"]}},"Spa.PageStack.Msg":{"args":["route","current","previous"],"tags":{"CurrentMsg":["current"],"PreviousMsg":["previous"],"RouteChange":["route"]}},"OUI.Explorer.SharedMsg":{"args":[],"tags":{"Event":["String.String"],"SelectColorScheme":["Basics.Int","OUI.Explorer.ColorSchemeType"],"OnBookClick":["String.String"],"OnRouteChange":["String.String"]}},"String.String":{"args":[],"tags":{"String":[]}},"Basics.Bool":{"args":[],"tags":{"True":[],"False":[]}},"OUI.Explorer.ColorSchemeType":{"args":[],"tags":{"Light":[],"Dark":[]}},"Basics.Int":{"args":[],"tags":{"Int":[]}},"Maybe.Maybe":{"args":["a"],"tags":{"Just":["a"],"Nothing":[]}},"OUI.MenuButton.Msg":{"args":["msg"],"tags":{"OnClickOutside":[],"OnClickButton":[],"OnClickItem":["msg"]}},"Url.Protocol":{"args":[],"tags":{"Http":[],"Https":[]}},"Browser.UrlRequest":{"args":[],"tags":{"Internal":["Url.Url"],"External":["String.String"]}}}}})}});}(this));

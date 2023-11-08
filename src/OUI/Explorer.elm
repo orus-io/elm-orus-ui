@@ -12,6 +12,8 @@ module OUI.Explorer exposing
 
 -}
 
+import Browser
+import Browser.Navigation
 import Effect exposing (Effect)
 import Element exposing (Element)
 import Element.Background as Background
@@ -23,7 +25,9 @@ import OUI.Icon as Icon
 import OUI.Material as Material
 import OUI.Material.Color as Color
 import OUI.Material.Theme as Theme exposing (Theme)
+import OUI.Navigation exposing (Navigation)
 import OUI.Switch as Switch
+import OUI.Text
 import Spa
 import Spa.Page
 import Spa.PageStack
@@ -63,8 +67,17 @@ invertColorSchemeType t =
 {-| The shared state
 -}
 type alias Shared themeExt =
-    { lastEvents : List String
+    { navKey : Browser.Navigation.Key
+    , lastEvents : List String
     , theme : Theme themeExt
+    , colorSchemeList : List ( Color.Scheme, Color.Scheme )
+    , selectedColorScheme : ( Int, ColorSchemeType )
+    , selectedBook : String
+    }
+
+
+type alias InitialShared themeExt =
+    { theme : Theme themeExt
     , colorSchemeList : List ( Color.Scheme, Color.Scheme )
     , selectedColorScheme : ( Int, ColorSchemeType )
     }
@@ -75,6 +88,8 @@ type alias Shared themeExt =
 type SharedMsg
     = Event String
     | SelectColorScheme Int ColorSchemeType
+    | OnBookClick String
+    | OnRouteChange String
 
 
 defaultView : Page msg
@@ -92,31 +107,32 @@ mapView mapper abook =
 
 
 {-| -}
-type alias Explorer themeExt current previous currentMsg previousMsg =
-    { app : Spa.Builder Route () (Shared themeExt) SharedMsg (Page (Spa.PageStack.Msg Route currentMsg previousMsg)) current previous currentMsg previousMsg
-    , categories : List ( String, List String )
-    , initialShared : Shared themeExt
-    }
+type Explorer themeExt current previous currentMsg previousMsg
+    = Explorer
+        { app : Spa.Builder Route () (Shared themeExt) SharedMsg (Page (Spa.PageStack.Msg Route currentMsg previousMsg)) current previous currentMsg previousMsg
+        , categories : List ( String, List String )
+        , initialShared : InitialShared themeExt
+        }
 
 
 {-| creates an empty Explorer
 -}
 explorer : Explorer themeExt () () () ()
 explorer =
-    { app =
-        Spa.init
-            { defaultView = defaultView
-            , extractIdentity = always Nothing
+    Explorer
+        { app =
+            Spa.init
+                { defaultView = defaultView
+                , extractIdentity = always Nothing
+                }
+        , categories = []
+        , initialShared =
+            { theme = Theme.defaultTheme
+            , colorSchemeList = [ ( Color.defaultLightScheme, Color.defaultDarkScheme ) ]
+            , selectedColorScheme =
+                ( 0, Light )
             }
-    , categories = []
-    , initialShared =
-        { lastEvents = []
-        , theme = Theme.defaultTheme
-        , colorSchemeList = [ ( Color.defaultLightScheme, Color.defaultDarkScheme ) ]
-        , selectedColorScheme =
-            ( 0, Light )
         }
-    }
 
 
 {-| set the theme
@@ -125,15 +141,16 @@ setTheme :
     Theme.Theme themeExt
     -> Explorer themeExt c p cm pm
     -> Explorer themeExt c p cm pm
-setTheme theme expl =
+setTheme theme (Explorer expl) =
     let
-        shared : Shared themeExt
+        shared : InitialShared themeExt
         shared =
             expl.initialShared
     in
-    { expl
-        | initialShared = { shared | theme = theme }
-    }
+    Explorer
+        { expl
+            | initialShared = { shared | theme = theme }
+        }
 
 
 {-| setColorScheme
@@ -143,15 +160,16 @@ setColorScheme :
     -> Color.Scheme
     -> Explorer themeExt c p cm pm
     -> Explorer themeExt c p cm pm
-setColorScheme light dark expl =
+setColorScheme light dark (Explorer expl) =
     let
-        shared : Shared themeExt
+        shared : InitialShared themeExt
         shared =
             expl.initialShared
     in
-    { expl
-        | initialShared = { shared | colorSchemeList = [ ( light, dark ) ] }
-    }
+    Explorer
+        { expl
+            | initialShared = { shared | colorSchemeList = [ ( light, dark ) ] }
+        }
 
 
 {-| Add a category to a Explorer
@@ -164,10 +182,11 @@ category :
     String
     -> Explorer themeExt current previous currentMsg previousMsg
     -> Explorer themeExt current previous currentMsg previousMsg
-category name expl =
-    { expl
-        | categories = ( name, [] ) :: expl.categories
-    }
+category name (Explorer expl) =
+    Explorer
+        { expl
+            | categories = ( name, [] ) :: expl.categories
+        }
 
 
 {-| Add a book to the current category
@@ -176,7 +195,7 @@ addBook :
     Book themeExt model msg
     -> Explorer themeExt current previous currentMsg previousMsg
     -> Explorer themeExt model (Spa.PageStack.Model Spa.SetupError current previous) (BookMsg msg) (Spa.PageStack.Msg Route currentMsg previousMsg)
-addBook b expl =
+addBook b (Explorer expl) =
     let
         cat : String
         cat =
@@ -185,55 +204,56 @@ addBook b expl =
                 |> Maybe.map Tuple.first
                 |> Maybe.withDefault ""
     in
-    { app =
-        expl.app
-            |> Spa.addPublicPage ( mapView, mapView )
-                (\route ->
-                    if route == bookPath cat b.title then
-                        Just route
+    Explorer
+        { app =
+            expl.app
+                |> Spa.addPublicPage ( mapView, mapView )
+                    (\route ->
+                        if route == bookPath cat b.title then
+                            Just route
 
-                    else
-                        Nothing
-                )
-                (\shared ->
-                    Spa.Page.element
-                        { init =
-                            \_ ->
-                                b.init shared
-                                    |> Tuple.mapSecond (Effect.map BookMsg)
-                        , update =
-                            \msg model ->
-                                case msg of
-                                    SharedMsg sharedMsg ->
-                                        ( model, Effect.fromShared sharedMsg )
+                        else
+                            Nothing
+                    )
+                    (\shared ->
+                        Spa.Page.element
+                            { init =
+                                \_ ->
+                                    b.init shared
+                                        |> Tuple.mapSecond (Effect.map BookMsg)
+                            , update =
+                                \msg model ->
+                                    case msg of
+                                        SharedMsg sharedMsg ->
+                                            ( model, Effect.fromShared sharedMsg )
 
-                                    BookMsg subMsg ->
-                                        b.update shared subMsg model
-                                            |> Tuple.mapSecond (Effect.map BookMsg)
-                        , view =
-                            \model ->
-                                { title = b.title
-                                , content =
-                                    b.chapters
-                                        |> List.reverse
-                                        |> List.map (\v -> v shared model)
-                                        |> Element.column [ Element.spacing 20 ]
-                                }
-                        , subscriptions =
-                            \model ->
-                                b.subscriptions shared model
-                                    |> Sub.map BookMsg
-                        }
-                )
-    , categories =
-        case expl.categories of
-            ( cat_, pages ) :: tail ->
-                ( cat_, b.title :: pages ) :: tail
+                                        BookMsg subMsg ->
+                                            b.update shared subMsg model
+                                                |> Tuple.mapSecond (Effect.map BookMsg)
+                            , view =
+                                \model ->
+                                    { title = b.title
+                                    , content =
+                                        b.chapters
+                                            |> List.reverse
+                                            |> List.map (\v -> v shared model)
+                                            |> Element.column [ Element.spacing 20 ]
+                                    }
+                            , subscriptions =
+                                \model ->
+                                    b.subscriptions shared model
+                                        |> Sub.map BookMsg
+                            }
+                    )
+        , categories =
+            case expl.categories of
+                ( cat_, pages ) :: tail ->
+                    ( cat_, b.title :: pages ) :: tail
 
-            [] ->
-                [ ( "", [ b.title ] ) ]
-    , initialShared = expl.initialShared
-    }
+                [] ->
+                    [ ( "", [ b.title ] ) ]
+        , initialShared = expl.initialShared
+        }
 
 
 {-| A stateless book
@@ -438,7 +458,7 @@ changeColorScheme index type_ shared =
 finalize :
     Explorer themeExt current previous currentMsg previousMsg
     -> Spa.Application Json.Decode.Value (Shared themeExt) SharedMsg String current previous currentMsg previousMsg
-finalize expl =
+finalize (Explorer expl) =
     let
         categories : List ( String, List String )
         categories =
@@ -446,148 +466,184 @@ finalize expl =
                 |> List.map (Tuple.mapSecond List.reverse)
                 |> List.reverse
     in
-    Spa.application mapView
-        { toRoute = \url -> url.fragment |> Maybe.withDefault "/"
-        , init =
-            \flags _ ->
-                let
-                    dFlags : { dark_mode : Bool }
-                    dFlags =
-                        Json.Decode.decodeValue decodeFlags flags
-                            |> Result.withDefault { dark_mode = False }
-                in
-                ( expl.initialShared
-                    |> changeColorScheme 0
-                        (if dFlags.dark_mode then
-                            Dark
+    expl.app
+        |> Spa.beforeRouteChange OnRouteChange
+        |> Spa.application mapView
+            { toRoute = \url -> url.fragment |> Maybe.withDefault "/"
+            , init =
+                \flags key ->
+                    let
+                        dFlags : { dark_mode : Bool }
+                        dFlags =
+                            Json.Decode.decodeValue decodeFlags flags
+                                |> Result.withDefault { dark_mode = False }
+                    in
+                    ( { navKey = key
+                      , lastEvents = []
+                      , theme = expl.initialShared.theme
+                      , colorSchemeList = expl.initialShared.colorSchemeList
+                      , selectedColorScheme = expl.initialShared.selectedColorScheme
+                      , selectedBook = ""
+                      }
+                        |> changeColorScheme 0
+                            (if dFlags.dark_mode then
+                                Dark
 
-                         else
-                            Light
-                        )
-                , Cmd.none
-                )
-        , update =
-            \msg shared ->
-                case msg of
-                    Event value ->
-                        ( { shared
-                            | lastEvents =
-                                value
-                                    :: shared.lastEvents
-                                    |> List.take 10
-                          }
-                        , Cmd.none
-                        )
+                             else
+                                Light
+                            )
+                    , Cmd.none
+                    )
+            , update =
+                \msg shared ->
+                    case msg of
+                        Event value ->
+                            ( { shared
+                                | lastEvents =
+                                    value
+                                        :: shared.lastEvents
+                                        |> List.take 5
+                              }
+                            , Cmd.none
+                            )
 
-                    SelectColorScheme index type_ ->
-                        ( changeColorScheme index type_ shared
-                        , Cmd.none
-                        )
-        , subscriptions = \_ -> Sub.none
-        , protectPage = \_ -> "/"
-        , toDocument =
-            \shared b ->
-                { title = b.title
-                , body =
-                    [ Element.column
-                        [ Element.height Element.fill
-                        , Element.width Element.fill
-                        ]
-                        [ Element.el
-                            [ Element.padding 15
-                            , Element.width Element.fill
-                            ]
-                          <|
-                            Element.text "Orus UI Explorer"
-                        , Element.row
+                        SelectColorScheme index type_ ->
+                            ( changeColorScheme index type_ shared
+                            , Cmd.none
+                            )
+
+                        OnBookClick path ->
+                            ( { shared | selectedBook = path }
+                            , Browser.Navigation.pushUrl shared.navKey <| "#" ++ path
+                            )
+
+                        OnRouteChange route ->
+                            ( { shared | selectedBook = route }
+                            , Cmd.none
+                            )
+            , subscriptions = \_ -> Sub.none
+            , protectPage = \_ -> "/"
+            , toDocument =
+                \shared b ->
+                    { title = b.title
+                    , body =
+                        [ Element.column
                             [ Element.height Element.fill
                             , Element.width Element.fill
                             ]
                             [ Element.row
-                                [ Element.width Element.fill
+                                [ Element.height Element.fill
+                                , Element.width Element.fill
                                 ]
-                                [ Element.text "Light/Dark"
-                                , Switch.new
-                                    (Tuple.second shared.selectedColorScheme
-                                        == Dark
-                                    )
-                                    |> Switch.onChange
-                                        (\dark ->
-                                            SelectColorScheme
-                                                (Tuple.first shared.selectedColorScheme)
-                                                (if dark then
-                                                    Dark
-
-                                                 else
-                                                    Light
-                                                )
-                                                |> Spa.mapSharedMsg
-                                        )
-                                    |> Switch.withIconSelected Icon.dark_mode
-                                    |> Switch.withIconUnselected Icon.light_mode
-                                    |> Material.switch shared.theme
-                                        [ Element.alignRight
-                                        ]
-                                ]
-                                :: (categories
-                                        |> List.concatMap
-                                            (\( cat, books ) ->
-                                                Element.text cat
-                                                    :: List.map
-                                                        (\name ->
-                                                            Element.link
-                                                                [ Element.padding 10
-                                                                , Element.width Element.fill
-                                                                ]
-                                                                { url = "#" ++ bookPath cat name
-                                                                , label = Element.text name
-                                                                }
-                                                        )
-                                                        books
-                                            )
-                                   )
-                                |> Element.column
-                                    [ Element.padding 10
-                                    , Element.alignTop
-                                    , Element.width <| Element.px 200
+                                [ Element.column
+                                    [ Element.alignTop
                                     , Element.height Element.fill
                                     ]
-                            , Element.column
-                                [ Element.width Element.fill
-                                , Element.height Element.fill
-                                ]
-                                [ b.content
-                                    |> Element.el
-                                        [ Element.scrollbarY
-                                        , Element.height Element.fill
-                                        , Element.width Element.fill
+                                    [ OUI.Navigation.new (Spa.mapSharedMsg << OnBookClick)
+                                        |> OUI.Navigation.withHeader "Orus UI Explorer"
+                                        |> OUI.Navigation.withSelected shared.selectedBook
+                                        |> (\nav ->
+                                                categories
+                                                    |> List.foldl
+                                                        (\( cat, books ) ->
+                                                            OUI.Navigation.addSectionHeader cat
+                                                                >> (\bn ->
+                                                                        books
+                                                                            |> List.foldl
+                                                                                (\bookName ->
+                                                                                    OUI.Navigation.addEntry (bookPath cat bookName) bookName Icon.blank
+                                                                                )
+                                                                                bn
+                                                                   )
+                                                        )
+                                                        nav
+                                           )
+                                        |> Material.navigation shared.theme []
+                                    , Element.row
+                                        [ Element.width Element.fill
+                                        , Element.padding 15
+                                        , shared.theme.colorscheme.surfaceContainerLow
+                                            |> Color.toElementColor
+                                            |> Background.color
                                         ]
-                                , Element.column
-                                    [ Element.height <| Element.px 200
-                                    , Element.width Element.fill
-                                    , Background.color <| Color.toElementColor shared.theme.colorscheme.surfaceContainerLow
+                                        [ OUI.Text.labelLarge "Light/Dark"
+                                            |> Material.text shared.theme
+                                        , Switch.new
+                                            (Tuple.second shared.selectedColorScheme
+                                                == Dark
+                                            )
+                                            |> Switch.onChange
+                                                (\dark ->
+                                                    SelectColorScheme
+                                                        (Tuple.first shared.selectedColorScheme)
+                                                        (if dark then
+                                                            Dark
+
+                                                         else
+                                                            Light
+                                                        )
+                                                        |> Spa.mapSharedMsg
+                                                )
+                                            |> Switch.withIconSelected Icon.dark_mode
+                                            |> Switch.withIconUnselected Icon.light_mode
+                                            |> Material.switch shared.theme
+                                                [ Element.alignRight
+                                                ]
+                                        ]
                                     ]
-                                  <|
-                                    List.map Element.text shared.lastEvents
+                                , Element.column
+                                    [ Element.width Element.fill
+                                    , Element.height Element.fill
+                                    , Element.padding 20
+                                    ]
+                                    [ OUI.Text.displayLarge b.title
+                                        |> Material.text shared.theme
+                                        |> Element.el
+                                            [ Element.paddingXY 0 30
+                                            ]
+                                    , b.content
+                                        |> Element.el
+                                            [ Element.scrollbarY
+                                            , Element.height Element.fill
+                                            , Element.width Element.fill
+                                            ]
+                                    , Element.column
+                                        [ Element.height <| Element.shrink
+                                        , Element.width Element.fill
+                                        , Background.color <| Color.toElementColor shared.theme.colorscheme.surfaceContainerLow
+                                        , Element.padding 15
+                                        , Element.spacing 8
+                                        ]
+                                      <|
+                                        List.indexedMap
+                                            (\i event ->
+                                                Element.text event
+                                                    |> Element.el
+                                                        [ shared.theme.colorscheme.onSurface
+                                                            |> Color.setAlpha (1.0 - toFloat i / 5.0)
+                                                            |> Color.toElementColor
+                                                            |> Font.color
+                                                        ]
+                                            )
+                                            shared.lastEvents
+                                    ]
                                 ]
                             ]
+                            |> Element.layoutWith
+                                { options =
+                                    [ Element.focusStyle
+                                        { borderColor = Nothing
+                                        , backgroundColor = Nothing
+                                        , shadow = Nothing
+                                        }
+                                    ]
+                                }
+                                [ Element.height Element.fill
+                                , Element.width Element.fill
+                                , Background.color <| Color.toElementColor shared.theme.colorscheme.surface
+                                , Font.color <| Color.toElementColor shared.theme.colorscheme.onSurface
+                                , Element.scrollbarY
+                                ]
                         ]
-                        |> Element.layoutWith
-                            { options =
-                                [ Element.focusStyle
-                                    { borderColor = Nothing
-                                    , backgroundColor = Nothing
-                                    , shadow = Nothing
-                                    }
-                                ]
-                            }
-                            [ Element.height Element.fill
-                            , Element.width Element.fill
-                            , Background.color <| Color.toElementColor shared.theme.colorscheme.surface
-                            , Font.color <| Color.toElementColor shared.theme.colorscheme.onSurface
-                            , Element.scrollbarY
-                            ]
-                    ]
-                }
-        }
-        expl.app
+                    }
+            }

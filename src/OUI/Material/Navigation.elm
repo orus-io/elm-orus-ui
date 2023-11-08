@@ -153,15 +153,29 @@ render typescale colorscheme theme _ nav =
         -- [image header
         -- text header
         -- fab
-        --]
-        --++
-        List.indexedMap
-            (\i entry ->
-                ( String.fromInt i
-                , renderEntry typescale colorscheme theme props entry
+        -- ]
+        -- ++
+        (case props.header of
+            Just s ->
+                ( "header"
+                , OUI.Text.headlineSmall s
+                    |> OUI.Material.Typography.render typescale
+                    |> Element.el
+                        [ Element.centerX
+                        , Element.padding 15
+                        ]
                 )
-            )
-            props.entries
+
+            Nothing ->
+                ( "", Element.none )
+        )
+            :: List.indexedMap
+                (\i entry ->
+                    ( String.fromInt i
+                    , renderEntry typescale colorscheme theme props entry
+                    )
+                )
+                props.entries
 
 
 renderEntry :
@@ -227,9 +241,18 @@ renderEntry typescale colorscheme theme props entry =
                             , Element.paddingXY theme.drawer.activeIndicatorPadding 0
                             , Element.height <| Element.px theme.drawer.activeIndicatorHeight
                             , Border.rounded theme.drawer.activeIndicatorShape
-                            , Element.mouseOver
-                                [ Background.color <| OUI.Material.Color.getElementColor props.activeColor colorscheme
-                                ]
+                            , if props.selected == Just key then
+                                Background.color <| OUI.Material.Color.getElementColor props.activeColor colorscheme
+
+                              else
+                                Element.mouseOver
+                                    [ colorscheme.surfaceContainerLow
+                                        |> OUI.Material.Color.withShade
+                                            colorscheme.onSurface
+                                            OUI.Material.Color.hoverStateLayerOpacity
+                                        |> OUI.Material.Color.toElementColor
+                                        |> Background.color
+                                    ]
                             , transitionAllEaseOut
                             ]
                             { onPress = Just <| props.onSelect key
@@ -334,9 +357,13 @@ renderEntry typescale colorscheme theme props entry =
                             [ Element.width Element.fill
                             , Element.height <| Element.px theme.rail.activeIndicatorHeight
                             , Border.rounded theme.rail.activeIndicatorShape
-                            , Element.mouseOver
-                                [ Background.color <| OUI.Material.Color.getElementColor props.activeColor colorscheme
-                                ]
+                            , if props.selected == Just key then
+                                Background.color <| OUI.Material.Color.getElementColor props.activeColor colorscheme
+
+                              else
+                                Element.mouseOver
+                                    [ Background.color <| OUI.Material.Color.getElementColor props.activeColor colorscheme
+                                    ]
                             , transitionAllEaseOut
                             , Element.alignTop
                             ]

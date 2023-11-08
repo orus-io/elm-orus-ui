@@ -9,11 +9,7 @@ import OUI.Text as Text
 book : Explorer.Book themeExt () ()
 book =
     Explorer.book "Typography"
-        |> Explorer.withMarkdownChapter """
-# Typography
-
-The material typescale
-    """
+        |> Explorer.withMarkdownChapter """ The material typescale """
         |> Explorer.withStaticChapter
             (\{ theme } ->
                 Element.column

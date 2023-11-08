@@ -12,8 +12,6 @@ import OUI.Showcase.Icons as Icons
 intro : String
 intro =
     """
-# Elm Orus UI
-
 Elm Orus UI is a toolkit for building user interface. It provides an elegant*
 API to create and configure components and a rendering module name 'Material'.
 
@@ -34,8 +32,6 @@ get implemented.
 get_started : String
 get_started =
     """
-# Get Started
-
 Elm Orus UI is still in a alpha state, and is not yet released on Elm packages.
 
 To use it, you have to clone the project, and add its 'src' subdirectory into
@@ -46,18 +42,19 @@ your own project 'src' list.
 
 main =
     Explorer.explorer
-        |> Explorer.addBook 
-        (Explorer.book "" |> Explorer.withMarkdownChapter intro)
         |> Explorer.addBook
-        (Explorer.book "Get Started" 
-        |> Explorer.withMarkdownChapter get_started)
+            (Explorer.book "Introduction" |> Explorer.withMarkdownChapter intro)
+        |> Explorer.addBook
+            (Explorer.book "Get Started"
+                |> Explorer.withMarkdownChapter get_started
+            )
         |> Showcase.addPages
         |> Explorer.addBook
             (Icons.book "Material Icons"
-            |> Icons.withChapter "basics"
-                [ ( "anchor", OUI.Icon.elmMaterialIcons Color Outlined.anchor )
-                , ( "face", OUI.Icon.elmMaterialIcons Color Outlined.face )
-                ]
+                |> Icons.withChapter "basics"
+                    [ ( "anchor", OUI.Icon.elmMaterialIcons Color Outlined.anchor )
+                    , ( "face", OUI.Icon.elmMaterialIcons Color Outlined.face )
+                    ]
             )
         |> Explorer.finalize
         |> Browser.application
