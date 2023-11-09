@@ -25,7 +25,7 @@ Material design.
 This UI Explorer is a little crude for now but will get nicer when new components
 get implemented.
 
-*This is of course our feeling about it, and we hope you make yours
+*This is of course our feeling about it, and we hope you make it yours
 """
 
 

@@ -70,7 +70,10 @@ filterChapter shared model =
         |> TextField.onFocusBlur (Explorer.bookMsg <| FilterFocus True) (Explorer.bookMsg <| FilterFocus False)
         |> TextField.withFocused model.filterFocused
         |> Material.textField shared.theme [ Element.width Element.fill ]
-        |> Element.el [ Element.padding 20, Element.width Element.fill ]
+        |> Element.el
+            [ Element.padding 20
+            , Element.width Element.fill
+            ]
 
 
 book : String -> Explorer.Book themeExt Model Msg

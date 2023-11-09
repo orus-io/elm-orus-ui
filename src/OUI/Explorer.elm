@@ -239,7 +239,10 @@ addBook b (Explorer expl) =
                                         b.chapters
                                             |> List.reverse
                                             |> List.map (\v -> v shared model)
-                                            |> Element.column [ Element.spacing 20 ]
+                                            |> Element.column
+                                                [ Element.spacing 20
+                                                , Element.width Element.fill
+                                                ]
                                     }
                             , subscriptions =
                                 \model ->
@@ -351,7 +354,7 @@ withMarkdownChapter markdown b =
                 of
                     Ok value ->
                         value
-                            |> Element.column [ Element.spacing 5 ]
+                            |> Element.column [ Element.spacing 15 ]
 
                     Err err ->
                         Element.text <| "Error rendering markdown: " ++ err

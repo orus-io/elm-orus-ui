@@ -11810,6 +11810,10 @@ var $orus_io$elm_spa$Spa$Page$element = function (_v0) {
 	return $orus_io$elm_spa$Spa$Internal$Page(
 		{init: init, onNewFlags: $elm$core$Maybe$Nothing, subscriptions: subscriptions, update: update, view: view});
 };
+var $mdgriffith$elm_ui$Internal$Model$Fill = function (a) {
+	return {$: 'Fill', a: a};
+};
+var $mdgriffith$elm_ui$Element$fill = $mdgriffith$elm_ui$Internal$Model$Fill(1);
 var $orus_io$elm_spa$Effect$fromShared = $orus_io$elm_spa$Effect$Shared;
 var $elm$core$List$head = function (list) {
 	if (list.b) {
@@ -11947,7 +11951,8 @@ var $author$project$OUI$Explorer$addBook = F2(
 											$mdgriffith$elm_ui$Element$column,
 											_List_fromArray(
 												[
-													$mdgriffith$elm_ui$Element$spacing(20)
+													$mdgriffith$elm_ui$Element$spacing(20),
+													$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill)
 												]),
 											A2(
 												$elm$core$List$map,
@@ -14739,10 +14744,6 @@ var $elm$core$List$drop = F2(
 	});
 var $mdgriffith$elm_ui$Internal$Model$Top = {$: 'Top'};
 var $mdgriffith$elm_ui$Element$alignTop = $mdgriffith$elm_ui$Internal$Model$AlignY($mdgriffith$elm_ui$Internal$Model$Top);
-var $mdgriffith$elm_ui$Internal$Model$Fill = function (a) {
-	return {$: 'Fill', a: a};
-};
-var $mdgriffith$elm_ui$Element$fill = $mdgriffith$elm_ui$Internal$Model$Fill(1);
 var $mdgriffith$elm_ui$Element$padding = function (x) {
 	var f = x;
 	return A2(
@@ -24296,7 +24297,7 @@ var $author$project$OUI$Explorer$withMarkdownChapter = F2(
 									$mdgriffith$elm_ui$Element$column,
 									_List_fromArray(
 										[
-											$mdgriffith$elm_ui$Element$spacing(5)
+											$mdgriffith$elm_ui$Element$spacing(15)
 										]),
 									value);
 							} else {
@@ -34291,7 +34292,7 @@ var $author$project$OUI$Explorer$finalize = function (_v0) {
 		A2($orus_io$elm_spa$Spa$beforeRouteChange, $author$project$OUI$Explorer$OnRouteChange, expl.app));
 };
 var $author$project$Main$get_started = '\nElm Orus UI is still in a alpha state, and is not yet released on Elm packages.\n\nTo use it, you have to clone the project, and add its \'src\' subdirectory into\nyour own project \'src\' list.\n\n';
-var $author$project$Main$intro = '\nElm Orus UI is a toolkit for building user interface. It provides an elegant*\nAPI to create and configure components and a rendering module name \'Material\'.\n\nThe design is based on the Material Design 3, and is fully customizable with\na \'Theme\' type that holds all the layout key values for each component, and \na colorscheme.\n\nThe colorscheme can be generated from a few key colors as specified in\nMaterial design.\n\nThis UI Explorer is a little crude for now but will get nicer when new components\nget implemented.\n\n*This is of course our feeling about it, and we hope you make yours\n';
+var $author$project$Main$intro = '\nElm Orus UI is a toolkit for building user interface. It provides an elegant*\nAPI to create and configure components and a rendering module name \'Material\'.\n\nThe design is based on the Material Design 3, and is fully customizable with\na \'Theme\' type that holds all the layout key values for each component, and \na colorscheme.\n\nThe colorscheme can be generated from a few key colors as specified in\nMaterial design.\n\nThis UI Explorer is a little crude for now but will get nicer when new components\nget implemented.\n\n*This is of course our feeling about it, and we hope you make it yours\n';
 var $elm$core$String$toUpper = _String_toUpper;
 var $author$project$OUI$Showcase$Icons$capitalize = A2(
 	$elm$core$Basics$composeR,
