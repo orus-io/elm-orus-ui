@@ -34110,6 +34110,21 @@ var $author$project$OUI$Explorer$finalize = function (_v0) {
 			$elm$core$List$map,
 			$elm$core$Tuple$mapSecond($elm$core$List$reverse),
 			expl.categories));
+	var allBooks = A2(
+		$elm$core$List$concatMap,
+		function (_v5) {
+			var cat = _v5.a;
+			var books = _v5.b;
+			return A2(
+				$elm$core$List$map,
+				$author$project$OUI$Explorer$bookPath(cat),
+				books);
+		},
+		categories);
+	var firstBook = A2(
+		$elm$core$Maybe$withDefault,
+		'',
+		$elm$core$List$head(allBooks));
 	return A3(
 		$orus_io$elm_spa$Spa$application,
 		$author$project$OUI$Explorer$mapView,
@@ -34365,9 +34380,7 @@ var $author$project$OUI$Explorer$finalize = function (_v0) {
 						case 'OnBookClick':
 							var path = msg.a;
 							return _Utils_Tuple2(
-								_Utils_update(
-									shared,
-									{selectedBook: path}),
+								shared,
 								A2($elm$browser$Browser$Navigation$pushUrl, shared.navKey, '#' + path));
 						default:
 							var route = msg.a;
@@ -34375,7 +34388,13 @@ var $author$project$OUI$Explorer$finalize = function (_v0) {
 								_Utils_update(
 									shared,
 									{selectedBook: route}),
-								$elm$core$Platform$Cmd$none);
+								(!_Utils_eq(
+									$elm$core$List$head(
+										A2(
+											$elm$core$List$filter,
+											$elm$core$Basics$eq(route),
+											allBooks)),
+									$elm$core$Maybe$Nothing)) ? $elm$core$Platform$Cmd$none : A2($elm$browser$Browser$Navigation$pushUrl, shared.navKey, '#' + firstBook));
 					}
 				})
 		},

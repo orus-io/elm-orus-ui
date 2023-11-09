@@ -469,6 +469,19 @@ finalize (Explorer expl) =
             expl.categories
                 |> List.map (Tuple.mapSecond List.reverse)
                 |> List.reverse
+
+        allBooks =
+            categories
+                |> List.concatMap
+                    (\( cat, books ) ->
+                        books
+                            |> List.map (bookPath cat)
+                    )
+
+        firstBook =
+            allBooks
+                |> List.head
+                |> Maybe.withDefault ""
     in
     expl.app
         |> Spa.beforeRouteChange OnRouteChange
@@ -517,13 +530,23 @@ finalize (Explorer expl) =
                             )
 
                         OnBookClick path ->
-                            ( { shared | selectedBook = path }
+                            ( shared
                             , Browser.Navigation.pushUrl shared.navKey <| "#" ++ path
                             )
 
                         OnRouteChange route ->
                             ( { shared | selectedBook = route }
-                            , Cmd.none
+                            , if
+                                (allBooks
+                                    |> List.filter ((==) route)
+                                    |> List.head
+                                )
+                                    /= Nothing
+                              then
+                                Cmd.none
+
+                              else
+                                Browser.Navigation.pushUrl shared.navKey <| "#" ++ firstBook
                             )
             , subscriptions = \_ -> Sub.none
             , protectPage = \_ -> "/"
