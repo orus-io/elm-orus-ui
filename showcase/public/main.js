@@ -24506,6 +24506,42 @@ var $mdgriffith$elm_ui$Element$moveDown = function (y) {
 		$mdgriffith$elm_ui$Internal$Flag$moveY,
 		$mdgriffith$elm_ui$Internal$Model$MoveY(y));
 };
+var $author$project$OUI$MenuButton$ArrowDown = {$: 'ArrowDown'};
+var $author$project$OUI$MenuButton$ArrowUp = {$: 'ArrowUp'};
+var $author$project$OUI$MenuButton$Enter = {$: 'Enter'};
+var $author$project$OUI$MenuButton$Esc = {$: 'Esc'};
+var $author$project$OUI$Material$MenuButton$onKeyDown = function (msg) {
+	var stringToKey = function (str) {
+		switch (str) {
+			case 'ArrowDown':
+				return $elm$json$Json$Decode$succeed($author$project$OUI$MenuButton$ArrowDown);
+			case 'ArrowUp':
+				return $elm$json$Json$Decode$succeed($author$project$OUI$MenuButton$ArrowUp);
+			case 'Enter':
+				return $elm$json$Json$Decode$succeed($author$project$OUI$MenuButton$Enter);
+			case 'Escape':
+				return $elm$json$Json$Decode$succeed($author$project$OUI$MenuButton$Esc);
+			default:
+				return $elm$json$Json$Decode$fail('not used key');
+		}
+	};
+	var keyDecoder = A2(
+		$elm$json$Json$Decode$andThen,
+		stringToKey,
+		A2($elm$json$Json$Decode$field, 'key', $elm$json$Json$Decode$string));
+	return $mdgriffith$elm_ui$Element$htmlAttribute(
+		A2(
+			$elm$html$Html$Events$on,
+			'keydown',
+			A2($elm$json$Json$Decode$map, msg, keyDecoder)));
+};
+var $elm$html$Html$Events$onBlur = function (msg) {
+	return A2(
+		$elm$html$Html$Events$on,
+		'blur',
+		$elm$json$Json$Decode$succeed(msg));
+};
+var $mdgriffith$elm_ui$Element$Events$onLoseFocus = A2($elm$core$Basics$composeL, $mdgriffith$elm_ui$Internal$Model$Attr, $elm$html$Html$Events$onBlur);
 var $author$project$OUI$MenuButton$properties = function (_v0) {
 	var props = _v0.a;
 	return props;
@@ -24563,8 +24599,8 @@ var $author$project$OUI$Menu$properties = function (_v0) {
 	var props = _v0.a;
 	return props;
 };
-var $author$project$OUI$Material$Menu$render = F6(
-	function (typescale, colorscheme, dividerTheme, theme, attrs, menu) {
+var $author$project$OUI$Material$Menu$render = F7(
+	function (typescale, colorscheme, dividerTheme, theme, highlighted, attrs, menu) {
 		var props = $author$project$OUI$Menu$properties(menu);
 		var widthApprox = 48 + A3(
 			$elm$core$List$foldl,
@@ -24633,80 +24669,87 @@ var $author$project$OUI$Material$Menu$render = F6(
 						]),
 					A3($author$project$OUI$Material$Typography$attrs, props.textType, props.textSize, typescale))),
 			A2(
-				$elm$core$List$map,
-				function (menuitem) {
-					if (menuitem.$ === 'Divider') {
-						return A2(
-							$mdgriffith$elm_ui$Element$el,
-							_List_fromArray(
-								[
-									$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
-									A2($mdgriffith$elm_ui$Element$paddingXY, 0, theme.topBottomPadding)
-								]),
-							A4($author$project$OUI$Material$Divider$render, colorscheme, dividerTheme, _List_Nil, $author$project$OUI$Divider$new));
-					} else {
-						var item = menuitem.a;
-						return A2(
-							$mdgriffith$elm_ui$Element$row,
-							_Utils_ap(
+				$elm$core$List$indexedMap,
+				F2(
+					function (i, menuitem) {
+						if (menuitem.$ === 'Divider') {
+							return A2(
+								$mdgriffith$elm_ui$Element$el,
 								_List_fromArray(
 									[
-										$mdgriffith$elm_ui$Element$height(
-										$mdgriffith$elm_ui$Element$px(theme.itemHeight)),
 										$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
-										A2($mdgriffith$elm_ui$Element$paddingXY, theme.leftRightPadding, 0),
-										$mdgriffith$elm_ui$Element$spacing(theme.paddingWithinItem),
-										$mdgriffith$elm_ui$Element$mouseOver(
-										_List_fromArray(
+										A2($mdgriffith$elm_ui$Element$paddingXY, 0, theme.topBottomPadding)
+									]),
+								A4($author$project$OUI$Material$Divider$render, colorscheme, dividerTheme, _List_Nil, $author$project$OUI$Divider$new));
+						} else {
+							var item = menuitem.a;
+							return A2(
+								$mdgriffith$elm_ui$Element$row,
+								_Utils_ap(
+									_List_fromArray(
+										[
+											$mdgriffith$elm_ui$Element$height(
+											$mdgriffith$elm_ui$Element$px(theme.itemHeight)),
+											$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
+											A2($mdgriffith$elm_ui$Element$paddingXY, theme.leftRightPadding, 0),
+											$mdgriffith$elm_ui$Element$spacing(theme.paddingWithinItem),
+											$mdgriffith$elm_ui$Element$mouseOver(
+											_List_fromArray(
+												[
+													$mdgriffith$elm_ui$Element$Background$color(
+													$author$project$OUI$Material$Color$toElementColor(
+														A3($author$project$OUI$Material$Color$withShade, colorscheme.onSurface, $author$project$OUI$Material$Color$hoverStateLayerOpacity, colorscheme.surfaceContainer)))
+												]))
+										]),
+									_Utils_ap(
+										function () {
+											var _v1 = props.onClick;
+											if (_v1.$ === 'Just') {
+												var msg = _v1.a;
+												return _List_fromArray(
+													[
+														$author$project$OUI$Material$Menu$passiveOnClick(
+														msg(item))
+													]);
+											} else {
+												return _List_Nil;
+											}
+										}(),
+										_Utils_eq(i, highlighted) ? _List_fromArray(
 											[
 												$mdgriffith$elm_ui$Element$Background$color(
-												$author$project$OUI$Material$Color$toElementColor(
-													A3($author$project$OUI$Material$Color$withShade, colorscheme.onSurface, $author$project$OUI$Material$Color$hoverStateLayerOpacity, colorscheme.surfaceContainer)))
-											]))
-									]),
-								function () {
-									var _v1 = props.onClick;
-									if (_v1.$ === 'Just') {
-										var msg = _v1.a;
-										return _List_fromArray(
-											[
-												$author$project$OUI$Material$Menu$passiveOnClick(
-												msg(item))
-											]);
-									} else {
-										return _List_Nil;
-									}
-								}()),
-							_Utils_ap(
-								hasLeadingIcons ? _List_fromArray(
-									[
-										A4(
-										$author$project$OUI$Material$Icon$renderWithSizeColor,
-										theme.iconSize,
-										colorscheme.onSurface,
-										_List_Nil,
-										A2(
-											$elm$core$Maybe$withDefault,
-											$author$project$OUI$Icon$blank,
-											props.itemToIcon(item)))
-									]) : _List_Nil,
-								_List_fromArray(
-									[
-										$mdgriffith$elm_ui$Element$text(
-										props.itemToText(item)),
-										A4(
-										$author$project$OUI$Material$Icon$renderWithSizeColor,
-										theme.iconSize,
-										colorscheme.onSurface,
-										_List_fromArray(
-											[$mdgriffith$elm_ui$Element$alignRight]),
-										A2(
-											$elm$core$Maybe$withDefault,
-											$author$project$OUI$Icon$blank,
-											props.itemToTrailingIcon(item)))
-									])));
-					}
-				},
+												$author$project$OUI$Material$Color$toElementColor(colorscheme.surfaceContainerHighest))
+											]) : _List_Nil)),
+								_Utils_ap(
+									hasLeadingIcons ? _List_fromArray(
+										[
+											A4(
+											$author$project$OUI$Material$Icon$renderWithSizeColor,
+											theme.iconSize,
+											colorscheme.onSurface,
+											_List_Nil,
+											A2(
+												$elm$core$Maybe$withDefault,
+												$author$project$OUI$Icon$blank,
+												props.itemToIcon(item)))
+										]) : _List_Nil,
+									_List_fromArray(
+										[
+											$mdgriffith$elm_ui$Element$text(
+											props.itemToText(item)),
+											A4(
+											$author$project$OUI$Material$Icon$renderWithSizeColor,
+											theme.iconSize,
+											colorscheme.onSurface,
+											_List_fromArray(
+												[$mdgriffith$elm_ui$Element$alignRight]),
+											A2(
+												$elm$core$Maybe$withDefault,
+												$author$project$OUI$Icon$blank,
+												props.itemToTrailingIcon(item)))
+										])));
+						}
+					}),
 				props.items));
 	});
 var $author$project$OUI$Material$MenuButton$render = F8(
@@ -24721,31 +24764,36 @@ var $author$project$OUI$Material$MenuButton$render = F8(
 				$elm$core$List$cons,
 				$mdgriffith$elm_ui$Element$htmlAttribute(
 					$elm$html$Html$Attributes$id(state.id)),
-				_Utils_ap(
-					attrs,
-					state.opened ? _List_fromArray(
-						[
-							$mdgriffith$elm_ui$Element$below(
-							A6(
-								$author$project$OUI$Material$Menu$render,
-								typescale,
-								colorscheme,
-								dividerTheme,
-								menuTheme,
-								_List_fromArray(
-									[
-										$mdgriffith$elm_ui$Element$moveDown(1),
-										function () {
-										var _v0 = props.menuAlign;
-										if (_v0.$ === 'AlignLeft') {
-											return $mdgriffith$elm_ui$Element$alignLeft;
-										} else {
-											return $mdgriffith$elm_ui$Element$alignRight;
-										}
-									}()
-									]),
-								props.menu))
-						]) : _List_Nil)),
+				A2(
+					$elm$core$List$cons,
+					$mdgriffith$elm_ui$Element$Events$onLoseFocus(props.onLoseFocus),
+					_Utils_ap(
+						attrs,
+						state.opened ? _List_fromArray(
+							[
+								$mdgriffith$elm_ui$Element$below(
+								A7(
+									$author$project$OUI$Material$Menu$render,
+									typescale,
+									colorscheme,
+									dividerTheme,
+									menuTheme,
+									state.highlighted,
+									_List_fromArray(
+										[
+											$mdgriffith$elm_ui$Element$moveDown(1),
+											function () {
+											var _v0 = props.menuAlign;
+											if (_v0.$ === 'AlignLeft') {
+												return $mdgriffith$elm_ui$Element$alignLeft;
+											} else {
+												return $mdgriffith$elm_ui$Element$alignRight;
+											}
+										}()
+										]),
+									props.menu)),
+								$author$project$OUI$Material$MenuButton$onKeyDown(props.onKeyDown)
+							]) : _List_Nil))),
 			props.button);
 	});
 var $author$project$OUI$Material$menuButton = function (theme) {
@@ -24772,10 +24820,15 @@ var $author$project$OUI$Menu$new = function (itemToText) {
 		});
 };
 var $author$project$OUI$MenuButton$AlignLeft = {$: 'AlignLeft'};
+var $author$project$OUI$MenuButton$OnBlur = {$: 'OnBlur'};
 var $author$project$OUI$MenuButton$OnClickButton = {$: 'OnClickButton'};
 var $author$project$OUI$MenuButton$OnClickItem = function (a) {
 	return {$: 'OnClickItem', a: a};
 };
+var $author$project$OUI$MenuButton$OnKeyDown = F3(
+	function (a, b, c) {
+		return {$: 'OnKeyDown', a: a, b: b, c: c};
+	});
 var $author$project$OUI$Menu$onClick = F2(
 	function (msg, _v0) {
 		var props = _v0.a;
@@ -24788,6 +24841,7 @@ var $author$project$OUI$Menu$onClick = F2(
 	});
 var $author$project$OUI$MenuButton$new = F4(
 	function (map, onClick, button, menu) {
+		var menuitems = $author$project$OUI$Menu$properties(menu).items;
 		return $author$project$OUI$MenuButton$MenuButton(
 			{
 				button: A2(
@@ -24801,7 +24855,12 @@ var $author$project$OUI$MenuButton$new = F4(
 						A2($elm$core$Basics$composeL, map, $author$project$OUI$MenuButton$OnClickItem),
 						onClick),
 					menu),
-				menuAlign: $author$project$OUI$MenuButton$AlignLeft
+				menuAlign: $author$project$OUI$MenuButton$AlignLeft,
+				onKeyDown: A2(
+					$elm$core$Basics$composeR,
+					A2($author$project$OUI$MenuButton$OnKeyDown, onClick, menuitems),
+					map),
+				onLoseFocus: map($author$project$OUI$MenuButton$OnBlur)
 			});
 	});
 var $author$project$OUI$Menu$withIcon = F2(
@@ -24879,7 +24938,7 @@ var $author$project$OUI$Showcase$MenuButtons$chapter = F2(
 					])));
 	});
 var $author$project$OUI$MenuButton$init = function (id) {
-	return {id: id, opened: false};
+	return {highlighted: -1, id: id, opened: false};
 };
 var $author$project$OUI$Showcase$MenuButtons$init = function (_v0) {
 	return _Utils_Tuple2(
@@ -29417,6 +29476,84 @@ var $author$project$OUI$MenuButton$performEffect = function (_v0) {
 var $author$project$OUI$MenuButton$Loopback = function (a) {
 	return {$: 'Loopback', a: a};
 };
+var $author$project$OUI$MenuButton$getAtIndex = function (index) {
+	return A2(
+		$elm$core$Basics$composeR,
+		$elm$core$List$drop(index),
+		A2(
+			$elm$core$Basics$composeR,
+			$elm$core$List$head,
+			$elm$core$Maybe$andThen(
+				function (menuitem) {
+					if (menuitem.$ === 'Item') {
+						var item = menuitem.a;
+						return $elm$core$Maybe$Just(item);
+					} else {
+						return $elm$core$Maybe$Nothing;
+					}
+				})));
+};
+var $author$project$OUI$MenuButton$hasItems = A2(
+	$elm$core$List$foldl,
+	F2(
+		function (item, r) {
+			if (item.$ === 'Item') {
+				return true;
+			} else {
+				return r;
+			}
+		}),
+	false);
+var $author$project$OUI$MenuButton$nextIndex = F2(
+	function (items, index) {
+		nextIndex:
+		while (true) {
+			if ($author$project$OUI$MenuButton$hasItems(items)) {
+				var newIndex = (_Utils_cmp(
+					index,
+					$elm$core$List$length(items) - 1) > -1) ? 0 : (index + 1);
+				var item = $elm$core$List$head(
+					A2($elm$core$List$drop, newIndex, items));
+				if (_Utils_eq(
+					item,
+					$elm$core$Maybe$Just($author$project$OUI$Menu$Divider))) {
+					var $temp$items = items,
+						$temp$index = newIndex;
+					items = $temp$items;
+					index = $temp$index;
+					continue nextIndex;
+				} else {
+					return newIndex;
+				}
+			} else {
+				return -1;
+			}
+		}
+	});
+var $author$project$OUI$MenuButton$prevIndex = F2(
+	function (items, index) {
+		prevIndex:
+		while (true) {
+			if ($author$project$OUI$MenuButton$hasItems(items)) {
+				var newIndex = (index <= 0) ? ($elm$core$List$length(items) - 1) : (index - 1);
+				var item = $elm$core$List$head(
+					A2($elm$core$List$drop, newIndex, items));
+				if (_Utils_eq(
+					item,
+					$elm$core$Maybe$Just($author$project$OUI$Menu$Divider))) {
+					var $temp$items = items,
+						$temp$index = newIndex;
+					items = $temp$items;
+					index = $temp$index;
+					continue prevIndex;
+				} else {
+					return newIndex;
+				}
+			} else {
+				return -1;
+			}
+		}
+	});
 var $author$project$OUI$MenuButton$updateWithoutPerform = F2(
 	function (msg, state) {
 		switch (msg.$) {
@@ -29424,7 +29561,7 @@ var $author$project$OUI$MenuButton$updateWithoutPerform = F2(
 				return _Utils_Tuple2(
 					_Utils_update(
 						state,
-						{opened: false}),
+						{highlighted: -1, opened: false}),
 					$elm$core$Maybe$Nothing);
 			case 'OnClickButton':
 				return _Utils_Tuple2(
@@ -29432,14 +29569,63 @@ var $author$project$OUI$MenuButton$updateWithoutPerform = F2(
 						state,
 						{opened: !state.opened}),
 					$elm$core$Maybe$Nothing);
-			default:
+			case 'OnClickItem':
 				var selectMsg = msg.a;
 				return _Utils_Tuple2(
 					_Utils_update(
 						state,
-						{opened: false}),
+						{highlighted: -1, opened: false}),
 					$elm$core$Maybe$Just(
 						$author$project$OUI$MenuButton$Loopback(selectMsg)));
+			case 'OnBlur':
+				return _Utils_Tuple2(
+					_Utils_update(
+						state,
+						{highlighted: -1, opened: false}),
+					$elm$core$Maybe$Nothing);
+			default:
+				switch (msg.c.$) {
+					case 'ArrowUp':
+						var items = msg.b;
+						var _v1 = msg.c;
+						return _Utils_Tuple2(
+							_Utils_update(
+								state,
+								{
+									highlighted: A2($author$project$OUI$MenuButton$prevIndex, items, state.highlighted)
+								}),
+							$elm$core$Maybe$Nothing);
+					case 'ArrowDown':
+						var items = msg.b;
+						var _v2 = msg.c;
+						return _Utils_Tuple2(
+							_Utils_update(
+								state,
+								{
+									highlighted: A2($author$project$OUI$MenuButton$nextIndex, items, state.highlighted),
+									opened: true
+								}),
+							$elm$core$Maybe$Nothing);
+					case 'Enter':
+						var onClick = msg.a;
+						var items = msg.b;
+						var _v3 = msg.c;
+						return _Utils_Tuple2(
+							_Utils_update(
+								state,
+								{highlighted: -1, opened: false}),
+							A2(
+								$elm$core$Maybe$map,
+								A2($elm$core$Basics$composeR, onClick, $author$project$OUI$MenuButton$Loopback),
+								A2($author$project$OUI$MenuButton$getAtIndex, state.highlighted, items)));
+					default:
+						var _v4 = msg.c;
+						return _Utils_Tuple2(
+							_Utils_update(
+								state,
+								{highlighted: -1, opened: false}),
+							$elm$core$Maybe$Nothing);
+				}
 		}
 	});
 var $author$project$OUI$MenuButton$update = F2(
@@ -29517,7 +29703,7 @@ var $author$project$OUI$Showcase$MenuButtons$book = A2(
 		'Menu Buttons',
 		{init: $author$project$OUI$Showcase$MenuButtons$init, subscriptions: $author$project$OUI$Showcase$MenuButtons$subscriptions, update: $author$project$OUI$Showcase$MenuButtons$update}));
 var $author$project$OUI$Material$menu = function (theme) {
-	return A4($author$project$OUI$Material$Menu$render, theme.typescale, theme.colorscheme, theme.divider, theme.menu);
+	return A5($author$project$OUI$Material$Menu$render, theme.typescale, theme.colorscheme, theme.divider, theme.menu, -1);
 };
 var $author$project$OUI$Menu$withTrailingIcon = F2(
 	function (itemToIcon, _v0) {
@@ -32119,13 +32305,6 @@ var $elm$html$Html$Events$onFocus = function (msg) {
 		$elm$json$Json$Decode$succeed(msg));
 };
 var $mdgriffith$elm_ui$Element$Events$onFocus = A2($elm$core$Basics$composeL, $mdgriffith$elm_ui$Internal$Model$Attr, $elm$html$Html$Events$onFocus);
-var $elm$html$Html$Events$onBlur = function (msg) {
-	return A2(
-		$elm$html$Html$Events$on,
-		'blur',
-		$elm$json$Json$Decode$succeed(msg));
-};
-var $mdgriffith$elm_ui$Element$Events$onLoseFocus = A2($elm$core$Basics$composeL, $mdgriffith$elm_ui$Internal$Model$Attr, $elm$html$Html$Events$onBlur);
 var $author$project$OUI$TextField$properties = function (_v0) {
 	var props = _v0.a;
 	return props;
@@ -34638,4 +34817,4 @@ var $author$project$Main$main = $elm$browser$Browser$application(
 							$author$project$Main$intro,
 							$author$project$OUI$Explorer$book('Introduction')),
 						$author$project$OUI$Explorer$explorer))))));
-_Platform_export({'Main':{'init':$author$project$Main$main($elm$json$Json$Decode$value)({"versions":{"elm":"0.19.1"},"types":{"message":"Spa.Msg OUI.Explorer.SharedMsg (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg OUI.Showcase.Icons.Msg) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg OUI.Showcase.Navigation.Msg) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg OUI.Showcase.MenuButtons.Msg) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg OUI.Showcase.TextFields.Msg) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg OUI.Showcase.Switches.Msg) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg ()) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg ()) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg ()) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg ()) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg ()) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg ()) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg ()) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg ()) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg ()) (Spa.PageStack.Msg String.String () ())))))))))))))))","aliases":{"Url.Url":{"args":[],"type":"{ protocol : Url.Protocol, host : String.String, port_ : Maybe.Maybe Basics.Int, path : String.String, query : Maybe.Maybe String.String, fragment : Maybe.Maybe String.String }"}},"unions":{"OUI.Explorer.BookMsg":{"args":["msg"],"tags":{"SharedMsg":["OUI.Explorer.SharedMsg"],"BookMsg":["msg"]}},"OUI.Showcase.Icons.Msg":{"args":[],"tags":{"FilterChange":["String.String"],"FilterFocus":["Basics.Bool"]}},"OUI.Showcase.MenuButtons.Msg":{"args":[],"tags":{"OnSelect":["String.String","String.String"],"MenuButtonMsg":["String.String","OUI.MenuButton.Msg OUI.Showcase.MenuButtons.Msg"]}},"OUI.Showcase.Navigation.Msg":{"args":[],"tags":{"Expand":["Basics.Bool"]}},"OUI.Showcase.Switches.Msg":{"args":[],"tags":{"SetSwitch":["String.String","Basics.Bool"]}},"OUI.Showcase.TextFields.Msg":{"args":[],"tags":{"OnChange":["String.String","String.String"],"OnFocus":["String.String"],"OnLoseFocus":["String.String"]}},"Spa.Msg":{"args":["sharedMsg","pageMsg"],"tags":{"SharedMsg":["sharedMsg"],"PageMsg":["pageMsg"],"UrlRequest":["Browser.UrlRequest"],"UrlChange":["Url.Url"]}},"Spa.PageStack.Msg":{"args":["route","current","previous"],"tags":{"CurrentMsg":["current"],"PreviousMsg":["previous"],"RouteChange":["route"]}},"OUI.Explorer.SharedMsg":{"args":[],"tags":{"Event":["String.String"],"SelectColorScheme":["Basics.Int","OUI.Explorer.ColorSchemeType"],"OnBookClick":["String.String"],"OnRouteChange":["String.String"]}},"String.String":{"args":[],"tags":{"String":[]}},"Basics.Bool":{"args":[],"tags":{"True":[],"False":[]}},"OUI.Explorer.ColorSchemeType":{"args":[],"tags":{"Light":[],"Dark":[]}},"Basics.Int":{"args":[],"tags":{"Int":[]}},"Maybe.Maybe":{"args":["a"],"tags":{"Just":["a"],"Nothing":[]}},"OUI.MenuButton.Msg":{"args":["msg"],"tags":{"OnClickOutside":[],"OnClickButton":[],"OnClickItem":["msg"]}},"Url.Protocol":{"args":[],"tags":{"Http":[],"Https":[]}},"Browser.UrlRequest":{"args":[],"tags":{"Internal":["Url.Url"],"External":["String.String"]}}}}})}});}(this));
+_Platform_export({'Main':{'init':$author$project$Main$main($elm$json$Json$Decode$value)({"versions":{"elm":"0.19.1"},"types":{"message":"Spa.Msg OUI.Explorer.SharedMsg (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg OUI.Showcase.Icons.Msg) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg OUI.Showcase.Navigation.Msg) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg OUI.Showcase.MenuButtons.Msg) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg OUI.Showcase.TextFields.Msg) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg OUI.Showcase.Switches.Msg) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg ()) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg ()) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg ()) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg ()) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg ()) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg ()) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg ()) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg ()) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg ()) (Spa.PageStack.Msg String.String () ())))))))))))))))","aliases":{"Url.Url":{"args":[],"type":"{ protocol : Url.Protocol, host : String.String, port_ : Maybe.Maybe Basics.Int, path : String.String, query : Maybe.Maybe String.String, fragment : Maybe.Maybe String.String }"}},"unions":{"OUI.Explorer.BookMsg":{"args":["msg"],"tags":{"SharedMsg":["OUI.Explorer.SharedMsg"],"BookMsg":["msg"]}},"OUI.Showcase.Icons.Msg":{"args":[],"tags":{"FilterChange":["String.String"],"FilterFocus":["Basics.Bool"]}},"OUI.Showcase.MenuButtons.Msg":{"args":[],"tags":{"OnSelect":["String.String","String.String"],"MenuButtonMsg":["String.String","OUI.MenuButton.Msg String.String OUI.Showcase.MenuButtons.Msg"]}},"OUI.Showcase.Navigation.Msg":{"args":[],"tags":{"Expand":["Basics.Bool"]}},"OUI.Showcase.Switches.Msg":{"args":[],"tags":{"SetSwitch":["String.String","Basics.Bool"]}},"OUI.Showcase.TextFields.Msg":{"args":[],"tags":{"OnChange":["String.String","String.String"],"OnFocus":["String.String"],"OnLoseFocus":["String.String"]}},"Spa.Msg":{"args":["sharedMsg","pageMsg"],"tags":{"SharedMsg":["sharedMsg"],"PageMsg":["pageMsg"],"UrlRequest":["Browser.UrlRequest"],"UrlChange":["Url.Url"]}},"Spa.PageStack.Msg":{"args":["route","current","previous"],"tags":{"CurrentMsg":["current"],"PreviousMsg":["previous"],"RouteChange":["route"]}},"OUI.Explorer.SharedMsg":{"args":[],"tags":{"Event":["String.String"],"SelectColorScheme":["Basics.Int","OUI.Explorer.ColorSchemeType"],"OnBookClick":["String.String"],"OnRouteChange":["String.String"]}},"String.String":{"args":[],"tags":{"String":[]}},"Basics.Bool":{"args":[],"tags":{"True":[],"False":[]}},"OUI.Explorer.ColorSchemeType":{"args":[],"tags":{"Light":[],"Dark":[]}},"Basics.Int":{"args":[],"tags":{"Int":[]}},"Maybe.Maybe":{"args":["a"],"tags":{"Just":["a"],"Nothing":[]}},"OUI.MenuButton.Msg":{"args":["item","msg"],"tags":{"OnClickOutside":[],"OnClickButton":[],"OnClickItem":["msg"],"OnKeyDown":["item -> msg","List.List (OUI.Menu.Item item)","OUI.MenuButton.Key"],"OnBlur":[]}},"Url.Protocol":{"args":[],"tags":{"Http":[],"Https":[]}},"Browser.UrlRequest":{"args":[],"tags":{"Internal":["Url.Url"],"External":["String.String"]}},"OUI.Menu.Item":{"args":["item"],"tags":{"Item":["item"],"Divider":[]}},"OUI.MenuButton.Key":{"args":[],"tags":{"ArrowDown":[],"ArrowUp":[],"Enter":[],"Esc":[]}},"List.List":{"args":["a"],"tags":{}}}}})}});}(this));

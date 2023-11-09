@@ -47,10 +47,11 @@ render :
     -> OUI.Material.Color.Scheme
     -> OUI.Material.Divider.Theme
     -> Theme
+    -> Int
     -> List (Attribute msg)
     -> Menu item msg
     -> Element msg
-render typescale colorscheme dividerTheme theme attrs menu =
+render typescale colorscheme dividerTheme theme highlighted attrs menu =
     let
         props :
             { items : List (OUI.Menu.Item item)
@@ -123,8 +124,8 @@ render typescale colorscheme dividerTheme theme attrs menu =
             ++ OUI.Material.Typography.attrs props.textType props.textSize typescale
         )
         (props.items
-            |> List.map
-                (\menuitem ->
+            |> List.indexedMap
+                (\i menuitem ->
                     case menuitem of
                         OUI.Menu.Divider ->
                             OUI.Divider.new
@@ -154,6 +155,15 @@ render typescale colorscheme dividerTheme theme attrs menu =
 
                                             Nothing ->
                                                 []
+                                       )
+                                    ++ (if i == highlighted then
+                                            [ colorscheme.surfaceContainerHighest
+                                                |> OUI.Material.Color.toElementColor
+                                                |> Background.color
+                                            ]
+
+                                        else
+                                            []
                                        )
                                 )
                                 ((if hasLeadingIcons then

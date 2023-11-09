@@ -109,7 +109,7 @@ menu :
     -> OUI.Menu.Menu item msg
     -> Element msg
 menu theme =
-    OUI.Material.Menu.render theme.typescale theme.colorscheme theme.divider theme.menu
+    OUI.Material.Menu.render theme.typescale theme.colorscheme theme.divider theme.menu -1
 
 
 {-| Render a menu button

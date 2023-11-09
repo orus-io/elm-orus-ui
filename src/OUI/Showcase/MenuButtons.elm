@@ -77,7 +77,7 @@ type alias Model =
 
 type Msg
     = OnSelect String String
-    | MenuButtonMsg String (MenuButton.Msg Msg)
+    | MenuButtonMsg String (MenuButton.Msg String Msg)
 
 
 init : Explorer.Shared themeExt -> ( Model, Effect Explorer.SharedMsg Msg )

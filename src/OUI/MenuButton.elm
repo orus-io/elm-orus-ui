@@ -1,5 +1,5 @@
 module OUI.MenuButton exposing
-    ( MenuButton, Align(..)
+    ( MenuButton, Align(..), Key(..)
     , new, alignLeft, alignRight
     , State, Msg, init, update, onOutsideClick
     , Effect(..), updateWithoutPerform, performEffect
@@ -10,7 +10,7 @@ module OUI.MenuButton exposing
 
 The button will open a menu when clicked.
 
-@docs MenuButton, Align
+@docs MenuButton, Align, Key
 
 
 # Constructor
@@ -60,6 +60,8 @@ type MenuButton btnC item msg
         { button : OUI.Button.Button { btnC | hasAction : () } msg
         , menu : OUI.Menu.Menu item msg
         , menuAlign : Align
+        , onKeyDown : Key -> msg
+        , onLoseFocus : msg
         }
 
 
@@ -87,12 +89,18 @@ The button must not have any action defined on it
 
 -}
 new :
-    (Msg msg -> msg)
+    (Msg item msg -> msg)
     -> (item -> msg)
     -> OUI.Button.Button { btnC | needOnClickOrDisabled : () } msg
     -> OUI.Menu.Menu item msg
     -> MenuButton btnC item msg
 new map onClick button menu =
+    let
+        menuitems : List (OUI.Menu.Item item)
+        menuitems =
+            OUI.Menu.properties menu
+                |> .items
+    in
     MenuButton
         { button =
             button
@@ -101,6 +109,8 @@ new map onClick button menu =
             menu
                 |> OUI.Menu.onClick (map << OnClickItem << onClick)
         , menuAlign = AlignLeft
+        , onKeyDown = OnKeyDown onClick menuitems >> map
+        , onLoseFocus = map OnBlur
         }
 
 
@@ -129,15 +139,27 @@ alignLeft (MenuButton props) =
 type alias State =
     { id : String
     , opened : Bool
+    , highlighted : Int
     }
+
+
+{-| Keys
+-}
+type Key
+    = ArrowDown
+    | ArrowUp
+    | Enter
+    | Esc
 
 
 {-| The component message
 -}
-type Msg msg
+type Msg item msg
     = OnClickOutside
     | OnClickButton
     | OnClickItem msg
+    | OnKeyDown (item -> msg) (List (OUI.Menu.Item item)) Key
+    | OnBlur
 
 
 {-| Initialise the State. The given id must be unique in the currently displayed
@@ -147,12 +169,13 @@ init : String -> State
 init id =
     { id = id
     , opened = False
+    , highlighted = -1
     }
 
 
 {-| Update the state given a message
 -}
-update : Msg msg -> State -> ( State, Cmd msg )
+update : Msg item msg -> State -> ( State, Cmd msg )
 update msg state =
     updateWithoutPerform msg state
         |> Tuple.mapSecond (Maybe.map performEffect >> Maybe.withDefault Cmd.none)
@@ -160,7 +183,7 @@ update msg state =
 
 {-| Catch clicks outside an opened menu
 -}
-onOutsideClick : (Msg msg -> msg) -> State -> Sub msg
+onOutsideClick : (Msg item msg -> msg) -> State -> Sub msg
 onOutsideClick map state =
     if state.opened then
         OUI.Helpers.onOutsideClick state.id (map OnClickOutside)
@@ -175,22 +198,158 @@ type Effect msg
     = Loopback msg
 
 
+hasItems : List (OUI.Menu.Item item) -> Bool
+hasItems =
+    List.foldl
+        (\item r ->
+            case item of
+                OUI.Menu.Item _ ->
+                    True
+
+                OUI.Menu.Divider ->
+                    r
+        )
+        False
+
+
+prevIndex : List (OUI.Menu.Item item) -> Int -> Int
+prevIndex items index =
+    if hasItems items then
+        let
+            newIndex : Int
+            newIndex =
+                if index <= 0 then
+                    List.length items - 1
+
+                else
+                    index - 1
+
+            item : Maybe (OUI.Menu.Item item)
+            item =
+                List.drop newIndex items
+                    |> List.head
+        in
+        if item == Just OUI.Menu.Divider then
+            prevIndex items newIndex
+
+        else
+            newIndex
+
+    else
+        -1
+
+
+nextIndex : List (OUI.Menu.Item item) -> Int -> Int
+nextIndex items index =
+    if hasItems items then
+        let
+            newIndex : Int
+            newIndex =
+                if index >= List.length items - 1 then
+                    0
+
+                else
+                    index + 1
+
+            item : Maybe (OUI.Menu.Item item)
+            item =
+                List.drop newIndex items
+                    |> List.head
+        in
+        if item == Just OUI.Menu.Divider then
+            nextIndex items newIndex
+
+        else
+            newIndex
+
+    else
+        -1
+
+
+getAtIndex : Int -> List (OUI.Menu.Item item) -> Maybe item
+getAtIndex index =
+    List.drop index
+        >> List.head
+        >> Maybe.andThen
+            (\menuitem ->
+                case menuitem of
+                    OUI.Menu.Item item ->
+                        Just item
+
+                    OUI.Menu.Divider ->
+                        Nothing
+            )
+
+
 {-| Do the update but returns a Effect instead of a Cmd
 
 The Effect can be converted to a Cmd with [performEffect](#performEffect)
 
 -}
-updateWithoutPerform : Msg msg -> State -> ( State, Maybe (Effect msg) )
+updateWithoutPerform : Msg item msg -> State -> ( State, Maybe (Effect msg) )
 updateWithoutPerform msg state =
     case msg of
         OnClickOutside ->
-            ( { state | opened = False }, Nothing )
+            ( { state
+                | opened = False
+                , highlighted = -1
+              }
+            , Nothing
+            )
 
         OnClickButton ->
             ( { state | opened = not state.opened }, Nothing )
 
         OnClickItem selectMsg ->
-            ( { state | opened = False }, Just <| Loopback selectMsg )
+            ( { state
+                | opened = False
+                , highlighted = -1
+              }
+            , Just <| Loopback selectMsg
+            )
+
+        OnBlur ->
+            ( { state
+                | opened = False
+                , highlighted = -1
+              }
+            , Nothing
+            )
+
+        OnKeyDown _ items ArrowUp ->
+            ( { state
+                | highlighted =
+                    prevIndex items state.highlighted
+              }
+            , Nothing
+            )
+
+        OnKeyDown _ items ArrowDown ->
+            ( { state
+                | opened = True
+                , highlighted =
+                    nextIndex items state.highlighted
+              }
+            , Nothing
+            )
+
+        OnKeyDown onClick items Enter ->
+            ( { state
+                | opened = False
+                , highlighted = -1
+              }
+            , items
+                |> getAtIndex state.highlighted
+                |> Maybe.map (onClick >> Loopback)
+            )
+
+        OnKeyDown _ _ Esc ->
+            ( { state
+                | opened = False
+                , highlighted = -1
+              }
+            , Nothing
+            )
 
 
 {-| Change a [`Effect`](#Effect) into a [`Cmd`](/packages/elm/core/latest/Platform-Cmd#Cmd)
@@ -214,6 +373,8 @@ properties :
         { button : OUI.Button.Button { btnC | hasAction : () } msg
         , menu : OUI.Menu.Menu item msg
         , menuAlign : Align
+        , onKeyDown : Key -> msg
+        , onLoseFocus : msg
         }
 properties (MenuButton props) =
     props
