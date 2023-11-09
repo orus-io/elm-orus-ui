@@ -35,13 +35,13 @@ addPages :
                 MenuButtons.Model
                 (Spa.PageStack.Model
                     Spa.SetupError
-                    ()
+                    TextFields.Model
                     (Spa.PageStack.Model
                         Spa.SetupError
-                        TextFields.Model
+                        Switches.Model
                         (Spa.PageStack.Model
                             Spa.SetupError
-                            Switches.Model
+                            ()
                             (Spa.PageStack.Model
                                 Spa.SetupError
                                 ()
@@ -81,13 +81,13 @@ addPages :
                 (Explorer.BookMsg MenuButtons.Msg)
                 (Spa.PageStack.Msg
                     Explorer.Route
-                    (Explorer.BookMsg ())
+                    (Explorer.BookMsg TextFields.Msg)
                     (Spa.PageStack.Msg
                         Explorer.Route
-                        (Explorer.BookMsg TextFields.Msg)
+                        (Explorer.BookMsg Switches.Msg)
                         (Spa.PageStack.Msg
                             Explorer.Route
-                            (Explorer.BookMsg Switches.Msg)
+                            (Explorer.BookMsg ())
                             (Spa.PageStack.Msg
                                 Explorer.Route
                                 (Explorer.BookMsg ())
@@ -128,11 +128,11 @@ addPages =
         >> Explorer.category "Basics"
         >> Explorer.addBook Buttons.book
         >> Explorer.addBook Checkbox.book
+        >> Explorer.addBook Dividers.book
         >> Explorer.addBook Menus.book
         >> Explorer.addBook RadioButtons.book
         >> Explorer.addBook Switches.book
         >> Explorer.addBook TextFields.book
-        >> Explorer.addBook Dividers.book
         >> Explorer.category "Complex"
         >> Explorer.addBook MenuButtons.book
         >> Explorer.addBook Navigation.book

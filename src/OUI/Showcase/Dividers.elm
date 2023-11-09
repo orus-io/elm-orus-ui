@@ -20,26 +20,34 @@ book =
 commonDividers : Explorer.Shared themeExt -> Element (Explorer.BookMsg ())
 commonDividers { theme } =
     Element.column
-        [ Element.spacing 30
+        [ Element.spacing 16
         , Element.width <| Element.px 400
-        , Element.padding 10
         , Element.Border.solid
-        , Element.Border.width 2
-        , Element.Border.color <| OUI.Material.Color.getElementColor OUI.Neutral theme.colorscheme
+        , Element.Border.rounded 8
+        , Element.Border.width 1
+        , theme.colorscheme.surfaceContainer
+            |> OUI.Material.Color.withShade theme.colorscheme.onSurface
+                OUI.Material.Color.hoverStateLayerOpacity
+            |> OUI.Material.Color.toElementColor
+            |> Element.Border.color
+        , Element.centerX
         ]
-        [ Element.text "Common dividers"
-        , Element.column [ Element.spacing 30, Element.width Element.fill ]
-            [ Element.text "Full width divider"
-            , Divider.new
-                |> Divider.fullWidthDivider
-                |> Material.divider theme []
-            , Element.text "inset divider"
-            , Divider.new
-                |> Divider.insetDivider
-                |> Material.divider theme []
-            , Element.text "thick inset divider"
-            , Divider.new
-                |> Divider.insetDivider
-                |> Material.divider theme [ Element.height <| Element.px 5 ]
-            ]
+        [ Element.text "Full width divider"
+            |> Element.el
+                [ Element.paddingEach
+                    { top = 16
+                    , bottom = 0
+                    , left = 16
+                    , right = 16
+                    }
+                ]
+        , Divider.new
+            |> Material.divider theme []
+        , Element.text "Inset divider"
+            |> Element.el [ Element.paddingXY 16 0 ]
+        , Divider.new
+            |> Material.divider theme []
+            |> Element.el [ Element.paddingXY 16 0, Element.width Element.fill ]
+        , Element.none
+            |> Element.el [ Element.height <| Element.px 40 ]
         ]

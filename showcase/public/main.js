@@ -24342,14 +24342,8 @@ var $author$project$OUI$Showcase$Colors$book = A2(
 			$author$project$OUI$Explorer$withMarkdownChapter,
 			'\nThe two default color schemes\n    ',
 			$author$project$OUI$Explorer$book('Colors'))));
-var $author$project$OUI$Neutral = {$: 'Neutral'};
-var $author$project$OUI$Divider$properties = function (_v0) {
-	var props = _v0.a;
-	return props;
-};
 var $author$project$OUI$Material$Divider$render = F4(
-	function (colorscheme, theme, attrs, divider) {
-		var properties = $author$project$OUI$Divider$properties(divider);
+	function (colorscheme, theme, attrs, _v0) {
 		var all_attrs = _Utils_ap(
 			_List_fromArray(
 				[
@@ -24360,74 +24354,21 @@ var $author$project$OUI$Material$Divider$render = F4(
 					$mdgriffith$elm_ui$Element$centerX
 				]),
 			attrs);
-		var _v0 = properties.type_;
-		if (_v0.$ === 'FullWidth') {
-			return A2(
-				$mdgriffith$elm_ui$Element$el,
-				_Utils_ap(
-					all_attrs,
-					_List_fromArray(
-						[
-							$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill)
-						])),
-				$mdgriffith$elm_ui$Element$none);
-		} else {
-			return A2(
-				$mdgriffith$elm_ui$Element$row,
+		return A2(
+			$mdgriffith$elm_ui$Element$el,
+			_Utils_ap(
+				all_attrs,
 				_List_fromArray(
 					[
 						$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill)
-					]),
-				_List_fromArray(
-					[
-						A2(
-						$mdgriffith$elm_ui$Element$el,
-						_List_fromArray(
-							[
-								$mdgriffith$elm_ui$Element$width(
-								$mdgriffith$elm_ui$Element$px(theme.margin))
-							]),
-						$mdgriffith$elm_ui$Element$none),
-						A2(
-						$mdgriffith$elm_ui$Element$el,
-						_Utils_ap(
-							all_attrs,
-							_List_fromArray(
-								[
-									$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill)
-								])),
-						$mdgriffith$elm_ui$Element$none),
-						A2(
-						$mdgriffith$elm_ui$Element$el,
-						_List_fromArray(
-							[
-								$mdgriffith$elm_ui$Element$width(
-								$mdgriffith$elm_ui$Element$px(theme.margin))
-							]),
-						$mdgriffith$elm_ui$Element$none)
-					]));
-		}
+					])),
+			$mdgriffith$elm_ui$Element$none);
 	});
 var $author$project$OUI$Material$divider = function (theme) {
 	return A2($author$project$OUI$Material$Divider$render, theme.colorscheme, theme.divider);
 };
-var $author$project$OUI$Divider$FullWidth = {$: 'FullWidth'};
-var $author$project$OUI$Divider$Divider = function (a) {
-	return {$: 'Divider', a: a};
-};
-var $author$project$OUI$Divider$dvdtype = F2(
-	function (value, _v0) {
-		var props = _v0.a;
-		return $author$project$OUI$Divider$Divider(
-			_Utils_update(
-				props,
-				{type_: value}));
-	});
-var $author$project$OUI$Divider$fullWidthDivider = $author$project$OUI$Divider$dvdtype($author$project$OUI$Divider$FullWidth);
-var $author$project$OUI$Divider$Inset = {$: 'Inset'};
-var $author$project$OUI$Divider$insetDivider = $author$project$OUI$Divider$dvdtype($author$project$OUI$Divider$Inset);
-var $author$project$OUI$Divider$new = $author$project$OUI$Divider$Divider(
-	{type_: $author$project$OUI$Divider$FullWidth});
+var $author$project$OUI$Divider$Divider = {$: 'Divider'};
+var $author$project$OUI$Divider$new = $author$project$OUI$Divider$Divider;
 var $mdgriffith$elm_ui$Internal$Flag$borderStyle = $mdgriffith$elm_ui$Internal$Flag$flag(11);
 var $mdgriffith$elm_ui$Element$Border$solid = A2($mdgriffith$elm_ui$Internal$Model$Class, $mdgriffith$elm_ui$Internal$Flag$borderStyle, $mdgriffith$elm_ui$Internal$Style$classes.borderSolid);
 var $author$project$OUI$Showcase$Dividers$commonDividers = function (_v0) {
@@ -24436,50 +24377,51 @@ var $author$project$OUI$Showcase$Dividers$commonDividers = function (_v0) {
 		$mdgriffith$elm_ui$Element$column,
 		_List_fromArray(
 			[
-				$mdgriffith$elm_ui$Element$spacing(30),
+				$mdgriffith$elm_ui$Element$spacing(16),
 				$mdgriffith$elm_ui$Element$width(
 				$mdgriffith$elm_ui$Element$px(400)),
-				$mdgriffith$elm_ui$Element$padding(10),
 				$mdgriffith$elm_ui$Element$Border$solid,
-				$mdgriffith$elm_ui$Element$Border$width(2),
+				$mdgriffith$elm_ui$Element$Border$rounded(8),
+				$mdgriffith$elm_ui$Element$Border$width(1),
 				$mdgriffith$elm_ui$Element$Border$color(
-				A2($author$project$OUI$Material$Color$getElementColor, $author$project$OUI$Neutral, theme.colorscheme))
+				$author$project$OUI$Material$Color$toElementColor(
+					A3($author$project$OUI$Material$Color$withShade, theme.colorscheme.onSurface, $author$project$OUI$Material$Color$hoverStateLayerOpacity, theme.colorscheme.surfaceContainer))),
+				$mdgriffith$elm_ui$Element$centerX
 			]),
 		_List_fromArray(
 			[
-				$mdgriffith$elm_ui$Element$text('Common dividers'),
 				A2(
-				$mdgriffith$elm_ui$Element$column,
+				$mdgriffith$elm_ui$Element$el,
 				_List_fromArray(
 					[
-						$mdgriffith$elm_ui$Element$spacing(30),
+						$mdgriffith$elm_ui$Element$paddingEach(
+						{bottom: 0, left: 16, right: 16, top: 16})
+					]),
+				$mdgriffith$elm_ui$Element$text('Full width divider')),
+				A3($author$project$OUI$Material$divider, theme, _List_Nil, $author$project$OUI$Divider$new),
+				A2(
+				$mdgriffith$elm_ui$Element$el,
+				_List_fromArray(
+					[
+						A2($mdgriffith$elm_ui$Element$paddingXY, 16, 0)
+					]),
+				$mdgriffith$elm_ui$Element$text('Inset divider')),
+				A2(
+				$mdgriffith$elm_ui$Element$el,
+				_List_fromArray(
+					[
+						A2($mdgriffith$elm_ui$Element$paddingXY, 16, 0),
 						$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill)
 					]),
+				A3($author$project$OUI$Material$divider, theme, _List_Nil, $author$project$OUI$Divider$new)),
+				A2(
+				$mdgriffith$elm_ui$Element$el,
 				_List_fromArray(
 					[
-						$mdgriffith$elm_ui$Element$text('Full width divider'),
-						A3(
-						$author$project$OUI$Material$divider,
-						theme,
-						_List_Nil,
-						$author$project$OUI$Divider$fullWidthDivider($author$project$OUI$Divider$new)),
-						$mdgriffith$elm_ui$Element$text('inset divider'),
-						A3(
-						$author$project$OUI$Material$divider,
-						theme,
-						_List_Nil,
-						$author$project$OUI$Divider$insetDivider($author$project$OUI$Divider$new)),
-						$mdgriffith$elm_ui$Element$text('thick inset divider'),
-						A3(
-						$author$project$OUI$Material$divider,
-						theme,
-						_List_fromArray(
-							[
-								$mdgriffith$elm_ui$Element$height(
-								$mdgriffith$elm_ui$Element$px(5))
-							]),
-						$author$project$OUI$Divider$insetDivider($author$project$OUI$Divider$new))
-					]))
+						$mdgriffith$elm_ui$Element$height(
+						$mdgriffith$elm_ui$Element$px(40))
+					]),
+				$mdgriffith$elm_ui$Element$none)
 			]));
 };
 var $author$project$OUI$Showcase$Dividers$book = A2(
@@ -31306,6 +31248,7 @@ var $author$project$OUI$TextField$onFocusBlur = F3(
 					onLoseFocus: $elm$core$Maybe$Just(onLoseFocus)
 				}));
 	});
+var $author$project$OUI$Neutral = {$: 'Neutral'};
 var $author$project$OUI$Text$bodyLarge = A2($author$project$OUI$Text$Text, $author$project$OUI$Text$Body, $author$project$OUI$Text$Large);
 var $author$project$OUI$Text$bodySmall = A2($author$project$OUI$Text$Text, $author$project$OUI$Text$Body, $author$project$OUI$Text$Small);
 var $author$project$OUI$Material$TextField$filterMaybe = $elm$core$List$filterMap($elm$core$Basics$identity);
@@ -33032,19 +32975,19 @@ var $author$project$OUI$Showcase$addPages = A2(
 						$author$project$OUI$Explorer$addBook($author$project$OUI$Showcase$Checkbox$book),
 						A2(
 							$elm$core$Basics$composeR,
-							$author$project$OUI$Explorer$addBook($author$project$OUI$Showcase$Menus$book),
+							$author$project$OUI$Explorer$addBook($author$project$OUI$Showcase$Dividers$book),
 							A2(
 								$elm$core$Basics$composeR,
-								$author$project$OUI$Explorer$addBook($author$project$OUI$Showcase$RadioButtons$book),
+								$author$project$OUI$Explorer$addBook($author$project$OUI$Showcase$Menus$book),
 								A2(
 									$elm$core$Basics$composeR,
-									$author$project$OUI$Explorer$addBook($author$project$OUI$Showcase$Switches$book),
+									$author$project$OUI$Explorer$addBook($author$project$OUI$Showcase$RadioButtons$book),
 									A2(
 										$elm$core$Basics$composeR,
-										$author$project$OUI$Explorer$addBook($author$project$OUI$Showcase$TextFields$book),
+										$author$project$OUI$Explorer$addBook($author$project$OUI$Showcase$Switches$book),
 										A2(
 											$elm$core$Basics$composeR,
-											$author$project$OUI$Explorer$addBook($author$project$OUI$Showcase$Dividers$book),
+											$author$project$OUI$Explorer$addBook($author$project$OUI$Showcase$TextFields$book),
 											A2(
 												$elm$core$Basics$composeR,
 												$author$project$OUI$Explorer$category('Complex'),
@@ -33263,7 +33206,7 @@ var $author$project$OUI$Material$Button$defaultTheme = {
 	icon: {containerSize: 40, iconSize: 24}
 };
 var $author$project$OUI$Material$Checkbox$defaultTheme = {containerHeight: 18, containerShape: 2, containerWidth: 18, iconSize: 18, stateLayerSize: 40};
-var $author$project$OUI$Material$Divider$defaultTheme = {margin: 16, thickness: 1};
+var $author$project$OUI$Material$Divider$defaultTheme = {thickness: 1};
 var $author$project$OUI$Material$Menu$defaultTheme = {iconSize: 24, itemHeight: 48, leftRightPadding: 12, maxWidth: 280, minWidth: 112, paddingWithinItem: 12, radius: 4, topBottomPadding: 8};
 var $author$project$OUI$Material$Navigation$defaultTheme = {
 	drawer: {activeIndicatorHeight: 56, activeIndicatorPadding: 12, activeIndicatorShape: 28, activeIndicatorWidth: 336, badgeRightPadding: 16, containerWidth: 360, iconSize: 24, leftPadding: 28, paddingBetweenElements: 0, rightPadding: 28},
@@ -34578,4 +34521,4 @@ var $author$project$Main$main = $elm$browser$Browser$application(
 							$author$project$Main$intro,
 							$author$project$OUI$Explorer$book('Introduction')),
 						$author$project$OUI$Explorer$explorer))))));
-_Platform_export({'Main':{'init':$author$project$Main$main($elm$json$Json$Decode$value)({"versions":{"elm":"0.19.1"},"types":{"message":"Spa.Msg OUI.Explorer.SharedMsg (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg OUI.Showcase.Icons.Msg) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg OUI.Showcase.Navigation.Msg) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg OUI.Showcase.MenuButtons.Msg) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg ()) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg OUI.Showcase.TextFields.Msg) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg OUI.Showcase.Switches.Msg) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg ()) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg ()) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg ()) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg ()) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg ()) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg ()) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg ()) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg ()) (Spa.PageStack.Msg String.String () ())))))))))))))))","aliases":{"Url.Url":{"args":[],"type":"{ protocol : Url.Protocol, host : String.String, port_ : Maybe.Maybe Basics.Int, path : String.String, query : Maybe.Maybe String.String, fragment : Maybe.Maybe String.String }"}},"unions":{"OUI.Explorer.BookMsg":{"args":["msg"],"tags":{"SharedMsg":["OUI.Explorer.SharedMsg"],"BookMsg":["msg"]}},"OUI.Showcase.Icons.Msg":{"args":[],"tags":{"FilterChange":["String.String"],"FilterFocus":["Basics.Bool"]}},"OUI.Showcase.MenuButtons.Msg":{"args":[],"tags":{"OnSelect":["String.String","String.String"],"MenuButtonMsg":["String.String","OUI.MenuButton.Msg OUI.Showcase.MenuButtons.Msg"]}},"OUI.Showcase.Navigation.Msg":{"args":[],"tags":{"Expand":["Basics.Bool"]}},"OUI.Showcase.Switches.Msg":{"args":[],"tags":{"SetSwitch":["String.String","Basics.Bool"]}},"OUI.Showcase.TextFields.Msg":{"args":[],"tags":{"OnChange":["String.String","String.String"],"OnFocus":["String.String"],"OnLoseFocus":["String.String"]}},"Spa.Msg":{"args":["sharedMsg","pageMsg"],"tags":{"SharedMsg":["sharedMsg"],"PageMsg":["pageMsg"],"UrlRequest":["Browser.UrlRequest"],"UrlChange":["Url.Url"]}},"Spa.PageStack.Msg":{"args":["route","current","previous"],"tags":{"CurrentMsg":["current"],"PreviousMsg":["previous"],"RouteChange":["route"]}},"OUI.Explorer.SharedMsg":{"args":[],"tags":{"Event":["String.String"],"SelectColorScheme":["Basics.Int","OUI.Explorer.ColorSchemeType"],"OnBookClick":["String.String"],"OnRouteChange":["String.String"]}},"String.String":{"args":[],"tags":{"String":[]}},"Basics.Bool":{"args":[],"tags":{"True":[],"False":[]}},"OUI.Explorer.ColorSchemeType":{"args":[],"tags":{"Light":[],"Dark":[]}},"Basics.Int":{"args":[],"tags":{"Int":[]}},"Maybe.Maybe":{"args":["a"],"tags":{"Just":["a"],"Nothing":[]}},"OUI.MenuButton.Msg":{"args":["msg"],"tags":{"OnClickOutside":[],"OnClickButton":[],"OnClickItem":["msg"]}},"Url.Protocol":{"args":[],"tags":{"Http":[],"Https":[]}},"Browser.UrlRequest":{"args":[],"tags":{"Internal":["Url.Url"],"External":["String.String"]}}}}})}});}(this));
+_Platform_export({'Main':{'init':$author$project$Main$main($elm$json$Json$Decode$value)({"versions":{"elm":"0.19.1"},"types":{"message":"Spa.Msg OUI.Explorer.SharedMsg (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg OUI.Showcase.Icons.Msg) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg OUI.Showcase.Navigation.Msg) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg OUI.Showcase.MenuButtons.Msg) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg OUI.Showcase.TextFields.Msg) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg OUI.Showcase.Switches.Msg) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg ()) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg ()) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg ()) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg ()) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg ()) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg ()) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg ()) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg ()) (Spa.PageStack.Msg String.String (OUI.Explorer.BookMsg ()) (Spa.PageStack.Msg String.String () ())))))))))))))))","aliases":{"Url.Url":{"args":[],"type":"{ protocol : Url.Protocol, host : String.String, port_ : Maybe.Maybe Basics.Int, path : String.String, query : Maybe.Maybe String.String, fragment : Maybe.Maybe String.String }"}},"unions":{"OUI.Explorer.BookMsg":{"args":["msg"],"tags":{"SharedMsg":["OUI.Explorer.SharedMsg"],"BookMsg":["msg"]}},"OUI.Showcase.Icons.Msg":{"args":[],"tags":{"FilterChange":["String.String"],"FilterFocus":["Basics.Bool"]}},"OUI.Showcase.MenuButtons.Msg":{"args":[],"tags":{"OnSelect":["String.String","String.String"],"MenuButtonMsg":["String.String","OUI.MenuButton.Msg OUI.Showcase.MenuButtons.Msg"]}},"OUI.Showcase.Navigation.Msg":{"args":[],"tags":{"Expand":["Basics.Bool"]}},"OUI.Showcase.Switches.Msg":{"args":[],"tags":{"SetSwitch":["String.String","Basics.Bool"]}},"OUI.Showcase.TextFields.Msg":{"args":[],"tags":{"OnChange":["String.String","String.String"],"OnFocus":["String.String"],"OnLoseFocus":["String.String"]}},"Spa.Msg":{"args":["sharedMsg","pageMsg"],"tags":{"SharedMsg":["sharedMsg"],"PageMsg":["pageMsg"],"UrlRequest":["Browser.UrlRequest"],"UrlChange":["Url.Url"]}},"Spa.PageStack.Msg":{"args":["route","current","previous"],"tags":{"CurrentMsg":["current"],"PreviousMsg":["previous"],"RouteChange":["route"]}},"OUI.Explorer.SharedMsg":{"args":[],"tags":{"Event":["String.String"],"SelectColorScheme":["Basics.Int","OUI.Explorer.ColorSchemeType"],"OnBookClick":["String.String"],"OnRouteChange":["String.String"]}},"String.String":{"args":[],"tags":{"String":[]}},"Basics.Bool":{"args":[],"tags":{"True":[],"False":[]}},"OUI.Explorer.ColorSchemeType":{"args":[],"tags":{"Light":[],"Dark":[]}},"Basics.Int":{"args":[],"tags":{"Int":[]}},"Maybe.Maybe":{"args":["a"],"tags":{"Just":["a"],"Nothing":[]}},"OUI.MenuButton.Msg":{"args":["msg"],"tags":{"OnClickOutside":[],"OnClickButton":[],"OnClickItem":["msg"]}},"Url.Protocol":{"args":[],"tags":{"Http":[],"Https":[]}},"Browser.UrlRequest":{"args":[],"tags":{"Internal":["Url.Url"],"External":["String.String"]}}}}})}});}(this));
