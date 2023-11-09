@@ -132,7 +132,7 @@ navigation :
     -> OUI.Navigation.Navigation btnC key msg
     -> Element msg
 navigation theme =
-    OUI.Material.Navigation.render theme.typescale theme.colorscheme theme.navigation
+    OUI.Material.Navigation.render theme.typescale theme.colorscheme theme.divider theme.navigation
 
 
 {-| Render a radiobutton

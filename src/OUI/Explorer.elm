@@ -470,6 +470,7 @@ finalize (Explorer expl) =
                 |> List.map (Tuple.mapSecond List.reverse)
                 |> List.reverse
 
+        allBooks : List String
         allBooks =
             categories
                 |> List.concatMap
@@ -478,6 +479,14 @@ finalize (Explorer expl) =
                             |> List.map (bookPath cat)
                     )
 
+        firstCategory : String
+        firstCategory =
+            categories
+                |> List.head
+                |> Maybe.map Tuple.first
+                |> Maybe.withDefault ""
+
+        firstBook : String
         firstBook =
             allBooks
                 |> List.head
@@ -573,7 +582,13 @@ finalize (Explorer expl) =
                                                 categories
                                                     |> List.foldl
                                                         (\( cat, books ) ->
-                                                            OUI.Navigation.addSectionHeader cat
+                                                            (if cat /= firstCategory then
+                                                                OUI.Navigation.addDivider
+
+                                                             else
+                                                                identity
+                                                            )
+                                                                >> OUI.Navigation.addSectionHeader cat
                                                                 >> (\bn ->
                                                                         books
                                                                             |> List.foldl

@@ -39,6 +39,7 @@ addEntries =
     Navigation.addSectionHeader "Mail"
         >> Navigation.addEntryWithBadge "inbox" "Inbox" OUI.Icon.check "50"
         >> Navigation.addEntryWithBadge "trash" "Trash" OUI.Icon.clear ""
+        >> Navigation.addDivider
         >> Navigation.addEntryWithBadge "folder" "Folder" OUI.Icon.check "4"
         >> Navigation.addEntry "folder2" "Folder" OUI.Icon.light_mode
 

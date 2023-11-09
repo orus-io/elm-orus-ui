@@ -29774,13 +29774,27 @@ var $author$project$OUI$Showcase$Menus$book = A2(
 	$author$project$OUI$Explorer$withChapter,
 	$author$project$OUI$Showcase$Menus$chapter,
 	$author$project$OUI$Explorer$book('Menu'));
+var $author$project$OUI$Navigation$Divider = {$: 'Divider'};
+var $author$project$OUI$Navigation$Navigation = function (a) {
+	return {$: 'Navigation', a: a};
+};
+var $author$project$OUI$Navigation$addDivider = function (_v0) {
+	var props = _v0.a;
+	return $author$project$OUI$Navigation$Navigation(
+		_Utils_update(
+			props,
+			{
+				entries: A2(
+					$elm$core$List$append,
+					props.entries,
+					_List_fromArray(
+						[$author$project$OUI$Navigation$Divider]))
+			}));
+};
 var $author$project$OUI$Navigation$Entry = F2(
 	function (a, b) {
 		return {$: 'Entry', a: a, b: b};
 	});
-var $author$project$OUI$Navigation$Navigation = function (a) {
-	return {$: 'Navigation', a: a};
-};
 var $author$project$OUI$Navigation$addEntry = F4(
 	function (key, label, icon, _v0) {
 		var props = _v0.a;
@@ -29897,8 +29911,11 @@ var $author$project$OUI$Showcase$Navigation$addEntries = A2(
 			A4($author$project$OUI$Navigation$addEntryWithBadge, 'trash', 'Trash', $author$project$OUI$Icon$clear, ''),
 			A2(
 				$elm$core$Basics$composeR,
-				A4($author$project$OUI$Navigation$addEntryWithBadge, 'folder', 'Folder', $author$project$OUI$Icon$check, '4'),
-				A3($author$project$OUI$Navigation$addEntry, 'folder2', 'Folder', $author$project$OUI$Icon$light_mode)))));
+				$author$project$OUI$Navigation$addDivider,
+				A2(
+					$elm$core$Basics$composeR,
+					A4($author$project$OUI$Navigation$addEntryWithBadge, 'folder', 'Folder', $author$project$OUI$Icon$check, '4'),
+					A3($author$project$OUI$Navigation$addEntry, 'folder2', 'Folder', $author$project$OUI$Icon$light_mode))))));
 var $author$project$OUI$Navigation$Drawer = {$: 'Drawer'};
 var $author$project$OUI$Navigation$new = function (onSelect) {
 	return $author$project$OUI$Navigation$Navigation(
@@ -30032,8 +30049,8 @@ var $author$project$OUI$Material$Navigation$transition = A2(
 	$elm$html$Html$Attributes$style('transition'),
 	$mdgriffith$elm_ui$Element$htmlAttribute);
 var $author$project$OUI$Material$Navigation$transitionAllEaseOut = $author$project$OUI$Material$Navigation$transition('');
-var $author$project$OUI$Material$Navigation$renderEntry = F5(
-	function (typescale, colorscheme, theme, props, entry) {
+var $author$project$OUI$Material$Navigation$renderEntry = F6(
+	function (typescale, colorscheme, dividerTheme, theme, props, entry) {
 		var isDrawer = !_Utils_eq(props.mode, $author$project$OUI$Navigation$Rail);
 		switch (entry.$) {
 			case 'Entry':
@@ -30322,11 +30339,24 @@ var $author$project$OUI$Material$Navigation$renderEntry = F5(
 						]),
 					_Utils_Tuple2(label, $mdgriffith$elm_ui$Element$none));
 			default:
-				return $mdgriffith$elm_ui$Element$none;
+				return A2(
+					$mdgriffith$elm_ui$Element$el,
+					_List_fromArray(
+						[
+							$mdgriffith$elm_ui$Element$paddingEach(
+							{
+								bottom: isDrawer ? 0 : theme.rail.paddingBetweenDestinationItems,
+								left: isDrawer ? theme.drawer.leftPadding : (((theme.rail.containerWidth - theme.rail.activeIndicatorWidth) / 2) | 0),
+								right: isDrawer ? theme.drawer.rightPadding : (((theme.rail.containerWidth - theme.rail.activeIndicatorWidth) / 2) | 0),
+								top: isDrawer ? 0 : theme.rail.paddingBetweenDestinationItems
+							}),
+							$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill)
+						]),
+					A4($author$project$OUI$Material$Divider$render, colorscheme, dividerTheme, _List_Nil, $author$project$OUI$Divider$new));
 		}
 	});
-var $author$project$OUI$Material$Navigation$render = F5(
-	function (typescale, colorscheme, theme, _v0, nav) {
+var $author$project$OUI$Material$Navigation$render = F6(
+	function (typescale, colorscheme, dividerTheme, theme, _v0, nav) {
 		var props = $author$project$OUI$Navigation$properties(nav);
 		var isDrawer = !_Utils_eq(props.mode, $author$project$OUI$Navigation$Rail);
 		var width = isDrawer ? theme.drawer.containerWidth : theme.rail.containerWidth;
@@ -30370,12 +30400,12 @@ var $author$project$OUI$Material$Navigation$render = F5(
 						function (i, entry) {
 							return _Utils_Tuple2(
 								$elm$core$String$fromInt(i),
-								A5($author$project$OUI$Material$Navigation$renderEntry, typescale, colorscheme, theme, props, entry));
+								A6($author$project$OUI$Material$Navigation$renderEntry, typescale, colorscheme, dividerTheme, theme, props, entry));
 						}),
 					props.entries)));
 	});
 var $author$project$OUI$Material$navigation = function (theme) {
-	return A3($author$project$OUI$Material$Navigation$render, theme.typescale, theme.colorscheme, theme.navigation);
+	return A4($author$project$OUI$Material$Navigation$render, theme.typescale, theme.colorscheme, theme.divider, theme.navigation);
 };
 var $author$project$OUI$Showcase$Navigation$drawer = function (_v0) {
 	var theme = _v0.theme;
@@ -34167,6 +34197,13 @@ var $author$project$OUI$Explorer$finalize = function (_v0) {
 			$elm$core$List$map,
 			$elm$core$Tuple$mapSecond($elm$core$List$reverse),
 			expl.categories));
+	var firstCategory = A2(
+		$elm$core$Maybe$withDefault,
+		'',
+		A2(
+			$elm$core$Maybe$map,
+			$elm$core$Tuple$first,
+			$elm$core$List$head(categories)));
 	var allBooks = A2(
 		$elm$core$List$concatMap,
 		function (_v5) {
@@ -34269,20 +34306,23 @@ var $author$project$OUI$Explorer$finalize = function (_v0) {
 																		var books = _v3.b;
 																		return A2(
 																			$elm$core$Basics$composeR,
-																			$author$project$OUI$Navigation$addSectionHeader(cat),
-																			function (bn) {
-																				return A3(
-																					$elm$core$List$foldl,
-																					function (bookName) {
-																						return A3(
-																							$author$project$OUI$Navigation$addEntry,
-																							A2($author$project$OUI$Explorer$bookPath, cat, bookName),
-																							bookName,
-																							$author$project$OUI$Icon$blank);
-																					},
-																					bn,
-																					books);
-																			});
+																			(!_Utils_eq(cat, firstCategory)) ? $author$project$OUI$Navigation$addDivider : $elm$core$Basics$identity,
+																			A2(
+																				$elm$core$Basics$composeR,
+																				$author$project$OUI$Navigation$addSectionHeader(cat),
+																				function (bn) {
+																					return A3(
+																						$elm$core$List$foldl,
+																						function (bookName) {
+																							return A3(
+																								$author$project$OUI$Navigation$addEntry,
+																								A2($author$project$OUI$Explorer$bookPath, cat, bookName),
+																								bookName,
+																								$author$project$OUI$Icon$blank);
+																						},
+																						bn,
+																						books);
+																				}));
 																	},
 																	nav,
 																	categories);

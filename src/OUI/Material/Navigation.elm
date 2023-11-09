@@ -7,7 +7,9 @@ import Element.Font as Font
 import Element.Input as Input
 import Element.Keyed as Keyed
 import Html.Attributes
+import OUI.Divider
 import OUI.Material.Color exposing (toElementColor)
+import OUI.Material.Divider
 import OUI.Material.Icon
 import OUI.Material.Typography
 import OUI.Navigation exposing (Navigation)
@@ -121,11 +123,12 @@ defaultTheme =
 render :
     OUI.Material.Typography.Typescale
     -> OUI.Material.Color.Scheme
+    -> OUI.Material.Divider.Theme
     -> Theme
     -> List (Attribute msg)
     -> Navigation btnC key msg
     -> Element msg
-render typescale colorscheme theme _ nav =
+render typescale colorscheme dividerTheme theme _ nav =
     let
         props : OUI.Navigation.Properties btnC key msg
         props =
@@ -172,7 +175,7 @@ render typescale colorscheme theme _ nav =
             :: List.indexedMap
                 (\i entry ->
                     ( String.fromInt i
-                    , renderEntry typescale colorscheme theme props entry
+                    , renderEntry typescale colorscheme dividerTheme theme props entry
                     )
                 )
                 props.entries
@@ -181,11 +184,12 @@ render typescale colorscheme theme _ nav =
 renderEntry :
     OUI.Material.Typography.Typescale
     -> OUI.Material.Color.Scheme
+    -> OUI.Material.Divider.Theme
     -> Theme
     -> OUI.Navigation.Properties btnC key msg
     -> OUI.Navigation.Entry key
     -> Element msg
-renderEntry typescale colorscheme theme props entry =
+renderEntry typescale colorscheme dividerTheme theme props entry =
     let
         isDrawer : Bool
         isDrawer =
@@ -439,4 +443,34 @@ renderEntry typescale colorscheme theme props entry =
                     ( label, Element.none )
 
         OUI.Navigation.Divider ->
-            Element.none
+            OUI.Divider.new
+                |> OUI.Material.Divider.render colorscheme dividerTheme []
+                |> Element.el
+                    [ Element.paddingEach
+                        { left =
+                            if isDrawer then
+                                theme.drawer.leftPadding
+
+                            else
+                                (theme.rail.containerWidth - theme.rail.activeIndicatorWidth) // 2
+                        , right =
+                            if isDrawer then
+                                theme.drawer.rightPadding
+
+                            else
+                                (theme.rail.containerWidth - theme.rail.activeIndicatorWidth) // 2
+                        , top =
+                            if isDrawer then
+                                0
+
+                            else
+                                theme.rail.paddingBetweenDestinationItems
+                        , bottom =
+                            if isDrawer then
+                                0
+
+                            else
+                                theme.rail.paddingBetweenDestinationItems
+                        }
+                    , Element.width Element.fill
+                    ]
