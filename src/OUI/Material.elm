@@ -109,7 +109,7 @@ menu :
     -> OUI.Menu.Menu item msg
     -> Element msg
 menu theme =
-    OUI.Material.Menu.render theme.typescale theme.colorscheme theme.menu
+    OUI.Material.Menu.render theme.typescale theme.colorscheme theme.divider theme.menu
 
 
 {-| Render a menu button
@@ -121,7 +121,7 @@ menuButton :
     -> OUI.MenuButton.MenuButton btnC item msg
     -> Element msg
 menuButton theme =
-    OUI.Material.MenuButton.render theme.typescale theme.colorscheme theme.button theme.menu
+    OUI.Material.MenuButton.render theme.typescale theme.colorscheme theme.button theme.divider theme.menu
 
 
 {-| Render a navigation trail/drawer

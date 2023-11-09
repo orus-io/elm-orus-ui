@@ -7,8 +7,10 @@ import Element.Events as Events
 import Element.Font as Font
 import Html.Events
 import Json.Decode as Json
+import OUI.Divider
 import OUI.Icon exposing (Icon)
 import OUI.Material.Color
+import OUI.Material.Divider
 import OUI.Material.Icon as Icon
 import OUI.Material.Typography
 import OUI.Menu exposing (Menu)
@@ -43,14 +45,15 @@ defaultTheme =
 render :
     OUI.Material.Typography.Typescale
     -> OUI.Material.Color.Scheme
+    -> OUI.Material.Divider.Theme
     -> Theme
     -> List (Attribute msg)
     -> Menu item msg
     -> Element msg
-render typescale colorscheme theme attrs menu =
+render typescale colorscheme dividerTheme theme attrs menu =
     let
         props :
-            { items : List item
+            { items : List (OUI.Menu.Item item)
             , itemToText : item -> String
             , itemToIcon : item -> Maybe Icon
             , itemToTrailingIcon : item -> Maybe Icon
@@ -66,13 +69,34 @@ render typescale colorscheme theme attrs menu =
         hasLeadingIcons : Bool
         hasLeadingIcons =
             props.items
-                |> List.foldl (\i r -> r || props.itemToIcon i /= Nothing) False
+                |> List.foldl
+                    (\i r ->
+                        r
+                            || (case i of
+                                    OUI.Menu.Item item ->
+                                        props.itemToIcon item /= Nothing
+
+                                    OUI.Menu.Divider ->
+                                        False
+                               )
+                    )
+                    False
 
         {- Buggy way to avaluate how much width we need -}
         widthApprox : Int
         widthApprox =
             props.items
-                |> List.foldl (\i r -> max r <| (props.itemToText i |> String.length) * 10) 0
+                |> List.foldl
+                    (\i r ->
+                        max r <|
+                            case i of
+                                OUI.Menu.Item item ->
+                                    (props.itemToText item |> String.length) * 10
+
+                                OUI.Menu.Divider ->
+                                    0
+                    )
+                    0
                 |> (+) 48
     in
     Element.column
@@ -100,43 +124,53 @@ render typescale colorscheme theme attrs menu =
         )
         (props.items
             |> List.map
-                (\item ->
-                    Element.row
-                        ([ Element.height <| Element.px theme.itemHeight
-                         , Element.width Element.fill
-                         , Element.paddingXY theme.leftRightPadding 0
-                         , Element.spacing theme.paddingWithinItem
-                         , Element.mouseOver
-                            [ colorscheme.surfaceContainer
-                                |> OUI.Material.Color.withShade colorscheme.onSurface
-                                    OUI.Material.Color.hoverStateLayerOpacity
-                                |> OUI.Material.Color.toElementColor
-                                |> Background.color
-                            ]
-                         ]
-                            ++ (case props.onClick of
-                                    Just msg ->
-                                        [ passiveOnClick <| msg item ]
+                (\menuitem ->
+                    case menuitem of
+                        OUI.Menu.Divider ->
+                            OUI.Divider.new
+                                |> OUI.Material.Divider.render colorscheme dividerTheme []
+                                |> Element.el
+                                    [ Element.width Element.fill
+                                    , Element.paddingXY 0 theme.topBottomPadding
+                                    ]
 
-                                    Nothing ->
-                                        []
-                               )
-                        )
-                        ((if hasLeadingIcons then
-                            [ props.itemToIcon item
-                                |> Maybe.withDefault OUI.Icon.blank
-                                |> Icon.renderWithSizeColor theme.iconSize colorscheme.onSurface []
-                            ]
+                        OUI.Menu.Item item ->
+                            Element.row
+                                ([ Element.height <| Element.px theme.itemHeight
+                                 , Element.width Element.fill
+                                 , Element.paddingXY theme.leftRightPadding 0
+                                 , Element.spacing theme.paddingWithinItem
+                                 , Element.mouseOver
+                                    [ colorscheme.surfaceContainer
+                                        |> OUI.Material.Color.withShade colorscheme.onSurface
+                                            OUI.Material.Color.hoverStateLayerOpacity
+                                        |> OUI.Material.Color.toElementColor
+                                        |> Background.color
+                                    ]
+                                 ]
+                                    ++ (case props.onClick of
+                                            Just msg ->
+                                                [ passiveOnClick <| msg item ]
 
-                          else
-                            []
-                         )
-                            ++ [ Element.text (props.itemToText item)
-                               , props.itemToTrailingIcon item
-                                    |> Maybe.withDefault OUI.Icon.blank
-                                    |> Icon.renderWithSizeColor theme.iconSize colorscheme.onSurface [ Element.alignRight ]
-                               ]
-                        )
+                                            Nothing ->
+                                                []
+                                       )
+                                )
+                                ((if hasLeadingIcons then
+                                    [ props.itemToIcon item
+                                        |> Maybe.withDefault OUI.Icon.blank
+                                        |> Icon.renderWithSizeColor theme.iconSize colorscheme.onSurface []
+                                    ]
+
+                                  else
+                                    []
+                                 )
+                                    ++ [ Element.text (props.itemToText item)
+                                       , props.itemToTrailingIcon item
+                                            |> Maybe.withDefault OUI.Icon.blank
+                                            |> Icon.renderWithSizeColor theme.iconSize colorscheme.onSurface [ Element.alignRight ]
+                                       ]
+                                )
                 )
         )
 

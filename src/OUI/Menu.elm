@@ -1,6 +1,7 @@
 module OUI.Menu exposing
-    ( Menu
-    , new, onClick, withIcon, withItems, withTrailingIcon
+    ( Menu, Item(..)
+    , new, onClick, withIcon, withTrailingIcon
+    , addItems, addDivider
     , properties
     )
 
@@ -9,12 +10,14 @@ module OUI.Menu exposing
 
 # Types
 
-@docs Menu
+@docs Menu, Item
 
 
 # Menu builders
 
-@docs new, onClick, withIcon, withItems, withTrailingIcon
+@docs new, onClick, withIcon, withTrailingIcon
+
+@docs addItems, addDivider
 
 
 # Internals
@@ -31,7 +34,7 @@ import OUI.Text
 -}
 type Menu item msg
     = Menu
-        { items : List item
+        { items : List (Item item)
         , itemToText : item -> String
         , itemToIcon : item -> Maybe Icon
         , itemToTrailingIcon : item -> Maybe Icon
@@ -40,6 +43,13 @@ type Menu item msg
         , textType : OUI.Text.Type
         , textSize : OUI.Text.Size
         }
+
+
+{-| A menu item
+-}
+type Item item
+    = Item item
+    | Divider
 
 
 {-| Creates a simple text menu
@@ -70,11 +80,21 @@ onClick msg (Menu props) =
 
 {-| Set the menu items
 -}
-withItems : List item -> Menu item msg -> Menu item msg
-withItems items (Menu props) =
+addItems : List item -> Menu item msg -> Menu item msg
+addItems items (Menu props) =
     Menu
         { props
-            | items = items
+            | items = props.items ++ List.map Item items
+        }
+
+
+{-| Add a divider the menu items
+-}
+addDivider : Menu item msg -> Menu item msg
+addDivider (Menu props) =
+    Menu
+        { props
+            | items = props.items ++ [ Divider ]
         }
 
 
@@ -103,7 +123,7 @@ withTrailingIcon itemToIcon (Menu props) =
 properties :
     Menu item msg
     ->
-        { items : List item
+        { items : List (Item item)
         , itemToText : item -> String
         , itemToIcon : item -> Maybe Icon
         , itemToTrailingIcon : item -> Maybe Icon

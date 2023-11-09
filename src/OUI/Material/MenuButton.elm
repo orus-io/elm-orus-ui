@@ -5,6 +5,7 @@ import Html.Attributes
 import OUI.Button
 import OUI.Material.Button as Button
 import OUI.Material.Color exposing (Scheme)
+import OUI.Material.Divider as Divider
 import OUI.Material.Menu as Menu
 import OUI.Material.Typography exposing (Typescale)
 import OUI.Menu
@@ -15,12 +16,13 @@ render :
     Typescale
     -> Scheme
     -> Button.Theme
+    -> Divider.Theme
     -> Menu.Theme
     -> OUI.MenuButton.State
     -> List (Attribute msg)
     -> MenuButton btnC item msg
     -> Element msg
-render typescale colorscheme buttonTheme menuTheme state attrs menuBtn =
+render typescale colorscheme buttonTheme dividerTheme menuTheme state attrs menuBtn =
     let
         props :
             { button : OUI.Button.Button { btnC | hasAction : () } msg
@@ -39,6 +41,7 @@ render typescale colorscheme buttonTheme menuTheme state attrs menuBtn =
                     [ Element.below
                         (Menu.render typescale
                             colorscheme
+                            dividerTheme
                             menuTheme
                             [ Element.moveDown 1
                             , case props.menuAlign of

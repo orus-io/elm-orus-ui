@@ -17,7 +17,7 @@ chapter : Explorer.Shared themeExt -> () -> Element (Explorer.BookMsg msg)
 chapter shared _ =
     Element.wrappedRow [ Element.spacing 50 ]
         [ Menu.new identity
-            |> Menu.withItems [ "one", "two", "three" ]
+            |> Menu.addItems [ "one", "two", "three" ]
             |> Menu.onClick (\i -> Explorer.logEvent <| "clicked menu1/" ++ i)
             |> OUI.Material.menu shared.theme []
         , Menu.new identity
@@ -38,6 +38,8 @@ chapter shared _ =
                     else
                         Nothing
                 )
-            |> Menu.withItems [ "one", "two", "three", "a longer entry" ]
+            |> Menu.addItems [ "one", "two", "three" ]
+            |> Menu.addDivider
+            |> Menu.addItems [ "a longer entry" ]
             |> OUI.Material.menu shared.theme []
         ]

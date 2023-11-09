@@ -32,7 +32,7 @@ chapter shared model =
                 |> Button.outlinedButton
             )
             (Menu.new identity
-                |> Menu.withItems [ "One", "Two", "Three" ]
+                |> Menu.addItems [ "One", "Two", "Three" ]
                 |> Menu.withIcon
                     (\i ->
                         if i /= "Two" then
@@ -51,7 +51,9 @@ chapter shared model =
                 |> Button.iconButton
             )
             (Menu.new identity
-                |> Menu.withItems [ "One", "Two", "Three" ]
+                |> Menu.addItems [ "One", "Two", "Three" ]
+                |> Menu.addDivider
+                |> Menu.addItems [ "Four" ]
                 |> Menu.withIcon
                     (\i ->
                         if i /= "Two" then

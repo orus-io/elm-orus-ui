@@ -24436,6 +24436,37 @@ var $author$project$OUI$Showcase$MenuButtons$OnSelect = F2(
 	function (a, b) {
 		return {$: 'OnSelect', a: a, b: b};
 	});
+var $author$project$OUI$Menu$Divider = {$: 'Divider'};
+var $author$project$OUI$Menu$Menu = function (a) {
+	return {$: 'Menu', a: a};
+};
+var $author$project$OUI$Menu$addDivider = function (_v0) {
+	var props = _v0.a;
+	return $author$project$OUI$Menu$Menu(
+		_Utils_update(
+			props,
+			{
+				items: _Utils_ap(
+					props.items,
+					_List_fromArray(
+						[$author$project$OUI$Menu$Divider]))
+			}));
+};
+var $author$project$OUI$Menu$Item = function (a) {
+	return {$: 'Item', a: a};
+};
+var $author$project$OUI$Menu$addItems = F2(
+	function (items, _v0) {
+		var props = _v0.a;
+		return $author$project$OUI$Menu$Menu(
+			_Utils_update(
+				props,
+				{
+					items: _Utils_ap(
+						props.items,
+						A2($elm$core$List$map, $author$project$OUI$Menu$Item, items))
+				}));
+	});
 var $author$project$OUI$MenuButton$AlignRight = {$: 'AlignRight'};
 var $author$project$OUI$MenuButton$MenuButton = function (a) {
 	return {$: 'MenuButton', a: a};
@@ -24532,8 +24563,8 @@ var $author$project$OUI$Menu$properties = function (_v0) {
 	var props = _v0.a;
 	return props;
 };
-var $author$project$OUI$Material$Menu$render = F5(
-	function (typescale, colorscheme, theme, attrs, menu) {
+var $author$project$OUI$Material$Menu$render = F6(
+	function (typescale, colorscheme, dividerTheme, theme, attrs, menu) {
 		var props = $author$project$OUI$Menu$properties(menu);
 		var widthApprox = 48 + A3(
 			$elm$core$List$foldl,
@@ -24542,8 +24573,15 @@ var $author$project$OUI$Material$Menu$render = F5(
 					return A2(
 						$elm$core$Basics$max,
 						r,
-						$elm$core$String$length(
-							props.itemToText(i)) * 10);
+						function () {
+							if (i.$ === 'Item') {
+								var item = i.a;
+								return $elm$core$String$length(
+									props.itemToText(item)) * 10;
+							} else {
+								return 0;
+							}
+						}());
 				}),
 			0,
 			props.items);
@@ -24551,9 +24589,16 @@ var $author$project$OUI$Material$Menu$render = F5(
 			$elm$core$List$foldl,
 			F2(
 				function (i, r) {
-					return r || (!_Utils_eq(
-						props.itemToIcon(i),
-						$elm$core$Maybe$Nothing));
+					return r || function () {
+						if (i.$ === 'Item') {
+							var item = i.a;
+							return !_Utils_eq(
+								props.itemToIcon(item),
+								$elm$core$Maybe$Nothing);
+						} else {
+							return false;
+						}
+					}();
 				}),
 			false,
 			props.items);
@@ -24589,71 +24634,83 @@ var $author$project$OUI$Material$Menu$render = F5(
 					A3($author$project$OUI$Material$Typography$attrs, props.textType, props.textSize, typescale))),
 			A2(
 				$elm$core$List$map,
-				function (item) {
-					return A2(
-						$mdgriffith$elm_ui$Element$row,
-						_Utils_ap(
+				function (menuitem) {
+					if (menuitem.$ === 'Divider') {
+						return A2(
+							$mdgriffith$elm_ui$Element$el,
 							_List_fromArray(
 								[
-									$mdgriffith$elm_ui$Element$height(
-									$mdgriffith$elm_ui$Element$px(theme.itemHeight)),
 									$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
-									A2($mdgriffith$elm_ui$Element$paddingXY, theme.leftRightPadding, 0),
-									$mdgriffith$elm_ui$Element$spacing(theme.paddingWithinItem),
-									$mdgriffith$elm_ui$Element$mouseOver(
-									_List_fromArray(
-										[
-											$mdgriffith$elm_ui$Element$Background$color(
-											$author$project$OUI$Material$Color$toElementColor(
-												A3($author$project$OUI$Material$Color$withShade, colorscheme.onSurface, $author$project$OUI$Material$Color$hoverStateLayerOpacity, colorscheme.surfaceContainer)))
-										]))
+									A2($mdgriffith$elm_ui$Element$paddingXY, 0, theme.topBottomPadding)
 								]),
-							function () {
-								var _v0 = props.onClick;
-								if (_v0.$ === 'Just') {
-									var msg = _v0.a;
-									return _List_fromArray(
-										[
-											$author$project$OUI$Material$Menu$passiveOnClick(
-											msg(item))
-										]);
-								} else {
-									return _List_Nil;
-								}
-							}()),
-						_Utils_ap(
-							hasLeadingIcons ? _List_fromArray(
-								[
-									A4(
-									$author$project$OUI$Material$Icon$renderWithSizeColor,
-									theme.iconSize,
-									colorscheme.onSurface,
-									_List_Nil,
-									A2(
-										$elm$core$Maybe$withDefault,
-										$author$project$OUI$Icon$blank,
-										props.itemToIcon(item)))
-								]) : _List_Nil,
-							_List_fromArray(
-								[
-									$mdgriffith$elm_ui$Element$text(
-									props.itemToText(item)),
-									A4(
-									$author$project$OUI$Material$Icon$renderWithSizeColor,
-									theme.iconSize,
-									colorscheme.onSurface,
-									_List_fromArray(
-										[$mdgriffith$elm_ui$Element$alignRight]),
-									A2(
-										$elm$core$Maybe$withDefault,
-										$author$project$OUI$Icon$blank,
-										props.itemToTrailingIcon(item)))
-								])));
+							A4($author$project$OUI$Material$Divider$render, colorscheme, dividerTheme, _List_Nil, $author$project$OUI$Divider$new));
+					} else {
+						var item = menuitem.a;
+						return A2(
+							$mdgriffith$elm_ui$Element$row,
+							_Utils_ap(
+								_List_fromArray(
+									[
+										$mdgriffith$elm_ui$Element$height(
+										$mdgriffith$elm_ui$Element$px(theme.itemHeight)),
+										$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
+										A2($mdgriffith$elm_ui$Element$paddingXY, theme.leftRightPadding, 0),
+										$mdgriffith$elm_ui$Element$spacing(theme.paddingWithinItem),
+										$mdgriffith$elm_ui$Element$mouseOver(
+										_List_fromArray(
+											[
+												$mdgriffith$elm_ui$Element$Background$color(
+												$author$project$OUI$Material$Color$toElementColor(
+													A3($author$project$OUI$Material$Color$withShade, colorscheme.onSurface, $author$project$OUI$Material$Color$hoverStateLayerOpacity, colorscheme.surfaceContainer)))
+											]))
+									]),
+								function () {
+									var _v1 = props.onClick;
+									if (_v1.$ === 'Just') {
+										var msg = _v1.a;
+										return _List_fromArray(
+											[
+												$author$project$OUI$Material$Menu$passiveOnClick(
+												msg(item))
+											]);
+									} else {
+										return _List_Nil;
+									}
+								}()),
+							_Utils_ap(
+								hasLeadingIcons ? _List_fromArray(
+									[
+										A4(
+										$author$project$OUI$Material$Icon$renderWithSizeColor,
+										theme.iconSize,
+										colorscheme.onSurface,
+										_List_Nil,
+										A2(
+											$elm$core$Maybe$withDefault,
+											$author$project$OUI$Icon$blank,
+											props.itemToIcon(item)))
+									]) : _List_Nil,
+								_List_fromArray(
+									[
+										$mdgriffith$elm_ui$Element$text(
+										props.itemToText(item)),
+										A4(
+										$author$project$OUI$Material$Icon$renderWithSizeColor,
+										theme.iconSize,
+										colorscheme.onSurface,
+										_List_fromArray(
+											[$mdgriffith$elm_ui$Element$alignRight]),
+										A2(
+											$elm$core$Maybe$withDefault,
+											$author$project$OUI$Icon$blank,
+											props.itemToTrailingIcon(item)))
+									])));
+					}
 				},
 				props.items));
 	});
-var $author$project$OUI$Material$MenuButton$render = F7(
-	function (typescale, colorscheme, buttonTheme, menuTheme, state, attrs, menuBtn) {
+var $author$project$OUI$Material$MenuButton$render = F8(
+	function (typescale, colorscheme, buttonTheme, dividerTheme, menuTheme, state, attrs, menuBtn) {
 		var props = $author$project$OUI$MenuButton$properties(menuBtn);
 		return A5(
 			$author$project$OUI$Material$Button$render,
@@ -24669,10 +24726,11 @@ var $author$project$OUI$Material$MenuButton$render = F7(
 					state.opened ? _List_fromArray(
 						[
 							$mdgriffith$elm_ui$Element$below(
-							A5(
+							A6(
 								$author$project$OUI$Material$Menu$render,
 								typescale,
 								colorscheme,
+								dividerTheme,
 								menuTheme,
 								_List_fromArray(
 									[
@@ -24691,12 +24749,9 @@ var $author$project$OUI$Material$MenuButton$render = F7(
 			props.button);
 	});
 var $author$project$OUI$Material$menuButton = function (theme) {
-	return A4($author$project$OUI$Material$MenuButton$render, theme.typescale, theme.colorscheme, theme.button, theme.menu);
+	return A5($author$project$OUI$Material$MenuButton$render, theme.typescale, theme.colorscheme, theme.button, theme.divider, theme.menu);
 };
 var $author$project$OUI$Text$Label = {$: 'Label'};
-var $author$project$OUI$Menu$Menu = function (a) {
-	return {$: 'Menu', a: a};
-};
 var $author$project$OUI$Menu$new = function (itemToText) {
 	return $author$project$OUI$Menu$Menu(
 		{
@@ -24757,14 +24812,6 @@ var $author$project$OUI$Menu$withIcon = F2(
 				props,
 				{itemToIcon: itemToIcon}));
 	});
-var $author$project$OUI$Menu$withItems = F2(
-	function (items, _v0) {
-		var props = _v0.a;
-		return $author$project$OUI$Menu$Menu(
-			_Utils_update(
-				props,
-				{items: items}));
-	});
 var $author$project$OUI$Showcase$MenuButtons$chapter = F2(
 	function (shared, model) {
 		return A2(
@@ -24795,7 +24842,7 @@ var $author$project$OUI$Showcase$MenuButtons$chapter = F2(
 									return (i !== 'Two') ? $elm$core$Maybe$Just($author$project$OUI$Icon$check) : $elm$core$Maybe$Nothing;
 								},
 								A2(
-									$author$project$OUI$Menu$withItems,
+									$author$project$OUI$Menu$addItems,
 									_List_fromArray(
 										['One', 'Two', 'Three']),
 									$author$project$OUI$Menu$new($elm$core$Basics$identity))))),
@@ -24820,10 +24867,15 @@ var $author$project$OUI$Showcase$MenuButtons$chapter = F2(
 										return (i !== 'Two') ? $elm$core$Maybe$Just($author$project$OUI$Icon$check) : $elm$core$Maybe$Nothing;
 									},
 									A2(
-										$author$project$OUI$Menu$withItems,
+										$author$project$OUI$Menu$addItems,
 										_List_fromArray(
-											['One', 'Two', 'Three']),
-										$author$project$OUI$Menu$new($elm$core$Basics$identity))))))
+											['Four']),
+										$author$project$OUI$Menu$addDivider(
+											A2(
+												$author$project$OUI$Menu$addItems,
+												_List_fromArray(
+													['One', 'Two', 'Three']),
+												$author$project$OUI$Menu$new($elm$core$Basics$identity))))))))
 					])));
 	});
 var $author$project$OUI$MenuButton$init = function (id) {
@@ -29465,7 +29517,7 @@ var $author$project$OUI$Showcase$MenuButtons$book = A2(
 		'Menu Buttons',
 		{init: $author$project$OUI$Showcase$MenuButtons$init, subscriptions: $author$project$OUI$Showcase$MenuButtons$subscriptions, update: $author$project$OUI$Showcase$MenuButtons$update}));
 var $author$project$OUI$Material$menu = function (theme) {
-	return A3($author$project$OUI$Material$Menu$render, theme.typescale, theme.colorscheme, theme.menu);
+	return A4($author$project$OUI$Material$Menu$render, theme.typescale, theme.colorscheme, theme.divider, theme.menu);
 };
 var $author$project$OUI$Menu$withTrailingIcon = F2(
 	function (itemToIcon, _v0) {
@@ -29683,7 +29735,7 @@ var $author$project$OUI$Showcase$Menus$chapter = F2(
 							return $author$project$OUI$Explorer$logEvent('clicked menu1/' + i);
 						},
 						A2(
-							$author$project$OUI$Menu$withItems,
+							$author$project$OUI$Menu$addItems,
 							_List_fromArray(
 								['one', 'two', 'three']),
 							$author$project$OUI$Menu$new($elm$core$Basics$identity)))),
@@ -29692,25 +29744,30 @@ var $author$project$OUI$Showcase$Menus$chapter = F2(
 					shared.theme,
 					_List_Nil,
 					A2(
-						$author$project$OUI$Menu$withItems,
+						$author$project$OUI$Menu$addItems,
 						_List_fromArray(
-							['one', 'two', 'three', 'a longer entry']),
-						A2(
-							$author$project$OUI$Menu$withTrailingIcon,
-							function (i) {
-								return (i === 'one') ? $elm$core$Maybe$Just($author$project$OUI$Icon$check) : $elm$core$Maybe$Nothing;
-							},
+							['a longer entry']),
+						$author$project$OUI$Menu$addDivider(
 							A2(
-								$author$project$OUI$Menu$withIcon,
-								function (i) {
-									return (i === 'two') ? $elm$core$Maybe$Just($author$project$OUI$Icon$clear) : $elm$core$Maybe$Nothing;
-								},
+								$author$project$OUI$Menu$addItems,
+								_List_fromArray(
+									['one', 'two', 'three']),
 								A2(
-									$author$project$OUI$Menu$onClick,
+									$author$project$OUI$Menu$withTrailingIcon,
 									function (i) {
-										return $author$project$OUI$Explorer$logEvent('clicked menu2/' + i);
+										return (i === 'one') ? $elm$core$Maybe$Just($author$project$OUI$Icon$check) : $elm$core$Maybe$Nothing;
 									},
-									$author$project$OUI$Menu$new($elm$core$Basics$identity))))))
+									A2(
+										$author$project$OUI$Menu$withIcon,
+										function (i) {
+											return (i === 'two') ? $elm$core$Maybe$Just($author$project$OUI$Icon$clear) : $elm$core$Maybe$Nothing;
+										},
+										A2(
+											$author$project$OUI$Menu$onClick,
+											function (i) {
+												return $author$project$OUI$Explorer$logEvent('clicked menu2/' + i);
+											},
+											$author$project$OUI$Menu$new($elm$core$Basics$identity))))))))
 				]));
 	});
 var $author$project$OUI$Showcase$Menus$book = A2(
