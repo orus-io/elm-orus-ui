@@ -1,16 +1,44 @@
 module OUI.MenuButton exposing
-    ( Align(..)
-    , MenuButton
-    , Msg
-    , State
-    , alignLeft
-    , alignRight
-    , init
-    , new
-    , onOutsideClick
+    ( MenuButton, Align(..)
+    , new, alignLeft, alignRight
+    , State, Msg, init, update, onOutsideClick
+    , Effect(..), updateWithoutPerform, performEffect
     , properties
-    , update
     )
+
+{-| A button+menu creation API
+
+The button will open a menu when clicked.
+
+@docs MenuButton, Align
+
+
+# Constructor
+
+@docs new, alignLeft, alignRight
+
+
+# State management
+
+Menu + button is a stateful component
+
+@docs State, Msg, init, update, onOutsideClick
+
+
+## update internals
+
+If you need to change the update effect into something else than Cmd (say, a
+[`Effect`](/packages/orus-io/elm-spa/latest/Effect#Effect), here is
+everything you need.
+
+@docs Effect, updateWithoutPerform, performEffect
+
+
+# Internal
+
+@docs properties
+
+-}
 
 import OUI.Button
 import OUI.Helpers
@@ -18,67 +46,15 @@ import OUI.Menu
 import Task
 
 
-type alias State =
-    { id : String
-    , opened : Bool
-    }
-
-
-type Msg msg
-    = OnClickOutside
-    | OnClickButton
-    | OnClickItem msg
-
-
-init : String -> State
-init id =
-    { id = id
-    , opened = False
-    }
-
-
-onOutsideClick : (Msg msg -> msg) -> State -> Sub msg
-onOutsideClick map state =
-    if state.opened then
-        OUI.Helpers.onOutsideClick state.id (map OnClickOutside)
-
-    else
-        Sub.none
-
-
-type Effect msg
-    = Loopback msg
-
-
-update : Msg msg -> State -> ( State, Cmd msg )
-update msg state =
-    updateWithoutPerform msg state
-        |> Tuple.mapSecond (Maybe.map performEffect >> Maybe.withDefault Cmd.none)
-
-
-updateWithoutPerform : Msg msg -> State -> ( State, Maybe (Effect msg) )
-updateWithoutPerform msg state =
-    case msg of
-        OnClickOutside ->
-            ( { state | opened = False }, Nothing )
-
-        OnClickButton ->
-            ( { state | opened = not state.opened }, Nothing )
-
-        OnClickItem selectMsg ->
-            ( { state | opened = False }, Just <| Loopback selectMsg )
-
-
-performEffect : Effect msg -> Cmd msg
-performEffect (Loopback msg) =
-    Task.perform identity <| Task.succeed msg
-
-
+{-| Menu alignment
+-}
 type Align
     = AlignLeft
     | AlignRight
 
 
+{-| A Button + Menu component
+-}
 type MenuButton btnC item msg
     = MenuButton
         { button : OUI.Button.Button { btnC | hasAction : () } msg
@@ -87,6 +63,29 @@ type MenuButton btnC item msg
         }
 
 
+{-| Creates a new button + menu
+
+The button must not have any action defined on it
+
+    MenuButton.new (MenuButtonMsg "menu1")
+        OnMenu1Click
+        (Button.new "click me"
+            |> Button.outlinedButton
+        )
+        (Menu.new identity
+            |> Menu.withItems [ "One", "Two", "Three" ]
+            |> Menu.withIcon
+                (\i ->
+                    if i /= "Two" then
+                        Just OUI.Icon.check
+
+                    else
+                        Nothing
+                )
+        )
+        |> OUI.Material.menuButton shared.theme model.menu1State []
+
+-}
 new :
     (Msg msg -> msg)
     -> (item -> msg)
@@ -105,6 +104,8 @@ new map onClick button menu =
         }
 
 
+{-| Change the menu alignment to 'right'
+-}
 alignRight : MenuButton btnC item msg -> MenuButton btnC item msg
 alignRight (MenuButton props) =
     MenuButton
@@ -113,6 +114,8 @@ alignRight (MenuButton props) =
         }
 
 
+{-| Change the menu alignment to 'left' (default)
+-}
 alignLeft : MenuButton btnC item msg -> MenuButton btnC item msg
 alignLeft (MenuButton props) =
     MenuButton
@@ -121,6 +124,90 @@ alignLeft (MenuButton props) =
         }
 
 
+{-| The component state
+-}
+type alias State =
+    { id : String
+    , opened : Bool
+    }
+
+
+{-| The component message
+-}
+type Msg msg
+    = OnClickOutside
+    | OnClickButton
+    | OnClickItem msg
+
+
+{-| Initialise the State. The given id must be unique in the currently displayed
+components
+-}
+init : String -> State
+init id =
+    { id = id
+    , opened = False
+    }
+
+
+{-| Update the state given a message
+-}
+update : Msg msg -> State -> ( State, Cmd msg )
+update msg state =
+    updateWithoutPerform msg state
+        |> Tuple.mapSecond (Maybe.map performEffect >> Maybe.withDefault Cmd.none)
+
+
+{-| Catch clicks outside an opened menu
+-}
+onOutsideClick : (Msg msg -> msg) -> State -> Sub msg
+onOutsideClick map state =
+    if state.opened then
+        OUI.Helpers.onOutsideClick state.id (map OnClickOutside)
+
+    else
+        Sub.none
+
+
+{-| Internal update returns Effect instead of Cmd
+-}
+type Effect msg
+    = Loopback msg
+
+
+{-| Do the update but returns a Effect instead of a Cmd
+
+The Effect can be converted to a Cmd with [performEffect](#performEffect)
+
+-}
+updateWithoutPerform : Msg msg -> State -> ( State, Maybe (Effect msg) )
+updateWithoutPerform msg state =
+    case msg of
+        OnClickOutside ->
+            ( { state | opened = False }, Nothing )
+
+        OnClickButton ->
+            ( { state | opened = not state.opened }, Nothing )
+
+        OnClickItem selectMsg ->
+            ( { state | opened = False }, Just <| Loopback selectMsg )
+
+
+{-| Change a [`Effect`](#Effect) into a [`Cmd`](/packages/elm/core/latest/Platform-Cmd#Cmd)
+
+It simply does:
+
+    performEffect : Effect msg -> Cmd msg
+    performEffect (Loopback msg) =
+        Task.perform identity <| Task.succeed msg
+
+-}
+performEffect : Effect msg -> Cmd msg
+performEffect (Loopback msg) =
+    Task.perform identity <| Task.succeed msg
+
+
+{-| -}
 properties :
     MenuButton btnC item msg
     ->
