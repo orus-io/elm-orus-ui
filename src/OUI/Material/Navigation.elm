@@ -150,6 +150,7 @@ render typescale colorscheme dividerTheme theme _ nav =
         [ Background.color <| OUI.Material.Color.toElementColor colorscheme.surfaceContainerLow
         , Element.width <| Element.px width
         , Element.height <| Element.fill
+        , Element.scrollbarY
         , transitionAllEaseOut
         ]
     <|
