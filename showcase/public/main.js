@@ -34445,7 +34445,9 @@ var $author$project$OUI$Explorer$finalize = function (_v0) {
 										$author$project$OUI$Material$Color$toElementColor(shared.theme.colorscheme.surface)),
 										$mdgriffith$elm_ui$Element$Font$color(
 										$author$project$OUI$Material$Color$toElementColor(shared.theme.colorscheme.onSurface)),
-										$mdgriffith$elm_ui$Element$scrollbarY
+										$mdgriffith$elm_ui$Element$scrollbarY,
+										$mdgriffith$elm_ui$Element$htmlAttribute(
+										A2($elm$html$Html$Attributes$style, '-webkit-tap-highlight-color', 'transparent'))
 									]),
 								A2(
 									$mdgriffith$elm_ui$Element$column,

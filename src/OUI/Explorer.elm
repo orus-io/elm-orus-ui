@@ -19,6 +19,7 @@ import Element exposing (Element)
 import Element.Background as Background
 import Element.Events as Events
 import Element.Font as Font
+import Html.Attributes
 import Json.Decode
 import Markdown.Parser
 import Markdown.Renderer
@@ -702,6 +703,8 @@ finalize (Explorer expl) =
                                 , Background.color <| Color.toElementColor shared.theme.colorscheme.surface
                                 , Font.color <| Color.toElementColor shared.theme.colorscheme.onSurface
                                 , Element.scrollbarY
+                                , Element.htmlAttribute <|
+                                    Html.Attributes.style "-webkit-tap-highlight-color" "transparent"
                                 ]
                         ]
                     }
