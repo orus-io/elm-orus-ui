@@ -9,13 +9,14 @@ import Markdown.Html
 import Markdown.Renderer
 import OUI.Checkbox
 import OUI.Material as Material
+import OUI.Material.Color
 import OUI.Material.Theme exposing (Theme)
 import OUI.Material.Typography as Typography
 import OUI.Text
 
 
 renderer : Theme themeExt -> Markdown.Renderer.Renderer (Element msg)
-renderer ({ typescale } as theme) =
+renderer ({ typescale, colorscheme } as theme) =
     { heading =
         \{ level, children } ->
             case level of
@@ -53,7 +54,11 @@ renderer ({ typescale } as theme) =
     , link =
         -- TODO handle link.title
         \link content ->
-            Element.link []
+            Element.link
+                [ colorscheme.primary
+                    |> OUI.Material.Color.toElementColor
+                    |> Font.color
+                ]
                 { url = link.destination
                 , label = Element.paragraph [] content
                 }
