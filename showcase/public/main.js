@@ -14144,7 +14144,7 @@ var $author$project$OUI$Material$Color$lightFromKeyColors = function (keyColors)
 		onPrimary: A2($author$project$OUI$Material$Color$tone, 100, keyColors.primary),
 		onPrimaryContainer: A2($author$project$OUI$Material$Color$tone, 10, keyColors.primary),
 		onSecondary: A2($author$project$OUI$Material$Color$tone, 100, keyColors.secondary),
-		onSecondaryContainer: A2($author$project$OUI$Material$Color$tone, 10, keyColors.primary),
+		onSecondaryContainer: A2($author$project$OUI$Material$Color$tone, 10, keyColors.secondary),
 		onSurface: A2($author$project$OUI$Material$Color$tone, 10, keyColors.neutral),
 		onSurfaceVariant: A2($author$project$OUI$Material$Color$tone, 30, keyColors.neutralVariant),
 		onTertiary: A2($author$project$OUI$Material$Color$tone, 100, keyColors.tertiary),
