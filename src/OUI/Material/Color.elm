@@ -1,6 +1,6 @@
 module OUI.Material.Color exposing
     ( KeyColors, Scheme, defaultKeyColors, defaultLightScheme, defaultDarkScheme, lightFromKeyColors, darkFromKeyColors
-    , getColor, getOnColor, getElementColor, getContainerColor, getOnContainerColor, getOnElementColor, toElementColor, getContainerElementColor, getOnContainerElementColor
+    , getColor, getOnColor, getElementColor, getContainerColor, getOnContainerColor, getOnElementColor, toElementColor, getContainerElementColor, getOnContainerElementColor, getSurfaceColor, getOnSurfaceColor, getSurfaceVariantColor, getOnSurfaceVariantColor, getSurfaceContainerLowestColor, getSurfaceContainerLowColor, getSurfaceContainerColor, getSurfaceContainerHighColor, getSurfaceContainerHighestColor
     , hoverStateLayerOpacity, focusStateLayerOpacity, pressStateLayerOpacity
     , setAlpha, withShade, isError, tone
     )
@@ -9,7 +9,7 @@ module OUI.Material.Color exposing
 
 @docs KeyColors, Scheme, defaultKeyColors, defaultLightScheme, defaultDarkScheme, lightFromKeyColors, darkFromKeyColors
 
-@docs getColor, getOnColor, getElementColor, getContainerColor, getOnContainerColor, getOnElementColor, toElementColor, getContainerElementColor, getOnContainerElementColor
+@docs getColor, getOnColor, getElementColor, getContainerColor, getOnContainerColor, getOnElementColor, toElementColor, getContainerElementColor, getOnContainerElementColor, getSurfaceColor, getOnSurfaceColor, getSurfaceVariantColor, getOnSurfaceVariantColor, getSurfaceContainerLowestColor, getSurfaceContainerLowColor, getSurfaceContainerColor, getSurfaceContainerHighColor, getSurfaceContainerHighestColor
 
 @docs hoverStateLayerOpacity, focusStateLayerOpacity, pressStateLayerOpacity
 
@@ -131,6 +131,9 @@ getColor c =
         OUI.ErrorContainer ->
             .errorContainer
 
+        OUI.Custom { color } ->
+            always color
+
 
 {-| Get a "on" color of a scheme
 -}
@@ -163,6 +166,9 @@ getOnColor c =
 
         OUI.ErrorContainer ->
             .onErrorContainer
+
+        OUI.Custom { onColor } ->
+            always onColor
 
 
 {-| get a container color
@@ -197,6 +203,9 @@ getContainerColor c =
         OUI.ErrorContainer ->
             .errorContainer
 
+        OUI.Custom { color } ->
+            always color
+
 
 {-| get a "on container" color
 -}
@@ -229,6 +238,99 @@ getOnContainerColor c =
 
         OUI.ErrorContainer ->
             .onErrorContainer
+
+        OUI.Custom { onColor } ->
+            always onColor
+
+
+getSurfaceColor : OUI.Color -> Scheme -> Color.Color
+getSurfaceColor c =
+    case c of
+        OUI.Custom { surface } ->
+            always surface
+
+        _ ->
+            .surface
+
+
+getOnSurfaceColor : OUI.Color -> Scheme -> Color.Color
+getOnSurfaceColor c =
+    case c of
+        OUI.Custom { onSurface } ->
+            always onSurface
+
+        _ ->
+            .onSurface
+
+
+getSurfaceVariantColor : OUI.Color -> Scheme -> Color.Color
+getSurfaceVariantColor c =
+    case c of
+        OUI.Custom { surface } ->
+            always surface
+
+        _ ->
+            .surfaceVariant
+
+
+getOnSurfaceVariantColor : OUI.Color -> Scheme -> Color.Color
+getOnSurfaceVariantColor c =
+    case c of
+        OUI.Custom { onSurface } ->
+            always onSurface
+
+        _ ->
+            .onSurfaceVariant
+
+
+getSurfaceContainerLowestColor : OUI.Color -> Scheme -> Color.Color
+getSurfaceContainerLowestColor c =
+    case c of
+        OUI.Custom { surface } ->
+            always surface
+
+        _ ->
+            .surfaceContainerLowest
+
+
+getSurfaceContainerLowColor : OUI.Color -> Scheme -> Color.Color
+getSurfaceContainerLowColor c =
+    case c of
+        OUI.Custom { surface } ->
+            always surface
+
+        _ ->
+            .surfaceContainerLow
+
+
+getSurfaceContainerColor : OUI.Color -> Scheme -> Color.Color
+getSurfaceContainerColor c =
+    case c of
+        OUI.Custom { surface } ->
+            always surface
+
+        _ ->
+            .surfaceContainer
+
+
+getSurfaceContainerHighColor : OUI.Color -> Scheme -> Color.Color
+getSurfaceContainerHighColor c =
+    case c of
+        OUI.Custom { surface } ->
+            always surface
+
+        _ ->
+            .surfaceContainerHigh
+
+
+getSurfaceContainerHighestColor : OUI.Color -> Scheme -> Color.Color
+getSurfaceContainerHighestColor c =
+    case c of
+        OUI.Custom { surface } ->
+            always surface
+
+        _ ->
+            .surfaceContainerHighest
 
 
 {-| set the opacity of a color

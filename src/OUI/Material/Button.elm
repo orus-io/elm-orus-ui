@@ -133,7 +133,7 @@ btnColors colorscheme type_ color disabled =
     case ( type_, disabled ) of
         ( OUI.Button.Elevated, False ) ->
             ( OUI.Material.Color.getColor color colorscheme
-            , colorscheme.surfaceContainerLow
+            , OUI.Material.Color.getSurfaceContainerLowColor color colorscheme
             )
 
         ( OUI.Button.Filled, False ) ->
@@ -167,13 +167,15 @@ btnColors colorscheme type_ color disabled =
             )
 
         ( _, True ) ->
-            ( OUI.Material.Color.setAlpha 0.38 colorscheme.onSurface
-            , OUI.Material.Color.setAlpha 0.12 colorscheme.onSurface
+            ( OUI.Material.Color.getOnSurfaceColor color colorscheme
+                |> OUI.Material.Color.setAlpha 0.38
+            , OUI.Material.Color.getOnSurfaceColor color colorscheme
+                |> OUI.Material.Color.setAlpha 0.12
             )
 
         ( _, False ) ->
             ( OUI.Material.Color.getColor color colorscheme
-            , colorscheme.surfaceContainerLow
+            , OUI.Material.Color.getSurfaceContainerLowColor color colorscheme
             )
 
 
@@ -233,7 +235,7 @@ elevatedAttrs _ colorscheme _ color =
     , Background.color <| OUI.Material.Color.toElementColor backColor
     , Font.color <| OUI.Material.Color.toElementColor frontColor
     , Element.focused
-        [ colorscheme.surfaceContainerLow
+        [ OUI.Material.Color.getSurfaceContainerLowColor color colorscheme
             |> OUI.Material.Color.withShade
                 (OUI.Material.Color.getColor color colorscheme)
                 OUI.Material.Color.focusStateLayerOpacity
@@ -241,7 +243,7 @@ elevatedAttrs _ colorscheme _ color =
             |> Background.color
         ]
     , Element.mouseDown
-        [ colorscheme.surfaceContainerLow
+        [ OUI.Material.Color.getSurfaceContainerLowColor color colorscheme
             |> OUI.Material.Color.withShade
                 (OUI.Material.Color.getColor color colorscheme)
                 OUI.Material.Color.pressStateLayerOpacity
@@ -249,7 +251,7 @@ elevatedAttrs _ colorscheme _ color =
             |> Background.color
         ]
     , Element.mouseOver
-        [ colorscheme.surfaceContainerLow
+        [ OUI.Material.Color.getSurfaceContainerLowColor color colorscheme
             |> OUI.Material.Color.withShade
                 (OUI.Material.Color.getColor color colorscheme)
                 OUI.Material.Color.hoverStateLayerOpacity
@@ -262,9 +264,10 @@ elevatedAttrs _ colorscheme _ color =
 elevatedDisabledAttrs :
     OUI.Material.Typography.Typescale
     -> OUI.Material.Color.Scheme
+    -> OUI.Color
     -> Layout
     -> List (Attribute msg)
-elevatedDisabledAttrs _ colorscheme _ =
+elevatedDisabledAttrs _ colorscheme color _ =
     let
         ( frontColor, backColor ) =
             btnColors colorscheme OUI.Button.Elevated OUI.Primary True
@@ -276,7 +279,7 @@ elevatedDisabledAttrs _ colorscheme _ =
             OUI.Material.Color.toElementColor <|
                 OUI.Material.Color.setAlpha
                     (0.12 + OUI.Material.Color.hoverStateLayerOpacity)
-                    colorscheme.onSurface
+                    (OUI.Material.Color.getOnSurfaceColor color colorscheme)
         ]
     ]
 
@@ -324,9 +327,10 @@ filledAttrs _ colorscheme _ color =
 filledDisabledAttrs :
     OUI.Material.Typography.Typescale
     -> OUI.Material.Color.Scheme
+    -> OUI.Color
     -> Layout
     -> List (Attribute msg)
-filledDisabledAttrs _ colorscheme _ =
+filledDisabledAttrs _ colorscheme color _ =
     let
         ( frontColor, backColor ) =
             btnColors colorscheme OUI.Button.Filled OUI.Primary True
@@ -338,7 +342,7 @@ filledDisabledAttrs _ colorscheme _ =
             OUI.Material.Color.toElementColor <|
                 OUI.Material.Color.setAlpha
                     (0.12 + OUI.Material.Color.hoverStateLayerOpacity)
-                    colorscheme.onSurface
+                    (OUI.Material.Color.getOnSurfaceColor color colorscheme)
         ]
     ]
 
@@ -354,7 +358,7 @@ outlinedAttrs _ colorscheme _ color =
     , Border.color <| OUI.Material.Color.toElementColor colorscheme.outline
     , Font.color <| OUI.Material.Color.getElementColor color colorscheme
     , Element.focused
-        [ colorscheme.surface
+        [ OUI.Material.Color.getSurfaceColor color colorscheme
             |> OUI.Material.Color.withShade
                 (OUI.Material.Color.getColor color colorscheme)
                 OUI.Material.Color.focusStateLayerOpacity
@@ -362,7 +366,7 @@ outlinedAttrs _ colorscheme _ color =
             |> Background.color
         ]
     , Element.mouseDown
-        [ colorscheme.surface
+        [ OUI.Material.Color.getSurfaceColor color colorscheme
             |> OUI.Material.Color.withShade
                 (OUI.Material.Color.getColor color colorscheme)
                 OUI.Material.Color.pressStateLayerOpacity
@@ -370,7 +374,7 @@ outlinedAttrs _ colorscheme _ color =
             |> Background.color
         ]
     , Element.mouseOver
-        [ colorscheme.surface
+        [ OUI.Material.Color.getSurfaceColor color colorscheme
             |> OUI.Material.Color.withShade
                 (OUI.Material.Color.getColor color colorscheme)
                 OUI.Material.Color.hoverStateLayerOpacity
@@ -383,22 +387,23 @@ outlinedAttrs _ colorscheme _ color =
 outlinedDisabledAttrs :
     OUI.Material.Typography.Typescale
     -> OUI.Material.Color.Scheme
+    -> OUI.Color
     -> Layout
     -> List (Attribute msg)
-outlinedDisabledAttrs _ colorscheme _ =
+outlinedDisabledAttrs _ colorscheme color _ =
     [ Border.width 1
     , Border.color <|
         OUI.Material.Color.toElementColor <|
-            OUI.Material.Color.setAlpha 0.12 colorscheme.onSurface
+            OUI.Material.Color.setAlpha 0.12 (OUI.Material.Color.getOnSurfaceColor color colorscheme)
     , Font.color <|
         OUI.Material.Color.toElementColor <|
-            OUI.Material.Color.setAlpha 0.38 colorscheme.onSurface
+            OUI.Material.Color.setAlpha 0.38 (OUI.Material.Color.getOnSurfaceColor color colorscheme)
     , Element.focused
         [ Background.color <|
             OUI.Material.Color.toElementColor <|
                 OUI.Material.Color.setAlpha
                     OUI.Material.Color.hoverStateLayerOpacity
-                    colorscheme.onSurface
+                    (OUI.Material.Color.getOnSurfaceColor color colorscheme)
         ]
     ]
 
@@ -412,7 +417,7 @@ textAttrs :
 textAttrs _ colorscheme _ color =
     [ Font.color <| OUI.Material.Color.getElementColor color colorscheme
     , Element.focused
-        [ colorscheme.surface
+        [ OUI.Material.Color.getSurfaceColor color colorscheme
             |> OUI.Material.Color.withShade
                 (OUI.Material.Color.getColor color colorscheme)
                 OUI.Material.Color.focusStateLayerOpacity
@@ -420,7 +425,7 @@ textAttrs _ colorscheme _ color =
             |> Background.color
         ]
     , Element.mouseDown
-        [ colorscheme.surface
+        [ OUI.Material.Color.getSurfaceColor color colorscheme
             |> OUI.Material.Color.withShade
                 (OUI.Material.Color.getColor color colorscheme)
                 OUI.Material.Color.pressStateLayerOpacity
@@ -428,7 +433,7 @@ textAttrs _ colorscheme _ color =
             |> Background.color
         ]
     , Element.mouseOver
-        [ colorscheme.surface
+        [ OUI.Material.Color.getSurfaceColor color colorscheme
             |> OUI.Material.Color.withShade
                 (OUI.Material.Color.getColor color colorscheme)
                 OUI.Material.Color.hoverStateLayerOpacity
@@ -441,18 +446,19 @@ textAttrs _ colorscheme _ color =
 textDisabledAttrs :
     OUI.Material.Typography.Typescale
     -> OUI.Material.Color.Scheme
+    -> OUI.Color
     -> Layout
     -> List (Attribute msg)
-textDisabledAttrs _ colorscheme _ =
+textDisabledAttrs _ colorscheme color _ =
     [ Font.color <|
         OUI.Material.Color.toElementColor <|
-            OUI.Material.Color.setAlpha 0.38 colorscheme.onSurface
+            OUI.Material.Color.setAlpha 0.38 (OUI.Material.Color.getOnSurfaceColor color colorscheme)
     , Element.focused
         [ Background.color <|
             OUI.Material.Color.toElementColor <|
                 OUI.Material.Color.setAlpha
                     OUI.Material.Color.hoverStateLayerOpacity
-                    colorscheme.onSurface
+                    (OUI.Material.Color.getOnSurfaceColor color colorscheme)
         ]
     ]
 
@@ -652,7 +658,7 @@ renderProps typescale colorscheme theme attrs props =
                 ++ (case ( props.type_, props.action ) of
                         ( OUI.Button.Elevated, OUI.Button.Disabled ) ->
                             layoutAttrs typescale colorscheme theme.common hasIcon
-                                ++ elevatedDisabledAttrs typescale colorscheme theme.common
+                                ++ elevatedDisabledAttrs typescale colorscheme props.color theme.common
 
                         ( OUI.Button.Elevated, _ ) ->
                             layoutAttrs typescale colorscheme theme.common hasIcon
@@ -660,7 +666,7 @@ renderProps typescale colorscheme theme attrs props =
 
                         ( OUI.Button.Filled, OUI.Button.Disabled ) ->
                             layoutAttrs typescale colorscheme theme.common hasIcon
-                                ++ filledDisabledAttrs typescale colorscheme theme.common
+                                ++ filledDisabledAttrs typescale colorscheme props.color theme.common
 
                         ( OUI.Button.Filled, _ ) ->
                             layoutAttrs typescale colorscheme theme.common hasIcon
@@ -668,7 +674,7 @@ renderProps typescale colorscheme theme attrs props =
 
                         ( OUI.Button.FilledIcon, OUI.Button.Disabled ) ->
                             iconButtonAttrs theme.icon
-                                ++ filledDisabledAttrs typescale colorscheme theme.common
+                                ++ filledDisabledAttrs typescale colorscheme props.color theme.common
 
                         ( OUI.Button.FilledIcon, _ ) ->
                             iconButtonAttrs theme.icon
@@ -676,7 +682,7 @@ renderProps typescale colorscheme theme attrs props =
 
                         ( OUI.Button.Outlined, OUI.Button.Disabled ) ->
                             layoutAttrs typescale colorscheme theme.common hasIcon
-                                ++ outlinedDisabledAttrs typescale colorscheme theme.common
+                                ++ outlinedDisabledAttrs typescale colorscheme props.color theme.common
 
                         ( OUI.Button.Outlined, _ ) ->
                             layoutAttrs typescale colorscheme theme.common hasIcon
@@ -684,7 +690,7 @@ renderProps typescale colorscheme theme attrs props =
 
                         ( OUI.Button.OutlinedIcon, OUI.Button.Disabled ) ->
                             iconButtonAttrs theme.icon
-                                ++ outlinedDisabledAttrs typescale colorscheme theme.common
+                                ++ outlinedDisabledAttrs typescale colorscheme props.color theme.common
 
                         ( OUI.Button.OutlinedIcon, _ ) ->
                             iconButtonAttrs theme.icon
@@ -692,7 +698,7 @@ renderProps typescale colorscheme theme attrs props =
 
                         ( OUI.Button.Text, OUI.Button.Disabled ) ->
                             layoutAttrs typescale colorscheme theme.common hasIcon
-                                ++ textDisabledAttrs typescale colorscheme theme.common
+                                ++ textDisabledAttrs typescale colorscheme props.color theme.common
 
                         ( OUI.Button.Text, _ ) ->
                             layoutAttrs typescale colorscheme theme.common hasIcon
@@ -700,7 +706,7 @@ renderProps typescale colorscheme theme attrs props =
 
                         ( OUI.Button.Icon, OUI.Button.Disabled ) ->
                             iconButtonAttrs theme.icon
-                                ++ textDisabledAttrs typescale colorscheme theme.common
+                                ++ textDisabledAttrs typescale colorscheme props.color theme.common
 
                         ( OUI.Button.Icon, _ ) ->
                             iconButtonAttrs theme.icon

@@ -6,6 +6,8 @@ module OUI exposing (Color(..))
 
 -}
 
+import Color
+
 
 {-| Colors
 -}
@@ -19,3 +21,9 @@ type Color
     | Neutral
     | Error
     | ErrorContainer
+    | Custom
+        { color : Color.Color
+        , onColor : Color.Color
+        , surface : Color.Color
+        , onSurface : Color.Color
+        }
