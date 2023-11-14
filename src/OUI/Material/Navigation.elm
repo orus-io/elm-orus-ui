@@ -147,7 +147,7 @@ render typescale colorscheme dividerTheme theme _ nav =
                 theme.rail.containerWidth
     in
     Keyed.column
-        [ Background.color <| OUI.Material.Color.toElementColor colorscheme.surfaceContainerLow
+        [ Background.color <| OUI.Material.Color.toElementColor (OUI.Material.Color.getSurfaceContainerLowColor props.activeColor colorscheme)
         , Element.width <| Element.px width
         , Element.height <| Element.fill
         , Element.scrollbarY
@@ -251,9 +251,9 @@ renderEntry typescale colorscheme dividerTheme theme props entry =
 
                               else
                                 Element.mouseOver
-                                    [ colorscheme.surfaceContainerLow
+                                    [ OUI.Material.Color.getSurfaceContainerLowColor props.activeColor colorscheme
                                         |> OUI.Material.Color.withShade
-                                            colorscheme.onSurface
+                                            (OUI.Material.Color.getOnSurfaceColor props.activeColor colorscheme)
                                             OUI.Material.Color.hoverStateLayerOpacity
                                         |> OUI.Material.Color.toElementColor
                                         |> Background.color
@@ -272,7 +272,7 @@ renderEntry typescale colorscheme dividerTheme theme props entry =
                                     [ ( "icon"
                                       , OUI.Material.Icon.renderWithSizeColor
                                             theme.drawer.iconSize
-                                            colorscheme.onSurfaceVariant
+                                            (OUI.Material.Color.getOnSurfaceVariantColor props.activeColor colorscheme)
                                             [ transitionAllEaseOut
                                             , Element.inFront badgeEl
                                             ]
@@ -387,7 +387,7 @@ renderEntry typescale colorscheme dividerTheme theme props entry =
                                         <|
                                             OUI.Material.Icon.renderWithSizeColor
                                                 theme.rail.iconSize
-                                                colorscheme.onSurfaceVariant
+                                                (OUI.Material.Color.getOnSurfaceVariantColor props.activeColor colorscheme)
                                                 [ transitionAllEaseOut
                                                 , Element.centerX
                                                 , Element.inFront badgeEl

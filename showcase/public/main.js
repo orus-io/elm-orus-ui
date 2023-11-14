@@ -11655,6 +11655,10 @@ var $mdgriffith$elm_ui$Element$el = F2(
 					[child])));
 	});
 var $author$project$OUI$Button$Elevated = {$: 'Elevated'};
+var $elm$core$Basics$always = F2(
+	function (a, _v0) {
+		return a;
+	});
 var $author$project$OUI$Material$Color$getColor = function (c) {
 	switch (c.$) {
 		case 'Primary':
@@ -11689,10 +11693,13 @@ var $author$project$OUI$Material$Color$getColor = function (c) {
 			return function ($) {
 				return $.error;
 			};
-		default:
+		case 'ErrorContainer':
 			return function ($) {
 				return $.errorContainer;
 			};
+		default:
+			var color = c.a.color;
+			return $elm$core$Basics$always(color);
 	}
 };
 var $author$project$OUI$Material$Color$getOnColor = function (c) {
@@ -11729,10 +11736,33 @@ var $author$project$OUI$Material$Color$getOnColor = function (c) {
 			return function ($) {
 				return $.onError;
 			};
-		default:
+		case 'ErrorContainer':
 			return function ($) {
 				return $.onErrorContainer;
 			};
+		default:
+			var onColor = c.a.onColor;
+			return $elm$core$Basics$always(onColor);
+	}
+};
+var $author$project$OUI$Material$Color$getOnSurfaceColor = function (c) {
+	if (c.$ === 'Custom') {
+		var onSurface = c.a.onSurface;
+		return $elm$core$Basics$always(onSurface);
+	} else {
+		return function ($) {
+			return $.onSurface;
+		};
+	}
+};
+var $author$project$OUI$Material$Color$getSurfaceContainerLowColor = function (c) {
+	if (c.$ === 'Custom') {
+		var surface = c.a.surface;
+		return $elm$core$Basics$always(surface);
+	} else {
+		return function ($) {
+			return $.surfaceContainerLow;
+		};
 	}
 };
 var $avh4$elm_color$Color$RgbaSpace = F4(
@@ -11762,15 +11792,21 @@ var $author$project$OUI$Material$Button$btnColors = F4(
 		var _v0 = _Utils_Tuple2(type_, disabled);
 		if (_v0.b) {
 			return _Utils_Tuple2(
-				A2($author$project$OUI$Material$Color$setAlpha, 0.38, colorscheme.onSurface),
-				A2($author$project$OUI$Material$Color$setAlpha, 0.12, colorscheme.onSurface));
+				A2(
+					$author$project$OUI$Material$Color$setAlpha,
+					0.38,
+					A2($author$project$OUI$Material$Color$getOnSurfaceColor, color, colorscheme)),
+				A2(
+					$author$project$OUI$Material$Color$setAlpha,
+					0.12,
+					A2($author$project$OUI$Material$Color$getOnSurfaceColor, color, colorscheme)));
 		} else {
 			switch (_v0.a.$) {
 				case 'Elevated':
 					var _v1 = _v0.a;
 					return _Utils_Tuple2(
 						A2($author$project$OUI$Material$Color$getColor, color, colorscheme),
-						colorscheme.surfaceContainerLow);
+						A2($author$project$OUI$Material$Color$getSurfaceContainerLowColor, color, colorscheme));
 				case 'Filled':
 					var _v2 = _v0.a;
 					return _Utils_Tuple2(
@@ -11804,7 +11840,7 @@ var $author$project$OUI$Material$Button$btnColors = F4(
 				default:
 					return _Utils_Tuple2(
 						A2($author$project$OUI$Material$Color$getColor, color, colorscheme),
-						colorscheme.surfaceContainerLow);
+						A2($author$project$OUI$Material$Color$getSurfaceContainerLowColor, color, colorscheme));
 			}
 		}
 	});
@@ -12162,7 +12198,7 @@ var $author$project$OUI$Material$Button$elevatedAttrs = F4(
 								$author$project$OUI$Material$Color$withShade,
 								A2($author$project$OUI$Material$Color$getColor, color, colorscheme),
 								$author$project$OUI$Material$Color$focusStateLayerOpacity,
-								colorscheme.surfaceContainerLow)))
+								A2($author$project$OUI$Material$Color$getSurfaceContainerLowColor, color, colorscheme))))
 					])),
 				$mdgriffith$elm_ui$Element$mouseDown(
 				_List_fromArray(
@@ -12173,7 +12209,7 @@ var $author$project$OUI$Material$Button$elevatedAttrs = F4(
 								$author$project$OUI$Material$Color$withShade,
 								A2($author$project$OUI$Material$Color$getColor, color, colorscheme),
 								$author$project$OUI$Material$Color$pressStateLayerOpacity,
-								colorscheme.surfaceContainerLow)))
+								A2($author$project$OUI$Material$Color$getSurfaceContainerLowColor, color, colorscheme))))
 					])),
 				$mdgriffith$elm_ui$Element$mouseOver(
 				_List_fromArray(
@@ -12184,12 +12220,12 @@ var $author$project$OUI$Material$Button$elevatedAttrs = F4(
 								$author$project$OUI$Material$Color$withShade,
 								A2($author$project$OUI$Material$Color$getColor, color, colorscheme),
 								$author$project$OUI$Material$Color$hoverStateLayerOpacity,
-								colorscheme.surfaceContainerLow)))
+								A2($author$project$OUI$Material$Color$getSurfaceContainerLowColor, color, colorscheme))))
 					]))
 			]);
 	});
-var $author$project$OUI$Material$Button$elevatedDisabledAttrs = F3(
-	function (_v0, colorscheme, _v1) {
+var $author$project$OUI$Material$Button$elevatedDisabledAttrs = F4(
+	function (_v0, colorscheme, color, _v1) {
 		var _v2 = A4($author$project$OUI$Material$Button$btnColors, colorscheme, $author$project$OUI$Button$Elevated, $author$project$OUI$Primary, true);
 		var frontColor = _v2.a;
 		var backColor = _v2.b;
@@ -12204,7 +12240,10 @@ var $author$project$OUI$Material$Button$elevatedDisabledAttrs = F3(
 					[
 						$mdgriffith$elm_ui$Element$Background$color(
 						$author$project$OUI$Material$Color$toElementColor(
-							A2($author$project$OUI$Material$Color$setAlpha, 0.12 + $author$project$OUI$Material$Color$hoverStateLayerOpacity, colorscheme.onSurface)))
+							A2(
+								$author$project$OUI$Material$Color$setAlpha,
+								0.12 + $author$project$OUI$Material$Color$hoverStateLayerOpacity,
+								A2($author$project$OUI$Material$Color$getOnSurfaceColor, color, colorscheme))))
 					]))
 			]);
 	});
@@ -12323,8 +12362,8 @@ var $author$project$OUI$Material$Button$filledAttrs = F4(
 					]))
 			]);
 	});
-var $author$project$OUI$Material$Button$filledDisabledAttrs = F3(
-	function (_v0, colorscheme, _v1) {
+var $author$project$OUI$Material$Button$filledDisabledAttrs = F4(
+	function (_v0, colorscheme, color, _v1) {
 		var _v2 = A4($author$project$OUI$Material$Button$btnColors, colorscheme, $author$project$OUI$Button$Filled, $author$project$OUI$Primary, true);
 		var frontColor = _v2.a;
 		var backColor = _v2.b;
@@ -12339,7 +12378,10 @@ var $author$project$OUI$Material$Button$filledDisabledAttrs = F3(
 					[
 						$mdgriffith$elm_ui$Element$Background$color(
 						$author$project$OUI$Material$Color$toElementColor(
-							A2($author$project$OUI$Material$Color$setAlpha, 0.12 + $author$project$OUI$Material$Color$hoverStateLayerOpacity, colorscheme.onSurface)))
+							A2(
+								$author$project$OUI$Material$Color$setAlpha,
+								0.12 + $author$project$OUI$Material$Color$hoverStateLayerOpacity,
+								A2($author$project$OUI$Material$Color$getOnSurfaceColor, color, colorscheme))))
 					]))
 			]);
 	});
@@ -12666,6 +12708,16 @@ var $author$project$OUI$Material$Color$getElementColor = function (c) {
 		$author$project$OUI$Material$Color$getColor(c),
 		$author$project$OUI$Material$Color$toElementColor);
 };
+var $author$project$OUI$Material$Color$getSurfaceColor = function (c) {
+	if (c.$ === 'Custom') {
+		var surface = c.a.surface;
+		return $elm$core$Basics$always(surface);
+	} else {
+		return function ($) {
+			return $.surface;
+		};
+	}
+};
 var $mdgriffith$elm_ui$Internal$Model$BorderWidth = F5(
 	function (a, b, c, d, e) {
 		return {$: 'BorderWidth', a: a, b: b, c: c, d: d, e: e};
@@ -12700,7 +12752,7 @@ var $author$project$OUI$Material$Button$outlinedAttrs = F4(
 								$author$project$OUI$Material$Color$withShade,
 								A2($author$project$OUI$Material$Color$getColor, color, colorscheme),
 								$author$project$OUI$Material$Color$focusStateLayerOpacity,
-								colorscheme.surface)))
+								A2($author$project$OUI$Material$Color$getSurfaceColor, color, colorscheme))))
 					])),
 				$mdgriffith$elm_ui$Element$mouseDown(
 				_List_fromArray(
@@ -12711,7 +12763,7 @@ var $author$project$OUI$Material$Button$outlinedAttrs = F4(
 								$author$project$OUI$Material$Color$withShade,
 								A2($author$project$OUI$Material$Color$getColor, color, colorscheme),
 								$author$project$OUI$Material$Color$pressStateLayerOpacity,
-								colorscheme.surface)))
+								A2($author$project$OUI$Material$Color$getSurfaceColor, color, colorscheme))))
 					])),
 				$mdgriffith$elm_ui$Element$mouseOver(
 				_List_fromArray(
@@ -12722,33 +12774,38 @@ var $author$project$OUI$Material$Button$outlinedAttrs = F4(
 								$author$project$OUI$Material$Color$withShade,
 								A2($author$project$OUI$Material$Color$getColor, color, colorscheme),
 								$author$project$OUI$Material$Color$hoverStateLayerOpacity,
-								colorscheme.surface)))
+								A2($author$project$OUI$Material$Color$getSurfaceColor, color, colorscheme))))
 					]))
 			]);
 	});
-var $author$project$OUI$Material$Button$outlinedDisabledAttrs = F3(
-	function (_v0, colorscheme, _v1) {
+var $author$project$OUI$Material$Button$outlinedDisabledAttrs = F4(
+	function (_v0, colorscheme, color, _v1) {
 		return _List_fromArray(
 			[
 				$mdgriffith$elm_ui$Element$Border$width(1),
 				$mdgriffith$elm_ui$Element$Border$color(
 				$author$project$OUI$Material$Color$toElementColor(
-					A2($author$project$OUI$Material$Color$setAlpha, 0.12, colorscheme.onSurface))),
+					A2(
+						$author$project$OUI$Material$Color$setAlpha,
+						0.12,
+						A2($author$project$OUI$Material$Color$getOnSurfaceColor, color, colorscheme)))),
 				$mdgriffith$elm_ui$Element$Font$color(
 				$author$project$OUI$Material$Color$toElementColor(
-					A2($author$project$OUI$Material$Color$setAlpha, 0.38, colorscheme.onSurface))),
+					A2(
+						$author$project$OUI$Material$Color$setAlpha,
+						0.38,
+						A2($author$project$OUI$Material$Color$getOnSurfaceColor, color, colorscheme)))),
 				$mdgriffith$elm_ui$Element$focused(
 				_List_fromArray(
 					[
 						$mdgriffith$elm_ui$Element$Background$color(
 						$author$project$OUI$Material$Color$toElementColor(
-							A2($author$project$OUI$Material$Color$setAlpha, $author$project$OUI$Material$Color$hoverStateLayerOpacity, colorscheme.onSurface)))
+							A2(
+								$author$project$OUI$Material$Color$setAlpha,
+								$author$project$OUI$Material$Color$hoverStateLayerOpacity,
+								A2($author$project$OUI$Material$Color$getOnSurfaceColor, color, colorscheme))))
 					]))
 			]);
-	});
-var $elm$core$Basics$always = F2(
-	function (a, _v0) {
-		return a;
 	});
 var $mdgriffith$elm_ui$Internal$Model$unstyled = A2($elm$core$Basics$composeL, $mdgriffith$elm_ui$Internal$Model$Unstyled, $elm$core$Basics$always);
 var $mdgriffith$elm_ui$Element$html = $mdgriffith$elm_ui$Internal$Model$unstyled;
@@ -12842,7 +12899,7 @@ var $author$project$OUI$Material$Button$textAttrs = F4(
 								$author$project$OUI$Material$Color$withShade,
 								A2($author$project$OUI$Material$Color$getColor, color, colorscheme),
 								$author$project$OUI$Material$Color$focusStateLayerOpacity,
-								colorscheme.surface)))
+								A2($author$project$OUI$Material$Color$getSurfaceColor, color, colorscheme))))
 					])),
 				$mdgriffith$elm_ui$Element$mouseDown(
 				_List_fromArray(
@@ -12853,7 +12910,7 @@ var $author$project$OUI$Material$Button$textAttrs = F4(
 								$author$project$OUI$Material$Color$withShade,
 								A2($author$project$OUI$Material$Color$getColor, color, colorscheme),
 								$author$project$OUI$Material$Color$pressStateLayerOpacity,
-								colorscheme.surface)))
+								A2($author$project$OUI$Material$Color$getSurfaceColor, color, colorscheme))))
 					])),
 				$mdgriffith$elm_ui$Element$mouseOver(
 				_List_fromArray(
@@ -12864,23 +12921,29 @@ var $author$project$OUI$Material$Button$textAttrs = F4(
 								$author$project$OUI$Material$Color$withShade,
 								A2($author$project$OUI$Material$Color$getColor, color, colorscheme),
 								$author$project$OUI$Material$Color$hoverStateLayerOpacity,
-								colorscheme.surface)))
+								A2($author$project$OUI$Material$Color$getSurfaceColor, color, colorscheme))))
 					]))
 			]);
 	});
-var $author$project$OUI$Material$Button$textDisabledAttrs = F3(
-	function (_v0, colorscheme, _v1) {
+var $author$project$OUI$Material$Button$textDisabledAttrs = F4(
+	function (_v0, colorscheme, color, _v1) {
 		return _List_fromArray(
 			[
 				$mdgriffith$elm_ui$Element$Font$color(
 				$author$project$OUI$Material$Color$toElementColor(
-					A2($author$project$OUI$Material$Color$setAlpha, 0.38, colorscheme.onSurface))),
+					A2(
+						$author$project$OUI$Material$Color$setAlpha,
+						0.38,
+						A2($author$project$OUI$Material$Color$getOnSurfaceColor, color, colorscheme)))),
 				$mdgriffith$elm_ui$Element$focused(
 				_List_fromArray(
 					[
 						$mdgriffith$elm_ui$Element$Background$color(
 						$author$project$OUI$Material$Color$toElementColor(
-							A2($author$project$OUI$Material$Color$setAlpha, $author$project$OUI$Material$Color$hoverStateLayerOpacity, colorscheme.onSurface)))
+							A2(
+								$author$project$OUI$Material$Color$setAlpha,
+								$author$project$OUI$Material$Color$hoverStateLayerOpacity,
+								A2($author$project$OUI$Material$Color$getOnSurfaceColor, color, colorscheme))))
 					]))
 			]);
 	});
@@ -13066,7 +13129,7 @@ var $author$project$OUI$Material$Button$renderProps = F5(
 								var _v3 = _v1.b;
 								return _Utils_ap(
 									A4($author$project$OUI$Material$Button$layoutAttrs, typescale, colorscheme, theme.common, hasIcon),
-									A3($author$project$OUI$Material$Button$elevatedDisabledAttrs, typescale, colorscheme, theme.common));
+									A4($author$project$OUI$Material$Button$elevatedDisabledAttrs, typescale, colorscheme, props.color, theme.common));
 							} else {
 								var _v4 = _v1.a;
 								return _Utils_ap(
@@ -13079,7 +13142,7 @@ var $author$project$OUI$Material$Button$renderProps = F5(
 								var _v6 = _v1.b;
 								return _Utils_ap(
 									A4($author$project$OUI$Material$Button$layoutAttrs, typescale, colorscheme, theme.common, hasIcon),
-									A3($author$project$OUI$Material$Button$filledDisabledAttrs, typescale, colorscheme, theme.common));
+									A4($author$project$OUI$Material$Button$filledDisabledAttrs, typescale, colorscheme, props.color, theme.common));
 							} else {
 								var _v7 = _v1.a;
 								return _Utils_ap(
@@ -13092,7 +13155,7 @@ var $author$project$OUI$Material$Button$renderProps = F5(
 								var _v9 = _v1.b;
 								return _Utils_ap(
 									$author$project$OUI$Material$Button$iconButtonAttrs(theme.icon),
-									A3($author$project$OUI$Material$Button$filledDisabledAttrs, typescale, colorscheme, theme.common));
+									A4($author$project$OUI$Material$Button$filledDisabledAttrs, typescale, colorscheme, props.color, theme.common));
 							} else {
 								var _v10 = _v1.a;
 								return _Utils_ap(
@@ -13105,7 +13168,7 @@ var $author$project$OUI$Material$Button$renderProps = F5(
 								var _v12 = _v1.b;
 								return _Utils_ap(
 									A4($author$project$OUI$Material$Button$layoutAttrs, typescale, colorscheme, theme.common, hasIcon),
-									A3($author$project$OUI$Material$Button$outlinedDisabledAttrs, typescale, colorscheme, theme.common));
+									A4($author$project$OUI$Material$Button$outlinedDisabledAttrs, typescale, colorscheme, props.color, theme.common));
 							} else {
 								var _v13 = _v1.a;
 								return _Utils_ap(
@@ -13118,7 +13181,7 @@ var $author$project$OUI$Material$Button$renderProps = F5(
 								var _v15 = _v1.b;
 								return _Utils_ap(
 									$author$project$OUI$Material$Button$iconButtonAttrs(theme.icon),
-									A3($author$project$OUI$Material$Button$outlinedDisabledAttrs, typescale, colorscheme, theme.common));
+									A4($author$project$OUI$Material$Button$outlinedDisabledAttrs, typescale, colorscheme, props.color, theme.common));
 							} else {
 								var _v16 = _v1.a;
 								return _Utils_ap(
@@ -13131,7 +13194,7 @@ var $author$project$OUI$Material$Button$renderProps = F5(
 								var _v18 = _v1.b;
 								return _Utils_ap(
 									A4($author$project$OUI$Material$Button$layoutAttrs, typescale, colorscheme, theme.common, hasIcon),
-									A3($author$project$OUI$Material$Button$textDisabledAttrs, typescale, colorscheme, theme.common));
+									A4($author$project$OUI$Material$Button$textDisabledAttrs, typescale, colorscheme, props.color, theme.common));
 							} else {
 								var _v19 = _v1.a;
 								return _Utils_ap(
@@ -13144,7 +13207,7 @@ var $author$project$OUI$Material$Button$renderProps = F5(
 								var _v21 = _v1.b;
 								return _Utils_ap(
 									$author$project$OUI$Material$Button$iconButtonAttrs(theme.icon),
-									A3($author$project$OUI$Material$Button$textDisabledAttrs, typescale, colorscheme, theme.common));
+									A4($author$project$OUI$Material$Button$textDisabledAttrs, typescale, colorscheme, props.color, theme.common));
 							} else {
 								var _v22 = _v1.a;
 								return _Utils_ap(
@@ -13737,15 +13800,17 @@ var $author$project$OUI$Material$Checkbox$render = F4(
 			var _v1 = _Utils_Tuple2(properties.onChange, properties.checked);
 			if (_v1.a.$ === 'Nothing') {
 				var _v2 = _v1.a;
-				return _Utils_Tuple2(colorscheme.onSurface, colorscheme.onSurface);
+				return _Utils_Tuple2(
+					A2($author$project$OUI$Material$Color$getOnSurfaceColor, properties.color, colorscheme),
+					A2($author$project$OUI$Material$Color$getOnSurfaceColor, properties.color, colorscheme));
 			} else {
 				if (_v1.b) {
 					return _Utils_Tuple2(
 						A2($author$project$OUI$Material$Color$getColor, properties.color, colorscheme),
-						colorscheme.onSurface);
+						A2($author$project$OUI$Material$Color$getOnSurfaceColor, properties.color, colorscheme));
 				} else {
 					return _Utils_Tuple2(
-						colorscheme.onSurface,
+						A2($author$project$OUI$Material$Color$getOnSurfaceColor, properties.color, colorscheme),
 						A2($author$project$OUI$Material$Color$getColor, properties.color, colorscheme));
 				}
 			}
@@ -13765,14 +13830,20 @@ var $author$project$OUI$Material$Checkbox$render = F4(
 					return _Utils_Tuple3(
 						A2($author$project$OUI$Material$Color$getOnColor, properties.color, colorscheme),
 						A2($author$project$OUI$Material$Color$getColor, properties.color, colorscheme),
-						colorscheme.onSurface);
+						A2($author$project$OUI$Material$Color$getOnSurfaceColor, properties.color, colorscheme));
 				}
 			} else {
 				var _v6 = _v4.a;
 				return _Utils_Tuple3(
-					colorscheme.surface,
-					A2($author$project$OUI$Material$Color$setAlpha, 0.38, colorscheme.onSurface),
-					A2($author$project$OUI$Material$Color$setAlpha, 0.38, colorscheme.onSurface));
+					A2($author$project$OUI$Material$Color$getSurfaceColor, properties.color, colorscheme),
+					A2(
+						$author$project$OUI$Material$Color$setAlpha,
+						0.38,
+						A2($author$project$OUI$Material$Color$getOnSurfaceColor, properties.color, colorscheme)),
+					A2(
+						$author$project$OUI$Material$Color$setAlpha,
+						0.38,
+						A2($author$project$OUI$Material$Color$getOnSurfaceColor, properties.color, colorscheme)));
 			}
 		}();
 		var frontColor = _v3.a;
@@ -25618,6 +25689,16 @@ var $mdgriffith$elm_ui$Element$Keyed$el = F2(
 				_List_fromArray(
 					[child])));
 	});
+var $author$project$OUI$Material$Color$getOnSurfaceVariantColor = function (c) {
+	if (c.$ === 'Custom') {
+		var onSurface = c.a.onSurface;
+		return $elm$core$Basics$always(onSurface);
+	} else {
+		return function ($) {
+			return $.onSurfaceVariant;
+		};
+	}
+};
 var $author$project$OUI$Material$Navigation$ifThenElse = F3(
 	function (condition, if_, then_) {
 		return condition ? if_ : then_;
@@ -25753,7 +25834,11 @@ var $author$project$OUI$Material$Navigation$renderEntry = F6(
 												[
 													$mdgriffith$elm_ui$Element$Background$color(
 													$author$project$OUI$Material$Color$toElementColor(
-														A3($author$project$OUI$Material$Color$withShade, colorscheme.onSurface, $author$project$OUI$Material$Color$hoverStateLayerOpacity, colorscheme.surfaceContainerLow)))
+														A3(
+															$author$project$OUI$Material$Color$withShade,
+															A2($author$project$OUI$Material$Color$getOnSurfaceColor, props.activeColor, colorscheme),
+															$author$project$OUI$Material$Color$hoverStateLayerOpacity,
+															A2($author$project$OUI$Material$Color$getSurfaceContainerLowColor, props.activeColor, colorscheme))))
 												])),
 											$author$project$OUI$Material$Navigation$transitionAllEaseOut
 										]),
@@ -25775,7 +25860,7 @@ var $author$project$OUI$Material$Navigation$renderEntry = F6(
 													A4(
 														$author$project$OUI$Material$Icon$renderWithSizeColor,
 														theme.drawer.iconSize,
-														colorscheme.onSurfaceVariant,
+														A2($author$project$OUI$Material$Color$getOnSurfaceVariantColor, props.activeColor, colorscheme),
 														_List_fromArray(
 															[
 																$author$project$OUI$Material$Navigation$transitionAllEaseOut,
@@ -25912,7 +25997,7 @@ var $author$project$OUI$Material$Navigation$renderEntry = F6(
 														A4(
 															$author$project$OUI$Material$Icon$renderWithSizeColor,
 															theme.rail.iconSize,
-															colorscheme.onSurfaceVariant,
+															A2($author$project$OUI$Material$Color$getOnSurfaceVariantColor, props.activeColor, colorscheme),
 															_List_fromArray(
 																[
 																	$author$project$OUI$Material$Navigation$transitionAllEaseOut,
@@ -26005,7 +26090,8 @@ var $author$project$OUI$Material$Navigation$render = F6(
 			_List_fromArray(
 				[
 					$mdgriffith$elm_ui$Element$Background$color(
-					$author$project$OUI$Material$Color$toElementColor(colorscheme.surfaceContainerLow)),
+					$author$project$OUI$Material$Color$toElementColor(
+						A2($author$project$OUI$Material$Color$getSurfaceContainerLowColor, props.activeColor, colorscheme))),
 					$mdgriffith$elm_ui$Element$width(
 					$mdgriffith$elm_ui$Element$px(width)),
 					$mdgriffith$elm_ui$Element$height($mdgriffith$elm_ui$Element$fill),
@@ -26223,7 +26309,10 @@ var $author$project$OUI$Material$RadioButton$render = F4(
 					return A2($author$project$OUI$Material$Color$getColor, properties.color, colorscheme);
 				}
 			} else {
-				return A2($author$project$OUI$Material$Color$setAlpha, 0.38, colorscheme.onSurface);
+				return A2(
+					$author$project$OUI$Material$Color$setAlpha,
+					0.38,
+					A2($author$project$OUI$Material$Color$getOnSurfaceColor, properties.color, colorscheme));
 			}
 		}();
 		var aria = $author$project$OUI$Utils$ARIA$toElementAttributes(
@@ -26231,15 +26320,17 @@ var $author$project$OUI$Material$RadioButton$render = F4(
 		var _v0 = function () {
 			var _v1 = _Utils_Tuple2(isDisabled, properties.selected);
 			if (_v1.a) {
-				return _Utils_Tuple2(colorscheme.onSurface, colorscheme.onSurface);
+				return _Utils_Tuple2(
+					A2($author$project$OUI$Material$Color$getOnSurfaceColor, properties.color, colorscheme),
+					A2($author$project$OUI$Material$Color$getOnSurfaceColor, properties.color, colorscheme));
 			} else {
 				if (_v1.b) {
 					return _Utils_Tuple2(
 						A2($author$project$OUI$Material$Color$getColor, properties.color, colorscheme),
-						colorscheme.onSurface);
+						A2($author$project$OUI$Material$Color$getOnSurfaceColor, properties.color, colorscheme));
 				} else {
 					return _Utils_Tuple2(
-						colorscheme.onSurface,
+						A2($author$project$OUI$Material$Color$getOnSurfaceColor, properties.color, colorscheme),
 						A2($author$project$OUI$Material$Color$getColor, properties.color, colorscheme));
 				}
 			}
@@ -26513,10 +26604,13 @@ var $author$project$OUI$Material$Color$getOnContainerColor = function (c) {
 			return function ($) {
 				return $.onErrorContainer;
 			};
-		default:
+		case 'ErrorContainer':
 			return function ($) {
 				return $.onErrorContainer;
 			};
+		default:
+			var onColor = c.a.onColor;
+			return $elm$core$Basics$always(onColor);
 	}
 };
 var $author$project$OUI$Material$Color$getOnElementColor = function (c) {
@@ -26524,6 +26618,16 @@ var $author$project$OUI$Material$Color$getOnElementColor = function (c) {
 		$elm$core$Basics$composeR,
 		$author$project$OUI$Material$Color$getOnColor(c),
 		$author$project$OUI$Material$Color$toElementColor);
+};
+var $author$project$OUI$Material$Color$getSurfaceContainerHighestColor = function (c) {
+	if (c.$ === 'Custom') {
+		var surface = c.a.surface;
+		return $elm$core$Basics$always(surface);
+	} else {
+		return function ($) {
+			return $.surfaceContainerHighest;
+		};
+	}
 };
 var $author$project$OUI$Material$Color$isError = function (c) {
 	switch (c.$) {
@@ -26578,8 +26682,9 @@ var $author$project$OUI$Material$Switch$render = F4(
 					};
 				} else {
 					return {
-						bgColor: $author$project$OUI$Material$Color$toElementColor(colorscheme.surfaceContainerHighest),
-						iconColor: colorscheme.surfaceContainerHighest,
+						bgColor: $author$project$OUI$Material$Color$toElementColor(
+							A2($author$project$OUI$Material$Color$getSurfaceContainerHighestColor, color, colorscheme)),
+						iconColor: A2($author$project$OUI$Material$Color$getSurfaceContainerHighestColor, color, colorscheme),
 						outlineColor: $author$project$OUI$Material$Color$isError(color) ? A2($author$project$OUI$Material$Color$getElementColor, color, colorscheme) : $author$project$OUI$Material$Color$toElementColor(colorscheme.outline),
 						thumbColor: $author$project$OUI$Material$Color$toElementColor(colorscheme.outline)
 					};
@@ -26588,21 +26693,50 @@ var $author$project$OUI$Material$Switch$render = F4(
 				if (_v2.b) {
 					return {
 						bgColor: $author$project$OUI$Material$Color$toElementColor(
-							A3($author$project$OUI$Material$Color$withShade, colorscheme.onSurface, 0.12, colorscheme.surface)),
-						iconColor: A3($author$project$OUI$Material$Color$withShade, colorscheme.onSurface, 0.38, colorscheme.surface),
+							A3(
+								$author$project$OUI$Material$Color$withShade,
+								A2($author$project$OUI$Material$Color$getOnSurfaceColor, color, colorscheme),
+								0.12,
+								A2($author$project$OUI$Material$Color$getSurfaceColor, color, colorscheme))),
+						iconColor: A3(
+							$author$project$OUI$Material$Color$withShade,
+							A2($author$project$OUI$Material$Color$getOnSurfaceColor, color, colorscheme),
+							0.38,
+							A2($author$project$OUI$Material$Color$getSurfaceColor, color, colorscheme)),
 						outlineColor: $author$project$OUI$Material$Color$toElementColor(
-							A3($author$project$OUI$Material$Color$withShade, colorscheme.onSurface, 0.12, colorscheme.surface)),
-						thumbColor: $author$project$OUI$Material$Color$toElementColor(colorscheme.surface)
+							A3(
+								$author$project$OUI$Material$Color$withShade,
+								A2($author$project$OUI$Material$Color$getOnSurfaceColor, color, colorscheme),
+								0.12,
+								A2($author$project$OUI$Material$Color$getSurfaceColor, color, colorscheme))),
+						thumbColor: $author$project$OUI$Material$Color$toElementColor(
+							A2($author$project$OUI$Material$Color$getSurfaceColor, color, colorscheme))
 					};
 				} else {
 					return {
 						bgColor: $author$project$OUI$Material$Color$toElementColor(
-							A3($author$project$OUI$Material$Color$withShade, colorscheme.surfaceContainerHighest, 0.12, colorscheme.surface)),
-						iconColor: A3($author$project$OUI$Material$Color$withShade, colorscheme.surfaceContainerHighest, 0.38, colorscheme.surface),
+							A3(
+								$author$project$OUI$Material$Color$withShade,
+								A2($author$project$OUI$Material$Color$getSurfaceContainerHighestColor, color, colorscheme),
+								0.12,
+								A2($author$project$OUI$Material$Color$getSurfaceColor, color, colorscheme))),
+						iconColor: A3(
+							$author$project$OUI$Material$Color$withShade,
+							A2($author$project$OUI$Material$Color$getSurfaceContainerHighestColor, color, colorscheme),
+							0.38,
+							A2($author$project$OUI$Material$Color$getSurfaceColor, color, colorscheme)),
 						outlineColor: $author$project$OUI$Material$Color$toElementColor(
-							A3($author$project$OUI$Material$Color$withShade, colorscheme.onSurface, 0.12, colorscheme.surface)),
+							A3(
+								$author$project$OUI$Material$Color$withShade,
+								A2($author$project$OUI$Material$Color$getOnSurfaceColor, color, colorscheme),
+								0.12,
+								A2($author$project$OUI$Material$Color$getSurfaceColor, color, colorscheme))),
 						thumbColor: $author$project$OUI$Material$Color$toElementColor(
-							A3($author$project$OUI$Material$Color$withShade, colorscheme.onSurface, 0.38, colorscheme.surface))
+							A3(
+								$author$project$OUI$Material$Color$withShade,
+								A2($author$project$OUI$Material$Color$getOnSurfaceColor, color, colorscheme),
+								0.38,
+								A2($author$project$OUI$Material$Color$getSurfaceColor, color, colorscheme)))
 					};
 				}
 			}
@@ -26668,21 +26802,30 @@ var $author$project$OUI$Material$Switch$render = F4(
 								[
 									$mdgriffith$elm_ui$Element$Background$color(
 									$author$project$OUI$Material$Color$toElementColor(
-										A2($author$project$OUI$Material$Color$setAlpha, $author$project$OUI$Material$Color$hoverStateLayerOpacity, colorscheme.onSurface)))
+										A2(
+											$author$project$OUI$Material$Color$setAlpha,
+											$author$project$OUI$Material$Color$hoverStateLayerOpacity,
+											A2($author$project$OUI$Material$Color$getOnSurfaceColor, color, colorscheme))))
 								])),
 							$mdgriffith$elm_ui$Element$focused(
 							_List_fromArray(
 								[
 									$mdgriffith$elm_ui$Element$Background$color(
 									$author$project$OUI$Material$Color$toElementColor(
-										A2($author$project$OUI$Material$Color$setAlpha, $author$project$OUI$Material$Color$focusStateLayerOpacity, colorscheme.onSurface)))
+										A2(
+											$author$project$OUI$Material$Color$setAlpha,
+											$author$project$OUI$Material$Color$focusStateLayerOpacity,
+											A2($author$project$OUI$Material$Color$getOnSurfaceColor, color, colorscheme))))
 								])),
 							$mdgriffith$elm_ui$Element$mouseDown(
 							_List_fromArray(
 								[
 									$mdgriffith$elm_ui$Element$Background$color(
 									$author$project$OUI$Material$Color$toElementColor(
-										A2($author$project$OUI$Material$Color$setAlpha, $author$project$OUI$Material$Color$pressStateLayerOpacity, colorscheme.onSurface)))
+										A2(
+											$author$project$OUI$Material$Color$setAlpha,
+											$author$project$OUI$Material$Color$pressStateLayerOpacity,
+											A2($author$project$OUI$Material$Color$getOnSurfaceColor, color, colorscheme))))
 								]))
 						]),
 					$mdgriffith$elm_ui$Element$none)),
@@ -27850,7 +27993,8 @@ var $author$project$OUI$Material$TextField$render = F6(
 		var hasLeadingIcon = !_Utils_eq(p.leadingIcon, $elm$core$Maybe$Nothing);
 		var hasError = $author$project$OUI$Material$Color$isError(p.color);
 		var labelElement = function () {
-			var labelColor = (hasError || p.hasFocus) ? A2($author$project$OUI$Material$Color$getElementColor, p.color, colorscheme) : $author$project$OUI$Material$Color$toElementColor(colorscheme.onSurface);
+			var labelColor = (hasError || p.hasFocus) ? A2($author$project$OUI$Material$Color$getElementColor, p.color, colorscheme) : $author$project$OUI$Material$Color$toElementColor(
+				A2($author$project$OUI$Material$Color$getOnSurfaceColor, p.color, colorscheme));
 			var staticAttrs = _List_fromArray(
 				[
 					$author$project$OUI$Material$TextField$transition('all 0.15s'),
@@ -27894,7 +28038,8 @@ var $author$project$OUI$Material$TextField$render = F6(
 									A2(
 										$elm$html$Html$Attributes$style,
 										'background',
-										'linear-gradient(to bottom, transparent 0 ' + ($elm$core$String$fromInt(topOffset) + ('px, ' + ($avh4$elm_color$Color$toCssString(colorscheme.surface) + (' ' + ($elm$core$String$fromInt(topOffset) + 'px)')))))))
+										'linear-gradient(to bottom, transparent 0 ' + ($elm$core$String$fromInt(topOffset) + ('px, ' + ($avh4$elm_color$Color$toCssString(
+											A2($author$project$OUI$Material$Color$getSurfaceColor, p.color, colorscheme)) + (' ' + ($elm$core$String$fromInt(topOffset) + 'px)')))))))
 								])),
 						A3(
 							$author$project$OUI$Material$Typography$renderWithAttrs,
@@ -27937,7 +28082,12 @@ var $author$project$OUI$Material$TextField$render = F6(
 					function (icon) {
 						var _v5 = p.onTrailingIconClick;
 						if (_v5.$ === 'Nothing') {
-							return A4($author$project$OUI$Material$Icon$renderWithSizeColor, 24, colorscheme.onSurfaceVariant, _List_Nil, icon);
+							return A4(
+								$author$project$OUI$Material$Icon$renderWithSizeColor,
+								24,
+								A2($author$project$OUI$Material$Color$getOnSurfaceVariantColor, p.color, colorscheme),
+								_List_Nil,
+								icon);
 						} else {
 							var onClick = _v5.a;
 							return A5(
@@ -27964,7 +28114,8 @@ var $author$project$OUI$Material$TextField$render = F6(
 			}
 		}();
 		var fontColorAttr = $mdgriffith$elm_ui$Element$Font$color(
-			$author$project$OUI$Material$Color$toElementColor(colorscheme.onSurface));
+			$author$project$OUI$Material$Color$toElementColor(
+				A2($author$project$OUI$Material$Color$getOnSurfaceColor, p.color, colorscheme)));
 		var focusEvents = A2(
 			$elm$core$List$filterMap,
 			$elm$core$Basics$identity,
@@ -28007,7 +28158,8 @@ var $author$project$OUI$Material$TextField$render = F6(
 					]);
 			}
 		}();
-		var borderColor = (hasError || p.hasFocus) ? A2($author$project$OUI$Material$Color$getElementColor, p.color, colorscheme) : $author$project$OUI$Material$Color$toElementColor(colorscheme.onSurfaceVariant);
+		var borderColor = (hasError || p.hasFocus) ? A2($author$project$OUI$Material$Color$getElementColor, p.color, colorscheme) : $author$project$OUI$Material$Color$toElementColor(
+			A2($author$project$OUI$Material$Color$getOnSurfaceVariantColor, p.color, colorscheme));
 		var borderAttrs = A2(
 			$elm$core$List$cons,
 			$author$project$OUI$Material$TextField$transition('color 0.15s'),
@@ -28035,10 +28187,12 @@ var $author$project$OUI$Material$TextField$render = F6(
 			var _v1 = p.type_;
 			if (_v1.$ === 'Filled') {
 				return $mdgriffith$elm_ui$Element$Background$color(
-					$author$project$OUI$Material$Color$toElementColor(colorscheme.surfaceContainerHighest));
+					$author$project$OUI$Material$Color$toElementColor(
+						A2($author$project$OUI$Material$Color$getSurfaceContainerHighestColor, p.color, colorscheme)));
 			} else {
 				return $mdgriffith$elm_ui$Element$Background$color(
-					$author$project$OUI$Material$Color$toElementColor(colorscheme.surface));
+					$author$project$OUI$Material$Color$toElementColor(
+						A2($author$project$OUI$Material$Color$getSurfaceColor, p.color, colorscheme)));
 			}
 		}();
 		var input_attrs = A2(
@@ -28100,7 +28254,11 @@ var $author$project$OUI$Material$TextField$render = F6(
 							[
 								A2(
 								$elm$core$Maybe$map,
-								A3($author$project$OUI$Material$Icon$renderWithSizeColor, 24, colorscheme.onSurfaceVariant, _List_Nil),
+								A3(
+									$author$project$OUI$Material$Icon$renderWithSizeColor,
+									24,
+									A2($author$project$OUI$Material$Color$getOnSurfaceVariantColor, p.color, colorscheme),
+									_List_Nil),
 								p.leadingIcon),
 								$elm$core$Maybe$Just(
 								p.isMultiline ? A2(
@@ -28127,7 +28285,7 @@ var $author$project$OUI$Material$TextField$render = F6(
 					var _v0 = p.supportingText;
 					if (_v0.$ === 'Just') {
 						var text = _v0.a;
-						var color = hasError ? colorscheme.error : colorscheme.onSurfaceVariant;
+						var color = hasError ? colorscheme.error : A2($author$project$OUI$Material$Color$getOnSurfaceVariantColor, p.color, colorscheme);
 						return _List_fromArray(
 							[
 								A2(

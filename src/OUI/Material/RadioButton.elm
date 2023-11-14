@@ -70,17 +70,17 @@ render colorscheme theme attrs radiobutton =
         ( focusedAndHoveredColor, pressedColor ) =
             case ( isDisabled, properties.selected ) of
                 ( True, _ ) ->
-                    ( colorscheme.onSurface
-                    , colorscheme.onSurface
+                    ( OUI.Material.Color.getOnSurfaceColor properties.color colorscheme
+                    , OUI.Material.Color.getOnSurfaceColor properties.color colorscheme
                     )
 
                 ( False, True ) ->
                     ( OUI.Material.Color.getColor properties.color colorscheme
-                    , colorscheme.onSurface
+                    , OUI.Material.Color.getOnSurfaceColor properties.color colorscheme
                     )
 
                 ( False, False ) ->
-                    ( colorscheme.onSurface
+                    ( OUI.Material.Color.getOnSurfaceColor properties.color colorscheme
                     , OUI.Material.Color.getColor properties.color colorscheme
                     )
 
@@ -94,7 +94,7 @@ render colorscheme theme attrs radiobutton =
                     OUI.Material.Color.getColor properties.color colorscheme
 
                 ( True, _ ) ->
-                    colorscheme.onSurface
+                    OUI.Material.Color.getOnSurfaceColor properties.color colorscheme
                         |> OUI.Material.Color.setAlpha 0.38
     in
     Input.button

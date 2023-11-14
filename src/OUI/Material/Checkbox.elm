@@ -56,17 +56,17 @@ render colorscheme theme attrs checkbox =
         ( focusedAndHoveredColor, pressedColor ) =
             case ( properties.onChange, properties.checked ) of
                 ( Nothing, _ ) ->
-                    ( colorscheme.onSurface
-                    , colorscheme.onSurface
+                    ( OUI.Material.Color.getOnSurfaceColor properties.color colorscheme
+                    , OUI.Material.Color.getOnSurfaceColor properties.color colorscheme
                     )
 
                 ( Just _, True ) ->
                     ( OUI.Material.Color.getColor properties.color colorscheme
-                    , colorscheme.onSurface
+                    , OUI.Material.Color.getOnSurfaceColor properties.color colorscheme
                     )
 
                 ( Just _, False ) ->
-                    ( colorscheme.onSurface
+                    ( OUI.Material.Color.getOnSurfaceColor properties.color colorscheme
                     , OUI.Material.Color.getColor properties.color colorscheme
                     )
 
@@ -81,14 +81,14 @@ render colorscheme theme attrs checkbox =
                 ( Just _, _ ) ->
                     ( OUI.Material.Color.getOnColor properties.color colorscheme
                     , OUI.Material.Color.getColor properties.color colorscheme
-                    , colorscheme.onSurface
+                    , OUI.Material.Color.getOnSurfaceColor properties.color colorscheme
                     )
 
                 ( Nothing, _ ) ->
-                    ( colorscheme.surface
-                    , colorscheme.onSurface
+                    ( OUI.Material.Color.getSurfaceColor properties.color colorscheme
+                    , OUI.Material.Color.getOnSurfaceColor properties.color colorscheme
                         |> OUI.Material.Color.setAlpha 0.38
-                    , colorscheme.onSurface
+                    , OUI.Material.Color.getOnSurfaceColor properties.color colorscheme
                         |> OUI.Material.Color.setAlpha 0.38
                     )
     in

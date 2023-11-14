@@ -126,12 +126,12 @@ render typescale colorscheme buttonTheme theme attrs textfield =
         bgColorAttr =
             case p.type_ of
                 OUI.TextField.Filled ->
-                    colorscheme.surfaceContainerHighest
+                    OUI.Material.Color.getSurfaceContainerHighestColor p.color colorscheme
                         |> OUI.Material.Color.toElementColor
                         |> Background.color
 
                 OUI.TextField.Outlined ->
-                    colorscheme.surface
+                    OUI.Material.Color.getSurfaceColor p.color colorscheme
                         |> OUI.Material.Color.toElementColor
                         |> Background.color
 
@@ -178,7 +178,7 @@ render typescale colorscheme buttonTheme theme attrs textfield =
                 OUI.Material.Color.getElementColor p.color colorscheme
 
             else
-                OUI.Material.Color.toElementColor colorscheme.onSurfaceVariant
+                OUI.Material.Color.toElementColor (OUI.Material.Color.getOnSurfaceVariantColor p.color colorscheme)
 
         borderAttrs : List (Attribute msg)
         borderAttrs =
@@ -313,7 +313,7 @@ render typescale colorscheme buttonTheme theme attrs textfield =
                         OUI.Material.Color.getElementColor p.color colorscheme
 
                     else
-                        OUI.Material.Color.toElementColor colorscheme.onSurface
+                        OUI.Material.Color.toElementColor (OUI.Material.Color.getOnSurfaceColor p.color colorscheme)
 
                 staticAttrs : List (Attribute msg)
                 staticAttrs =
@@ -358,7 +358,7 @@ render typescale colorscheme buttonTheme theme attrs textfield =
                                         ("linear-gradient(to bottom, transparent 0 "
                                             ++ String.fromInt topOffset
                                             ++ "px, "
-                                            ++ Color.toCssString colorscheme.surface
+                                            ++ Color.toCssString (OUI.Material.Color.getSurfaceColor p.color colorscheme)
                                             ++ " "
                                             ++ String.fromInt topOffset
                                             ++ "px)"
@@ -386,7 +386,7 @@ render typescale colorscheme buttonTheme theme attrs textfield =
 
         fontColorAttr : Attribute msg
         fontColorAttr =
-            colorscheme.onSurface
+            OUI.Material.Color.getOnSurfaceColor p.color colorscheme
                 |> OUI.Material.Color.toElementColor
                 |> Font.color
 
@@ -403,7 +403,7 @@ render typescale colorscheme buttonTheme theme attrs textfield =
                             (\icon ->
                                 case p.onTrailingIconClick of
                                     Nothing ->
-                                        OUI.Material.Icon.renderWithSizeColor 24 colorscheme.onSurfaceVariant [] icon
+                                        OUI.Material.Icon.renderWithSizeColor 24 (OUI.Material.Color.getOnSurfaceVariantColor p.color colorscheme) [] icon
 
                                     Just onClick ->
                                         Button.new p.label
@@ -455,7 +455,7 @@ render typescale colorscheme buttonTheme theme attrs textfield =
             (filterMaybe
                 [ p.leadingIcon
                     |> Maybe.map
-                        (OUI.Material.Icon.renderWithSizeColor 24 colorscheme.onSurfaceVariant [])
+                        (OUI.Material.Icon.renderWithSizeColor 24 (OUI.Material.Color.getOnSurfaceVariantColor p.color colorscheme) [])
                 , Just <|
                     if p.isMultiline then
                         Input.multiline input_attrs
@@ -484,7 +484,7 @@ render typescale colorscheme buttonTheme theme attrs textfield =
                                     colorscheme.error
 
                                 else
-                                    colorscheme.onSurfaceVariant
+                                    OUI.Material.Color.getOnSurfaceVariantColor p.color colorscheme
                         in
                         [ Element.el
                             [ color

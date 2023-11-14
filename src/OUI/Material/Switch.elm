@@ -83,7 +83,7 @@ render colorscheme theme attrs switch =
                     }
 
                 ( True, False ) ->
-                    { bgColor = Color.toElementColor colorscheme.surfaceContainerHighest
+                    { bgColor = Color.toElementColor (Color.getSurfaceContainerHighestColor color colorscheme)
                     , outlineColor =
                         if Color.isError color then
                             Color.getElementColor color colorscheme
@@ -91,42 +91,42 @@ render colorscheme theme attrs switch =
                         else
                             Color.toElementColor colorscheme.outline
                     , thumbColor = Color.toElementColor colorscheme.outline
-                    , iconColor = colorscheme.surfaceContainerHighest
+                    , iconColor = Color.getSurfaceContainerHighestColor color colorscheme
                     }
 
                 ( False, True ) ->
                     { bgColor =
-                        colorscheme.surface
-                            |> Color.withShade colorscheme.onSurface 0.12
+                        Color.getSurfaceColor color colorscheme
+                            |> Color.withShade (Color.getOnSurfaceColor color colorscheme) 0.12
                             |> Color.toElementColor
                     , outlineColor =
-                        colorscheme.surface
-                            |> Color.withShade colorscheme.onSurface 0.12
+                        Color.getSurfaceColor color colorscheme
+                            |> Color.withShade (Color.getOnSurfaceColor color colorscheme) 0.12
                             |> Color.toElementColor
                     , thumbColor =
-                        colorscheme.surface
+                        Color.getSurfaceColor color colorscheme
                             |> Color.toElementColor
                     , iconColor =
-                        colorscheme.surface
-                            |> Color.withShade colorscheme.onSurface 0.38
+                        Color.getSurfaceColor color colorscheme
+                            |> Color.withShade (Color.getOnSurfaceColor color colorscheme) 0.38
                     }
 
                 ( False, False ) ->
                     { bgColor =
-                        colorscheme.surface
-                            |> Color.withShade colorscheme.surfaceContainerHighest 0.12
+                        Color.getSurfaceColor color colorscheme
+                            |> Color.withShade (Color.getSurfaceContainerHighestColor color colorscheme) 0.12
                             |> Color.toElementColor
                     , outlineColor =
-                        colorscheme.surface
-                            |> Color.withShade colorscheme.onSurface 0.12
+                        Color.getSurfaceColor color colorscheme
+                            |> Color.withShade (Color.getOnSurfaceColor color colorscheme) 0.12
                             |> Color.toElementColor
                     , thumbColor =
-                        colorscheme.surface
-                            |> Color.withShade colorscheme.onSurface 0.38
+                        Color.getSurfaceColor color colorscheme
+                            |> Color.withShade (Color.getOnSurfaceColor color colorscheme) 0.38
                             |> Color.toElementColor
                     , iconColor =
-                        colorscheme.surface
-                            |> Color.withShade colorscheme.surfaceContainerHighest 0.38
+                        Color.getSurfaceColor color colorscheme
+                            |> Color.withShade (Color.getSurfaceContainerHighestColor color colorscheme) 0.38
                     }
 
         trackAttrs : List (Attribute msg)
@@ -204,19 +204,19 @@ render colorscheme theme attrs switch =
                     , Element.width <| Element.px theme.stateLayer.size
                     , Border.rounded <| theme.stateLayer.size // 2
                     , Element.mouseOver
-                        [ colorscheme.onSurface
+                        [ Color.getOnSurfaceColor color colorscheme
                             |> Color.setAlpha Color.hoverStateLayerOpacity
                             |> Color.toElementColor
                             |> Background.color
                         ]
                     , Element.focused
-                        [ colorscheme.onSurface
+                        [ Color.getOnSurfaceColor color colorscheme
                             |> Color.setAlpha Color.focusStateLayerOpacity
                             |> Color.toElementColor
                             |> Background.color
                         ]
                     , Element.mouseDown
-                        [ colorscheme.onSurface
+                        [ Color.getOnSurfaceColor color colorscheme
                             |> Color.setAlpha Color.pressStateLayerOpacity
                             |> Color.toElementColor
                             |> Background.color
