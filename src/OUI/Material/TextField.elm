@@ -411,7 +411,7 @@ render typescale colorscheme buttonTheme theme attrs textfield =
                                             |> Button.onClick onClick
                                             |> Button.color (ifThenElse p.hasFocus p.color OUI.Neutral)
                                             |> Button.iconButton
-                                            |> Button.render typescale colorscheme buttonTheme [ Element.centerX, Element.centerY ]
+                                            |> Button.render typescale colorscheme buttonTheme Nothing [ Element.centerX, Element.centerY ]
                             )
 
         input_attrs : List (Attribute msg)

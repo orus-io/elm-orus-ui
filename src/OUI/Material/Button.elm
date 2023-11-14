@@ -16,6 +16,7 @@ import Element.Font as Font
 import Element.Input as Input
 import OUI
 import OUI.Button exposing (Button, properties)
+import OUI.Icon exposing (Icon)
 import OUI.Material.Color
 import OUI.Material.Icon as Icon
 import OUI.Material.Typography
@@ -582,26 +583,28 @@ render :
     OUI.Material.Typography.Typescale
     -> OUI.Material.Color.Scheme
     -> Theme
+    -> Maybe Icon
     -> List (Attribute msg)
     -> Button { constraints | hasAction : () } msg
     -> Element msg
-render typescale colorscheme theme attrs button =
+render typescale colorscheme theme rightIcon attrs button =
     let
         props : OUI.Button.Properties msg
         props =
             properties button
     in
-    renderProps typescale colorscheme theme attrs props
+    renderProps typescale colorscheme theme rightIcon attrs props
 
 
 renderProps :
     OUI.Material.Typography.Typescale
     -> OUI.Material.Color.Scheme
     -> Theme
+    -> Maybe Icon
     -> List (Attribute msg)
     -> OUI.Button.Properties msg
     -> Element msg
-renderProps typescale colorscheme theme attrs props =
+renderProps typescale colorscheme theme rightIcon attrs props =
     let
         aria : List (Attribute msg)
         aria =
@@ -615,8 +618,12 @@ renderProps typescale colorscheme theme attrs props =
 
         label : Element msg
         label =
-            case props.icon of
-                Nothing ->
+            let
+                ( size, color ) =
+                    iconSizeColor colorscheme theme props.type_ props.color (props.action == OUI.Button.Disabled)
+            in
+            case ( iconOnly props.type_, props.icon, rightIcon ) of
+                ( _, Nothing, Nothing ) ->
                     Element.el
                         [ Element.centerX
                         , Element.centerY
@@ -624,30 +631,44 @@ renderProps typescale colorscheme theme attrs props =
                     <|
                         Element.text props.text
 
-                Just icon ->
-                    let
-                        ( size, color ) =
-                            iconSizeColor colorscheme theme props.type_ props.color (props.action == OUI.Button.Disabled)
-                    in
-                    if iconOnly props.type_ then
-                        Icon.renderWithSizeColor size
-                            color
-                            [ Element.centerX
-                            , Element.centerY
-                            ]
-                            icon
+                ( True, _, Just icon ) ->
+                    Icon.renderWithSizeColor size
+                        color
+                        [ Element.centerX
+                        , Element.centerY
+                        ]
+                        icon
 
-                    else
-                        Element.row
-                            [ Element.spacing theme.common.paddingBetweenElements
-                            ]
-                            [ Icon.renderWithSizeColor size
+                ( True, Just icon, _ ) ->
+                    Icon.renderWithSizeColor size
+                        color
+                        [ Element.centerX
+                        , Element.centerY
+                        ]
+                        icon
+
+                ( False, icon, _ ) ->
+                    [ icon
+                        |> Maybe.map
+                            (Icon.renderWithSizeColor size
                                 color
                                 [ Element.centerX
                                 , Element.centerY
                                 ]
-                                icon
-                            , Element.text props.text
+                            )
+                    , Just (Element.text props.text)
+                    , rightIcon
+                        |> Maybe.map
+                            (Icon.renderWithSizeColor size
+                                color
+                                [ Element.centerX
+                                , Element.centerY
+                                ]
+                            )
+                    ]
+                        |> List.filterMap identity
+                        |> Element.row
+                            [ Element.spacing theme.common.paddingBetweenElements
                             ]
 
         all_attrs : List (Attribute msg)

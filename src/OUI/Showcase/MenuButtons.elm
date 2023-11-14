@@ -42,6 +42,7 @@ chapter shared model =
                             Nothing
                     )
             )
+            |> MenuButton.withOpenCloseIcons OUI.Icon.arrow_drop_down OUI.Icon.arrow_drop_up
             |> OUI.Material.menuButton shared.theme model.menu1State []
         , MenuButton.new (MenuButtonMsg "menu2")
             (OnSelect "menu2")

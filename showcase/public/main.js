@@ -13067,51 +13067,103 @@ var $author$project$OUI$Utils$ARIA$withLabel = F2(
 				label: $elm$core$Maybe$Just(label)
 			});
 	});
-var $author$project$OUI$Material$Button$renderProps = F5(
-	function (typescale, colorscheme, theme, attrs, props) {
+var $author$project$OUI$Material$Button$renderProps = F6(
+	function (typescale, colorscheme, theme, rightIcon, attrs, props) {
 		var label = function () {
-			var _v29 = props.icon;
-			if (_v29.$ === 'Nothing') {
-				return A2(
-					$mdgriffith$elm_ui$Element$el,
-					_List_fromArray(
-						[$mdgriffith$elm_ui$Element$centerX, $mdgriffith$elm_ui$Element$centerY]),
-					$mdgriffith$elm_ui$Element$text(props.text));
-			} else {
-				var icon = _v29.a;
-				var _v30 = A5(
-					$author$project$OUI$Material$Button$iconSizeColor,
-					colorscheme,
-					theme,
-					props.type_,
-					props.color,
-					_Utils_eq(props.action, $author$project$OUI$Button$Disabled));
-				var size = _v30.a;
-				var color = _v30.b;
-				return $author$project$OUI$Material$Button$iconOnly(props.type_) ? A4(
+			var _v29 = A5(
+				$author$project$OUI$Material$Button$iconSizeColor,
+				colorscheme,
+				theme,
+				props.type_,
+				props.color,
+				_Utils_eq(props.action, $author$project$OUI$Button$Disabled));
+			var size = _v29.a;
+			var color = _v29.b;
+			var _v30 = _Utils_Tuple3(
+				$author$project$OUI$Material$Button$iconOnly(props.type_),
+				props.icon,
+				rightIcon);
+			_v30$0:
+			while (true) {
+				_v30$1:
+				while (true) {
+					if (_v30.a) {
+						if (_v30.b.$ === 'Nothing') {
+							if (_v30.c.$ === 'Nothing') {
+								break _v30$0;
+							} else {
+								break _v30$1;
+							}
+						} else {
+							if (_v30.c.$ === 'Just') {
+								break _v30$1;
+							} else {
+								var icon = _v30.b.a;
+								return A4(
+									$author$project$OUI$Material$Icon$renderWithSizeColor,
+									size,
+									color,
+									_List_fromArray(
+										[$mdgriffith$elm_ui$Element$centerX, $mdgriffith$elm_ui$Element$centerY]),
+									icon);
+							}
+						}
+					} else {
+						if ((_v30.b.$ === 'Nothing') && (_v30.c.$ === 'Nothing')) {
+							break _v30$0;
+						} else {
+							var icon = _v30.b;
+							return A2(
+								$mdgriffith$elm_ui$Element$row,
+								_List_fromArray(
+									[
+										$mdgriffith$elm_ui$Element$spacing(theme.common.paddingBetweenElements)
+									]),
+								A2(
+									$elm$core$List$filterMap,
+									$elm$core$Basics$identity,
+									_List_fromArray(
+										[
+											A2(
+											$elm$core$Maybe$map,
+											A3(
+												$author$project$OUI$Material$Icon$renderWithSizeColor,
+												size,
+												color,
+												_List_fromArray(
+													[$mdgriffith$elm_ui$Element$centerX, $mdgriffith$elm_ui$Element$centerY])),
+											icon),
+											$elm$core$Maybe$Just(
+											$mdgriffith$elm_ui$Element$text(props.text)),
+											A2(
+											$elm$core$Maybe$map,
+											A3(
+												$author$project$OUI$Material$Icon$renderWithSizeColor,
+												size,
+												color,
+												_List_fromArray(
+													[$mdgriffith$elm_ui$Element$centerX, $mdgriffith$elm_ui$Element$centerY])),
+											rightIcon)
+										])));
+						}
+					}
+				}
+				var icon = _v30.c.a;
+				return A4(
 					$author$project$OUI$Material$Icon$renderWithSizeColor,
 					size,
 					color,
 					_List_fromArray(
 						[$mdgriffith$elm_ui$Element$centerX, $mdgriffith$elm_ui$Element$centerY]),
-					icon) : A2(
-					$mdgriffith$elm_ui$Element$row,
-					_List_fromArray(
-						[
-							$mdgriffith$elm_ui$Element$spacing(theme.common.paddingBetweenElements)
-						]),
-					_List_fromArray(
-						[
-							A4(
-							$author$project$OUI$Material$Icon$renderWithSizeColor,
-							size,
-							color,
-							_List_fromArray(
-								[$mdgriffith$elm_ui$Element$centerX, $mdgriffith$elm_ui$Element$centerY]),
-							icon),
-							$mdgriffith$elm_ui$Element$text(props.text)
-						]));
+					icon);
 			}
+			var _v31 = _v30.b;
+			var _v32 = _v30.c;
+			return A2(
+				$mdgriffith$elm_ui$Element$el,
+				_List_fromArray(
+					[$mdgriffith$elm_ui$Element$centerX, $mdgriffith$elm_ui$Element$centerY]),
+				$mdgriffith$elm_ui$Element$text(props.text));
 		}();
 		var hasIcon = !_Utils_eq(props.icon, $elm$core$Maybe$Nothing);
 		var aria = $author$project$OUI$Utils$ARIA$toElementAttributes(
@@ -13268,13 +13320,13 @@ var $author$project$OUI$Material$Button$renderProps = F5(
 					{label: label, onPress: $elm$core$Maybe$Nothing});
 		}
 	});
-var $author$project$OUI$Material$Button$render = F5(
-	function (typescale, colorscheme, theme, attrs, button) {
+var $author$project$OUI$Material$Button$render = F6(
+	function (typescale, colorscheme, theme, rightIcon, attrs, button) {
 		var props = $author$project$OUI$Button$properties(button);
-		return A5($author$project$OUI$Material$Button$renderProps, typescale, colorscheme, theme, attrs, props);
+		return A6($author$project$OUI$Material$Button$renderProps, typescale, colorscheme, theme, rightIcon, attrs, props);
 	});
 var $author$project$OUI$Material$button = function (theme) {
-	return A3($author$project$OUI$Material$Button$render, theme.typescale, theme.colorscheme, theme.button);
+	return A4($author$project$OUI$Material$Button$render, theme.typescale, theme.colorscheme, theme.button, $elm$core$Maybe$Nothing);
 };
 var $author$project$OUI$Icon$Svg = function (a) {
 	return {$: 'Svg', a: a};
@@ -24008,6 +24060,77 @@ var $author$project$OUI$MenuButton$alignRight = function (_v0) {
 			props,
 			{menuAlign: $author$project$OUI$MenuButton$AlignRight}));
 };
+var $elm$svg$Svg$Attributes$enableBackground = _VirtualDom_attribute('enable-background');
+var $author$project$OUI$Icon$arrow_drop_down = $author$project$OUI$Icon$fromRenderer(
+	$author$project$OUI$Icon$Svg(
+		F2(
+			function (size, color) {
+				var sizeAsString = $elm$core$String$fromInt(size);
+				return A2(
+					$elm$svg$Svg$svg,
+					_List_fromArray(
+						[
+							$elm$svg$Svg$Attributes$viewBox('0 0 24 24'),
+							$elm$svg$Svg$Attributes$enableBackground('new 0 0 24 24'),
+							$elm$svg$Svg$Attributes$height(sizeAsString),
+							$elm$svg$Svg$Attributes$width(sizeAsString)
+						]),
+					_List_fromArray(
+						[
+							A2(
+							$elm$svg$Svg$path,
+							_List_fromArray(
+								[
+									$elm$svg$Svg$Attributes$d('M0 0h24v24H0V0z'),
+									$elm$svg$Svg$Attributes$fill('none')
+								]),
+							_List_Nil),
+							A2(
+							$elm$svg$Svg$path,
+							_List_fromArray(
+								[
+									$elm$svg$Svg$Attributes$d('M7 10l5 5 5-5H7z'),
+									$elm$svg$Svg$Attributes$fill(
+									$avh4$elm_color$Color$toCssString(color))
+								]),
+							_List_Nil)
+						]));
+			})));
+var $author$project$OUI$Icon$arrow_drop_up = $author$project$OUI$Icon$fromRenderer(
+	$author$project$OUI$Icon$Svg(
+		F2(
+			function (size, color) {
+				var sizeAsString = $elm$core$String$fromInt(size);
+				return A2(
+					$elm$svg$Svg$svg,
+					_List_fromArray(
+						[
+							$elm$svg$Svg$Attributes$viewBox('0 0 24 24'),
+							$elm$svg$Svg$Attributes$enableBackground('new 0 0 24 24'),
+							$elm$svg$Svg$Attributes$height(sizeAsString),
+							$elm$svg$Svg$Attributes$width(sizeAsString)
+						]),
+					_List_fromArray(
+						[
+							A2(
+							$elm$svg$Svg$path,
+							_List_fromArray(
+								[
+									$elm$svg$Svg$Attributes$d('M0 0h24v24H0V0z'),
+									$elm$svg$Svg$Attributes$fill('none')
+								]),
+							_List_Nil),
+							A2(
+							$elm$svg$Svg$path,
+							_List_fromArray(
+								[
+									$elm$svg$Svg$Attributes$d('M7 14l5-5 5 5H7z'),
+									$elm$svg$Svg$Attributes$fill(
+									$avh4$elm_color$Color$toCssString(color))
+								]),
+							_List_Nil)
+						]));
+			})));
 var $author$project$OUI$Explorer$bookMsg = $author$project$OUI$Explorer$BookMsg;
 var $mdgriffith$elm_ui$Internal$Model$Left = {$: 'Left'};
 var $mdgriffith$elm_ui$Element$alignLeft = $mdgriffith$elm_ui$Internal$Model$AlignX($mdgriffith$elm_ui$Internal$Model$Left);
@@ -24285,11 +24408,19 @@ var $author$project$OUI$Material$Menu$render = F7(
 var $author$project$OUI$Material$MenuButton$render = F8(
 	function (typescale, colorscheme, buttonTheme, dividerTheme, menuTheme, state, attrs, menuBtn) {
 		var props = $author$project$OUI$MenuButton$properties(menuBtn);
-		return A5(
+		return A6(
 			$author$project$OUI$Material$Button$render,
 			typescale,
 			colorscheme,
 			buttonTheme,
+			A2(
+				$elm$core$Maybe$map,
+				function (_v0) {
+					var open = _v0.a;
+					var close = _v0.b;
+					return state.opened ? close : open;
+				},
+				props.openCloseIcons),
 			A2(
 				$elm$core$List$cons,
 				$mdgriffith$elm_ui$Element$htmlAttribute(
@@ -24313,8 +24444,8 @@ var $author$project$OUI$Material$MenuButton$render = F8(
 										[
 											$mdgriffith$elm_ui$Element$moveDown(1),
 											function () {
-											var _v0 = props.menuAlign;
-											if (_v0.$ === 'AlignLeft') {
+											var _v1 = props.menuAlign;
+											if (_v1.$ === 'AlignLeft') {
 												return $mdgriffith$elm_ui$Element$alignLeft;
 											} else {
 												return $mdgriffith$elm_ui$Element$alignRight;
@@ -24390,7 +24521,8 @@ var $author$project$OUI$MenuButton$new = F4(
 					$elm$core$Basics$composeR,
 					A2($author$project$OUI$MenuButton$OnKeyDown, onClick, menuitems),
 					map),
-				onLoseFocus: map($author$project$OUI$MenuButton$OnBlur)
+				onLoseFocus: map($author$project$OUI$MenuButton$OnBlur),
+				openCloseIcons: $elm$core$Maybe$Nothing
 			});
 	});
 var $author$project$OUI$Menu$withIcon = F2(
@@ -24400,6 +24532,17 @@ var $author$project$OUI$Menu$withIcon = F2(
 			_Utils_update(
 				props,
 				{itemToIcon: itemToIcon}));
+	});
+var $author$project$OUI$MenuButton$withOpenCloseIcons = F3(
+	function (open, close, _v0) {
+		var props = _v0.a;
+		return $author$project$OUI$MenuButton$MenuButton(
+			_Utils_update(
+				props,
+				{
+					openCloseIcons: $elm$core$Maybe$Just(
+						_Utils_Tuple2(open, close))
+				}));
 	});
 var $author$project$OUI$Showcase$MenuButtons$chapter = F2(
 	function (shared, model) {
@@ -24419,22 +24562,26 @@ var $author$project$OUI$Showcase$MenuButtons$chapter = F2(
 						shared.theme,
 						model.menu1State,
 						_List_Nil,
-						A4(
-							$author$project$OUI$MenuButton$new,
-							$author$project$OUI$Showcase$MenuButtons$MenuButtonMsg('menu1'),
-							$author$project$OUI$Showcase$MenuButtons$OnSelect('menu1'),
-							$author$project$OUI$Button$outlinedButton(
-								$author$project$OUI$Button$new('click me')),
-							A2(
-								$author$project$OUI$Menu$withIcon,
-								function (i) {
-									return (i !== 'Two') ? $elm$core$Maybe$Just($author$project$OUI$Icon$check) : $elm$core$Maybe$Nothing;
-								},
+						A3(
+							$author$project$OUI$MenuButton$withOpenCloseIcons,
+							$author$project$OUI$Icon$arrow_drop_down,
+							$author$project$OUI$Icon$arrow_drop_up,
+							A4(
+								$author$project$OUI$MenuButton$new,
+								$author$project$OUI$Showcase$MenuButtons$MenuButtonMsg('menu1'),
+								$author$project$OUI$Showcase$MenuButtons$OnSelect('menu1'),
+								$author$project$OUI$Button$outlinedButton(
+									$author$project$OUI$Button$new('click me')),
 								A2(
-									$author$project$OUI$Menu$addItems,
-									_List_fromArray(
-										['One', 'Two', 'Three']),
-									$author$project$OUI$Menu$new($elm$core$Basics$identity))))),
+									$author$project$OUI$Menu$withIcon,
+									function (i) {
+										return (i !== 'Two') ? $elm$core$Maybe$Just($author$project$OUI$Icon$check) : $elm$core$Maybe$Nothing;
+									},
+									A2(
+										$author$project$OUI$Menu$addItems,
+										_List_fromArray(
+											['One', 'Two', 'Three']),
+										$author$project$OUI$Menu$new($elm$core$Basics$identity)))))),
 						A4(
 						$author$project$OUI$Material$menuButton,
 						shared.theme,
@@ -25565,7 +25712,6 @@ var $author$project$OUI$Navigation$addSectionHeader = F2(
 							]))
 				}));
 	});
-var $elm$svg$Svg$Attributes$enableBackground = _VirtualDom_attribute('enable-background');
 var $elm$svg$Svg$rect = $elm$svg$Svg$trustedNode('rect');
 var $author$project$OUI$Icon$light_mode = $author$project$OUI$Icon$fromRenderer(
 	$author$project$OUI$Icon$Svg(
@@ -28090,11 +28236,12 @@ var $author$project$OUI$Material$TextField$render = F6(
 								icon);
 						} else {
 							var onClick = _v5.a;
-							return A5(
+							return A6(
 								$author$project$OUI$Material$Button$render,
 								typescale,
 								colorscheme,
 								buttonTheme,
+								$elm$core$Maybe$Nothing,
 								_List_fromArray(
 									[$mdgriffith$elm_ui$Element$centerX, $mdgriffith$elm_ui$Element$centerY]),
 								$author$project$OUI$Button$iconButton(

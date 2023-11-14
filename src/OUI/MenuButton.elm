@@ -1,6 +1,6 @@
 module OUI.MenuButton exposing
     ( MenuButton, Align(..), Key(..)
-    , new, alignLeft, alignRight
+    , new, alignLeft, alignRight, withOpenCloseIcons
     , State, Msg, init, update, onOutsideClick
     , Effect(..), updateWithoutPerform, performEffect
     , properties
@@ -15,7 +15,7 @@ The button will open a menu when clicked.
 
 # Constructor
 
-@docs new, alignLeft, alignRight
+@docs new, alignLeft, alignRight, withOpenCloseIcons
 
 
 # State management
@@ -42,6 +42,7 @@ everything you need.
 
 import OUI.Button
 import OUI.Helpers
+import OUI.Icon exposing (Icon)
 import OUI.Menu
 import Task
 
@@ -62,6 +63,7 @@ type MenuButton btnC item msg
         , menuAlign : Align
         , onKeyDown : Key -> msg
         , onLoseFocus : msg
+        , openCloseIcons : Maybe ( Icon, Icon )
         }
 
 
@@ -111,6 +113,17 @@ new map onClick button menu =
         , menuAlign = AlignLeft
         , onKeyDown = OnKeyDown onClick menuitems >> map
         , onLoseFocus = map OnBlur
+        , openCloseIcons = Nothing
+        }
+
+
+{-| withOpenCloseIcons
+-}
+withOpenCloseIcons : Icon -> Icon -> MenuButton btnC item msg -> MenuButton btnC item msg
+withOpenCloseIcons open close (MenuButton props) =
+    MenuButton
+        { props
+            | openCloseIcons = Just ( open, close )
         }
 
 
@@ -375,6 +388,7 @@ properties :
         , menuAlign : Align
         , onKeyDown : Key -> msg
         , onLoseFocus : msg
+        , openCloseIcons : Maybe ( Icon, Icon )
         }
 properties (MenuButton props) =
     props

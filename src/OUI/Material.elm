@@ -76,7 +76,7 @@ button :
     -> OUI.Button.Button { constraints | hasAction : () } msg
     -> Element msg
 button theme =
-    OUI.Material.Button.render theme.typescale theme.colorscheme theme.button
+    OUI.Material.Button.render theme.typescale theme.colorscheme theme.button Nothing
 
 
 {-| Render an icon

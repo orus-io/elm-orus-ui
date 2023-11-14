@@ -7,6 +7,7 @@ import Html.Attributes
 import Html.Events
 import Json.Decode as Decode
 import OUI.Button
+import OUI.Icon exposing (Icon)
 import OUI.Material.Button as Button
 import OUI.Material.Color exposing (Scheme)
 import OUI.Material.Divider as Divider
@@ -34,6 +35,7 @@ render typescale colorscheme buttonTheme dividerTheme menuTheme state attrs menu
             , menuAlign : OUI.MenuButton.Align
             , onKeyDown : OUI.MenuButton.Key -> msg
             , onLoseFocus : msg
+            , openCloseIcons : Maybe ( Icon, Icon )
             }
         props =
             OUI.MenuButton.properties menuBtn
@@ -41,6 +43,16 @@ render typescale colorscheme buttonTheme dividerTheme menuTheme state attrs menu
     Button.render typescale
         colorscheme
         buttonTheme
+        (props.openCloseIcons
+            |> Maybe.map
+                (\( open, close ) ->
+                    if state.opened then
+                        close
+
+                    else
+                        open
+                )
+        )
         (Element.htmlAttribute (Html.Attributes.id state.id)
             :: Element.Events.onLoseFocus props.onLoseFocus
             :: attrs
