@@ -28127,6 +28127,7 @@ var $author$project$OUI$Material$TextField$render = F6(
 					var _v0 = p.supportingText;
 					if (_v0.$ === 'Just') {
 						var text = _v0.a;
+						var color = hasError ? colorscheme.error : colorscheme.onSurfaceVariant;
 						return _List_fromArray(
 							[
 								A2(
@@ -28134,7 +28135,7 @@ var $author$project$OUI$Material$TextField$render = F6(
 								_List_fromArray(
 									[
 										$mdgriffith$elm_ui$Element$Font$color(
-										$author$project$OUI$Material$Color$toElementColor(colorscheme.onSurfaceVariant)),
+										$author$project$OUI$Material$Color$toElementColor(color)),
 										A2($mdgriffith$elm_ui$Element$paddingXY, theme.leftRightPaddingWithoutIcon, 0)
 									]),
 								A2(

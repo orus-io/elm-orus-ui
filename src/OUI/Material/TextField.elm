@@ -478,8 +478,16 @@ render typescale colorscheme buttonTheme theme attrs textfield =
             )
             :: (case p.supportingText of
                     Just text ->
+                        let
+                            color =
+                                if hasError then
+                                    colorscheme.error
+
+                                else
+                                    colorscheme.onSurfaceVariant
+                        in
                         [ Element.el
-                            [ colorscheme.onSurfaceVariant
+                            [ color
                                 |> OUI.Material.Color.toElementColor
                                 |> Font.color
                             , Element.paddingXY theme.leftRightPaddingWithoutIcon 0
