@@ -479,6 +479,7 @@ render typescale colorscheme buttonTheme theme attrs textfield =
             :: (case p.supportingText of
                     Just text ->
                         let
+                            color : Color.Color
                             color =
                                 if hasError then
                                     colorscheme.error

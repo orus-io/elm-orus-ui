@@ -243,6 +243,8 @@ getOnContainerColor c =
             always onColor
 
 
+{-| get the "surface" color
+-}
 getSurfaceColor : OUI.Color -> Scheme -> Color.Color
 getSurfaceColor c =
     case c of
@@ -253,6 +255,8 @@ getSurfaceColor c =
             .surface
 
 
+{-| get the "on surface" color
+-}
 getOnSurfaceColor : OUI.Color -> Scheme -> Color.Color
 getOnSurfaceColor c =
     case c of
@@ -263,6 +267,8 @@ getOnSurfaceColor c =
             .onSurface
 
 
+{-| get the "surface variant" color
+-}
 getSurfaceVariantColor : OUI.Color -> Scheme -> Color.Color
 getSurfaceVariantColor c =
     case c of
@@ -273,6 +279,8 @@ getSurfaceVariantColor c =
             .surfaceVariant
 
 
+{-| get the "on surface variant" color
+-}
 getOnSurfaceVariantColor : OUI.Color -> Scheme -> Color.Color
 getOnSurfaceVariantColor c =
     case c of
@@ -283,6 +291,8 @@ getOnSurfaceVariantColor c =
             .onSurfaceVariant
 
 
+{-| get the "surface container lowest" color
+-}
 getSurfaceContainerLowestColor : OUI.Color -> Scheme -> Color.Color
 getSurfaceContainerLowestColor c =
     case c of
@@ -293,6 +303,8 @@ getSurfaceContainerLowestColor c =
             .surfaceContainerLowest
 
 
+{-| get the "surface container low" color
+-}
 getSurfaceContainerLowColor : OUI.Color -> Scheme -> Color.Color
 getSurfaceContainerLowColor c =
     case c of
@@ -303,6 +315,8 @@ getSurfaceContainerLowColor c =
             .surfaceContainerLow
 
 
+{-| get the "surface container" color
+-}
 getSurfaceContainerColor : OUI.Color -> Scheme -> Color.Color
 getSurfaceContainerColor c =
     case c of
@@ -313,6 +327,8 @@ getSurfaceContainerColor c =
             .surfaceContainer
 
 
+{-| get the "surface container high" color
+-}
 getSurfaceContainerHighColor : OUI.Color -> Scheme -> Color.Color
 getSurfaceContainerHighColor c =
     case c of
@@ -323,6 +339,8 @@ getSurfaceContainerHighColor c =
             .surfaceContainerHigh
 
 
+{-| get the "surface container highest" color
+-}
 getSurfaceContainerHighestColor : OUI.Color -> Scheme -> Color.Color
 getSurfaceContainerHighestColor c =
     case c of
