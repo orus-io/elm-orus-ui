@@ -8,7 +8,7 @@ import OUI.Divider as Divider
 import OUI.Explorer as Explorer exposing (Explorer)
 import OUI.Material as Material
 import OUI.Material.Color
-import OUI.Material.Theme
+import OUI.Material.Theme as Theme
 
 
 book : Explorer.Book themeExt () ()
@@ -19,14 +19,19 @@ book =
 
 commonDividers : Explorer.Shared themeExt -> Element (Explorer.BookMsg ())
 commonDividers { theme } =
+    let
+        colorscheme : OUI.Material.Color.Scheme
+        colorscheme =
+            Theme.colorscheme theme
+    in
     Element.column
         [ Element.spacing 16
         , Element.width <| Element.px 400
         , Element.Border.solid
         , Element.Border.rounded 8
         , Element.Border.width 1
-        , theme.colorscheme.surfaceContainer
-            |> OUI.Material.Color.withShade theme.colorscheme.onSurface
+        , colorscheme.surfaceContainer
+            |> OUI.Material.Color.withShade colorscheme.onSurface
                 OUI.Material.Color.hoverStateLayerOpacity
             |> OUI.Material.Color.toElementColor
             |> Element.Border.color

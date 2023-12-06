@@ -39,7 +39,7 @@ import OUI.Material.Navigation
 import OUI.Material.RadioButton
 import OUI.Material.Switch
 import OUI.Material.TextField
-import OUI.Material.Theme exposing (Theme, Typescale)
+import OUI.Material.Theme as Theme exposing (Theme)
 import OUI.Material.Typography
 import OUI.Menu
 import OUI.MenuButton
@@ -50,22 +50,14 @@ import OUI.Text
 import OUI.TextField
 
 
-{-| Convert a color to a Element.color
--}
-toElementColor : Color.Color -> Element.Color
-toElementColor =
-    Color.toRgba
-        >> Element.fromRgb
-
-
 {-| Render a text
 -}
 text :
     Theme themeExt
     -> OUI.Text.Text
     -> Element msg
-text { typescale } =
-    OUI.Material.Typography.render typescale
+text theme =
+    OUI.Material.Typography.render (Theme.typescale theme)
 
 
 {-| Render a button
@@ -76,7 +68,11 @@ button :
     -> OUI.Button.Button { constraints | hasAction : () } msg
     -> Element msg
 button theme =
-    OUI.Material.Button.render theme.typescale theme.colorscheme theme.button Nothing
+    OUI.Material.Button.render
+        (Theme.typescale theme)
+        (Theme.colorscheme theme)
+        (Theme.button theme)
+        Nothing
 
 
 {-| Render an icon
@@ -86,8 +82,8 @@ icon :
     -> List (Attribute msg)
     -> Icon
     -> Element msg
-icon { colorscheme } =
-    OUI.Material.Icon.render colorscheme
+icon theme =
+    OUI.Material.Icon.render (Theme.colorscheme theme)
 
 
 {-| Render a checkbox
@@ -98,7 +94,7 @@ checkbox :
     -> OUI.Checkbox.Checkbox { hasAction : (), withChecked : () } msg
     -> Element msg
 checkbox theme =
-    OUI.Material.Checkbox.render theme.colorscheme theme.checkbox
+    OUI.Material.Checkbox.render (Theme.colorscheme theme) (Theme.checkbox theme)
 
 
 {-| Render a menu
@@ -109,7 +105,12 @@ menu :
     -> OUI.Menu.Menu item msg
     -> Element msg
 menu theme =
-    OUI.Material.Menu.render theme.typescale theme.colorscheme theme.divider theme.menu -1
+    OUI.Material.Menu.render
+        (Theme.typescale theme)
+        (Theme.colorscheme theme)
+        (Theme.divider theme)
+        (Theme.menu theme)
+        -1
 
 
 {-| Render a menu button
@@ -121,7 +122,12 @@ menuButton :
     -> OUI.MenuButton.MenuButton btnC item msg
     -> Element msg
 menuButton theme =
-    OUI.Material.MenuButton.render theme.typescale theme.colorscheme theme.button theme.divider theme.menu
+    OUI.Material.MenuButton.render
+        (Theme.typescale theme)
+        (Theme.colorscheme theme)
+        (Theme.button theme)
+        (Theme.divider theme)
+        (Theme.menu theme)
 
 
 {-| Render a navigation trail/drawer
@@ -132,7 +138,11 @@ navigation :
     -> OUI.Navigation.Navigation btnC key msg
     -> Element msg
 navigation theme =
-    OUI.Material.Navigation.render theme.typescale theme.colorscheme theme.divider theme.navigation
+    OUI.Material.Navigation.render
+        (Theme.typescale theme)
+        (Theme.colorscheme theme)
+        (Theme.divider theme)
+        (Theme.navigation theme)
 
 
 {-| Render a radiobutton
@@ -143,7 +153,9 @@ radiobutton :
     -> OUI.RadioButton.RadioButton { hasAction : (), withSelected : () } msg
     -> Element msg
 radiobutton theme =
-    OUI.Material.RadioButton.render theme.colorscheme theme.radiobutton
+    OUI.Material.RadioButton.render
+        (Theme.colorscheme theme)
+        (Theme.radiobutton theme)
 
 
 {-| Render a Switch
@@ -154,7 +166,9 @@ switch :
     -> OUI.Switch.Switch msg
     -> Element msg
 switch theme =
-    OUI.Material.Switch.render theme.colorscheme theme.switch
+    OUI.Material.Switch.render
+        (Theme.colorscheme theme)
+        (Theme.switch theme)
 
 
 {-| Render a TextField
@@ -165,11 +179,17 @@ textField :
     -> OUI.TextField.TextField msg
     -> Element msg
 textField theme =
-    OUI.Material.TextField.render theme.typescale theme.colorscheme theme.button theme.textfield
+    OUI.Material.TextField.render
+        (Theme.typescale theme)
+        (Theme.colorscheme theme)
+        (Theme.button theme)
+        (Theme.textfield theme)
 
 
 {-| Render a divider
 -}
 divider : Theme themeExt -> List (Attribute msg) -> OUI.Divider.Divider -> Element msg
 divider theme =
-    OUI.Material.Divider.render theme.colorscheme theme.divider
+    OUI.Material.Divider.render
+        (Theme.colorscheme theme)
+        (Theme.divider theme)

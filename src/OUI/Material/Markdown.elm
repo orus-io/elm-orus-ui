@@ -10,13 +10,22 @@ import Markdown.Renderer
 import OUI.Checkbox
 import OUI.Material as Material
 import OUI.Material.Color
-import OUI.Material.Theme exposing (Theme)
+import OUI.Material.Theme as Theme exposing (Theme)
 import OUI.Material.Typography as Typography
 import OUI.Text
 
 
 renderer : Theme themeExt -> Markdown.Renderer.Renderer (Element msg)
-renderer ({ typescale, colorscheme } as theme) =
+renderer theme =
+    let
+        typescale : Typography.Typescale
+        typescale =
+            Theme.typescale theme
+
+        colorscheme : OUI.Material.Color.Scheme
+        colorscheme =
+            Theme.colorscheme theme
+    in
     { heading =
         \{ level, children } ->
             case level of

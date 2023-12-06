@@ -120,7 +120,7 @@ type Explorer themeExt current previous currentMsg previousMsg
 
 {-| creates an empty Explorer
 -}
-explorer : Explorer themeExt () () () ()
+explorer : Explorer () () () () ()
 explorer =
     Explorer
         { app =
@@ -450,10 +450,7 @@ changeColorScheme index type_ shared =
             shared.theme
     in
     { shared
-        | theme =
-            { theme
-                | colorscheme = colorScheme
-            }
+        | theme = shared.theme |> Theme.withColorscheme colorScheme
         , selectedColorScheme = ( realIndex, type_ )
     }
 
@@ -562,6 +559,11 @@ finalize (Explorer expl) =
             , protectPage = \_ -> "/"
             , toDocument =
                 \shared b ->
+                    let
+                        colorscheme : Color.Scheme
+                        colorscheme =
+                            Theme.colorscheme shared.theme
+                    in
                     { title = b.title
                     , body =
                         [ Element.column
@@ -605,13 +607,13 @@ finalize (Explorer expl) =
                                     , Element.row
                                         [ Element.width Element.fill
                                         , Element.padding 15
-                                        , shared.theme.colorscheme.surfaceContainerLow
+                                        , colorscheme.surfaceContainerLow
                                             |> Color.toElementColor
                                             |> Background.color
                                         , Element.pointer
                                         , Element.mouseOver
-                                            [ shared.theme.colorscheme.surfaceContainerLow
-                                                |> Color.withShade shared.theme.colorscheme.onSurface
+                                            [ colorscheme.surfaceContainerLow
+                                                |> Color.withShade colorscheme.onSurface
                                                     Color.hoverStateLayerOpacity
                                                 |> Color.toElementColor
                                                 |> Background.color
@@ -670,7 +672,7 @@ finalize (Explorer expl) =
                                     , Element.column
                                         [ Element.height <| Element.shrink
                                         , Element.width Element.fill
-                                        , Background.color <| Color.toElementColor shared.theme.colorscheme.surfaceContainerLow
+                                        , Background.color <| Color.toElementColor colorscheme.surfaceContainerLow
                                         , Element.padding 15
                                         , Element.spacing 8
                                         ]
@@ -679,7 +681,7 @@ finalize (Explorer expl) =
                                             (\i event ->
                                                 Element.text event
                                                     |> Element.el
-                                                        [ shared.theme.colorscheme.onSurface
+                                                        [ colorscheme.onSurface
                                                             |> Color.setAlpha (1.0 - toFloat i / 5.0)
                                                             |> Color.toElementColor
                                                             |> Font.color
@@ -700,8 +702,8 @@ finalize (Explorer expl) =
                                 }
                                 [ Element.height Element.fill
                                 , Element.width Element.fill
-                                , Background.color <| Color.toElementColor shared.theme.colorscheme.surface
-                                , Font.color <| Color.toElementColor shared.theme.colorscheme.onSurface
+                                , Background.color <| Color.toElementColor colorscheme.surface
+                                , Font.color <| Color.toElementColor colorscheme.onSurface
                                 , Element.scrollbarY
                                 , Element.htmlAttribute <|
                                     Html.Attributes.style "-webkit-tap-highlight-color" "transparent"

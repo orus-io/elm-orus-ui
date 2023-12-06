@@ -1,13 +1,19 @@
 module OUI.Material.Theme exposing
-    ( Theme, defaultTheme, Typescale, defaultTypescale
+    ( Theme, defaultTheme, Typescale, defaultTypescale, withExt
     , ButtonTheme, CheckboxTheme, DividerTheme, MenuTheme, NavigationTheme, SwitchTheme, TextFieldTheme, RadioButtonTheme
+    , colorscheme, typescale, button, checkbox, divider, menu, navigation, switch, textfield, radiobutton, ext
+    , withButton, withCheckbox, withColorscheme, withDivider, withMenu, withNavigation, withRadiobutton, withSwitch, withTextfield, withTypescale
     )
 
 {-|
 
-@docs Theme, defaultTheme, Typescale, defaultTypescale
+@docs Theme, defaultTheme, Typescale, defaultTypescale, withExt
 
 @docs ButtonTheme, CheckboxTheme, DividerTheme, MenuTheme, NavigationTheme, SwitchTheme, TextFieldTheme, RadioButtonTheme
+
+@docs colorscheme, typescale, button, checkbox, divider, menu, navigation, switch, textfield, radiobutton, ext
+
+@docs withButton, withCheckbox, withColorscheme, withDivider, withMenu, withNavigation, withRadiobutton, withSwitch, withTextfield, withTypescale
 
 -}
 
@@ -82,37 +88,205 @@ type alias Typescale =
 Contains a color scheme, a typescale, and layouts for all the components
 
 -}
-type alias Theme ext =
-    { colorscheme : OUI.Material.Color.Scheme
-    , typescale : Typescale
-    , button : ButtonTheme
-    , checkbox : CheckboxTheme
-    , divider : DividerTheme
-    , menu : MenuTheme
-    , navigation : NavigationTheme
-    , switch : SwitchTheme
-    , textfield : TextFieldTheme
-    , radiobutton : RadioButtonTheme
-    , ext : Maybe ext
-    }
+type Theme ext
+    = Theme
+        { colorscheme : OUI.Material.Color.Scheme
+        , typescale : Typescale
+        , button : ButtonTheme
+        , checkbox : CheckboxTheme
+        , divider : DividerTheme
+        , menu : MenuTheme
+        , navigation : NavigationTheme
+        , switch : SwitchTheme
+        , textfield : TextFieldTheme
+        , radiobutton : RadioButtonTheme
+        , ext : ext
+        }
+
+
+{-| get the coloscheme
+-}
+colorscheme : Theme ext -> OUI.Material.Color.Scheme
+colorscheme (Theme t) =
+    t.colorscheme
+
+
+{-| get the typescale
+-}
+typescale : Theme ext -> Typescale
+typescale (Theme t) =
+    t.typescale
+
+
+{-| get the button theme
+-}
+button : Theme ext -> ButtonTheme
+button (Theme t) =
+    t.button
+
+
+{-| get the checkbox theme
+-}
+checkbox : Theme ext -> CheckboxTheme
+checkbox (Theme t) =
+    t.checkbox
+
+
+{-| get the divider theme
+-}
+divider : Theme ext -> DividerTheme
+divider (Theme t) =
+    t.divider
+
+
+{-| get the mene theme
+-}
+menu : Theme ext -> MenuTheme
+menu (Theme t) =
+    t.menu
+
+
+{-| get the navigation theme
+-}
+navigation : Theme ext -> NavigationTheme
+navigation (Theme t) =
+    t.navigation
+
+
+{-| get the switch theme
+-}
+switch : Theme ext -> SwitchTheme
+switch (Theme t) =
+    t.switch
+
+
+{-| get the textfield theme
+-}
+textfield : Theme ext -> TextFieldTheme
+textfield (Theme t) =
+    t.textfield
+
+
+{-| get the radiobutton theme
+-}
+radiobutton : Theme ext -> RadioButtonTheme
+radiobutton (Theme t) =
+    t.radiobutton
+
+
+{-| get the theme extension
+-}
+ext : Theme ext -> ext
+ext (Theme t) =
+    t.ext
+
+
+{-| set the colorscheme
+-}
+withColorscheme : OUI.Material.Color.Scheme -> Theme ext -> Theme ext
+withColorscheme value (Theme t) =
+    Theme { t | colorscheme = value }
+
+
+{-| set the typescale
+-}
+withTypescale : Typescale -> Theme ext -> Theme ext
+withTypescale value (Theme t) =
+    Theme { t | typescale = value }
+
+
+{-| set the button theme
+-}
+withButton : ButtonTheme -> Theme ext -> Theme ext
+withButton value (Theme t) =
+    Theme { t | button = value }
+
+
+{-| set the checkbox theme
+-}
+withCheckbox : CheckboxTheme -> Theme ext -> Theme ext
+withCheckbox value (Theme t) =
+    Theme { t | checkbox = value }
+
+
+{-| set the divider theme
+-}
+withDivider : DividerTheme -> Theme ext -> Theme ext
+withDivider value (Theme t) =
+    Theme { t | divider = value }
+
+
+{-| set the menu theme
+-}
+withMenu : MenuTheme -> Theme ext -> Theme ext
+withMenu value (Theme t) =
+    Theme { t | menu = value }
+
+
+{-| set the navigation theme
+-}
+withNavigation : NavigationTheme -> Theme ext -> Theme ext
+withNavigation value (Theme t) =
+    Theme { t | navigation = value }
+
+
+{-| set the switch theme
+-}
+withSwitch : SwitchTheme -> Theme ext -> Theme ext
+withSwitch value (Theme t) =
+    Theme { t | switch = value }
+
+
+{-| set the textfield theme
+-}
+withTextfield : TextFieldTheme -> Theme ext -> Theme ext
+withTextfield value (Theme t) =
+    Theme { t | textfield = value }
+
+
+{-| set the radiobutton theme
+-}
+withRadiobutton : RadioButtonTheme -> Theme ext -> Theme ext
+withRadiobutton value (Theme t) =
+    Theme { t | radiobutton = value }
+
+
+{-| set the theme extension
+-}
+withExt : ext -> Theme ext1 -> Theme ext
+withExt themeExt (Theme t) =
+    Theme
+        { colorscheme = t.colorscheme
+        , typescale = t.typescale
+        , button = t.button
+        , divider = t.divider
+        , checkbox = t.checkbox
+        , menu = t.menu
+        , navigation = t.navigation
+        , radiobutton = t.radiobutton
+        , switch = t.switch
+        , textfield = t.textfield
+        , ext = themeExt
+        }
 
 
 {-| The default Material 3 theme
 -}
-defaultTheme : Theme ext
+defaultTheme : Theme ()
 defaultTheme =
-    { colorscheme = OUI.Material.Color.defaultLightScheme
-    , typescale = defaultTypescale
-    , button = OUI.Material.Button.defaultTheme
-    , divider = OUI.Material.Divider.defaultTheme
-    , checkbox = OUI.Material.Checkbox.defaultTheme
-    , menu = OUI.Material.Menu.defaultTheme
-    , navigation = OUI.Material.Navigation.defaultTheme
-    , radiobutton = OUI.Material.RadioButton.defaultTheme
-    , switch = OUI.Material.Switch.defaultTheme
-    , textfield = OUI.Material.TextField.defaultTheme
-    , ext = Nothing
-    }
+    Theme
+        { colorscheme = OUI.Material.Color.defaultLightScheme
+        , typescale = defaultTypescale
+        , button = OUI.Material.Button.defaultTheme
+        , divider = OUI.Material.Divider.defaultTheme
+        , checkbox = OUI.Material.Checkbox.defaultTheme
+        , menu = OUI.Material.Menu.defaultTheme
+        , navigation = OUI.Material.Navigation.defaultTheme
+        , radiobutton = OUI.Material.RadioButton.defaultTheme
+        , switch = OUI.Material.Switch.defaultTheme
+        , textfield = OUI.Material.TextField.defaultTheme
+        , ext = ()
+        }
 
 
 {-| The default Material 3 Typescale

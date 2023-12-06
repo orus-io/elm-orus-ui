@@ -11470,6 +11470,14 @@ var $author$project$OUI$Primary = {$: 'Primary'};
 var $author$project$OUI$PrimaryContainer = {$: 'PrimaryContainer'};
 var $author$project$OUI$SecondaryContainer = {$: 'SecondaryContainer'};
 var $author$project$OUI$TertiaryContainer = {$: 'TertiaryContainer'};
+var $author$project$OUI$Material$Theme$button = function (_v0) {
+	var t = _v0.a;
+	return t.button;
+};
+var $author$project$OUI$Material$Theme$colorscheme = function (_v0) {
+	var t = _v0.a;
+	return t.colorscheme;
+};
 var $author$project$OUI$Button$properties = function (_v0) {
 	var props = _v0.a;
 	return props;
@@ -13325,8 +13333,17 @@ var $author$project$OUI$Material$Button$render = F6(
 		var props = $author$project$OUI$Button$properties(button);
 		return A6($author$project$OUI$Material$Button$renderProps, typescale, colorscheme, theme, rightIcon, attrs, props);
 	});
+var $author$project$OUI$Material$Theme$typescale = function (_v0) {
+	var t = _v0.a;
+	return t.typescale;
+};
 var $author$project$OUI$Material$button = function (theme) {
-	return A4($author$project$OUI$Material$Button$render, theme.typescale, theme.colorscheme, theme.button, $elm$core$Maybe$Nothing);
+	return A4(
+		$author$project$OUI$Material$Button$render,
+		$author$project$OUI$Material$Theme$typescale(theme),
+		$author$project$OUI$Material$Theme$colorscheme(theme),
+		$author$project$OUI$Material$Theme$button(theme),
+		$elm$core$Maybe$Nothing);
 };
 var $author$project$OUI$Icon$Svg = function (a) {
 	return {$: 'Svg', a: a};
@@ -13831,6 +13848,10 @@ var $author$project$OUI$Showcase$Buttons$book = A2(
 	$author$project$OUI$Showcase$Buttons$commonButtons,
 	$author$project$OUI$Explorer$book('Buttons'));
 var $author$project$OUI$Error = {$: 'Error'};
+var $author$project$OUI$Material$Theme$checkbox = function (_v0) {
+	var t = _v0.a;
+	return t.checkbox;
+};
 var $mdgriffith$elm_ui$Element$none = $mdgriffith$elm_ui$Internal$Model$Empty;
 var $author$project$OUI$Checkbox$properties = function (_v0) {
 	var props = _v0.a;
@@ -13981,7 +14002,10 @@ var $author$project$OUI$Material$Checkbox$render = F4(
 			});
 	});
 var $author$project$OUI$Material$checkbox = function (theme) {
-	return A2($author$project$OUI$Material$Checkbox$render, theme.colorscheme, theme.checkbox);
+	return A2(
+		$author$project$OUI$Material$Checkbox$render,
+		$author$project$OUI$Material$Theme$colorscheme(theme),
+		$author$project$OUI$Material$Theme$checkbox(theme));
 };
 var $author$project$OUI$Checkbox$Checkbox = function (a) {
 	return {$: 'Checkbox', a: a};
@@ -23655,8 +23679,8 @@ var $mdgriffith$elm_ui$Element$paragraph = F2(
 var $elm$html$Html$pre = _VirtualDom_node('pre');
 var $mdgriffith$elm_ui$Element$Font$strike = $mdgriffith$elm_ui$Internal$Model$htmlClass($mdgriffith$elm_ui$Internal$Style$classes.strike);
 var $author$project$OUI$Material$Markdown$renderer = function (theme) {
-	var typescale = theme.typescale;
-	var colorscheme = theme.colorscheme;
+	var typescale = $author$project$OUI$Material$Theme$typescale(theme);
+	var colorscheme = $author$project$OUI$Material$Theme$colorscheme(theme);
 	return {
 		blockQuote: $mdgriffith$elm_ui$Element$column(
 			_List_fromArray(
@@ -23924,6 +23948,10 @@ var $author$project$OUI$Showcase$Colors$book = A2(
 			$author$project$OUI$Explorer$withMarkdownChapter,
 			'\nThe two default color schemes\n    ',
 			$author$project$OUI$Explorer$book('Colors'))));
+var $author$project$OUI$Material$Theme$divider = function (_v0) {
+	var t = _v0.a;
+	return t.divider;
+};
 var $author$project$OUI$Material$Divider$render = F4(
 	function (colorscheme, theme, attrs, _v0) {
 		var all_attrs = _Utils_ap(
@@ -23947,7 +23975,10 @@ var $author$project$OUI$Material$Divider$render = F4(
 			$mdgriffith$elm_ui$Element$none);
 	});
 var $author$project$OUI$Material$divider = function (theme) {
-	return A2($author$project$OUI$Material$Divider$render, theme.colorscheme, theme.divider);
+	return A2(
+		$author$project$OUI$Material$Divider$render,
+		$author$project$OUI$Material$Theme$colorscheme(theme),
+		$author$project$OUI$Material$Theme$divider(theme));
 };
 var $author$project$OUI$Divider$Divider = {$: 'Divider'};
 var $author$project$OUI$Divider$new = $author$project$OUI$Divider$Divider;
@@ -23955,6 +23986,7 @@ var $mdgriffith$elm_ui$Internal$Flag$borderStyle = $mdgriffith$elm_ui$Internal$F
 var $mdgriffith$elm_ui$Element$Border$solid = A2($mdgriffith$elm_ui$Internal$Model$Class, $mdgriffith$elm_ui$Internal$Flag$borderStyle, $mdgriffith$elm_ui$Internal$Style$classes.borderSolid);
 var $author$project$OUI$Showcase$Dividers$commonDividers = function (_v0) {
 	var theme = _v0.theme;
+	var colorscheme = $author$project$OUI$Material$Theme$colorscheme(theme);
 	return A2(
 		$mdgriffith$elm_ui$Element$column,
 		_List_fromArray(
@@ -23967,7 +23999,7 @@ var $author$project$OUI$Showcase$Dividers$commonDividers = function (_v0) {
 				$mdgriffith$elm_ui$Element$Border$width(1),
 				$mdgriffith$elm_ui$Element$Border$color(
 				$author$project$OUI$Material$Color$toElementColor(
-					A3($author$project$OUI$Material$Color$withShade, theme.colorscheme.onSurface, $author$project$OUI$Material$Color$hoverStateLayerOpacity, theme.colorscheme.surfaceContainer))),
+					A3($author$project$OUI$Material$Color$withShade, colorscheme.onSurface, $author$project$OUI$Material$Color$hoverStateLayerOpacity, colorscheme.surfaceContainer))),
 				$mdgriffith$elm_ui$Element$centerX
 			]),
 		_List_fromArray(
@@ -24132,6 +24164,10 @@ var $author$project$OUI$Icon$arrow_drop_up = $author$project$OUI$Icon$fromRender
 						]));
 			})));
 var $author$project$OUI$Explorer$bookMsg = $author$project$OUI$Explorer$BookMsg;
+var $author$project$OUI$Material$Theme$menu = function (_v0) {
+	var t = _v0.a;
+	return t.menu;
+};
 var $mdgriffith$elm_ui$Internal$Model$Left = {$: 'Left'};
 var $mdgriffith$elm_ui$Element$alignLeft = $mdgriffith$elm_ui$Internal$Model$AlignX($mdgriffith$elm_ui$Internal$Model$Left);
 var $mdgriffith$elm_ui$Internal$Model$Right = {$: 'Right'};
@@ -24458,7 +24494,13 @@ var $author$project$OUI$Material$MenuButton$render = F8(
 			props.button);
 	});
 var $author$project$OUI$Material$menuButton = function (theme) {
-	return A5($author$project$OUI$Material$MenuButton$render, theme.typescale, theme.colorscheme, theme.button, theme.divider, theme.menu);
+	return A5(
+		$author$project$OUI$Material$MenuButton$render,
+		$author$project$OUI$Material$Theme$typescale(theme),
+		$author$project$OUI$Material$Theme$colorscheme(theme),
+		$author$project$OUI$Material$Theme$button(theme),
+		$author$project$OUI$Material$Theme$divider(theme),
+		$author$project$OUI$Material$Theme$menu(theme));
 };
 var $author$project$OUI$Text$Label = {$: 'Label'};
 var $author$project$OUI$Menu$new = function (itemToText) {
@@ -25371,7 +25413,13 @@ var $author$project$OUI$Showcase$MenuButtons$book = A2(
 		'Menu Buttons',
 		{init: $author$project$OUI$Showcase$MenuButtons$init, subscriptions: $author$project$OUI$Showcase$MenuButtons$subscriptions, update: $author$project$OUI$Showcase$MenuButtons$update}));
 var $author$project$OUI$Material$menu = function (theme) {
-	return A5($author$project$OUI$Material$Menu$render, theme.typescale, theme.colorscheme, theme.divider, theme.menu, -1);
+	return A5(
+		$author$project$OUI$Material$Menu$render,
+		$author$project$OUI$Material$Theme$typescale(theme),
+		$author$project$OUI$Material$Theme$colorscheme(theme),
+		$author$project$OUI$Material$Theme$divider(theme),
+		$author$project$OUI$Material$Theme$menu(theme),
+		-1);
 };
 var $author$project$OUI$Menu$withTrailingIcon = F2(
 	function (itemToIcon, _v0) {
@@ -25778,6 +25826,10 @@ var $author$project$OUI$Navigation$new = function (onSelect) {
 };
 var $author$project$OUI$Showcase$Navigation$nav = $author$project$OUI$Showcase$Navigation$addEntries(
 	$author$project$OUI$Navigation$new($author$project$OUI$Explorer$logEvent));
+var $author$project$OUI$Material$Theme$navigation = function (_v0) {
+	var t = _v0.a;
+	return t.navigation;
+};
 var $author$project$OUI$Navigation$Rail = {$: 'Rail'};
 var $mdgriffith$elm_ui$Element$Keyed$column = F2(
 	function (attrs, children) {
@@ -26278,7 +26330,12 @@ var $author$project$OUI$Material$Navigation$render = F6(
 					props.entries)));
 	});
 var $author$project$OUI$Material$navigation = function (theme) {
-	return A4($author$project$OUI$Material$Navigation$render, theme.typescale, theme.colorscheme, theme.divider, theme.navigation);
+	return A4(
+		$author$project$OUI$Material$Navigation$render,
+		$author$project$OUI$Material$Theme$typescale(theme),
+		$author$project$OUI$Material$Theme$colorscheme(theme),
+		$author$project$OUI$Material$Theme$divider(theme),
+		$author$project$OUI$Material$Theme$navigation(theme));
 };
 var $author$project$OUI$Showcase$Navigation$drawer = function (_v0) {
 	var theme = _v0.theme;
@@ -26430,6 +26487,10 @@ var $author$project$OUI$Showcase$RadioButtons$onChange = F2(
 		return $author$project$OUI$Explorer$logEvent(
 			name + (' changes to ' + (selected ? '\'selected\'' : '\'unselected\'')));
 	});
+var $author$project$OUI$Material$Theme$radiobutton = function (_v0) {
+	var t = _v0.a;
+	return t.radiobutton;
+};
 var $author$project$OUI$RadioButton$properties = function (_v0) {
 	var props = _v0.a;
 	return props;
@@ -26582,7 +26643,10 @@ var $author$project$OUI$Material$RadioButton$render = F4(
 			});
 	});
 var $author$project$OUI$Material$radiobutton = function (theme) {
-	return A2($author$project$OUI$Material$RadioButton$render, theme.colorscheme, theme.radiobutton);
+	return A2(
+		$author$project$OUI$Material$RadioButton$render,
+		$author$project$OUI$Material$Theme$colorscheme(theme),
+		$author$project$OUI$Material$Theme$radiobutton(theme));
 };
 var $author$project$OUI$RadioButton$withColor = F2(
 	function (color, _v0) {
@@ -26993,8 +27057,15 @@ var $author$project$OUI$Material$Switch$render = F4(
 					onChange)
 			});
 	});
+var $author$project$OUI$Material$Theme$switch = function (_v0) {
+	var t = _v0.a;
+	return t._switch;
+};
 var $author$project$OUI$Material$switch = function (theme) {
-	return A2($author$project$OUI$Material$Switch$render, theme.colorscheme, theme._switch);
+	return A2(
+		$author$project$OUI$Material$Switch$render,
+		$author$project$OUI$Material$Theme$colorscheme(theme),
+		$author$project$OUI$Material$Theme$switch(theme));
 };
 var $author$project$OUI$Switch$withColor = F2(
 	function (value, _v0) {
@@ -28453,8 +28524,17 @@ var $author$project$OUI$Material$TextField$render = F6(
 					}
 				}()));
 	});
+var $author$project$OUI$Material$Theme$textfield = function (_v0) {
+	var t = _v0.a;
+	return t.textfield;
+};
 var $author$project$OUI$Material$textField = function (theme) {
-	return A4($author$project$OUI$Material$TextField$render, theme.typescale, theme.colorscheme, theme.button, theme.textfield);
+	return A4(
+		$author$project$OUI$Material$TextField$render,
+		$author$project$OUI$Material$Theme$typescale(theme),
+		$author$project$OUI$Material$Theme$colorscheme(theme),
+		$author$project$OUI$Material$Theme$button(theme),
+		$author$project$OUI$Material$Theme$textfield(theme));
 };
 var $author$project$OUI$TextField$withClickableTrailingIcon = F3(
 	function (msg, icon, _v0) {
@@ -28575,15 +28655,16 @@ var $author$project$OUI$Showcase$TextFields$textfields = F3(
 								key(name),
 								model))));
 			});
+		var colorscheme = $author$project$OUI$Material$Theme$colorscheme(theme);
 		return A2(
 			$mdgriffith$elm_ui$Element$row,
 			_List_fromArray(
 				[
 					$mdgriffith$elm_ui$Element$Border$width(1),
 					$mdgriffith$elm_ui$Element$Border$color(
-					$author$project$OUI$Material$Color$toElementColor(theme.colorscheme.outline)),
+					$author$project$OUI$Material$Color$toElementColor(colorscheme.outline)),
 					$mdgriffith$elm_ui$Element$Background$color(
-					$author$project$OUI$Material$Color$toElementColor(theme.colorscheme.surfaceContainer))
+					$author$project$OUI$Material$Color$toElementColor(colorscheme.surfaceContainer))
 				]),
 			_List_fromArray(
 				[
@@ -28907,9 +28988,9 @@ var $author$project$OUI$Text$displayMedium = A2($author$project$OUI$Text$Text, $
 var $author$project$OUI$Text$displaySmall = A2($author$project$OUI$Text$Text, $author$project$OUI$Text$Display, $author$project$OUI$Text$Small);
 var $author$project$OUI$Text$headlineLarge = A2($author$project$OUI$Text$Text, $author$project$OUI$Text$Headline, $author$project$OUI$Text$Large);
 var $author$project$OUI$Text$headlineMedium = A2($author$project$OUI$Text$Text, $author$project$OUI$Text$Headline, $author$project$OUI$Text$Medium);
-var $author$project$OUI$Material$text = function (_v0) {
-	var typescale = _v0.typescale;
-	return $author$project$OUI$Material$Typography$render(typescale);
+var $author$project$OUI$Material$text = function (theme) {
+	return $author$project$OUI$Material$Typography$render(
+		$author$project$OUI$Material$Theme$typescale(theme));
 };
 var $author$project$OUI$Text$titleLarge = A2($author$project$OUI$Text$Text, $author$project$OUI$Text$Title, $author$project$OUI$Text$Large);
 var $author$project$OUI$Text$titleMedium = A2($author$project$OUI$Text$Text, $author$project$OUI$Text$Title, $author$project$OUI$Text$Medium);
@@ -29273,6 +29354,9 @@ var $author$project$OUI$Icon$elmMaterialIcons = F2(
 	});
 var $author$project$OUI$Explorer$Light = {$: 'Light'};
 var $author$project$OUI$Material$Color$defaultDarkScheme = $author$project$OUI$Material$Color$darkFromKeyColors($author$project$OUI$Material$Color$defaultKeyColors);
+var $author$project$OUI$Material$Theme$Theme = function (a) {
+	return {$: 'Theme', a: a};
+};
 var $author$project$OUI$Material$Button$defaultTheme = {
 	common: {containerHeight: 40, containerRadius: 20, iconSize: 18, leftPaddingWithIcon: 16, leftRightPadding: 24, paddingBetweenElements: 8, rightPaddingWithIcon: 16, textSize: $author$project$OUI$Text$Large, textType: $author$project$OUI$Text$Label},
 	fab: {
@@ -29337,7 +29421,8 @@ var $author$project$OUI$Material$Theme$defaultTypescale = {
 		small: {font: 'Roboto', lineHeight: 20, size: 14, tracking: 0.1, weight: 500}
 	}
 };
-var $author$project$OUI$Material$Theme$defaultTheme = {button: $author$project$OUI$Material$Button$defaultTheme, checkbox: $author$project$OUI$Material$Checkbox$defaultTheme, colorscheme: $author$project$OUI$Material$Color$defaultLightScheme, divider: $author$project$OUI$Material$Divider$defaultTheme, ext: $elm$core$Maybe$Nothing, menu: $author$project$OUI$Material$Menu$defaultTheme, navigation: $author$project$OUI$Material$Navigation$defaultTheme, radiobutton: $author$project$OUI$Material$RadioButton$defaultTheme, _switch: $author$project$OUI$Material$Switch$defaultTheme, textfield: $author$project$OUI$Material$TextField$defaultTheme, typescale: $author$project$OUI$Material$Theme$defaultTypescale};
+var $author$project$OUI$Material$Theme$defaultTheme = $author$project$OUI$Material$Theme$Theme(
+	{button: $author$project$OUI$Material$Button$defaultTheme, checkbox: $author$project$OUI$Material$Checkbox$defaultTheme, colorscheme: $author$project$OUI$Material$Color$defaultLightScheme, divider: $author$project$OUI$Material$Divider$defaultTheme, ext: _Utils_Tuple0, menu: $author$project$OUI$Material$Menu$defaultTheme, navigation: $author$project$OUI$Material$Navigation$defaultTheme, radiobutton: $author$project$OUI$Material$RadioButton$defaultTheme, _switch: $author$project$OUI$Material$Switch$defaultTheme, textfield: $author$project$OUI$Material$TextField$defaultTheme, typescale: $author$project$OUI$Material$Theme$defaultTypescale});
 var $author$project$OUI$Explorer$defaultView = {
 	content: $mdgriffith$elm_ui$Element$text('invalid view'),
 	title: 'Invalid'
@@ -29860,6 +29945,14 @@ var $orus_io$elm_spa$Spa$beforeRouteChange = F2(
 					beforeRouteChange: $elm$core$Maybe$Just(toSharedMsg)
 				}));
 	});
+var $author$project$OUI$Material$Theme$withColorscheme = F2(
+	function (value, _v0) {
+		var t = _v0.a;
+		return $author$project$OUI$Material$Theme$Theme(
+			_Utils_update(
+				t,
+				{colorscheme: value}));
+	});
 var $author$project$OUI$Explorer$changeColorScheme = F3(
 	function (index, type_, shared) {
 		var theme = shared.theme;
@@ -29886,9 +29979,7 @@ var $author$project$OUI$Explorer$changeColorScheme = F3(
 			shared,
 			{
 				selectedColorScheme: _Utils_Tuple2(realIndex, type_),
-				theme: _Utils_update(
-					theme,
-					{colorscheme: colorScheme})
+				theme: A2($author$project$OUI$Material$Theme$withColorscheme, colorScheme, shared.theme)
 			});
 	});
 var $author$project$OUI$Icon$dark_mode = $author$project$OUI$Icon$fromRenderer(
@@ -30237,6 +30328,7 @@ var $author$project$OUI$Explorer$finalize = function (_v0) {
 			},
 			toDocument: F2(
 				function (shared, b) {
+					var colorscheme = $author$project$OUI$Material$Theme$colorscheme(shared.theme);
 					return {
 						body: _List_fromArray(
 							[
@@ -30254,9 +30346,9 @@ var $author$project$OUI$Explorer$finalize = function (_v0) {
 										$mdgriffith$elm_ui$Element$height($mdgriffith$elm_ui$Element$fill),
 										$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
 										$mdgriffith$elm_ui$Element$Background$color(
-										$author$project$OUI$Material$Color$toElementColor(shared.theme.colorscheme.surface)),
+										$author$project$OUI$Material$Color$toElementColor(colorscheme.surface)),
 										$mdgriffith$elm_ui$Element$Font$color(
-										$author$project$OUI$Material$Color$toElementColor(shared.theme.colorscheme.onSurface)),
+										$author$project$OUI$Material$Color$toElementColor(colorscheme.onSurface)),
 										$mdgriffith$elm_ui$Element$scrollbarY,
 										$mdgriffith$elm_ui$Element$htmlAttribute(
 										A2($elm$html$Html$Attributes$style, '-webkit-tap-highlight-color', 'transparent'))
@@ -30336,14 +30428,14 @@ var $author$project$OUI$Explorer$finalize = function (_v0) {
 																	$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
 																	$mdgriffith$elm_ui$Element$padding(15),
 																	$mdgriffith$elm_ui$Element$Background$color(
-																	$author$project$OUI$Material$Color$toElementColor(shared.theme.colorscheme.surfaceContainerLow)),
+																	$author$project$OUI$Material$Color$toElementColor(colorscheme.surfaceContainerLow)),
 																	$mdgriffith$elm_ui$Element$pointer,
 																	$mdgriffith$elm_ui$Element$mouseOver(
 																	_List_fromArray(
 																		[
 																			$mdgriffith$elm_ui$Element$Background$color(
 																			$author$project$OUI$Material$Color$toElementColor(
-																				A3($author$project$OUI$Material$Color$withShade, shared.theme.colorscheme.onSurface, $author$project$OUI$Material$Color$hoverStateLayerOpacity, shared.theme.colorscheme.surfaceContainerLow)))
+																				A3($author$project$OUI$Material$Color$withShade, colorscheme.onSurface, $author$project$OUI$Material$Color$hoverStateLayerOpacity, colorscheme.surfaceContainerLow)))
 																		])),
 																	$mdgriffith$elm_ui$Element$Events$onClick(
 																	$orus_io$elm_spa$Spa$mapSharedMsg(
@@ -30418,7 +30510,7 @@ var $author$project$OUI$Explorer$finalize = function (_v0) {
 																	$mdgriffith$elm_ui$Element$height($mdgriffith$elm_ui$Element$shrink),
 																	$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
 																	$mdgriffith$elm_ui$Element$Background$color(
-																	$author$project$OUI$Material$Color$toElementColor(shared.theme.colorscheme.surfaceContainerLow)),
+																	$author$project$OUI$Material$Color$toElementColor(colorscheme.surfaceContainerLow)),
 																	$mdgriffith$elm_ui$Element$padding(15),
 																	$mdgriffith$elm_ui$Element$spacing(8)
 																]),
@@ -30432,7 +30524,7 @@ var $author$project$OUI$Explorer$finalize = function (_v0) {
 																				[
 																					$mdgriffith$elm_ui$Element$Font$color(
 																					$author$project$OUI$Material$Color$toElementColor(
-																						A2($author$project$OUI$Material$Color$setAlpha, 1.0 - (i / 5.0), shared.theme.colorscheme.onSurface)))
+																						A2($author$project$OUI$Material$Color$setAlpha, 1.0 - (i / 5.0), colorscheme.onSurface)))
 																				]),
 																			$mdgriffith$elm_ui$Element$text(event));
 																	}),
@@ -30544,18 +30636,32 @@ var $author$project$Main$typescale = function () {
 				})
 		});
 }();
+var $author$project$OUI$Material$Theme$withButton = F2(
+	function (value, _v0) {
+		var t = _v0.a;
+		return $author$project$OUI$Material$Theme$Theme(
+			_Utils_update(
+				t,
+				{button: value}));
+	});
+var $author$project$OUI$Material$Theme$withTypescale = F2(
+	function (value, _v0) {
+		var t = _v0.a;
+		return $author$project$OUI$Material$Theme$Theme(
+			_Utils_update(
+				t,
+				{typescale: value}));
+	});
 var $author$project$Main$theme = function () {
 	var base = $author$project$OUI$Material$Theme$defaultTheme;
-	var button = base.button;
+	var button = $author$project$OUI$Material$Theme$button(base);
 	var buttonCommon = button.common;
-	return _Utils_update(
-		base,
-		{
-			button: _Utils_update(
-				button,
-				{common: buttonCommon}),
-			typescale: $author$project$Main$typescale
-		});
+	return A2(
+		$author$project$OUI$Material$Theme$withButton,
+		_Utils_update(
+			button,
+			{common: buttonCommon}),
+		A2($author$project$OUI$Material$Theme$withTypescale, $author$project$Main$typescale, base));
 }();
 var $elm$json$Json$Decode$value = _Json_decodeValue;
 var $elm$core$String$toUpper = _String_toUpper;
@@ -30582,9 +30688,9 @@ var $author$project$OUI$Material$Icon$render = F3(
 			colorscheme);
 		return A4($author$project$OUI$Material$Icon$renderWithSizeColor, size, color, attrs, icon);
 	});
-var $author$project$OUI$Material$icon = function (_v0) {
-	var colorscheme = _v0.colorscheme;
-	return $author$project$OUI$Material$Icon$render(colorscheme);
+var $author$project$OUI$Material$icon = function (theme) {
+	return $author$project$OUI$Material$Icon$render(
+		$author$project$OUI$Material$Theme$colorscheme(theme));
 };
 var $author$project$OUI$Icon$withSize = F2(
 	function (value, _v0) {

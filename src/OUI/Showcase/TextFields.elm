@@ -6,10 +6,12 @@ import Element exposing (Element)
 import Element.Background as Background
 import Element.Border as Border
 import OUI
+import OUI.Button exposing (color)
 import OUI.Explorer as Explorer
 import OUI.Icon exposing (check, clear)
 import OUI.Material as Material
 import OUI.Material.Color
+import OUI.Material.Theme as Theme
 import OUI.TextField as TextField exposing (TextField, multiline)
 
 
@@ -118,6 +120,10 @@ update _ msg model =
 textfields : Bool -> Explorer.Shared themeExt -> Model -> Element (Explorer.BookMsg Msg)
 textfields multiline { theme } model =
     let
+        colorscheme : OUI.Material.Color.Scheme
+        colorscheme =
+            Theme.colorscheme theme
+
         key : String -> String
         key name =
             name
@@ -150,10 +156,10 @@ textfields multiline { theme } model =
     in
     Element.row
         [ Border.width 1
-        , theme.colorscheme.outline
+        , colorscheme.outline
             |> OUI.Material.Color.toElementColor
             |> Border.color
-        , theme.colorscheme.surfaceContainer
+        , colorscheme.surfaceContainer
             |> OUI.Material.Color.toElementColor
             |> Background.color
         ]

@@ -7,7 +7,7 @@ import Material.Icons.Types exposing (Coloring(..))
 import OUI.Explorer as Explorer
 import OUI.Icon
 import OUI.Material.Color
-import OUI.Material.Theme
+import OUI.Material.Theme as Theme exposing (Theme)
 import OUI.Material.Typography
 import OUI.Showcase as Showcase
 import OUI.Showcase.Icons as Icons
@@ -42,7 +42,6 @@ To use it, you have to clone the project, and add its 'src' subdirectory into
 your own project 'src' list.
 
 """
-
 
 main =
     Explorer.explorer
@@ -107,7 +106,7 @@ typescale : OUI.Material.Typography.Typescale
 typescale =
     let
         base =
-            OUI.Material.Theme.defaultTypescale
+            Theme.defaultTypescale
 
         title =
             base.title
@@ -128,24 +127,22 @@ typescale =
     }
 
 
-theme : OUI.Material.Theme.Theme ()
+theme : Theme ()
 theme =
     let
         base =
-            OUI.Material.Theme.defaultTheme
+            Theme.defaultTheme
 
         button =
-            base.button
+            Theme.button base
 
         buttonCommon =
             button.common
     in
-    { base
-        | button =
-            { button
+    base
+    |> Theme.withTypescale typescale
+    |> Theme.withButton
+    { button
                 | common = buttonCommon
-
                 --  | common = { buttonCommon | containerRadius = 8 }
             }
-        , typescale = typescale
-    }
