@@ -2,6 +2,7 @@ module OUI.Material.Typography exposing (Typescale, Typography, attrs, getTypo, 
 
 import Element exposing (Attribute, Element)
 import Element.Font as Font
+import OUI.Material.Color as Color
 import OUI.Text
 
 
@@ -92,22 +93,73 @@ getTypo type_ size =
            )
 
 
-attrs : OUI.Text.Type -> OUI.Text.Size -> Typescale -> List (Attribute msg)
-attrs type_ size =
-    getTypo type_ size >> typographyAttrs
+attrs :
+    OUI.Text.Type
+    -> OUI.Text.Size
+    -> OUI.Text.Color
+    -> Typescale
+    -> Color.Scheme
+    -> List (Attribute msg)
+attrs type_ size color typescale colorscheme =
+    typographyAttrs (getTypo type_ size typescale)
+        ++ ((case color of
+                OUI.Text.NoColor ->
+                    Nothing
+
+                OUI.Text.Color c ->
+                    Just <| Color.getElementColor c colorscheme
+
+                OUI.Text.OnColor c ->
+                    Just <| Color.getOnElementColor c colorscheme
+
+                OUI.Text.Custom c ->
+                    Just <| Color.toElementColor c
+            )
+                |> Maybe.map (Font.color >> List.singleton)
+                |> Maybe.withDefault []
+           )
 
 
-render : Typescale -> OUI.Text.Text -> Element msg
-render typescale (OUI.Text.Text type_ size text) =
-    Element.el (attrs type_ size typescale) <|
-        Element.text text
+render :
+    Typescale
+    -> Color.Scheme
+    -> OUI.Text.Text
+    -> Element msg
+render typescale colorscheme text =
+    let
+        props :
+            { type_ : OUI.Text.Type
+            , size : OUI.Text.Size
+            , color : OUI.Text.Color
+            , text : String
+            }
+        props =
+            OUI.Text.properties text
+    in
+    Element.el (attrs props.type_ props.size props.color typescale colorscheme) <|
+        Element.text props.text
 
 
-renderWithAttrs : Typescale -> List (Attribute msg) -> OUI.Text.Text -> Element msg
-renderWithAttrs typescale customAttrs (OUI.Text.Text type_ size text) =
+renderWithAttrs :
+    Typescale
+    -> Color.Scheme
+    -> List (Attribute msg)
+    -> OUI.Text.Text
+    -> Element msg
+renderWithAttrs typescale colorscheme customAttrs text =
+    let
+        props :
+            { type_ : OUI.Text.Type
+            , size : OUI.Text.Size
+            , color : OUI.Text.Color
+            , text : String
+            }
+        props =
+            OUI.Text.properties text
+    in
     Element.el
-        (attrs type_ size typescale
+        (attrs props.type_ props.size props.color typescale colorscheme
             ++ customAttrs
         )
     <|
-        Element.text text
+        Element.text props.text

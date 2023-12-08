@@ -30,25 +30,25 @@ renderer theme =
         \{ level, children } ->
             case level of
                 Block.H1 ->
-                    Element.paragraph (Typography.attrs OUI.Text.Display OUI.Text.Small typescale) children
+                    Element.paragraph (Typography.attrs OUI.Text.Display OUI.Text.Small OUI.Text.NoColor typescale colorscheme) children
 
                 Block.H2 ->
-                    Element.paragraph (Typography.attrs OUI.Text.Headline OUI.Text.Large typescale) children
+                    Element.paragraph (Typography.attrs OUI.Text.Headline OUI.Text.Large OUI.Text.NoColor typescale colorscheme) children
 
                 Block.H3 ->
-                    Element.paragraph (Typography.attrs OUI.Text.Headline OUI.Text.Medium typescale) children
+                    Element.paragraph (Typography.attrs OUI.Text.Headline OUI.Text.Medium OUI.Text.NoColor typescale colorscheme) children
 
                 Block.H4 ->
-                    Element.paragraph (Typography.attrs OUI.Text.Headline OUI.Text.Small typescale) children
+                    Element.paragraph (Typography.attrs OUI.Text.Headline OUI.Text.Small OUI.Text.NoColor typescale colorscheme) children
 
                 Block.H5 ->
-                    Element.paragraph (Typography.attrs OUI.Text.Title OUI.Text.Large typescale) children
+                    Element.paragraph (Typography.attrs OUI.Text.Title OUI.Text.Large OUI.Text.NoColor typescale colorscheme) children
 
                 Block.H6 ->
-                    Element.paragraph (Typography.attrs OUI.Text.Title OUI.Text.Medium typescale) children
+                    Element.paragraph (Typography.attrs OUI.Text.Title OUI.Text.Medium OUI.Text.NoColor typescale colorscheme) children
     , paragraph =
         Element.paragraph
-            (Typography.attrs OUI.Text.Body OUI.Text.Large typescale)
+            (Typography.attrs OUI.Text.Body OUI.Text.Large OUI.Text.NoColor typescale colorscheme)
     , hardLineBreak = Html.br [] [] |> Element.html
     , blockQuote = Element.column [ Font.family [ Font.monospace ] ]
     , strong =

@@ -186,7 +186,7 @@ layoutAttrs :
     -> Layout
     -> Bool
     -> List (Attribute msg)
-layoutAttrs typescale _ layout hasIcon =
+layoutAttrs typescale colorscheme layout hasIcon =
     let
         padding : Attribute msg
         padding =
@@ -202,7 +202,7 @@ layoutAttrs typescale _ layout hasIcon =
                 Element.paddingXY layout.leftRightPadding 0
     in
     (Element.height <| Element.px layout.containerHeight)
-        :: OUI.Material.Typography.attrs layout.textType layout.textSize typescale
+        :: OUI.Material.Typography.attrs layout.textType layout.textSize OUI.Text.NoColor typescale colorscheme
         ++ [ Border.rounded layout.containerRadius
            , padding
            ]

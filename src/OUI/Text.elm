@@ -1,17 +1,20 @@
 module OUI.Text exposing
-    ( Type(..), Size(..), Text(..)
+    ( Type(..), Size(..), Color(..), Text
     , text, withSize, withType
+    , onColor, withColor, withCustomColor
     , displayLarge, displayMedium, displaySmall
     , headlineLarge, headlineMedium, headlineSmall
     , titleLarge, titleMedium, titleSmall
     , labelLarge, labelMedium, labelSmall
     , bodyLarge, bodyMedium, bodySmall
+    , properties
     )
 
 {-|
 
-@docs Type, Size, Text
+@docs Type, Size, Color, Text
 @docs text, withSize, withType
+@docs onColor, withColor, withCustomColor
 
 
 # Direct constructors
@@ -22,7 +25,15 @@ module OUI.Text exposing
 @docs labelLarge, labelMedium, labelSmall
 @docs bodyLarge, bodyMedium, bodySmall
 
+
+# Internal
+
+@docs properties
+
 -}
+
+import Color
+import OUI
 
 
 {-| Text types
@@ -43,10 +54,24 @@ type Size
     | Large
 
 
+{-| Text Color
+-}
+type Color
+    = NoColor
+    | Color OUI.Color
+    | OnColor OUI.Color
+    | Custom Color.Color
+
+
 {-| A Text component
 -}
 type Text
-    = Text Type Size String
+    = Text
+        { type_ : Type
+        , size : Size
+        , color : Color
+        , text : String
+        }
 
 
 {-| Create a new text component
@@ -55,124 +80,170 @@ with default "body" type and "medium" size
 
 -}
 text : String -> Text
-text =
-    Text Body Medium
-
-
-{-| set the text size
--}
-withSize : Size -> Text -> Text
-withSize value (Text type_ _ s) =
-    Text type_ value s
+text s =
+    Text
+        { type_ = Body
+        , size = Medium
+        , color = NoColor
+        , text = s
+        }
 
 
 {-| set the text type
 -}
 withType : Type -> Text -> Text
-withType value (Text _ size s) =
-    Text value size s
+withType value (Text props) =
+    Text { props | type_ = value }
+
+
+{-| set the text size
+-}
+withSize : Size -> Text -> Text
+withSize value (Text props) =
+    Text { props | size = value }
+
+
+{-| Define the text color given the background color.
+-}
+onColor : OUI.Color -> Text -> Text
+onColor value (Text props) =
+    Text { props | color = OnColor value }
+
+
+{-| Set the text color
+-}
+withColor : OUI.Color -> Text -> Text
+withColor value (Text props) =
+    Text { props | color = Color value }
+
+
+{-| Set a custom text
+-}
+withCustomColor : Color.Color -> Text -> Text
+withCustomColor value (Text props) =
+    Text { props | color = Custom value }
+
+
+textTypeSize : Type -> Size -> String -> Text
+textTypeSize type_ size s =
+    text s
+        |> withType type_
+        |> withSize size
 
 
 {-| create a display small text
 -}
 displaySmall : String -> Text
 displaySmall =
-    Text Display Small
+    textTypeSize Display Small
 
 
 {-| create a display medium text
 -}
 displayMedium : String -> Text
 displayMedium =
-    Text Display Medium
+    textTypeSize Display Medium
 
 
 {-| create a display large text
 -}
 displayLarge : String -> Text
 displayLarge =
-    Text Display Large
+    textTypeSize Display Large
 
 
 {-| create a headline small text
 -}
 headlineSmall : String -> Text
 headlineSmall =
-    Text Headline Small
+    textTypeSize Headline Small
 
 
 {-| create a headline medium text
 -}
 headlineMedium : String -> Text
 headlineMedium =
-    Text Headline Medium
+    textTypeSize Headline Medium
 
 
 {-| create a headline large text
 -}
 headlineLarge : String -> Text
 headlineLarge =
-    Text Headline Large
+    textTypeSize Headline Large
 
 
 {-| create a title small text
 -}
 titleSmall : String -> Text
 titleSmall =
-    Text Title Small
+    textTypeSize Title Small
 
 
 {-| create a title medium text
 -}
 titleMedium : String -> Text
 titleMedium =
-    Text Title Medium
+    textTypeSize Title Medium
 
 
 {-| create a title large text
 -}
 titleLarge : String -> Text
 titleLarge =
-    Text Title Large
+    textTypeSize Title Large
 
 
 {-| create a label small text
 -}
 labelSmall : String -> Text
 labelSmall =
-    Text Label Small
+    textTypeSize Label Small
 
 
 {-| create a label medium text
 -}
 labelMedium : String -> Text
 labelMedium =
-    Text Label Medium
+    textTypeSize Label Medium
 
 
 {-| create a label large text
 -}
 labelLarge : String -> Text
 labelLarge =
-    Text Label Large
+    textTypeSize Label Large
 
 
 {-| create a body small text
 -}
 bodySmall : String -> Text
 bodySmall =
-    Text Body Small
+    textTypeSize Body Small
 
 
 {-| create a body medium text
 -}
 bodyMedium : String -> Text
 bodyMedium =
-    Text Body Medium
+    textTypeSize Body Medium
 
 
 {-| create a body large text
 -}
 bodyLarge : String -> Text
 bodyLarge =
-    Text Body Large
+    textTypeSize Body Large
+
+
+{-| -}
+properties :
+    Text
+    ->
+        { type_ : Type
+        , size : Size
+        , color : Color
+        , text : String
+        }
+properties (Text props) =
+    props

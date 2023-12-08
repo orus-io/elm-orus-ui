@@ -11695,6 +11695,10 @@ var $author$project$OUI$Material$Color$getColor = function (c) {
 			};
 		case 'Neutral':
 			return function ($) {
+				return $.onSurface;
+			};
+		case 'NeutralVariant':
+			return function ($) {
 				return $.onSurfaceVariant;
 			};
 		case 'Error':
@@ -11737,6 +11741,10 @@ var $author$project$OUI$Material$Color$getOnColor = function (c) {
 				return $.onTertiaryContainer;
 			};
 		case 'Neutral':
+			return function ($) {
+				return $.surface;
+			};
+		case 'NeutralVariant':
 			return function ($) {
 				return $.surface;
 			};
@@ -12444,6 +12452,19 @@ var $author$project$OUI$Material$Button$iconSizeColor = F5(
 				return _Utils_Tuple2(theme.common.iconSize, frontColor);
 		}
 	});
+var $author$project$OUI$Text$NoColor = {$: 'NoColor'};
+var $author$project$OUI$Material$Color$getElementColor = function (c) {
+	return A2(
+		$elm$core$Basics$composeR,
+		$author$project$OUI$Material$Color$getColor(c),
+		$author$project$OUI$Material$Color$toElementColor);
+};
+var $author$project$OUI$Material$Color$getOnElementColor = function (c) {
+	return A2(
+		$elm$core$Basics$composeR,
+		$author$project$OUI$Material$Color$getOnColor(c),
+		$author$project$OUI$Material$Color$toElementColor);
+};
 var $author$project$OUI$Material$Typography$getTypo = F2(
 	function (type_, size) {
 		return A2(
@@ -12489,6 +12510,10 @@ var $author$project$OUI$Material$Typography$getTypo = F2(
 				}
 			}());
 	});
+var $elm$core$List$singleton = function (value) {
+	return _List_fromArray(
+		[value]);
+};
 var $mdgriffith$elm_ui$Internal$Model$FontFamily = F2(
 	function (a, b) {
 		return {$: 'FontFamily', a: a, b: b};
@@ -12571,12 +12596,35 @@ var $author$project$OUI$Material$Typography$typographyAttrs = function (typograp
 			(typography.weight === 500) ? $mdgriffith$elm_ui$Element$Font$medium : $mdgriffith$elm_ui$Element$Font$regular
 		]);
 };
-var $author$project$OUI$Material$Typography$attrs = F2(
-	function (type_, size) {
-		return A2(
-			$elm$core$Basics$composeR,
-			A2($author$project$OUI$Material$Typography$getTypo, type_, size),
-			$author$project$OUI$Material$Typography$typographyAttrs);
+var $author$project$OUI$Material$Typography$attrs = F5(
+	function (type_, size, color, typescale, colorscheme) {
+		return _Utils_ap(
+			$author$project$OUI$Material$Typography$typographyAttrs(
+				A3($author$project$OUI$Material$Typography$getTypo, type_, size, typescale)),
+			A2(
+				$elm$core$Maybe$withDefault,
+				_List_Nil,
+				A2(
+					$elm$core$Maybe$map,
+					A2($elm$core$Basics$composeR, $mdgriffith$elm_ui$Element$Font$color, $elm$core$List$singleton),
+					function () {
+						switch (color.$) {
+							case 'NoColor':
+								return $elm$core$Maybe$Nothing;
+							case 'Color':
+								var c = color.a;
+								return $elm$core$Maybe$Just(
+									A2($author$project$OUI$Material$Color$getElementColor, c, colorscheme));
+							case 'OnColor':
+								var c = color.a;
+								return $elm$core$Maybe$Just(
+									A2($author$project$OUI$Material$Color$getOnElementColor, c, colorscheme));
+							default:
+								var c = color.a;
+								return $elm$core$Maybe$Just(
+									$author$project$OUI$Material$Color$toElementColor(c));
+						}
+					}())));
 	});
 var $mdgriffith$elm_ui$Internal$Model$PaddingStyle = F5(
 	function (a, b, c, d, e) {
@@ -12647,7 +12695,7 @@ var $mdgriffith$elm_ui$Element$paddingXY = F2(
 		}
 	});
 var $author$project$OUI$Material$Button$layoutAttrs = F4(
-	function (typescale, _v0, layout, hasIcon) {
+	function (typescale, colorscheme, layout, hasIcon) {
 		var padding = hasIcon ? $mdgriffith$elm_ui$Element$paddingEach(
 			{bottom: 0, left: layout.leftPaddingWithIcon, right: layout.rightPaddingWithIcon, top: 0}) : A2($mdgriffith$elm_ui$Element$paddingXY, layout.leftRightPadding, 0);
 		return A2(
@@ -12655,7 +12703,7 @@ var $author$project$OUI$Material$Button$layoutAttrs = F4(
 			$mdgriffith$elm_ui$Element$height(
 				$mdgriffith$elm_ui$Element$px(layout.containerHeight)),
 			_Utils_ap(
-				A3($author$project$OUI$Material$Typography$attrs, layout.textType, layout.textSize, typescale),
+				A5($author$project$OUI$Material$Typography$attrs, layout.textType, layout.textSize, $author$project$OUI$Text$NoColor, typescale, colorscheme),
 				_List_fromArray(
 					[
 						$mdgriffith$elm_ui$Element$Border$rounded(layout.containerRadius),
@@ -12709,12 +12757,6 @@ var $mdgriffith$elm_ui$Element$Border$color = function (clr) {
 			'bc-' + $mdgriffith$elm_ui$Internal$Model$formatColorClass(clr),
 			'border-color',
 			clr));
-};
-var $author$project$OUI$Material$Color$getElementColor = function (c) {
-	return A2(
-		$elm$core$Basics$composeR,
-		$author$project$OUI$Material$Color$getColor(c),
-		$author$project$OUI$Material$Color$toElementColor);
 };
 var $author$project$OUI$Material$Color$getSurfaceColor = function (c) {
 	if (c.$ === 'Custom') {
@@ -12820,10 +12862,6 @@ var $mdgriffith$elm_ui$Element$html = $mdgriffith$elm_ui$Internal$Model$unstyled
 var $author$project$OUI$Icon$properties = function (_v0) {
 	var props = _v0.a;
 	return props;
-};
-var $elm$core$List$singleton = function (value) {
-	return _List_fromArray(
-		[value]);
 };
 var $elm$svg$Svg$trustedNode = _VirtualDom_nodeNS('http://www.w3.org/2000/svg');
 var $elm$svg$Svg$svg = $elm$svg$Svg$trustedNode('svg');
@@ -23742,32 +23780,32 @@ var $author$project$OUI$Material$Markdown$renderer = function (theme) {
 				case 'H1':
 					return A2(
 						$mdgriffith$elm_ui$Element$paragraph,
-						A3($author$project$OUI$Material$Typography$attrs, $author$project$OUI$Text$Display, $author$project$OUI$Text$Small, typescale),
+						A5($author$project$OUI$Material$Typography$attrs, $author$project$OUI$Text$Display, $author$project$OUI$Text$Small, $author$project$OUI$Text$NoColor, typescale, colorscheme),
 						children);
 				case 'H2':
 					return A2(
 						$mdgriffith$elm_ui$Element$paragraph,
-						A3($author$project$OUI$Material$Typography$attrs, $author$project$OUI$Text$Headline, $author$project$OUI$Text$Large, typescale),
+						A5($author$project$OUI$Material$Typography$attrs, $author$project$OUI$Text$Headline, $author$project$OUI$Text$Large, $author$project$OUI$Text$NoColor, typescale, colorscheme),
 						children);
 				case 'H3':
 					return A2(
 						$mdgriffith$elm_ui$Element$paragraph,
-						A3($author$project$OUI$Material$Typography$attrs, $author$project$OUI$Text$Headline, $author$project$OUI$Text$Medium, typescale),
+						A5($author$project$OUI$Material$Typography$attrs, $author$project$OUI$Text$Headline, $author$project$OUI$Text$Medium, $author$project$OUI$Text$NoColor, typescale, colorscheme),
 						children);
 				case 'H4':
 					return A2(
 						$mdgriffith$elm_ui$Element$paragraph,
-						A3($author$project$OUI$Material$Typography$attrs, $author$project$OUI$Text$Headline, $author$project$OUI$Text$Small, typescale),
+						A5($author$project$OUI$Material$Typography$attrs, $author$project$OUI$Text$Headline, $author$project$OUI$Text$Small, $author$project$OUI$Text$NoColor, typescale, colorscheme),
 						children);
 				case 'H5':
 					return A2(
 						$mdgriffith$elm_ui$Element$paragraph,
-						A3($author$project$OUI$Material$Typography$attrs, $author$project$OUI$Text$Title, $author$project$OUI$Text$Large, typescale),
+						A5($author$project$OUI$Material$Typography$attrs, $author$project$OUI$Text$Title, $author$project$OUI$Text$Large, $author$project$OUI$Text$NoColor, typescale, colorscheme),
 						children);
 				default:
 					return A2(
 						$mdgriffith$elm_ui$Element$paragraph,
-						A3($author$project$OUI$Material$Typography$attrs, $author$project$OUI$Text$Title, $author$project$OUI$Text$Medium, typescale),
+						A5($author$project$OUI$Material$Typography$attrs, $author$project$OUI$Text$Title, $author$project$OUI$Text$Medium, $author$project$OUI$Text$NoColor, typescale, colorscheme),
 						children);
 			}
 		},
@@ -23813,7 +23851,7 @@ var $author$project$OUI$Material$Markdown$renderer = function (theme) {
 						items));
 			}),
 		paragraph: $mdgriffith$elm_ui$Element$paragraph(
-			A3($author$project$OUI$Material$Typography$attrs, $author$project$OUI$Text$Body, $author$project$OUI$Text$Large, typescale)),
+			A5($author$project$OUI$Material$Typography$attrs, $author$project$OUI$Text$Body, $author$project$OUI$Text$Large, $author$project$OUI$Text$NoColor, typescale, colorscheme)),
 		strikethrough: $mdgriffith$elm_ui$Element$paragraph(
 			_List_fromArray(
 				[$mdgriffith$elm_ui$Element$Font$strike])),
@@ -24356,7 +24394,7 @@ var $author$project$OUI$Material$Menu$render = F7(
 									theme.minWidth,
 									$mdgriffith$elm_ui$Element$px(widthApprox))))
 						]),
-					A3($author$project$OUI$Material$Typography$attrs, props.textType, props.textSize, typescale))),
+					A5($author$project$OUI$Material$Typography$attrs, props.textType, props.textSize, $author$project$OUI$Text$NoColor, typescale, colorscheme))),
 			A2(
 				$elm$core$List$indexedMap,
 				F2(
@@ -25849,24 +25887,55 @@ var $mdgriffith$elm_ui$Element$Keyed$column = F2(
 						attrs))),
 			$mdgriffith$elm_ui$Internal$Model$Keyed(children));
 	});
-var $author$project$OUI$Text$Text = F3(
-	function (a, b, c) {
-		return {$: 'Text', a: a, b: b, c: c};
+var $author$project$OUI$Text$Text = function (a) {
+	return {$: 'Text', a: a};
+};
+var $author$project$OUI$Text$text = function (s) {
+	return $author$project$OUI$Text$Text(
+		{color: $author$project$OUI$Text$NoColor, size: $author$project$OUI$Text$Medium, text: s, type_: $author$project$OUI$Text$Body});
+};
+var $author$project$OUI$Text$withSize = F2(
+	function (value, _v0) {
+		var props = _v0.a;
+		return $author$project$OUI$Text$Text(
+			_Utils_update(
+				props,
+				{size: value}));
 	});
-var $author$project$OUI$Text$headlineSmall = A2($author$project$OUI$Text$Text, $author$project$OUI$Text$Headline, $author$project$OUI$Text$Small);
+var $author$project$OUI$Text$withType = F2(
+	function (value, _v0) {
+		var props = _v0.a;
+		return $author$project$OUI$Text$Text(
+			_Utils_update(
+				props,
+				{type_: value}));
+	});
+var $author$project$OUI$Text$textTypeSize = F3(
+	function (type_, size, s) {
+		return A2(
+			$author$project$OUI$Text$withSize,
+			size,
+			A2(
+				$author$project$OUI$Text$withType,
+				type_,
+				$author$project$OUI$Text$text(s)));
+	});
+var $author$project$OUI$Text$headlineSmall = A2($author$project$OUI$Text$textTypeSize, $author$project$OUI$Text$Headline, $author$project$OUI$Text$Small);
 var $author$project$OUI$Navigation$properties = function (_v0) {
 	var props = _v0.a;
 	return props;
 };
-var $author$project$OUI$Material$Typography$render = F2(
-	function (typescale, _v0) {
-		var type_ = _v0.a;
-		var size = _v0.b;
-		var text = _v0.c;
+var $author$project$OUI$Text$properties = function (_v0) {
+	var props = _v0.a;
+	return props;
+};
+var $author$project$OUI$Material$Typography$render = F3(
+	function (typescale, colorscheme, text) {
+		var props = $author$project$OUI$Text$properties(text);
 		return A2(
 			$mdgriffith$elm_ui$Element$el,
-			A3($author$project$OUI$Material$Typography$attrs, type_, size, typescale),
-			$mdgriffith$elm_ui$Element$text(text));
+			A5($author$project$OUI$Material$Typography$attrs, props.type_, props.size, props.color, typescale, colorscheme),
+			$mdgriffith$elm_ui$Element$text(props.text));
 	});
 var $mdgriffith$elm_ui$Internal$Model$Bottom = {$: 'Bottom'};
 var $mdgriffith$elm_ui$Element$alignBottom = $mdgriffith$elm_ui$Internal$Model$AlignY($mdgriffith$elm_ui$Internal$Model$Bottom);
@@ -25905,9 +25974,9 @@ var $mdgriffith$elm_ui$Internal$Model$InFront = {$: 'InFront'};
 var $mdgriffith$elm_ui$Element$inFront = function (element) {
 	return A2($mdgriffith$elm_ui$Element$createNearby, $mdgriffith$elm_ui$Internal$Model$InFront, element);
 };
-var $author$project$OUI$Text$labelLarge = A2($author$project$OUI$Text$Text, $author$project$OUI$Text$Label, $author$project$OUI$Text$Large);
-var $author$project$OUI$Text$labelMedium = A2($author$project$OUI$Text$Text, $author$project$OUI$Text$Label, $author$project$OUI$Text$Medium);
-var $author$project$OUI$Text$labelSmall = A2($author$project$OUI$Text$Text, $author$project$OUI$Text$Label, $author$project$OUI$Text$Small);
+var $author$project$OUI$Text$labelLarge = A2($author$project$OUI$Text$textTypeSize, $author$project$OUI$Text$Label, $author$project$OUI$Text$Large);
+var $author$project$OUI$Text$labelMedium = A2($author$project$OUI$Text$textTypeSize, $author$project$OUI$Text$Label, $author$project$OUI$Text$Medium);
+var $author$project$OUI$Text$labelSmall = A2($author$project$OUI$Text$textTypeSize, $author$project$OUI$Text$Label, $author$project$OUI$Text$Small);
 var $mdgriffith$elm_ui$Internal$Model$MoveX = function (a) {
 	return {$: 'MoveX', a: a};
 };
@@ -25930,17 +25999,15 @@ var $mdgriffith$elm_ui$Element$moveUp = function (y) {
 		$mdgriffith$elm_ui$Internal$Flag$moveY,
 		$mdgriffith$elm_ui$Internal$Model$MoveY(-y));
 };
-var $author$project$OUI$Material$Typography$renderWithAttrs = F3(
-	function (typescale, customAttrs, _v0) {
-		var type_ = _v0.a;
-		var size = _v0.b;
-		var text = _v0.c;
+var $author$project$OUI$Material$Typography$renderWithAttrs = F4(
+	function (typescale, colorscheme, customAttrs, text) {
+		var props = $author$project$OUI$Text$properties(text);
 		return A2(
 			$mdgriffith$elm_ui$Element$el,
 			_Utils_ap(
-				A3($author$project$OUI$Material$Typography$attrs, type_, size, typescale),
+				A5($author$project$OUI$Material$Typography$attrs, props.type_, props.size, props.color, typescale, colorscheme),
 				customAttrs),
-			$mdgriffith$elm_ui$Element$text(text));
+			$mdgriffith$elm_ui$Element$text(props.text));
 	});
 var $mdgriffith$elm_ui$Element$Keyed$row = F2(
 	function (attrs, children) {
@@ -25960,7 +26027,7 @@ var $mdgriffith$elm_ui$Element$Keyed$row = F2(
 						attrs))),
 			$mdgriffith$elm_ui$Internal$Model$Keyed(children));
 	});
-var $author$project$OUI$Text$titleSmall = A2($author$project$OUI$Text$Text, $author$project$OUI$Text$Title, $author$project$OUI$Text$Small);
+var $author$project$OUI$Text$titleSmall = A2($author$project$OUI$Text$textTypeSize, $author$project$OUI$Text$Title, $author$project$OUI$Text$Small);
 var $author$project$OUI$Material$Navigation$transition = A2(
 	$elm$core$Basics$composeR,
 	$elm$html$Html$Attributes$style('transition'),
@@ -25992,9 +26059,10 @@ var $author$project$OUI$Material$Navigation$renderEntry = F6(
 											$mdgriffith$elm_ui$Element$centerY,
 											$author$project$OUI$Material$Navigation$transitionAllEaseOut
 										]),
-									A3(
+									A4(
 										$author$project$OUI$Material$Typography$renderWithAttrs,
 										typescale,
+										colorscheme,
 										_List_fromArray(
 											[$author$project$OUI$Material$Navigation$transitionAllEaseOut]),
 										$author$project$OUI$Text$labelLarge(text)));
@@ -26067,9 +26135,10 @@ var $author$project$OUI$Material$Navigation$renderEntry = F6(
 														icon)),
 													_Utils_Tuple2(
 													'label',
-													A3(
+													A4(
 														$author$project$OUI$Material$Typography$renderWithAttrs,
 														typescale,
+														colorscheme,
 														_List_fromArray(
 															[$author$project$OUI$Material$Navigation$transitionAllEaseOut]),
 														$author$project$OUI$Text$labelLarge(label)))
@@ -26127,9 +26196,10 @@ var $author$project$OUI$Material$Navigation$renderEntry = F6(
 									A3(
 										$author$project$OUI$Material$Navigation$ifThenElse,
 										large,
-										A3(
+										A4(
 											$author$project$OUI$Material$Typography$renderWithAttrs,
 											typescale,
+											colorscheme,
 											_List_fromArray(
 												[$mdgriffith$elm_ui$Element$centerX, $mdgriffith$elm_ui$Element$centerY]),
 											$author$project$OUI$Text$labelSmall(text)),
@@ -26213,9 +26283,10 @@ var $author$project$OUI$Material$Navigation$renderEntry = F6(
 																$mdgriffith$elm_ui$Element$width(
 																$mdgriffith$elm_ui$Element$px(theme.rail.activeIndicatorWidth))
 															]),
-														A3(
+														A4(
 															$author$project$OUI$Material$Typography$renderWithAttrs,
 															typescale,
+															colorscheme,
 															_List_fromArray(
 																[
 																	$mdgriffith$elm_ui$Element$moveLeft(theme.rail.activeIndicatorWidth),
@@ -26244,9 +26315,10 @@ var $author$project$OUI$Material$Navigation$renderEntry = F6(
 						]),
 					_Utils_Tuple2(
 						label,
-						A3(
+						A4(
 							$author$project$OUI$Material$Typography$renderWithAttrs,
 							typescale,
+							colorscheme,
 							_List_fromArray(
 								[$mdgriffith$elm_ui$Element$centerY]),
 							$author$project$OUI$Text$titleSmall(label)))) : A2(
@@ -26311,9 +26383,10 @@ var $author$project$OUI$Material$Navigation$render = F6(
 										$mdgriffith$elm_ui$Element$centerX,
 										$mdgriffith$elm_ui$Element$padding(15)
 									]),
-								A2(
+								A3(
 									$author$project$OUI$Material$Typography$render,
 									typescale,
+									colorscheme,
 									$author$project$OUI$Text$headlineSmall(s))));
 					} else {
 						return _Utils_Tuple2('', $mdgriffith$elm_ui$Element$none);
@@ -26808,6 +26881,10 @@ var $author$project$OUI$Material$Color$getOnContainerColor = function (c) {
 			};
 		case 'Neutral':
 			return function ($) {
+				return $.onSurface;
+			};
+		case 'NeutralVariant':
+			return function ($) {
 				return $.onSurfaceVariant;
 			};
 		case 'Error':
@@ -26822,12 +26899,6 @@ var $author$project$OUI$Material$Color$getOnContainerColor = function (c) {
 			var onColor = c.a.onColor;
 			return $elm$core$Basics$always(onColor);
 	}
-};
-var $author$project$OUI$Material$Color$getOnElementColor = function (c) {
-	return A2(
-		$elm$core$Basics$composeR,
-		$author$project$OUI$Material$Color$getOnColor(c),
-		$author$project$OUI$Material$Color$toElementColor);
 };
 var $author$project$OUI$Material$Color$getSurfaceContainerHighestColor = function (c) {
 	if (c.$ === 'Custom') {
@@ -27337,8 +27408,8 @@ var $author$project$OUI$TextField$onFocusBlur = F3(
 				}));
 	});
 var $author$project$OUI$Neutral = {$: 'Neutral'};
-var $author$project$OUI$Text$bodyLarge = A2($author$project$OUI$Text$Text, $author$project$OUI$Text$Body, $author$project$OUI$Text$Large);
-var $author$project$OUI$Text$bodySmall = A2($author$project$OUI$Text$Text, $author$project$OUI$Text$Body, $author$project$OUI$Text$Small);
+var $author$project$OUI$Text$bodyLarge = A2($author$project$OUI$Text$textTypeSize, $author$project$OUI$Text$Body, $author$project$OUI$Text$Large);
+var $author$project$OUI$Text$bodySmall = A2($author$project$OUI$Text$textTypeSize, $author$project$OUI$Text$Body, $author$project$OUI$Text$Small);
 var $author$project$OUI$Material$TextField$filterMaybe = $elm$core$List$filterMap($elm$core$Basics$identity);
 var $author$project$OUI$Material$TextField$ifThenElse = F3(
 	function (value, ifTrue, ifFalse) {
@@ -28231,9 +28302,10 @@ var $author$project$OUI$Material$TextField$render = F6(
 								$mdgriffith$elm_ui$Element$moveDown((((theme.height / 2) | 0) - ((typescale.body.large.size / 2) | 0)) - topBorderWidth),
 								$mdgriffith$elm_ui$Element$moveRight(inputLeftOffset - leftBorderWidth)
 							])),
-					A3(
+					A4(
 						$author$project$OUI$Material$Typography$renderWithAttrs,
 						typescale,
+						colorscheme,
 						_List_fromArray(
 							[
 								$author$project$OUI$Material$TextField$transition('font-size 0.15s')
@@ -28258,9 +28330,10 @@ var $author$project$OUI$Material$TextField$render = F6(
 										'linear-gradient(to bottom, transparent 0 ' + ($elm$core$String$fromInt(topOffset) + ('px, ' + ($avh4$elm_color$Color$toCssString(
 											A2($author$project$OUI$Material$Color$getSurfaceColor, p.color, colorscheme)) + (' ' + ($elm$core$String$fromInt(topOffset) + 'px)')))))))
 								])),
-						A3(
+						A4(
 							$author$project$OUI$Material$Typography$renderWithAttrs,
 							typescale,
+							colorscheme,
 							_List_fromArray(
 								[
 									$author$project$OUI$Material$TextField$transition('font-size 0.15s')
@@ -28276,9 +28349,10 @@ var $author$project$OUI$Material$TextField$render = F6(
 									$mdgriffith$elm_ui$Element$moveDown(theme.filled.topBottomPadding + (((typescale.body.large.lineHeight - typescale.body.large.size) / 2) | 0)),
 									$mdgriffith$elm_ui$Element$moveRight(inputLeftOffset - leftBorderWidth)
 								])),
-						A3(
+						A4(
 							$author$project$OUI$Material$Typography$renderWithAttrs,
 							typescale,
+							colorscheme,
 							_List_fromArray(
 								[
 									$author$project$OUI$Material$TextField$transition('font-size 0.15s')
@@ -28431,7 +28505,7 @@ var $author$project$OUI$Material$TextField$render = F6(
 							_Utils_ap(
 								focusEvents,
 								_Utils_ap(
-									A3($author$project$OUI$Material$Typography$attrs, $author$project$OUI$Text$Body, $author$project$OUI$Text$Large, typescale),
+									A5($author$project$OUI$Material$Typography$attrs, $author$project$OUI$Text$Body, $author$project$OUI$Text$Large, $author$project$OUI$Text$NoColor, typescale, colorscheme),
 									p.isMultiline ? _List_fromArray(
 										[
 											$mdgriffith$elm_ui$Element$height($mdgriffith$elm_ui$Element$fill)
@@ -28514,9 +28588,10 @@ var $author$project$OUI$Material$TextField$render = F6(
 										$author$project$OUI$Material$Color$toElementColor(color)),
 										A2($mdgriffith$elm_ui$Element$paddingXY, theme.leftRightPaddingWithoutIcon, 0)
 									]),
-								A2(
+								A3(
 									$author$project$OUI$Material$Typography$render,
 									typescale,
+									colorscheme,
 									$author$project$OUI$Text$bodySmall(text)))
 							]);
 					} else {
@@ -28982,96 +29057,194 @@ var $author$project$OUI$Showcase$TextFields$book = A2(
 					}),
 				update: $author$project$OUI$Showcase$TextFields$update
 			})));
-var $author$project$OUI$Text$bodyMedium = A2($author$project$OUI$Text$Text, $author$project$OUI$Text$Body, $author$project$OUI$Text$Medium);
-var $author$project$OUI$Text$displayLarge = A2($author$project$OUI$Text$Text, $author$project$OUI$Text$Display, $author$project$OUI$Text$Large);
-var $author$project$OUI$Text$displayMedium = A2($author$project$OUI$Text$Text, $author$project$OUI$Text$Display, $author$project$OUI$Text$Medium);
-var $author$project$OUI$Text$displaySmall = A2($author$project$OUI$Text$Text, $author$project$OUI$Text$Display, $author$project$OUI$Text$Small);
-var $author$project$OUI$Text$headlineLarge = A2($author$project$OUI$Text$Text, $author$project$OUI$Text$Headline, $author$project$OUI$Text$Large);
-var $author$project$OUI$Text$headlineMedium = A2($author$project$OUI$Text$Text, $author$project$OUI$Text$Headline, $author$project$OUI$Text$Medium);
+var $author$project$OUI$Text$bodyMedium = A2($author$project$OUI$Text$textTypeSize, $author$project$OUI$Text$Body, $author$project$OUI$Text$Medium);
+var $author$project$OUI$Text$displayLarge = A2($author$project$OUI$Text$textTypeSize, $author$project$OUI$Text$Display, $author$project$OUI$Text$Large);
+var $author$project$OUI$Text$displayMedium = A2($author$project$OUI$Text$textTypeSize, $author$project$OUI$Text$Display, $author$project$OUI$Text$Medium);
+var $author$project$OUI$Text$displaySmall = A2($author$project$OUI$Text$textTypeSize, $author$project$OUI$Text$Display, $author$project$OUI$Text$Small);
+var $author$project$OUI$Text$headlineLarge = A2($author$project$OUI$Text$textTypeSize, $author$project$OUI$Text$Headline, $author$project$OUI$Text$Large);
+var $author$project$OUI$Text$headlineMedium = A2($author$project$OUI$Text$textTypeSize, $author$project$OUI$Text$Headline, $author$project$OUI$Text$Medium);
 var $author$project$OUI$Material$text = function (theme) {
-	return $author$project$OUI$Material$Typography$render(
-		$author$project$OUI$Material$Theme$typescale(theme));
+	return A2(
+		$author$project$OUI$Material$Typography$render,
+		$author$project$OUI$Material$Theme$typescale(theme),
+		$author$project$OUI$Material$Theme$colorscheme(theme));
 };
-var $author$project$OUI$Text$titleLarge = A2($author$project$OUI$Text$Text, $author$project$OUI$Text$Title, $author$project$OUI$Text$Large);
-var $author$project$OUI$Text$titleMedium = A2($author$project$OUI$Text$Text, $author$project$OUI$Text$Title, $author$project$OUI$Text$Medium);
+var $author$project$OUI$Text$titleLarge = A2($author$project$OUI$Text$textTypeSize, $author$project$OUI$Text$Title, $author$project$OUI$Text$Large);
+var $author$project$OUI$Text$titleMedium = A2($author$project$OUI$Text$textTypeSize, $author$project$OUI$Text$Title, $author$project$OUI$Text$Medium);
+var $author$project$OUI$Text$Color = function (a) {
+	return {$: 'Color', a: a};
+};
+var $author$project$OUI$Text$withColor = F2(
+	function (value, _v0) {
+		var props = _v0.a;
+		return $author$project$OUI$Text$Text(
+			_Utils_update(
+				props,
+				{
+					color: $author$project$OUI$Text$Color(value)
+				}));
+	});
 var $author$project$OUI$Showcase$Typography$book = A2(
 	$author$project$OUI$Explorer$withStaticChapter,
-	function (_v0) {
-		var theme = _v0.theme;
+	function (_v1) {
+		var theme = _v1.theme;
 		return A2(
 			$mdgriffith$elm_ui$Element$column,
 			_List_fromArray(
 				[
-					$mdgriffith$elm_ui$Element$spacing(10)
+					$mdgriffith$elm_ui$Element$spacing(20)
 				]),
 			_List_fromArray(
 				[
 					A2(
-					$author$project$OUI$Material$text,
-					theme,
-					$author$project$OUI$Text$displayLarge('Display Large')),
+					$mdgriffith$elm_ui$Element$row,
+					_List_fromArray(
+						[
+							$mdgriffith$elm_ui$Element$spacing(20)
+						]),
+					_List_fromArray(
+						[
+							A2(
+							$mdgriffith$elm_ui$Element$column,
+							_List_fromArray(
+								[
+									$mdgriffith$elm_ui$Element$spacing(10)
+								]),
+							_List_fromArray(
+								[
+									A2(
+									$author$project$OUI$Material$text,
+									theme,
+									$author$project$OUI$Text$displayLarge('Display Large')),
+									A2(
+									$author$project$OUI$Material$text,
+									theme,
+									$author$project$OUI$Text$displayMedium('Display Medium')),
+									A2(
+									$author$project$OUI$Material$text,
+									theme,
+									$author$project$OUI$Text$displaySmall('Display Small'))
+								])),
+							A2(
+							$mdgriffith$elm_ui$Element$column,
+							_List_fromArray(
+								[
+									$mdgriffith$elm_ui$Element$spacing(10)
+								]),
+							_List_fromArray(
+								[
+									A2(
+									$author$project$OUI$Material$text,
+									theme,
+									$author$project$OUI$Text$headlineLarge('Headline Large')),
+									A2(
+									$author$project$OUI$Material$text,
+									theme,
+									$author$project$OUI$Text$headlineMedium('Headline Medium')),
+									A2(
+									$author$project$OUI$Material$text,
+									theme,
+									$author$project$OUI$Text$headlineSmall('Headline Small'))
+								]))
+						])),
 					A2(
-					$author$project$OUI$Material$text,
-					theme,
-					$author$project$OUI$Text$displayMedium('Display Medium')),
-					A2(
-					$author$project$OUI$Material$text,
-					theme,
-					$author$project$OUI$Text$displaySmall('Display Small')),
-					A2(
-					$author$project$OUI$Material$text,
-					theme,
-					$author$project$OUI$Text$headlineLarge('Headline Large')),
-					A2(
-					$author$project$OUI$Material$text,
-					theme,
-					$author$project$OUI$Text$headlineMedium('Headline Medium')),
-					A2(
-					$author$project$OUI$Material$text,
-					theme,
-					$author$project$OUI$Text$headlineSmall('Headline Small')),
-					A2(
-					$author$project$OUI$Material$text,
-					theme,
-					$author$project$OUI$Text$titleLarge('Title Large')),
-					A2(
-					$author$project$OUI$Material$text,
-					theme,
-					$author$project$OUI$Text$titleMedium('Title Medium')),
-					A2(
-					$author$project$OUI$Material$text,
-					theme,
-					$author$project$OUI$Text$titleSmall('Title Small')),
-					A2(
-					$author$project$OUI$Material$text,
-					theme,
-					$author$project$OUI$Text$labelLarge('Label Large')),
-					A2(
-					$author$project$OUI$Material$text,
-					theme,
-					$author$project$OUI$Text$labelMedium('Label Medium')),
-					A2(
-					$author$project$OUI$Material$text,
-					theme,
-					$author$project$OUI$Text$labelSmall('Label Small')),
-					A2(
-					$author$project$OUI$Material$text,
-					theme,
-					$author$project$OUI$Text$bodyLarge('Body Large')),
-					A2(
-					$author$project$OUI$Material$text,
-					theme,
-					$author$project$OUI$Text$bodyMedium('Body Medium')),
-					A2(
-					$author$project$OUI$Material$text,
-					theme,
-					$author$project$OUI$Text$bodySmall('Body Small'))
+					$mdgriffith$elm_ui$Element$row,
+					_List_fromArray(
+						[
+							$mdgriffith$elm_ui$Element$spacing(20)
+						]),
+					_List_fromArray(
+						[
+							A2(
+							$mdgriffith$elm_ui$Element$column,
+							_List_fromArray(
+								[
+									$mdgriffith$elm_ui$Element$spacing(10)
+								]),
+							_List_fromArray(
+								[
+									A2(
+									$author$project$OUI$Material$text,
+									theme,
+									$author$project$OUI$Text$titleLarge('Title Large')),
+									A2(
+									$author$project$OUI$Material$text,
+									theme,
+									$author$project$OUI$Text$titleMedium('Title Medium')),
+									A2(
+									$author$project$OUI$Material$text,
+									theme,
+									$author$project$OUI$Text$titleSmall('Title Small'))
+								])),
+							A2(
+							$mdgriffith$elm_ui$Element$column,
+							_List_fromArray(
+								[
+									$mdgriffith$elm_ui$Element$spacing(10)
+								]),
+							_List_fromArray(
+								[
+									A2(
+									$author$project$OUI$Material$text,
+									theme,
+									$author$project$OUI$Text$labelLarge('Label Large')),
+									A2(
+									$author$project$OUI$Material$text,
+									theme,
+									$author$project$OUI$Text$labelMedium('Label Medium')),
+									A2(
+									$author$project$OUI$Material$text,
+									theme,
+									$author$project$OUI$Text$labelSmall('Label Small'))
+								])),
+							A2(
+							$mdgriffith$elm_ui$Element$column,
+							_List_fromArray(
+								[
+									$mdgriffith$elm_ui$Element$spacing(10)
+								]),
+							_List_fromArray(
+								[
+									A2(
+									$author$project$OUI$Material$text,
+									theme,
+									$author$project$OUI$Text$bodyLarge('Body Large')),
+									A2(
+									$author$project$OUI$Material$text,
+									theme,
+									$author$project$OUI$Text$bodyMedium('Body Medium')),
+									A2(
+									$author$project$OUI$Material$text,
+									theme,
+									$author$project$OUI$Text$bodySmall('Body Small'))
+								]))
+						]))
 				]));
 	},
 	A2(
-		$author$project$OUI$Explorer$withMarkdownChapter,
-		'\nThe material typescale\n\nType styles include: display, headline, title, body, and label\n\nEach type comes in three sizes: large, medium, small\n\n\n',
-		$author$project$OUI$Explorer$book('Typography')));
+		$author$project$OUI$Explorer$withStaticChapter,
+		function (_v0) {
+			var theme = _v0.theme;
+			return A2(
+				$mdgriffith$elm_ui$Element$paragraph,
+				_List_Nil,
+				A2(
+					$elm$core$List$map,
+					$author$project$OUI$Material$text(theme),
+					_List_fromArray(
+						[
+							$author$project$OUI$Text$bodyLarge('Different text pieces can be assembled with Element.paragraph, '),
+							$author$project$OUI$Text$bodySmall('here with smaller text, '),
+							A2(
+							$author$project$OUI$Text$withColor,
+							$author$project$OUI$Primary,
+							$author$project$OUI$Text$bodyLarge(' or here in color.'))
+						])));
+		},
+		A2(
+			$author$project$OUI$Explorer$withMarkdownChapter,
+			'\nThe material typescale\n\nType styles include: display, headline, title, body, and label\n\nEach type comes in three sizes: large, medium, small\n\n\n',
+			$author$project$OUI$Explorer$book('Typography'))));
 var $author$project$OUI$Explorer$category = F2(
 	function (name, _v0) {
 		var expl = _v0.a;

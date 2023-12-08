@@ -324,7 +324,7 @@ render typescale colorscheme buttonTheme theme attrs textfield =
             in
             if labelHoldPlace then
                 OUI.Text.bodyLarge label
-                    |> OUI.Material.Typography.renderWithAttrs typescale [ transition "font-size 0.15s" ]
+                    |> OUI.Material.Typography.renderWithAttrs typescale colorscheme [ transition "font-size 0.15s" ]
                     |> Element.el
                         (staticAttrs
                             ++ [ Element.moveDown <|
@@ -345,7 +345,7 @@ render typescale colorscheme buttonTheme theme attrs textfield =
                         typescale.body.small.size // 2
                 in
                 OUI.Text.bodySmall label
-                    |> OUI.Material.Typography.renderWithAttrs typescale [ transition "font-size 0.15s" ]
+                    |> OUI.Material.Typography.renderWithAttrs typescale colorscheme [ transition "font-size 0.15s" ]
                     |> Element.el
                         (staticAttrs
                             ++ [ Element.moveUp <| toFloat <| topOffset
@@ -369,7 +369,7 @@ render typescale colorscheme buttonTheme theme attrs textfield =
 
             else
                 OUI.Text.bodySmall label
-                    |> OUI.Material.Typography.renderWithAttrs typescale [ transition "font-size 0.15s" ]
+                    |> OUI.Material.Typography.renderWithAttrs typescale colorscheme [ transition "font-size 0.15s" ]
                     |> Element.el
                         (staticAttrs
                             ++ [ Element.moveDown <|
@@ -424,7 +424,7 @@ render typescale colorscheme buttonTheme theme attrs textfield =
                 :: (Element.moveDown <| toFloat inputMoveDownBy)
                 :: Element.width Element.fill
                 :: focusEvents
-                ++ OUI.Material.Typography.attrs OUI.Text.Body OUI.Text.Large typescale
+                ++ OUI.Material.Typography.attrs OUI.Text.Body OUI.Text.Large OUI.Text.NoColor typescale colorscheme
                 ++ (if p.isMultiline then
                         [ Element.height Element.fill ]
 
@@ -494,7 +494,7 @@ render typescale colorscheme buttonTheme theme attrs textfield =
                             , Element.paddingXY theme.leftRightPaddingWithoutIcon 0
                             ]
                             (OUI.Text.bodySmall text
-                                |> OUI.Material.Typography.render typescale
+                                |> OUI.Material.Typography.render typescale colorscheme
                             )
                         ]
 

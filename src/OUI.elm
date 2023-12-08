@@ -19,6 +19,7 @@ type Color
     | Tertiary
     | TertiaryContainer
     | Neutral
+    | NeutralVariant
     | Error
     | ErrorContainer
     | Custom

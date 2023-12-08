@@ -11,7 +11,7 @@ import OUI.Divider
 import OUI.Material.Color exposing (toElementColor)
 import OUI.Material.Divider
 import OUI.Material.Icon
-import OUI.Material.Typography
+import OUI.Material.Typography as Typography
 import OUI.Navigation exposing (Navigation)
 import OUI.Text
 
@@ -121,7 +121,7 @@ defaultTheme =
 
 
 render :
-    OUI.Material.Typography.Typescale
+    Typography.Typescale
     -> OUI.Material.Color.Scheme
     -> OUI.Material.Divider.Theme
     -> Theme
@@ -163,7 +163,7 @@ render typescale colorscheme dividerTheme theme _ nav =
             Just s ->
                 ( "header"
                 , OUI.Text.headlineSmall s
-                    |> OUI.Material.Typography.render typescale
+                    |> Typography.render typescale colorscheme
                     |> Element.el
                         [ Element.centerX
                         , Element.padding 15
@@ -183,7 +183,7 @@ render typescale colorscheme dividerTheme theme _ nav =
 
 
 renderEntry :
-    OUI.Material.Typography.Typescale
+    Typography.Typescale
     -> OUI.Material.Color.Scheme
     -> OUI.Material.Divider.Theme
     -> Theme
@@ -222,7 +222,9 @@ renderEntry typescale colorscheme dividerTheme theme props entry =
                                         , transitionAllEaseOut
                                         ]
                                         (OUI.Text.labelLarge text
-                                            |> OUI.Material.Typography.renderWithAttrs typescale
+                                            |> Typography.renderWithAttrs
+                                                typescale
+                                                colorscheme
                                                 [ transitionAllEaseOut
                                                 ]
                                         )
@@ -280,7 +282,9 @@ renderEntry typescale colorscheme dividerTheme theme props entry =
                                       )
                                     , ( "label"
                                       , OUI.Text.labelLarge label
-                                            |> OUI.Material.Typography.renderWithAttrs typescale
+                                            |> Typography.renderWithAttrs
+                                                typescale
+                                                colorscheme
                                                 [ transitionAllEaseOut
                                                 ]
                                       )
@@ -340,7 +344,9 @@ renderEntry typescale colorscheme dividerTheme theme props entry =
                                         )
                                         (ifThenElse large
                                             (OUI.Text.labelSmall text
-                                                |> OUI.Material.Typography.renderWithAttrs typescale
+                                                |> Typography.renderWithAttrs
+                                                    typescale
+                                                    colorscheme
                                                     [ Element.centerX
                                                     , Element.centerY
                                                     ]
@@ -401,7 +407,9 @@ renderEntry typescale colorscheme dividerTheme theme props entry =
                                             ]
                                             (OUI.Text.labelMedium
                                                 label
-                                                |> OUI.Material.Typography.renderWithAttrs typescale
+                                                |> Typography.renderWithAttrs
+                                                    typescale
+                                                    colorscheme
                                                     [ Element.moveLeft <|
                                                         toFloat <|
                                                             theme.rail.activeIndicatorWidth
@@ -424,7 +432,9 @@ renderEntry typescale colorscheme dividerTheme theme props entry =
             if isDrawer then
                 ( label
                 , OUI.Text.titleSmall label
-                    |> OUI.Material.Typography.renderWithAttrs typescale
+                    |> Typography.renderWithAttrs
+                        typescale
+                        colorscheme
                         [ Element.centerY
                         ]
                 )

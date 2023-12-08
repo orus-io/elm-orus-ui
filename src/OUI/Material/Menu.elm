@@ -7,6 +7,7 @@ import Element.Events as Events
 import Element.Font as Font
 import Html.Events
 import Json.Decode as Json
+import OUI
 import OUI.Divider
 import OUI.Icon exposing (Icon)
 import OUI.Material.Color
@@ -121,7 +122,12 @@ render typescale colorscheme dividerTheme theme highlighted attrs menu =
                     |> Element.maximum theme.maxWidth
                     |> Element.width
                ]
-            ++ OUI.Material.Typography.attrs props.textType props.textSize typescale
+            ++ OUI.Material.Typography.attrs
+                props.textType
+                props.textSize
+                OUI.Text.NoColor
+                typescale
+                colorscheme
         )
         (props.items
             |> List.indexedMap

@@ -57,7 +57,7 @@ text :
     -> OUI.Text.Text
     -> Element msg
 text theme =
-    OUI.Material.Typography.render (Theme.typescale theme)
+    OUI.Material.Typography.render (Theme.typescale theme) (Theme.colorscheme theme)
 
 
 {-| Render a button
