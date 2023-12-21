@@ -94,8 +94,8 @@ type SharedMsg
     | OnRouteChange String
 
 
-defaultView : Page msg
-defaultView =
+defaultView : Shared themeExt -> Page msg
+defaultView _ =
     { title = "Invalid"
     , content = Element.text "invalid view"
     }
