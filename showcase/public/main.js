@@ -11645,6 +11645,82 @@ var $mdgriffith$elm_ui$Internal$Model$AlignY = function (a) {
 };
 var $mdgriffith$elm_ui$Internal$Model$CenterY = {$: 'CenterY'};
 var $mdgriffith$elm_ui$Element$centerY = $mdgriffith$elm_ui$Internal$Model$AlignY($mdgriffith$elm_ui$Internal$Model$CenterY);
+var $elm$html$Html$Attributes$download = function (fileName) {
+	return A2($elm$html$Html$Attributes$stringProperty, 'download', fileName);
+};
+var $elm$html$Html$Attributes$href = function (url) {
+	return A2(
+		$elm$html$Html$Attributes$stringProperty,
+		'href',
+		_VirtualDom_noJavaScriptUri(url));
+};
+var $mdgriffith$elm_ui$Element$download = F2(
+	function (attrs, _v0) {
+		var url = _v0.url;
+		var label = _v0.label;
+		return A4(
+			$mdgriffith$elm_ui$Internal$Model$element,
+			$mdgriffith$elm_ui$Internal$Model$asEl,
+			$mdgriffith$elm_ui$Internal$Model$NodeName('a'),
+			A2(
+				$elm$core$List$cons,
+				$mdgriffith$elm_ui$Internal$Model$Attr(
+					$elm$html$Html$Attributes$href(url)),
+				A2(
+					$elm$core$List$cons,
+					$mdgriffith$elm_ui$Internal$Model$Attr(
+						$elm$html$Html$Attributes$download('')),
+					A2(
+						$elm$core$List$cons,
+						$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$shrink),
+						A2(
+							$elm$core$List$cons,
+							$mdgriffith$elm_ui$Element$height($mdgriffith$elm_ui$Element$shrink),
+							A2(
+								$elm$core$List$cons,
+								$mdgriffith$elm_ui$Internal$Model$htmlClass($mdgriffith$elm_ui$Internal$Style$classes.contentCenterX),
+								A2(
+									$elm$core$List$cons,
+									$mdgriffith$elm_ui$Internal$Model$htmlClass($mdgriffith$elm_ui$Internal$Style$classes.contentCenterY),
+									attrs)))))),
+			$mdgriffith$elm_ui$Internal$Model$Unkeyed(
+				_List_fromArray(
+					[label])));
+	});
+var $mdgriffith$elm_ui$Element$downloadAs = F2(
+	function (attrs, _v0) {
+		var url = _v0.url;
+		var filename = _v0.filename;
+		var label = _v0.label;
+		return A4(
+			$mdgriffith$elm_ui$Internal$Model$element,
+			$mdgriffith$elm_ui$Internal$Model$asEl,
+			$mdgriffith$elm_ui$Internal$Model$NodeName('a'),
+			A2(
+				$elm$core$List$cons,
+				$mdgriffith$elm_ui$Internal$Model$Attr(
+					$elm$html$Html$Attributes$href(url)),
+				A2(
+					$elm$core$List$cons,
+					$mdgriffith$elm_ui$Internal$Model$Attr(
+						$elm$html$Html$Attributes$download(filename)),
+					A2(
+						$elm$core$List$cons,
+						$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$shrink),
+						A2(
+							$elm$core$List$cons,
+							$mdgriffith$elm_ui$Element$height($mdgriffith$elm_ui$Element$shrink),
+							A2(
+								$elm$core$List$cons,
+								$mdgriffith$elm_ui$Internal$Model$htmlClass($mdgriffith$elm_ui$Internal$Style$classes.contentCenterX),
+								A2(
+									$elm$core$List$cons,
+									$mdgriffith$elm_ui$Internal$Model$htmlClass($mdgriffith$elm_ui$Internal$Style$classes.contentCenterY),
+									attrs)))))),
+			$mdgriffith$elm_ui$Internal$Model$Unkeyed(
+				_List_fromArray(
+					[label])));
+	});
 var $mdgriffith$elm_ui$Element$el = F2(
 	function (attrs, child) {
 		return A4(
@@ -12710,12 +12786,6 @@ var $author$project$OUI$Material$Button$layoutAttrs = F4(
 						padding
 					])));
 	});
-var $elm$html$Html$Attributes$href = function (url) {
-	return A2(
-		$elm$html$Html$Attributes$stringProperty,
-		'href',
-		_VirtualDom_noJavaScriptUri(url));
-};
 var $elm$html$Html$Attributes$rel = _VirtualDom_attribute('rel');
 var $mdgriffith$elm_ui$Element$link = F2(
 	function (attrs, _v0) {
@@ -12743,6 +12813,41 @@ var $mdgriffith$elm_ui$Element$link = F2(
 								$elm$core$List$cons,
 								$mdgriffith$elm_ui$Internal$Model$htmlClass($mdgriffith$elm_ui$Internal$Style$classes.contentCenterX + (' ' + ($mdgriffith$elm_ui$Internal$Style$classes.contentCenterY + (' ' + $mdgriffith$elm_ui$Internal$Style$classes.link)))),
 								attrs))))),
+			$mdgriffith$elm_ui$Internal$Model$Unkeyed(
+				_List_fromArray(
+					[label])));
+	});
+var $elm$html$Html$Attributes$target = $elm$html$Html$Attributes$stringProperty('target');
+var $mdgriffith$elm_ui$Element$newTabLink = F2(
+	function (attrs, _v0) {
+		var url = _v0.url;
+		var label = _v0.label;
+		return A4(
+			$mdgriffith$elm_ui$Internal$Model$element,
+			$mdgriffith$elm_ui$Internal$Model$asEl,
+			$mdgriffith$elm_ui$Internal$Model$NodeName('a'),
+			A2(
+				$elm$core$List$cons,
+				$mdgriffith$elm_ui$Internal$Model$Attr(
+					$elm$html$Html$Attributes$href(url)),
+				A2(
+					$elm$core$List$cons,
+					$mdgriffith$elm_ui$Internal$Model$Attr(
+						$elm$html$Html$Attributes$rel('noopener noreferrer')),
+					A2(
+						$elm$core$List$cons,
+						$mdgriffith$elm_ui$Internal$Model$Attr(
+							$elm$html$Html$Attributes$target('_blank')),
+						A2(
+							$elm$core$List$cons,
+							$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$shrink),
+							A2(
+								$elm$core$List$cons,
+								$mdgriffith$elm_ui$Element$height($mdgriffith$elm_ui$Element$shrink),
+								A2(
+									$elm$core$List$cons,
+									$mdgriffith$elm_ui$Internal$Model$htmlClass($mdgriffith$elm_ui$Internal$Style$classes.contentCenterX + (' ' + ($mdgriffith$elm_ui$Internal$Style$classes.contentCenterY + (' ' + $mdgriffith$elm_ui$Internal$Style$classes.link)))),
+									attrs)))))),
 			$mdgriffith$elm_ui$Internal$Model$Unkeyed(
 				_List_fromArray(
 					[label])));
@@ -13350,6 +13455,25 @@ var $author$project$OUI$Material$Button$renderProps = F6(
 					$mdgriffith$elm_ui$Element$link,
 					all_attrs,
 					{label: label, url: url});
+			case 'NewTabLink':
+				var url = _v0.a;
+				return A2(
+					$mdgriffith$elm_ui$Element$newTabLink,
+					all_attrs,
+					{label: label, url: url});
+			case 'DownloadLink':
+				var url = _v0.a;
+				return A2(
+					$mdgriffith$elm_ui$Element$download,
+					all_attrs,
+					{label: label, url: url});
+			case 'DownloadAsLink':
+				var url = _v0.a;
+				var filename = _v0.b;
+				return A2(
+					$mdgriffith$elm_ui$Element$downloadAs,
+					all_attrs,
+					{filename: filename, label: label, url: url});
 			case 'OnClick':
 				var msg = _v0.a;
 				return A2(
@@ -29525,8 +29649,6 @@ var $author$project$OUI$Icon$elmMaterialIcons = F2(
 							wrapper(color));
 					})));
 	});
-var $author$project$OUI$Explorer$Light = {$: 'Light'};
-var $author$project$OUI$Material$Color$defaultDarkScheme = $author$project$OUI$Material$Color$darkFromKeyColors($author$project$OUI$Material$Color$defaultKeyColors);
 var $author$project$OUI$Material$Theme$Theme = function (a) {
 	return {$: 'Theme', a: a};
 };
@@ -29596,6 +29718,8 @@ var $author$project$OUI$Material$Theme$defaultTypescale = {
 };
 var $author$project$OUI$Material$Theme$defaultTheme = $author$project$OUI$Material$Theme$Theme(
 	{button: $author$project$OUI$Material$Button$defaultTheme, checkbox: $author$project$OUI$Material$Checkbox$defaultTheme, colorscheme: $author$project$OUI$Material$Color$defaultLightScheme, divider: $author$project$OUI$Material$Divider$defaultTheme, ext: _Utils_Tuple0, menu: $author$project$OUI$Material$Menu$defaultTheme, navigation: $author$project$OUI$Material$Navigation$defaultTheme, radiobutton: $author$project$OUI$Material$RadioButton$defaultTheme, _switch: $author$project$OUI$Material$Switch$defaultTheme, textfield: $author$project$OUI$Material$TextField$defaultTheme, typescale: $author$project$OUI$Material$Theme$defaultTypescale});
+var $author$project$OUI$Explorer$Light = {$: 'Light'};
+var $author$project$OUI$Material$Color$defaultDarkScheme = $author$project$OUI$Material$Color$darkFromKeyColors($author$project$OUI$Material$Color$defaultKeyColors);
 var $author$project$OUI$Explorer$defaultView = {
 	content: $mdgriffith$elm_ui$Element$text('invalid view'),
 	title: 'Invalid'
@@ -29630,23 +29754,26 @@ var $orus_io$elm_spa$Spa$init = function (shared) {
 				{defaultView: shared.defaultView})
 		});
 };
-var $author$project$OUI$Explorer$explorer = $author$project$OUI$Explorer$Explorer(
-	{
-		app: $orus_io$elm_spa$Spa$init(
-			{
-				defaultView: $author$project$OUI$Explorer$defaultView,
-				extractIdentity: $elm$core$Basics$always($elm$core$Maybe$Nothing)
-			}),
-		categories: _List_Nil,
-		initialShared: {
-			colorSchemeList: _List_fromArray(
-				[
-					_Utils_Tuple2($author$project$OUI$Material$Color$defaultLightScheme, $author$project$OUI$Material$Color$defaultDarkScheme)
-				]),
-			selectedColorScheme: _Utils_Tuple2(0, $author$project$OUI$Explorer$Light),
-			theme: $author$project$OUI$Material$Theme$defaultTheme
-		}
-	});
+var $author$project$OUI$Explorer$explorerWithTheme = function (theme) {
+	return $author$project$OUI$Explorer$Explorer(
+		{
+			app: $orus_io$elm_spa$Spa$init(
+				{
+					defaultView: $author$project$OUI$Explorer$defaultView,
+					extractIdentity: $elm$core$Basics$always($elm$core$Maybe$Nothing)
+				}),
+			categories: _List_Nil,
+			initialShared: {
+				colorSchemeList: _List_fromArray(
+					[
+						_Utils_Tuple2($author$project$OUI$Material$Color$defaultLightScheme, $author$project$OUI$Material$Color$defaultDarkScheme)
+					]),
+				selectedColorScheme: _Utils_Tuple2(0, $author$project$OUI$Explorer$Light),
+				theme: theme
+			}
+		});
+};
+var $author$project$OUI$Explorer$explorer = $author$project$OUI$Explorer$explorerWithTheme($author$project$OUI$Material$Theme$defaultTheme);
 var $icidasset$elm_material_icons$Material$Icons$Outlined$face = A2(
 	$icidasset$elm_material_icons$Material$Icons$Internal$icon,
 	_List_fromArray(

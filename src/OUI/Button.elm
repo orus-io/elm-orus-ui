@@ -2,7 +2,8 @@ module OUI.Button exposing
     ( Button, Type(..), Action(..)
     , new
     , withIcon, color
-    , onClick, link, disabled
+    , onClick, disabled
+    , link, newTabLink, downloadLink, downloadAsLink
     , elevatedButton, filledButton, outlinedButton, textButton, smallFAB, mediumFAB, largeFAB, extendedFAB, iconButton, filledIconButton, outlinedIconButton
     , Properties, properties
     )
@@ -27,7 +28,14 @@ module OUI.Button exposing
 A button must have one and only one action that can be set with one of the
 following functions.
 
-@docs onClick, link, disabled
+@docs onClick, disabled
+
+
+## Links
+
+Instead of a direct action (or disabled), a button can be a link
+
+@docs link, newTabLink, downloadLink, downloadAsLink
 
 
 # Button types
@@ -68,6 +76,9 @@ type Action msg
     = Disabled
     | OnClick msg
     | Link String
+    | NewTabLink String
+    | DownloadLink String
+    | DownloadAsLink String String
 
 
 {-| underlying properties of the button
@@ -85,10 +96,6 @@ type alias Props msg =
 -}
 type Button constraints msg
     = Button (Props msg)
-
-
-type MenuButton item msg
-    = MenuButton (Props msg) (Menu item msg)
 
 
 {-| Create a button with the given label
@@ -236,6 +243,36 @@ link url (Button props) =
     Button
         { props
             | action = Link url
+        }
+
+
+{-| Set the button as a link opening in a new tab
+-}
+newTabLink : String -> Button { props | needOnClickOrDisabled : () } msg -> Button { a | hasAction : () } msg
+newTabLink url (Button props) =
+    Button
+        { props
+            | action = NewTabLink url
+        }
+
+
+{-| A link to download a file
+-}
+downloadLink : String -> Button { props | needOnClickOrDisabled : () } msg -> Button { a | hasAction : () } msg
+downloadLink url (Button props) =
+    Button
+        { props
+            | action = DownloadLink url
+        }
+
+
+{-| A link to download a file, but you can specify the filename.
+-}
+downloadAsLink : String -> String -> Button { props | needOnClickOrDisabled : () } msg -> Button { a | hasAction : () } msg
+downloadAsLink filename url (Button props) =
+    Button
+        { props
+            | action = DownloadAsLink url filename
         }
 
 

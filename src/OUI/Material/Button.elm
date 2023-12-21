@@ -761,6 +761,25 @@ renderProps typescale colorscheme theme rightIcon attrs props =
                 , url = url
                 }
 
+        OUI.Button.NewTabLink url ->
+            Element.newTabLink all_attrs
+                { label = label
+                , url = url
+                }
+
+        OUI.Button.DownloadLink url ->
+            Element.download all_attrs
+                { label = label
+                , url = url
+                }
+
+        OUI.Button.DownloadAsLink url filename ->
+            Element.downloadAs all_attrs
+                { label = label
+                , filename = filename
+                , url = url
+                }
+
         OUI.Button.OnClick msg ->
             Input.button all_attrs
                 { label = label
