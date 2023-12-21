@@ -1,13 +1,13 @@
 module OUI.Explorer exposing
     ( Book, BookMsg, Page, Route, Shared, SharedMsg, Explorer
-    , setTheme, ColorSchemeType, setColorScheme, addBook, book, statefulBook, category, bookMsg, logEvent, logEffect, explorer, finalize
+    , setTheme, ColorSchemeType, setColorScheme, addBook, book, statefulBook, category, bookMsg, logEvent, logEffect, explorer, explorerWithTheme, finalize
     , withMarkdownChapter, withStaticChapter, withChapter
     )
 
 {-|
 
 @docs Book, BookMsg, Page, Route, Shared, SharedMsg, Explorer
-@docs setTheme, ColorSchemeType, setColorScheme, addBook, book, statefulBook, category, bookMsg, logEvent, logEffect, explorer, finalize
+@docs setTheme, ColorSchemeType, setColorScheme, addBook, book, statefulBook, category, bookMsg, logEvent, logEffect, explorer, explorerWithTheme, finalize
 @docs withMarkdownChapter, withStaticChapter, withChapter
 
 -}
@@ -122,6 +122,15 @@ type Explorer themeExt current previous currentMsg previousMsg
 -}
 explorer : Explorer () () () () ()
 explorer =
+    explorerWithTheme Theme.defaultTheme
+
+
+{-| creates an empty Explorer with a customized theme type
+-}
+explorerWithTheme :
+    Theme.Theme themeExt
+    -> Explorer themeExt () () () ()
+explorerWithTheme theme =
     Explorer
         { app =
             Spa.init
@@ -130,7 +139,7 @@ explorer =
                 }
         , categories = []
         , initialShared =
-            { theme = Theme.defaultTheme
+            { theme = theme
             , colorSchemeList = [ ( Color.defaultLightScheme, Color.defaultDarkScheme ) ]
             , selectedColorScheme =
                 ( 0, Light )
