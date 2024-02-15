@@ -1,22 +1,23 @@
 module OUI.Material.Theme exposing
     ( Theme, defaultTheme, Typescale, defaultTypescale, withExt
-    , ButtonTheme, CheckboxTheme, DividerTheme, MenuTheme, NavigationTheme, SwitchTheme, TextFieldTheme, RadioButtonTheme
-    , colorscheme, typescale, button, checkbox, divider, menu, navigation, switch, textfield, radiobutton, ext
-    , withButton, withCheckbox, withColorscheme, withDivider, withMenu, withNavigation, withRadiobutton, withSwitch, withTextfield, withTypescale
+    , BadgeTheme, ButtonTheme, CheckboxTheme, DividerTheme, MenuTheme, NavigationTheme, SwitchTheme, TextFieldTheme, RadioButtonTheme
+    , colorscheme, typescale, badge, button, checkbox, divider, menu, navigation, switch, textfield, radiobutton, ext
+    , withBadge, withButton, withCheckbox, withColorscheme, withDivider, withMenu, withNavigation, withRadiobutton, withSwitch, withTextfield, withTypescale
     )
 
 {-|
 
 @docs Theme, defaultTheme, Typescale, defaultTypescale, withExt
 
-@docs ButtonTheme, CheckboxTheme, DividerTheme, MenuTheme, NavigationTheme, SwitchTheme, TextFieldTheme, RadioButtonTheme
+@docs BadgeTheme, ButtonTheme, CheckboxTheme, DividerTheme, MenuTheme, NavigationTheme, SwitchTheme, TextFieldTheme, RadioButtonTheme
 
-@docs colorscheme, typescale, button, checkbox, divider, menu, navigation, switch, textfield, radiobutton, ext
+@docs colorscheme, typescale, badge, button, checkbox, divider, menu, navigation, switch, textfield, radiobutton, ext
 
-@docs withButton, withCheckbox, withColorscheme, withDivider, withMenu, withNavigation, withRadiobutton, withSwitch, withTextfield, withTypescale
+@docs withBadge, withButton, withCheckbox, withColorscheme, withDivider, withMenu, withNavigation, withRadiobutton, withSwitch, withTextfield, withTypescale
 
 -}
 
+import OUI.Material.Badge
 import OUI.Material.Button
 import OUI.Material.Checkbox
 import OUI.Material.Color
@@ -27,6 +28,12 @@ import OUI.Material.RadioButton
 import OUI.Material.Switch
 import OUI.Material.TextField
 import OUI.Material.Typography
+
+
+{-| A badge theme
+-}
+type alias BadgeTheme =
+    OUI.Material.Badge.Theme
 
 
 {-| A Button theme
@@ -92,6 +99,7 @@ type Theme ext
     = Theme
         { colorscheme : OUI.Material.Color.Scheme
         , typescale : Typescale
+        , badge : BadgeTheme
         , button : ButtonTheme
         , checkbox : CheckboxTheme
         , divider : DividerTheme
@@ -123,6 +131,13 @@ typescale (Theme t) =
 button : Theme ext -> ButtonTheme
 button (Theme t) =
     t.button
+
+
+{-| get the badge theme
+-}
+badge : Theme ext -> BadgeTheme
+badge (Theme t) =
+    t.badge
 
 
 {-| get the checkbox theme
@@ -195,6 +210,13 @@ withTypescale value (Theme t) =
     Theme { t | typescale = value }
 
 
+{-| set the badge theme
+-}
+withBadge : BadgeTheme -> Theme ext -> Theme ext
+withBadge value (Theme t) =
+    Theme { t | badge = value }
+
+
 {-| set the button theme
 -}
 withButton : ButtonTheme -> Theme ext -> Theme ext
@@ -258,6 +280,7 @@ withExt themeExt (Theme t) =
     Theme
         { colorscheme = t.colorscheme
         , typescale = t.typescale
+        , badge = t.badge
         , button = t.button
         , divider = t.divider
         , checkbox = t.checkbox
@@ -277,6 +300,7 @@ defaultTheme =
     Theme
         { colorscheme = OUI.Material.Color.defaultLightScheme
         , typescale = defaultTypescale
+        , badge = OUI.Material.Badge.defaultTheme
         , button = OUI.Material.Button.defaultTheme
         , divider = OUI.Material.Divider.defaultTheme
         , checkbox = OUI.Material.Checkbox.defaultTheme

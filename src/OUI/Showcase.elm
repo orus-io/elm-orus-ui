@@ -7,6 +7,7 @@ module OUI.Showcase exposing (addPages)
 -}
 
 import OUI.Explorer as Explorer exposing (Explorer)
+import OUI.Showcase.Badge as Badge
 import OUI.Showcase.Buttons as Buttons
 import OUI.Showcase.Checkbox as Checkbox
 import OUI.Showcase.Colors as Colors
@@ -62,8 +63,12 @@ addPages :
                                                     ()
                                                     (Spa.PageStack.Model
                                                         Spa.SetupError
-                                                        current
-                                                        previous
+                                                        ()
+                                                        (Spa.PageStack.Model
+                                                            Spa.SetupError
+                                                            current
+                                                            previous
+                                                        )
                                                     )
                                                 )
                                             )
@@ -108,8 +113,12 @@ addPages :
                                                     (Explorer.BookMsg ())
                                                     (Spa.PageStack.Msg
                                                         Explorer.Route
-                                                        currentMsg
-                                                        previousMsg
+                                                        (Explorer.BookMsg ())
+                                                        (Spa.PageStack.Msg
+                                                            Explorer.Route
+                                                            currentMsg
+                                                            previousMsg
+                                                        )
                                                     )
                                                 )
                                             )
@@ -126,6 +135,7 @@ addPages =
         >> Explorer.addBook Colors.book
         >> Explorer.addBook Typography.book
         >> Explorer.category "Basics"
+        >> Explorer.addBook Badge.book
         >> Explorer.addBook Buttons.book
         >> Explorer.addBook Checkbox.book
         >> Explorer.addBook Dividers.book

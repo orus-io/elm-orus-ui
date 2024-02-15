@@ -1,7 +1,7 @@
 module OUI.Text exposing
     ( Type(..), Size(..), Color(..), Text
     , text, withSize, withType
-    , onColor, withColor, withCustomColor
+    , onColor, withColor, withCustomColor, withTextColor
     , displayLarge, displayMedium, displaySmall
     , headlineLarge, headlineMedium, headlineSmall
     , titleLarge, titleMedium, titleSmall
@@ -14,7 +14,7 @@ module OUI.Text exposing
 
 @docs Type, Size, Color, Text
 @docs text, withSize, withType
-@docs onColor, withColor, withCustomColor
+@docs onColor, withColor, withCustomColor, withTextColor
 
 
 # Direct constructors
@@ -122,6 +122,13 @@ withColor value (Text props) =
 withCustomColor : Color.Color -> Text -> Text
 withCustomColor value (Text props) =
     Text { props | color = Custom value }
+
+
+{-| Set the text color
+-}
+withTextColor : Color -> Text -> Text
+withTextColor value (Text props) =
+    Text { props | color = value }
 
 
 textTypeSize : Type -> Size -> String -> Text
