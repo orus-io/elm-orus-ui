@@ -17,6 +17,7 @@ import OUI.Showcase.Menus as Menus
 import OUI.Showcase.Navigation as Navigation
 import OUI.Showcase.RadioButtons as RadioButtons
 import OUI.Showcase.Switches as Switches
+import OUI.Showcase.Tabs as Tabs
 import OUI.Showcase.TextFields as TextFields
 import OUI.Showcase.Typography as Typography
 import Spa
@@ -39,10 +40,10 @@ addPages :
                     TextFields.Model
                     (Spa.PageStack.Model
                         Spa.SetupError
-                        Switches.Model
+                        Tabs.Model
                         (Spa.PageStack.Model
                             Spa.SetupError
-                            ()
+                            Switches.Model
                             (Spa.PageStack.Model
                                 Spa.SetupError
                                 ()
@@ -66,8 +67,12 @@ addPages :
                                                         ()
                                                         (Spa.PageStack.Model
                                                             Spa.SetupError
-                                                            current
-                                                            previous
+                                                            ()
+                                                            (Spa.PageStack.Model
+                                                                Spa.SetupError
+                                                                current
+                                                                previous
+                                                            )
                                                         )
                                                     )
                                                 )
@@ -89,10 +94,10 @@ addPages :
                     (Explorer.BookMsg TextFields.Msg)
                     (Spa.PageStack.Msg
                         Explorer.Route
-                        (Explorer.BookMsg Switches.Msg)
+                        (Explorer.BookMsg Tabs.Msg)
                         (Spa.PageStack.Msg
                             Explorer.Route
-                            (Explorer.BookMsg ())
+                            (Explorer.BookMsg Switches.Msg)
                             (Spa.PageStack.Msg
                                 Explorer.Route
                                 (Explorer.BookMsg ())
@@ -116,8 +121,12 @@ addPages :
                                                         (Explorer.BookMsg ())
                                                         (Spa.PageStack.Msg
                                                             Explorer.Route
-                                                            currentMsg
-                                                            previousMsg
+                                                            (Explorer.BookMsg ())
+                                                            (Spa.PageStack.Msg
+                                                                Explorer.Route
+                                                                currentMsg
+                                                                previousMsg
+                                                            )
                                                         )
                                                     )
                                                 )
@@ -142,6 +151,7 @@ addPages =
         >> Explorer.addBook Menus.book
         >> Explorer.addBook RadioButtons.book
         >> Explorer.addBook Switches.book
+        >> Explorer.addBook Tabs.book
         >> Explorer.addBook TextFields.book
         >> Explorer.category "Complex"
         >> Explorer.addBook MenuButtons.book

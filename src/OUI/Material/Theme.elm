@@ -1,19 +1,20 @@
 module OUI.Material.Theme exposing
     ( Theme, defaultTheme, Typescale, defaultTypescale, withExt
     , BadgeTheme, ButtonTheme, CheckboxTheme, DividerTheme, MenuTheme, NavigationTheme, SwitchTheme, TextFieldTheme, RadioButtonTheme
-    , colorscheme, typescale, badge, button, checkbox, divider, menu, navigation, switch, textfield, radiobutton, ext
-    , withBadge, withButton, withCheckbox, withColorscheme, withDivider, withMenu, withNavigation, withRadiobutton, withSwitch, withTextfield, withTypescale
+    , colorscheme, typescale, badge, button, checkbox, divider, menu, navigation, switch, textfield, radiobutton, tabs, ext
+    , withBadge, withButton, withCheckbox, withColorscheme, withDivider, withMenu, withNavigation, withRadiobutton, withSwitch, withTabs, withTextfield, withTypescale
+    , TabsTheme
     )
 
 {-|
 
 @docs Theme, defaultTheme, Typescale, defaultTypescale, withExt
 
-@docs BadgeTheme, ButtonTheme, CheckboxTheme, DividerTheme, MenuTheme, NavigationTheme, SwitchTheme, TextFieldTheme, RadioButtonTheme
+@docs BadgeTheme, ButtonTheme, CheckboxTheme, DividerTheme, MenuTheme, NavigationTheme, SwitchTheme, TextFieldTheme, RadioButtonTheme, Tabs
 
-@docs colorscheme, typescale, badge, button, checkbox, divider, menu, navigation, switch, textfield, radiobutton, ext
+@docs colorscheme, typescale, badge, button, checkbox, divider, menu, navigation, switch, textfield, radiobutton, tabs, ext
 
-@docs withBadge, withButton, withCheckbox, withColorscheme, withDivider, withMenu, withNavigation, withRadiobutton, withSwitch, withTextfield, withTypescale
+@docs withBadge, withButton, withCheckbox, withColorscheme, withDivider, withMenu, withNavigation, withRadiobutton, withSwitch, withTabs, withTextfield, withTypescale
 
 -}
 
@@ -26,6 +27,7 @@ import OUI.Material.Menu
 import OUI.Material.Navigation
 import OUI.Material.RadioButton
 import OUI.Material.Switch
+import OUI.Material.Tabs
 import OUI.Material.TextField
 import OUI.Material.Typography
 
@@ -72,6 +74,12 @@ type alias SwitchTheme =
     OUI.Material.Switch.Theme
 
 
+{-| A Tabs theme
+-}
+type alias TabsTheme =
+    OUI.Material.Tabs.Theme
+
+
 {-| A TextField theme
 -}
 type alias TextFieldTheme =
@@ -106,6 +114,7 @@ type Theme ext
         , menu : MenuTheme
         , navigation : NavigationTheme
         , switch : SwitchTheme
+        , tabs : TabsTheme
         , textfield : TextFieldTheme
         , radiobutton : RadioButtonTheme
         , ext : ext
@@ -173,6 +182,13 @@ navigation (Theme t) =
 switch : Theme ext -> SwitchTheme
 switch (Theme t) =
     t.switch
+
+
+{-| get the tabs theme
+-}
+tabs : Theme ext -> TabsTheme
+tabs (Theme t) =
+    t.tabs
 
 
 {-| get the textfield theme
@@ -259,6 +275,13 @@ withSwitch value (Theme t) =
     Theme { t | switch = value }
 
 
+{-| set the tabs theme
+-}
+withTabs : TabsTheme -> Theme ext -> Theme ext
+withTabs value (Theme t) =
+    Theme { t | tabs = value }
+
+
 {-| set the textfield theme
 -}
 withTextfield : TextFieldTheme -> Theme ext -> Theme ext
@@ -288,6 +311,7 @@ withExt themeExt (Theme t) =
         , navigation = t.navigation
         , radiobutton = t.radiobutton
         , switch = t.switch
+        , tabs = t.tabs
         , textfield = t.textfield
         , ext = themeExt
         }
@@ -308,6 +332,7 @@ defaultTheme =
         , navigation = OUI.Material.Navigation.defaultTheme
         , radiobutton = OUI.Material.RadioButton.defaultTheme
         , switch = OUI.Material.Switch.defaultTheme
+        , tabs = OUI.Material.Tabs.defaultTheme
         , textfield = OUI.Material.TextField.defaultTheme
         , ext = ()
         }

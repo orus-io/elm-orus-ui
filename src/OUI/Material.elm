@@ -1,6 +1,6 @@
 module OUI.Material exposing
     ( text, icon, divider, badge
-    , button, checkbox, switch, textField, radiobutton, menu
+    , button, checkbox, switch, textField, radiobutton, menu, tabs
     , menuButton, navigation
     )
 
@@ -14,7 +14,7 @@ module OUI.Material exposing
 
 # Inputs
 
-@docs button, checkbox, switch, textField, radiobutton, menu
+@docs button, checkbox, switch, textField, radiobutton, menu, tabs
 
 
 # Complex
@@ -40,6 +40,7 @@ import OUI.Material.MenuButton
 import OUI.Material.Navigation
 import OUI.Material.RadioButton
 import OUI.Material.Switch
+import OUI.Material.Tabs
 import OUI.Material.TextField
 import OUI.Material.Theme as Theme exposing (Theme)
 import OUI.Material.Typography
@@ -48,6 +49,7 @@ import OUI.MenuButton
 import OUI.Navigation
 import OUI.RadioButton
 import OUI.Switch
+import OUI.Tabs
 import OUI.Text
 import OUI.TextField
 
@@ -185,6 +187,21 @@ switch theme =
     OUI.Material.Switch.render
         (Theme.colorscheme theme)
         (Theme.switch theme)
+
+
+{-| Render a Tabs
+-}
+tabs :
+    Theme themeExt
+    -> List (Attribute msg)
+    -> OUI.Tabs.Tabs key item msg
+    -> Element msg
+tabs theme =
+    OUI.Material.Tabs.render
+        (Theme.typescale theme)
+        (Theme.colorscheme theme)
+        (Theme.badge theme)
+        (Theme.tabs theme)
 
 
 {-| Render a TextField
