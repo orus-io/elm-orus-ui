@@ -1,16 +1,15 @@
 module OUI.Material.Theme exposing
     ( Theme, defaultTheme, Typescale, defaultTypescale, withExt
-    , BadgeTheme, ButtonTheme, CheckboxTheme, DividerTheme, MenuTheme, NavigationTheme, SwitchTheme, TextFieldTheme, RadioButtonTheme
+    , BadgeTheme, ButtonTheme, CheckboxTheme, DividerTheme, MenuTheme, NavigationTheme, SwitchTheme, TextFieldTheme, RadioButtonTheme, TabsTheme
     , colorscheme, typescale, badge, button, checkbox, divider, menu, navigation, switch, textfield, radiobutton, tabs, ext
     , withBadge, withButton, withCheckbox, withColorscheme, withDivider, withMenu, withNavigation, withRadiobutton, withSwitch, withTabs, withTextfield, withTypescale
-    , TabsTheme
     )
 
 {-|
 
 @docs Theme, defaultTheme, Typescale, defaultTypescale, withExt
 
-@docs BadgeTheme, ButtonTheme, CheckboxTheme, DividerTheme, MenuTheme, NavigationTheme, SwitchTheme, TextFieldTheme, RadioButtonTheme, Tabs
+@docs BadgeTheme, ButtonTheme, CheckboxTheme, DividerTheme, MenuTheme, NavigationTheme, SwitchTheme, TextFieldTheme, RadioButtonTheme, TabsTheme
 
 @docs colorscheme, typescale, badge, button, checkbox, divider, menu, navigation, switch, textfield, radiobutton, tabs, ext
 
