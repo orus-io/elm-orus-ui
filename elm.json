@@ -22,6 +22,7 @@
     "OUI.Showcase",
     "OUI.Switch",
     "OUI.RadioButton",
+    "OUI.Tabs",
     "OUI.Text",
     "OUI.TextField",
     "OUI.Utils.ARIA"
