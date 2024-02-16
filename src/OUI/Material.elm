@@ -73,8 +73,8 @@ badge :
     -> Attribute msg
 badge theme =
     OUI.Material.Badge.render
-        (Theme.colorscheme theme)
         (Theme.typescale theme)
+        (Theme.colorscheme theme)
         (Theme.badge theme)
 
 

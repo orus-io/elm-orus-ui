@@ -129,8 +129,8 @@ renderPrimaryItem typescale colorscheme btheme theme { text, icon, badge, select
                         ++ (case badge of
                                 Just b ->
                                     [ OUI.Material.Badge.render
-                                        colorscheme
                                         typescale
+                                        colorscheme
                                         btheme
                                         []
                                         b

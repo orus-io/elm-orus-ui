@@ -165,13 +165,13 @@ renderBadge typescale colorscheme theme attrs badge =
 
 
 render :
-    OUI.Material.Color.Scheme
-    -> OUI.Material.Typography.Typescale
+    OUI.Material.Typography.Typescale
+    -> OUI.Material.Color.Scheme
     -> Theme
     -> List (Attribute msg)
     -> Badge
     -> Attribute msg
-render colorscheme typescale theme attrs badge =
+render typescale colorscheme theme attrs badge =
     let
         isSmall =
             case badge of

@@ -12143,7 +12143,7 @@ var $author$project$OUI$Material$Badge$renderBadge = F5(
 				$mdgriffith$elm_ui$Element$text(shortLabel)));
 	});
 var $author$project$OUI$Material$Badge$render = F5(
-	function (colorscheme, typescale, theme, attrs, badge) {
+	function (typescale, colorscheme, theme, attrs, badge) {
 		var isSmall = function () {
 			if (badge.$ === 'Small') {
 				return true;
@@ -12184,8 +12184,8 @@ var $author$project$OUI$Material$Theme$typescale = function (_v0) {
 var $author$project$OUI$Material$badge = function (theme) {
 	return A3(
 		$author$project$OUI$Material$Badge$render,
-		$author$project$OUI$Material$Theme$colorscheme(theme),
 		$author$project$OUI$Material$Theme$typescale(theme),
+		$author$project$OUI$Material$Theme$colorscheme(theme),
 		$author$project$OUI$Material$Theme$badge(theme));
 };
 var $author$project$OUI$Text$Body = {$: 'Body'};
@@ -28132,7 +28132,7 @@ var $author$project$OUI$Material$Tabs$renderPrimaryItem = F5(
 										var b = badge.a;
 										return _List_fromArray(
 											[
-												A5($author$project$OUI$Material$Badge$render, colorscheme, typescale, btheme, _List_Nil, b)
+												A5($author$project$OUI$Material$Badge$render, typescale, colorscheme, btheme, _List_Nil, b)
 											]);
 									} else {
 										return _List_Nil;
