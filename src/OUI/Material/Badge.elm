@@ -63,6 +63,7 @@ renderBadge :
     -> Element msg
 renderBadge typescale colorscheme theme attrs badge =
     let
+        isSmall : Bool
         isSmall =
             case badge of
                 OUI.Badge.Small ->
@@ -78,6 +79,7 @@ renderBadge typescale colorscheme theme attrs badge =
             else
                 ( theme.large.shape, theme.large.size )
 
+        sizeAttrs : List (Attribute msg)
         sizeAttrs =
             if isSmall then
                 [ Element.height <| Element.px size
@@ -89,6 +91,7 @@ renderBadge typescale colorscheme theme attrs badge =
                 , Element.width <| Element.minimum size Element.shrink
                 ]
 
+        shortLabel : String
         shortLabel =
             case badge of
                 OUI.Badge.Small ->
@@ -108,6 +111,7 @@ renderBadge typescale colorscheme theme attrs badge =
                     else
                         String.fromInt i
 
+        label : String
         label =
             case badge of
                 OUI.Badge.Small ->
@@ -140,20 +144,25 @@ renderBadge typescale colorscheme theme attrs badge =
                 typescale
                 colorscheme
             ++ attrs
-            ++ [ Element.text label
-                    |> Element.el [ Element.centerY ]
-                    |> Element.el
-                        [ Element.transparent True
-                        , Element.mouseOver
-                            [ Element.transparent False
+            ++ (if not isSmall && label /= shortLabel then
+                    [ Element.text label
+                        |> Element.el [ Element.centerY ]
+                        |> Element.el
+                            [ Element.transparent True
+                            , Element.mouseOver
+                                [ Element.transparent False
+                                ]
+                            , Border.rounded shape
+                            , Background.color <| OUI.Material.Color.getElementColor theme.color colorscheme
+                            , Element.height <| Element.px size
+                            , Element.paddingXY theme.large.padding 0
                             ]
-                        , Border.rounded shape
-                        , Background.color <| OUI.Material.Color.getElementColor theme.color colorscheme
-                        , Element.height <| Element.px size
-                        , Element.paddingXY theme.large.padding 0
-                        ]
-                    |> Element.inFront
-               ]
+                        |> Element.inFront
+                    ]
+
+                else
+                    []
+               )
         )
     <|
         if isSmall then
@@ -173,6 +182,7 @@ render :
     -> Attribute msg
 render typescale colorscheme theme attrs badge =
     let
+        isSmall : Bool
         isSmall =
             case badge of
                 OUI.Badge.Small ->
@@ -188,18 +198,12 @@ render typescale colorscheme theme attrs badge =
             else
                 ( theme.large.size, theme.large.pos )
 
+        posAttrs : List (Attribute msg)
         posAttrs =
-            Element.alignTop
-                :: (if isSmall then
-                        [ Element.moveLeft <| toFloat posX
-                        , Element.moveUp <| toFloat (size - posY)
-                        ]
-
-                    else
-                        [ Element.moveLeft <| toFloat posX
-                        , Element.moveUp <| toFloat (size - posY)
-                        ]
-                   )
+            [ Element.alignTop
+            , Element.moveLeft <| toFloat posX
+            , Element.moveUp <| toFloat (size - posY)
+            ]
     in
     Element.onRight <|
         renderBadge typescale colorscheme theme (posAttrs ++ attrs) badge

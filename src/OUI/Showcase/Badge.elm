@@ -1,8 +1,8 @@
 module OUI.Showcase.Badge exposing (book)
 
-import Element
+import Element exposing (Element)
 import OUI.Badge
-import OUI.Explorer as Explorer exposing (Explorer)
+import OUI.Explorer as Explorer
 import OUI.Icon
 import OUI.Material
 import OUI.Text
@@ -14,6 +14,7 @@ book =
         |> Explorer.withStaticChapter badges
 
 
+badges : Explorer.Shared themeExt -> Element msg
 badges shared =
     Element.table
         [ Element.spacing 20 ]

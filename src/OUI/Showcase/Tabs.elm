@@ -47,6 +47,7 @@ book =
 tabs : Explorer.Shared themeExt -> Model -> Element (Explorer.BookMsg Msg)
 tabs { theme } model =
     let
+        base : OUI.Tabs.Tabs Int Entry Msg
         base =
             OUI.Tabs.new .label OnClick
                 |> OUI.Tabs.withItems entries

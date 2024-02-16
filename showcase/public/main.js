@@ -12110,7 +12110,7 @@ var $author$project$OUI$Material$Badge$renderBadge = F5(
 							A5($author$project$OUI$Material$Typography$attrs, theme.large.textType, theme.large.textSize, theme.large.textColor, typescale, colorscheme),
 							_Utils_ap(
 								attrs,
-								_List_fromArray(
+								((!isSmall) && (!_Utils_eq(label, shortLabel))) ? _List_fromArray(
 									[
 										$mdgriffith$elm_ui$Element$inFront(
 										A2(
@@ -12135,7 +12135,7 @@ var $author$project$OUI$Material$Badge$renderBadge = F5(
 												_List_fromArray(
 													[$mdgriffith$elm_ui$Element$centerY]),
 												$mdgriffith$elm_ui$Element$text(label))))
-									])))))),
+									]) : _List_Nil))))),
 			isSmall ? $mdgriffith$elm_ui$Element$none : A2(
 				$mdgriffith$elm_ui$Element$el,
 				_List_fromArray(
@@ -12156,18 +12156,12 @@ var $author$project$OUI$Material$Badge$render = F5(
 		var _v1 = _v0.b;
 		var posX = _v1.a;
 		var posY = _v1.b;
-		var posAttrs = A2(
-			$elm$core$List$cons,
-			$mdgriffith$elm_ui$Element$alignTop,
-			isSmall ? _List_fromArray(
-				[
-					$mdgriffith$elm_ui$Element$moveLeft(posX),
-					$mdgriffith$elm_ui$Element$moveUp(size - posY)
-				]) : _List_fromArray(
-				[
-					$mdgriffith$elm_ui$Element$moveLeft(posX),
-					$mdgriffith$elm_ui$Element$moveUp(size - posY)
-				]));
+		var posAttrs = _List_fromArray(
+			[
+				$mdgriffith$elm_ui$Element$alignTop,
+				$mdgriffith$elm_ui$Element$moveLeft(posX),
+				$mdgriffith$elm_ui$Element$moveUp(size - posY)
+			]);
 		return $mdgriffith$elm_ui$Element$onRight(
 			A5(
 				$author$project$OUI$Material$Badge$renderBadge,

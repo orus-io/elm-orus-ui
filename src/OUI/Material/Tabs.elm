@@ -288,9 +288,20 @@ render :
     -> Element msg
 render typescale colorscheme btheme theme attrs tabs =
     let
+        props :
+            { type_ : OUI.Tabs.Type
+            , items : List ( key, item )
+            , itemToText : item -> String
+            , itemToIcon : item -> Maybe Icon
+            , itemToBadge : item -> Maybe Badge
+            , selected : Maybe key
+            , onClick : key -> msg
+            , color : OUI.Color
+            }
         props =
             OUI.Tabs.properties tabs
 
+        isPrimary : Bool
         isPrimary =
             case props.type_ of
                 OUI.Tabs.Primary ->
