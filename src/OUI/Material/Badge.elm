@@ -169,7 +169,10 @@ renderBadge typescale colorscheme theme attrs badge =
             Element.none
 
         else
-            Element.el [ Element.centerY ]
+            Element.el
+                [ Element.centerY
+                , Element.centerX
+                ]
                 (Element.text shortLabel)
 
 
