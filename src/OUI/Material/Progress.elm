@@ -2,6 +2,8 @@ module OUI.Material.Progress exposing (Theme, defaultTheme, render)
 
 import Color
 import Element exposing (Attribute, Element)
+import Element.Background as Background
+import Element.Border as Border
 import OUI.Material.Color
 import OUI.Progress exposing (Progress)
 import Svg
@@ -36,10 +38,10 @@ render colorscheme theme attrs progress =
     in
     case ( props.type_, props.value ) of
         ( OUI.Progress.Circular, Nothing ) ->
-            indeterminateCircularIcon theme (OUI.Material.Color.getColor props.color colorscheme) attrs
+            indeterminateCircular theme (OUI.Material.Color.getColor props.color colorscheme) attrs
 
         ( OUI.Progress.Circular, Just value ) ->
-            determinateCircularIcon theme
+            determinateCircular theme
                 (OUI.Material.Color.getColor props.color colorscheme)
                 (OUI.Material.Color.getContainerColor props.color colorscheme)
                 attrs
@@ -49,11 +51,92 @@ render colorscheme theme attrs progress =
             Element.none
 
         ( OUI.Progress.Linear, Just value ) ->
+            determinateLinear theme
+                (OUI.Material.Color.getColor props.color colorscheme)
+                (OUI.Material.Color.getContainerColor props.color colorscheme)
+                attrs
+                value
+
+
+determinateLinear :
+    Theme
+    -> Color.Color
+    -> Color.Color
+    -> List (Attribute msg)
+    -> Float
+    -> Element msg
+determinateLinear theme color trackColor attrs value =
+    let
+        thickest =
+            max theme.activeIndicator.thickness theme.trackIndicator.thickness
+
+        clampedProgress =
+            clamp 0 1.0 value
+
+        isZero =
+            clampedProgress == 0
+
+        activeLen =
+            clampedProgress * 1000 |> floor
+    in
+    Element.row
+        ((Element.height <| Element.px thickest)
+            :: (Element.inFront <|
+                    Element.el
+                        [ Element.width <| Element.px theme.trackIndicator.thickness
+                        , Element.height <| Element.px theme.trackIndicator.thickness
+                        , Border.rounded theme.trackIndicator.thickness
+                        , Element.alignRight
+                        , Background.color <| OUI.Material.Color.toElementColor color
+                        ]
+                        Element.none
+               )
+            :: attrs
+        )
+        [ if activeLen /= 0 then
+            Element.el
+                [ Element.width <| Element.fillPortion activeLen
+                , Element.height <| Element.px theme.activeIndicator.thickness
+                , Background.color <| OUI.Material.Color.toElementColor color
+                , Border.rounded theme.activeIndicator.thickness
+                ]
+                Element.none
+
+          else
             Element.none
+        , if activeLen /= 1000 then
+            Element.row
+                [ Element.width <| Element.fillPortion (1000 - activeLen)
+                , Element.height <| Element.px theme.trackIndicator.thickness
+                , Element.clipX
+                ]
+            <|
+                [ Element.el
+                    [ Element.width <|
+                        Element.px <|
+                            if activeLen == 0 then
+                                0
+
+                            else
+                                thickest
+                    ]
+                    Element.none
+                , Element.el
+                    [ Element.width Element.fill
+                    , Element.height <| Element.px theme.trackIndicator.thickness
+                    , Background.color <| OUI.Material.Color.toElementColor trackColor
+                    , Border.rounded theme.trackIndicator.thickness
+                    ]
+                    Element.none
+                ]
+
+          else
+            Element.none
+        ]
 
 
-indeterminateCircularIcon : Theme -> Color.Color -> List (Attribute msg) -> Element msg
-indeterminateCircularIcon theme color attribs =
+indeterminateCircular : Theme -> Color.Color -> List (Attribute msg) -> Element msg
+indeterminateCircular theme color attribs =
     -- Based on example at https://codepen.io/FezVrasta/pen/oXrgdR
     Svg.svg
         [ Svg.Attributes.height <| String.fromInt theme.circularSize ++ "px"
@@ -109,14 +192,14 @@ indeterminateCircularIcon theme color attribs =
         |> Element.el attribs
 
 
-determinateCircularIcon :
+determinateCircular :
     Theme
     -> Color.Color
     -> Color.Color
     -> List (Attribute msg)
     -> Float
     -> Element msg
-determinateCircularIcon theme color trackColor attribs progress =
+determinateCircular theme color trackColor attribs progress =
     -- With help from https://css-tricks.com/building-progress-ring-quickly/
     let
         thickest =

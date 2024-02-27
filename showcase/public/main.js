@@ -27140,7 +27140,7 @@ var $elm$svg$Svg$Attributes$strokeLinecap = _VirtualDom_attribute('stroke-lineca
 var $elm$svg$Svg$Attributes$strokeWidth = _VirtualDom_attribute('stroke-width');
 var $elm$svg$Svg$Attributes$transform = _VirtualDom_attribute('transform');
 var $elm$svg$Svg$Attributes$xmlSpace = A2(_VirtualDom_attributeNS, 'http://www.w3.org/XML/1998/namespace', 'xml:space');
-var $author$project$OUI$Material$Progress$determinateCircularIcon = F5(
+var $author$project$OUI$Material$Progress$determinateCircular = F5(
 	function (theme, color, trackColor, attribs, progress) {
 		var trackThickness = $elm$core$String$fromInt(theme.trackIndicator.thickness);
 		var thickest = A2($elm$core$Basics$max, theme.activeIndicator.thickness, theme.trackIndicator.thickness);
@@ -27226,6 +27226,89 @@ var $author$project$OUI$Material$Progress$determinateCircularIcon = F5(
 								]))
 						]))));
 	});
+var $mdgriffith$elm_ui$Element$clipX = A2($mdgriffith$elm_ui$Internal$Model$Class, $mdgriffith$elm_ui$Internal$Flag$overflow, $mdgriffith$elm_ui$Internal$Style$classes.clipX);
+var $mdgriffith$elm_ui$Element$fillPortion = $mdgriffith$elm_ui$Internal$Model$Fill;
+var $author$project$OUI$Material$Progress$determinateLinear = F5(
+	function (theme, color, trackColor, attrs, value) {
+		var thickest = A2($elm$core$Basics$max, theme.activeIndicator.thickness, theme.trackIndicator.thickness);
+		var clampedProgress = A3($elm$core$Basics$clamp, 0, 1.0, value);
+		var isZero = !clampedProgress;
+		var activeLen = $elm$core$Basics$floor(clampedProgress * 1000);
+		return A2(
+			$mdgriffith$elm_ui$Element$row,
+			A2(
+				$elm$core$List$cons,
+				$mdgriffith$elm_ui$Element$height(
+					$mdgriffith$elm_ui$Element$px(thickest)),
+				A2(
+					$elm$core$List$cons,
+					$mdgriffith$elm_ui$Element$inFront(
+						A2(
+							$mdgriffith$elm_ui$Element$el,
+							_List_fromArray(
+								[
+									$mdgriffith$elm_ui$Element$width(
+									$mdgriffith$elm_ui$Element$px(theme.trackIndicator.thickness)),
+									$mdgriffith$elm_ui$Element$height(
+									$mdgriffith$elm_ui$Element$px(theme.trackIndicator.thickness)),
+									$mdgriffith$elm_ui$Element$Border$rounded(theme.trackIndicator.thickness),
+									$mdgriffith$elm_ui$Element$alignRight,
+									$mdgriffith$elm_ui$Element$Background$color(
+									$author$project$OUI$Material$Color$toElementColor(color))
+								]),
+							$mdgriffith$elm_ui$Element$none)),
+					attrs)),
+			_List_fromArray(
+				[
+					(!(!activeLen)) ? A2(
+					$mdgriffith$elm_ui$Element$el,
+					_List_fromArray(
+						[
+							$mdgriffith$elm_ui$Element$width(
+							$mdgriffith$elm_ui$Element$fillPortion(activeLen)),
+							$mdgriffith$elm_ui$Element$height(
+							$mdgriffith$elm_ui$Element$px(theme.activeIndicator.thickness)),
+							$mdgriffith$elm_ui$Element$Background$color(
+							$author$project$OUI$Material$Color$toElementColor(color)),
+							$mdgriffith$elm_ui$Element$Border$rounded(theme.activeIndicator.thickness)
+						]),
+					$mdgriffith$elm_ui$Element$none) : $mdgriffith$elm_ui$Element$none,
+					(activeLen !== 1000) ? A2(
+					$mdgriffith$elm_ui$Element$row,
+					_List_fromArray(
+						[
+							$mdgriffith$elm_ui$Element$width(
+							$mdgriffith$elm_ui$Element$fillPortion(1000 - activeLen)),
+							$mdgriffith$elm_ui$Element$height(
+							$mdgriffith$elm_ui$Element$px(theme.trackIndicator.thickness)),
+							$mdgriffith$elm_ui$Element$clipX
+						]),
+					_List_fromArray(
+						[
+							A2(
+							$mdgriffith$elm_ui$Element$el,
+							_List_fromArray(
+								[
+									$mdgriffith$elm_ui$Element$width(
+									$mdgriffith$elm_ui$Element$px(
+										(!activeLen) ? 0 : thickest))
+								]),
+							$mdgriffith$elm_ui$Element$none),
+							A2(
+							$mdgriffith$elm_ui$Element$el,
+							_List_fromArray(
+								[
+									$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
+									$mdgriffith$elm_ui$Element$height(
+									$mdgriffith$elm_ui$Element$px(theme.trackIndicator.thickness)),
+									$mdgriffith$elm_ui$Element$Background$color(
+									$author$project$OUI$Material$Color$toElementColor(trackColor)),
+									$mdgriffith$elm_ui$Element$Border$rounded(theme.trackIndicator.thickness)
+								]),
+							$mdgriffith$elm_ui$Element$none)
+						])) : $mdgriffith$elm_ui$Element$none
+				]));
+	});
 var $author$project$OUI$Material$Color$getContainerColor = function (c) {
 	switch (c.$) {
 		case 'Primary':
@@ -27286,7 +27369,7 @@ var $elm$svg$Svg$Attributes$values = function (value) {
 		'values',
 		_VirtualDom_noJavaScriptUri(value));
 };
-var $author$project$OUI$Material$Progress$indeterminateCircularIcon = F3(
+var $author$project$OUI$Material$Progress$indeterminateCircular = F3(
 	function (theme, color, attribs) {
 		return A2(
 			$mdgriffith$elm_ui$Element$el,
@@ -27382,7 +27465,7 @@ var $author$project$OUI$Material$Progress$render = F4(
 				var _v1 = _v0.a;
 				var _v2 = _v0.b;
 				return A3(
-					$author$project$OUI$Material$Progress$indeterminateCircularIcon,
+					$author$project$OUI$Material$Progress$indeterminateCircular,
 					theme,
 					A2($author$project$OUI$Material$Color$getColor, props.color, colorscheme),
 					attrs);
@@ -27390,7 +27473,7 @@ var $author$project$OUI$Material$Progress$render = F4(
 				var _v3 = _v0.a;
 				var value = _v0.b.a;
 				return A5(
-					$author$project$OUI$Material$Progress$determinateCircularIcon,
+					$author$project$OUI$Material$Progress$determinateCircular,
 					theme,
 					A2($author$project$OUI$Material$Color$getColor, props.color, colorscheme),
 					A2($author$project$OUI$Material$Color$getContainerColor, props.color, colorscheme),
@@ -27405,7 +27488,13 @@ var $author$project$OUI$Material$Progress$render = F4(
 			} else {
 				var _v6 = _v0.a;
 				var value = _v0.b.a;
-				return $mdgriffith$elm_ui$Element$none;
+				return A5(
+					$author$project$OUI$Material$Progress$determinateLinear,
+					theme,
+					A2($author$project$OUI$Material$Color$getColor, props.color, colorscheme),
+					A2($author$project$OUI$Material$Color$getContainerColor, props.color, colorscheme),
+					attrs,
+					value);
 			}
 		}
 	});
@@ -27430,7 +27519,9 @@ var $author$project$OUI$Showcase$Progress$progressChapter = function (shared) {
 		$mdgriffith$elm_ui$Element$table,
 		_List_fromArray(
 			[
-				$mdgriffith$elm_ui$Element$spacing(20)
+				$mdgriffith$elm_ui$Element$spacing(20),
+				$mdgriffith$elm_ui$Element$width(
+				A2($mdgriffith$elm_ui$Element$maximum, 500, $mdgriffith$elm_ui$Element$fill))
 			]),
 		{
 			columns: _List_fromArray(
@@ -27440,31 +27531,36 @@ var $author$project$OUI$Showcase$Progress$progressChapter = function (shared) {
 					view: A2(
 						$elm$core$Basics$composeR,
 						function ($) {
-							return $.text;
+							return $.value;
 						},
 						A2(
 							$elm$core$Basics$composeR,
-							$author$project$OUI$Text$bodyLarge,
-							$author$project$OUI$Material$text(shared.theme))),
+							$elm$core$Maybe$map($elm$core$String$fromFloat),
+							A2(
+								$elm$core$Basics$composeR,
+								$elm$core$Maybe$withDefault('undetermined'),
+								A2(
+									$elm$core$Basics$composeR,
+									$author$project$OUI$Text$bodyLarge,
+									A2(
+										$elm$core$Basics$composeR,
+										$author$project$OUI$Material$text(shared.theme),
+										$mdgriffith$elm_ui$Element$el(
+											_List_fromArray(
+												[$mdgriffith$elm_ui$Element$centerY]))))))),
 					width: $mdgriffith$elm_ui$Element$shrink
 				},
 					{
 					header: A2(
 						$mdgriffith$elm_ui$Element$el,
 						_List_fromArray(
-							[
-								$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill)
-							]),
+							[$mdgriffith$elm_ui$Element$centerX]),
 						A2(
-							$mdgriffith$elm_ui$Element$el,
-							_List_fromArray(
-								[$mdgriffith$elm_ui$Element$centerX]),
-							A2(
-								$author$project$OUI$Material$text,
-								shared.theme,
-								$author$project$OUI$Text$bodyLarge('0%')))),
+							$author$project$OUI$Material$text,
+							shared.theme,
+							$author$project$OUI$Text$bodyLarge('circular'))),
 					view: function (_v0) {
-						var progress = _v0.progress;
+						var value = _v0.value;
 						return A2(
 							$mdgriffith$elm_ui$Element$el,
 							_List_fromArray(
@@ -27476,239 +27572,72 @@ var $author$project$OUI$Showcase$Progress$progressChapter = function (shared) {
 								shared.theme,
 								_List_fromArray(
 									[$mdgriffith$elm_ui$Element$centerX]),
-								A2($author$project$OUI$Progress$withValue, 0, progress)));
+								function () {
+									if (value.$ === 'Just') {
+										var v = value.a;
+										return $author$project$OUI$Progress$withValue(v);
+									} else {
+										return $elm$core$Basics$identity;
+									}
+								}()($author$project$OUI$Progress$circular)));
 					},
-					width: $mdgriffith$elm_ui$Element$fill
+					width: $mdgriffith$elm_ui$Element$shrink
 				},
 					{
 					header: A2(
 						$mdgriffith$elm_ui$Element$el,
 						_List_fromArray(
-							[
-								$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill)
-							]),
+							[$mdgriffith$elm_ui$Element$centerX]),
 						A2(
-							$mdgriffith$elm_ui$Element$el,
-							_List_fromArray(
-								[$mdgriffith$elm_ui$Element$centerX]),
-							A2(
-								$author$project$OUI$Material$text,
-								shared.theme,
-								$author$project$OUI$Text$bodyLarge('1%')))),
-					view: function (_v1) {
-						var progress = _v1.progress;
-						return A2(
-							$mdgriffith$elm_ui$Element$el,
-							_List_fromArray(
-								[
-									$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill)
-								]),
-							A3(
-								$author$project$OUI$Material$progress,
-								shared.theme,
-								_List_fromArray(
-									[$mdgriffith$elm_ui$Element$centerX]),
-								A2($author$project$OUI$Progress$withValue, 0.01, progress)));
-					},
-					width: $mdgriffith$elm_ui$Element$fill
-				},
-					{
-					header: A2(
-						$mdgriffith$elm_ui$Element$el,
-						_List_fromArray(
-							[
-								$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill)
-							]),
-						A2(
-							$mdgriffith$elm_ui$Element$el,
-							_List_fromArray(
-								[$mdgriffith$elm_ui$Element$centerX]),
-							A2(
-								$author$project$OUI$Material$text,
-								shared.theme,
-								$author$project$OUI$Text$bodyLarge('25%')))),
+							$author$project$OUI$Material$text,
+							shared.theme,
+							$author$project$OUI$Text$bodyLarge('linear'))),
 					view: function (_v2) {
-						var progress = _v2.progress;
-						return A2(
-							$mdgriffith$elm_ui$Element$el,
+						var value = _v2.value;
+						return A3(
+							$author$project$OUI$Material$progress,
+							shared.theme,
 							_List_fromArray(
 								[
-									$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill)
+									$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
+									$mdgriffith$elm_ui$Element$centerY
 								]),
-							A3(
-								$author$project$OUI$Material$progress,
-								shared.theme,
-								_List_fromArray(
-									[$mdgriffith$elm_ui$Element$centerX]),
-								A2($author$project$OUI$Progress$withValue, 0.25, progress)));
-					},
-					width: $mdgriffith$elm_ui$Element$fill
-				},
-					{
-					header: A2(
-						$mdgriffith$elm_ui$Element$el,
-						_List_fromArray(
-							[
-								$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill)
-							]),
-						A2(
-							$mdgriffith$elm_ui$Element$el,
-							_List_fromArray(
-								[$mdgriffith$elm_ui$Element$centerX]),
-							A2(
-								$author$project$OUI$Material$text,
-								shared.theme,
-								$author$project$OUI$Text$bodyLarge('37%')))),
-					view: function (_v3) {
-						var progress = _v3.progress;
-						return A2(
-							$mdgriffith$elm_ui$Element$el,
-							_List_fromArray(
-								[
-									$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill)
-								]),
-							A3(
-								$author$project$OUI$Material$progress,
-								shared.theme,
-								_List_fromArray(
-									[$mdgriffith$elm_ui$Element$centerX]),
-								A2($author$project$OUI$Progress$withValue, 0.37, progress)));
-					},
-					width: $mdgriffith$elm_ui$Element$fill
-				},
-					{
-					header: A2(
-						$mdgriffith$elm_ui$Element$el,
-						_List_fromArray(
-							[
-								$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill)
-							]),
-						A2(
-							$mdgriffith$elm_ui$Element$el,
-							_List_fromArray(
-								[$mdgriffith$elm_ui$Element$centerX]),
-							A2(
-								$author$project$OUI$Material$text,
-								shared.theme,
-								$author$project$OUI$Text$bodyLarge('50%')))),
-					view: function (_v4) {
-						var progress = _v4.progress;
-						return A2(
-							$mdgriffith$elm_ui$Element$el,
-							_List_fromArray(
-								[
-									$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill)
-								]),
-							A3(
-								$author$project$OUI$Material$progress,
-								shared.theme,
-								_List_fromArray(
-									[$mdgriffith$elm_ui$Element$centerX]),
-								A2($author$project$OUI$Progress$withValue, 0.5, progress)));
-					},
-					width: $mdgriffith$elm_ui$Element$fill
-				},
-					{
-					header: A2(
-						$mdgriffith$elm_ui$Element$el,
-						_List_fromArray(
-							[
-								$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill)
-							]),
-						A2(
-							$mdgriffith$elm_ui$Element$el,
-							_List_fromArray(
-								[$mdgriffith$elm_ui$Element$centerX]),
-							A2(
-								$author$project$OUI$Material$text,
-								shared.theme,
-								$author$project$OUI$Text$bodyLarge('99%')))),
-					view: function (_v5) {
-						var progress = _v5.progress;
-						return A2(
-							$mdgriffith$elm_ui$Element$el,
-							_List_fromArray(
-								[
-									$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill)
-								]),
-							A3(
-								$author$project$OUI$Material$progress,
-								shared.theme,
-								_List_fromArray(
-									[$mdgriffith$elm_ui$Element$centerX]),
-								A2($author$project$OUI$Progress$withValue, 0.99, progress)));
-					},
-					width: $mdgriffith$elm_ui$Element$fill
-				},
-					{
-					header: A2(
-						$mdgriffith$elm_ui$Element$el,
-						_List_fromArray(
-							[
-								$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill)
-							]),
-						A2(
-							$mdgriffith$elm_ui$Element$el,
-							_List_fromArray(
-								[$mdgriffith$elm_ui$Element$centerX]),
-							A2(
-								$author$project$OUI$Material$text,
-								shared.theme,
-								$author$project$OUI$Text$bodyLarge('100%')))),
-					view: function (_v6) {
-						var progress = _v6.progress;
-						return A2(
-							$mdgriffith$elm_ui$Element$el,
-							_List_fromArray(
-								[
-									$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill)
-								]),
-							A3(
-								$author$project$OUI$Material$progress,
-								shared.theme,
-								_List_fromArray(
-									[$mdgriffith$elm_ui$Element$centerX]),
-								A2($author$project$OUI$Progress$withValue, 1, progress)));
-					},
-					width: $mdgriffith$elm_ui$Element$fill
-				},
-					{
-					header: A2(
-						$mdgriffith$elm_ui$Element$el,
-						_List_fromArray(
-							[
-								$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill)
-							]),
-						A2(
-							$mdgriffith$elm_ui$Element$el,
-							_List_fromArray(
-								[$mdgriffith$elm_ui$Element$centerX]),
-							A2(
-								$author$project$OUI$Material$text,
-								shared.theme,
-								$author$project$OUI$Text$bodyLarge('undetermined')))),
-					view: function (_v7) {
-						var progress = _v7.progress;
-						return A2(
-							$mdgriffith$elm_ui$Element$el,
-							_List_fromArray(
-								[
-									$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill)
-								]),
-							A3(
-								$author$project$OUI$Material$progress,
-								shared.theme,
-								_List_fromArray(
-									[$mdgriffith$elm_ui$Element$centerX]),
-								progress));
+							function () {
+								if (value.$ === 'Just') {
+									var v = value.a;
+									return $author$project$OUI$Progress$withValue(v);
+								} else {
+									return $elm$core$Basics$identity;
+								}
+							}()($author$project$OUI$Progress$linear));
 					},
 					width: $mdgriffith$elm_ui$Element$fill
 				}
 				]),
 			data: _List_fromArray(
 				[
-					{progress: $author$project$OUI$Progress$circular, text: 'circular'},
-					{progress: $author$project$OUI$Progress$linear, text: 'linear'}
+					{
+					value: $elm$core$Maybe$Just(0)
+				},
+					{
+					value: $elm$core$Maybe$Just(0.01)
+				},
+					{
+					value: $elm$core$Maybe$Just(0.25)
+				},
+					{
+					value: $elm$core$Maybe$Just(0.37)
+				},
+					{
+					value: $elm$core$Maybe$Just(0.5)
+				},
+					{
+					value: $elm$core$Maybe$Just(0.99)
+				},
+					{
+					value: $elm$core$Maybe$Just(1.0)
+				},
+					{value: $elm$core$Maybe$Nothing}
 				])
 		});
 };

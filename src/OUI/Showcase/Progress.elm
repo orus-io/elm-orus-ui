@@ -16,126 +16,72 @@ book =
 progressChapter : Explorer.Shared themeExt -> Element msg
 progressChapter shared =
     Element.table
-        [ Element.spacing 20 ]
-        { data =
-            [ { text = "circular"
-              , progress =
-                    OUI.Progress.circular
-              }
-            , { text = "linear"
-              , progress =
-                    OUI.Progress.linear
-              }
-            ]
-        , columns =
+        [ Element.spacing 20, Element.width <| Element.maximum 500 <| Element.fill ]
+        { columns =
             [ { header = Element.none
               , width = Element.shrink
               , view =
-                    .text
+                    .value
+                        >> Maybe.map String.fromFloat
+                        >> Maybe.withDefault "undetermined"
                         >> OUI.Text.bodyLarge
                         >> OUI.Material.text shared.theme
+                        >> Element.el [ Element.centerY ]
               }
             , { header =
-                    OUI.Text.bodyLarge "0%"
+                    OUI.Text.bodyLarge "circular"
                         |> OUI.Material.text shared.theme
                         |> Element.el [ Element.centerX ]
-                        |> Element.el [ Element.width Element.fill ]
-              , width = Element.fill
+              , width = Element.shrink
               , view =
-                    \{ progress } ->
-                        progress
-                            |> OUI.Progress.withValue 0
+                    \{ value } ->
+                        OUI.Progress.circular
+                            |> (case value of
+                                    Just v ->
+                                        OUI.Progress.withValue v
+
+                                    Nothing ->
+                                        identity
+                               )
                             |> OUI.Material.progress shared.theme [ Element.centerX ]
                             |> Element.el [ Element.width Element.fill ]
               }
             , { header =
-                    OUI.Text.bodyLarge "1%"
+                    OUI.Text.bodyLarge "linear"
                         |> OUI.Material.text shared.theme
                         |> Element.el [ Element.centerX ]
-                        |> Element.el [ Element.width Element.fill ]
               , width = Element.fill
               , view =
-                    \{ progress } ->
-                        progress
-                            |> OUI.Progress.withValue 0.01
-                            |> OUI.Material.progress shared.theme [ Element.centerX ]
-                            |> Element.el [ Element.width Element.fill ]
+                    \{ value } ->
+                        OUI.Progress.linear
+                            |> (case value of
+                                    Just v ->
+                                        OUI.Progress.withValue v
+
+                                    Nothing ->
+                                        identity
+                               )
+                            |> OUI.Material.progress shared.theme
+                                [ Element.width Element.fill
+                                , Element.centerY
+                                ]
               }
-            , { header =
-                    OUI.Text.bodyLarge "25%"
-                        |> OUI.Material.text shared.theme
-                        |> Element.el [ Element.centerX ]
-                        |> Element.el [ Element.width Element.fill ]
-              , width = Element.fill
-              , view =
-                    \{ progress } ->
-                        progress
-                            |> OUI.Progress.withValue 0.25
-                            |> OUI.Material.progress shared.theme [ Element.centerX ]
-                            |> Element.el [ Element.width Element.fill ]
+            ]
+        , data =
+            [ { value = Just 0
               }
-            , { header =
-                    OUI.Text.bodyLarge "37%"
-                        |> OUI.Material.text shared.theme
-                        |> Element.el [ Element.centerX ]
-                        |> Element.el [ Element.width Element.fill ]
-              , width = Element.fill
-              , view =
-                    \{ progress } ->
-                        progress
-                            |> OUI.Progress.withValue 0.37
-                            |> OUI.Material.progress shared.theme [ Element.centerX ]
-                            |> Element.el [ Element.width Element.fill ]
+            , { value = Just 0.01
               }
-            , { header =
-                    OUI.Text.bodyLarge "50%"
-                        |> OUI.Material.text shared.theme
-                        |> Element.el [ Element.centerX ]
-                        |> Element.el [ Element.width Element.fill ]
-              , width = Element.fill
-              , view =
-                    \{ progress } ->
-                        progress
-                            |> OUI.Progress.withValue 0.5
-                            |> OUI.Material.progress shared.theme [ Element.centerX ]
-                            |> Element.el [ Element.width Element.fill ]
+            , { value = Just 0.25
               }
-            , { header =
-                    OUI.Text.bodyLarge "99%"
-                        |> OUI.Material.text shared.theme
-                        |> Element.el [ Element.centerX ]
-                        |> Element.el [ Element.width Element.fill ]
-              , width = Element.fill
-              , view =
-                    \{ progress } ->
-                        progress
-                            |> OUI.Progress.withValue 0.99
-                            |> OUI.Material.progress shared.theme [ Element.centerX ]
-                            |> Element.el [ Element.width Element.fill ]
+            , { value = Just 0.37
               }
-            , { header =
-                    OUI.Text.bodyLarge "100%"
-                        |> OUI.Material.text shared.theme
-                        |> Element.el [ Element.centerX ]
-                        |> Element.el [ Element.width Element.fill ]
-              , width = Element.fill
-              , view =
-                    \{ progress } ->
-                        progress
-                            |> OUI.Progress.withValue 1
-                            |> OUI.Material.progress shared.theme [ Element.centerX ]
-                            |> Element.el [ Element.width Element.fill ]
+            , { value = Just 0.5
               }
-            , { header =
-                    OUI.Text.bodyLarge "undetermined"
-                        |> OUI.Material.text shared.theme
-                        |> Element.el [ Element.centerX ]
-                        |> Element.el [ Element.width Element.fill ]
-              , width = Element.fill
-              , view =
-                    \{ progress } ->
-                        OUI.Material.progress shared.theme [ Element.centerX ] progress
-                            |> Element.el [ Element.width Element.fill ]
+            , { value = Just 0.99
               }
+            , { value = Just 1.0
+              }
+            , { value = Nothing }
             ]
         }
