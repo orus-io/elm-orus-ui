@@ -1,5 +1,5 @@
 module OUI.Material exposing
-    ( text, icon, divider, badge
+    ( text, icon, divider, badge, progress
     , button, checkbox, switch, textField, radiobutton, menu, tabs
     , menuButton, navigation
     )
@@ -9,7 +9,7 @@ module OUI.Material exposing
 
 # Basics
 
-@docs text, icon, divider, badge
+@docs text, icon, divider, badge, progress
 
 
 # Inputs
@@ -38,6 +38,7 @@ import OUI.Material.Icon
 import OUI.Material.Menu
 import OUI.Material.MenuButton
 import OUI.Material.Navigation
+import OUI.Material.Progress
 import OUI.Material.RadioButton
 import OUI.Material.Switch
 import OUI.Material.Tabs
@@ -47,6 +48,7 @@ import OUI.Material.Typography
 import OUI.Menu
 import OUI.MenuButton
 import OUI.Navigation
+import OUI.Progress
 import OUI.RadioButton
 import OUI.Switch
 import OUI.Tabs
@@ -161,6 +163,19 @@ navigation theme =
         (Theme.colorscheme theme)
         (Theme.divider theme)
         (Theme.navigation theme)
+
+
+{-| Render a progress
+-}
+progress :
+    Theme themeExt
+    -> List (Attribute msg)
+    -> OUI.Progress.Progress
+    -> Element msg
+progress theme =
+    OUI.Material.Progress.render
+        (Theme.colorscheme theme)
+        (Theme.progress theme)
 
 
 {-| Render a radiobutton

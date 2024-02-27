@@ -1,19 +1,19 @@
 module OUI.Material.Theme exposing
     ( Theme, defaultTheme, Typescale, defaultTypescale, withExt
-    , BadgeTheme, ButtonTheme, CheckboxTheme, DividerTheme, MenuTheme, NavigationTheme, SwitchTheme, TextFieldTheme, RadioButtonTheme, TabsTheme
-    , colorscheme, typescale, badge, button, checkbox, divider, menu, navigation, switch, textfield, radiobutton, tabs, ext
-    , withBadge, withButton, withCheckbox, withColorscheme, withDivider, withMenu, withNavigation, withRadiobutton, withSwitch, withTabs, withTextfield, withTypescale
+    , BadgeTheme, ButtonTheme, CheckboxTheme, DividerTheme, MenuTheme, NavigationTheme, ProgressTheme, SwitchTheme, TextFieldTheme, RadioButtonTheme, TabsTheme
+    , colorscheme, typescale, badge, button, checkbox, divider, menu, navigation, progress, switch, textfield, radiobutton, tabs, ext
+    , withBadge, withButton, withCheckbox, withColorscheme, withDivider, withMenu, withNavigation, withProgress, withRadiobutton, withSwitch, withTabs, withTextfield, withTypescale
     )
 
 {-|
 
 @docs Theme, defaultTheme, Typescale, defaultTypescale, withExt
 
-@docs BadgeTheme, ButtonTheme, CheckboxTheme, DividerTheme, MenuTheme, NavigationTheme, SwitchTheme, TextFieldTheme, RadioButtonTheme, TabsTheme
+@docs BadgeTheme, ButtonTheme, CheckboxTheme, DividerTheme, MenuTheme, NavigationTheme, ProgressTheme, SwitchTheme, TextFieldTheme, RadioButtonTheme, TabsTheme
 
-@docs colorscheme, typescale, badge, button, checkbox, divider, menu, navigation, switch, textfield, radiobutton, tabs, ext
+@docs colorscheme, typescale, badge, button, checkbox, divider, menu, navigation, progress, switch, textfield, radiobutton, tabs, ext
 
-@docs withBadge, withButton, withCheckbox, withColorscheme, withDivider, withMenu, withNavigation, withRadiobutton, withSwitch, withTabs, withTextfield, withTypescale
+@docs withBadge, withButton, withCheckbox, withColorscheme, withDivider, withMenu, withNavigation, withProgress, withRadiobutton, withSwitch, withTabs, withTextfield, withTypescale
 
 -}
 
@@ -24,6 +24,7 @@ import OUI.Material.Color
 import OUI.Material.Divider
 import OUI.Material.Menu
 import OUI.Material.Navigation
+import OUI.Material.Progress
 import OUI.Material.RadioButton
 import OUI.Material.Switch
 import OUI.Material.Tabs
@@ -65,6 +66,12 @@ type alias MenuTheme =
 -}
 type alias NavigationTheme =
     OUI.Material.Navigation.Theme
+
+
+{-| A Progress theme
+-}
+type alias ProgressTheme =
+    OUI.Material.Progress.Theme
 
 
 {-| A Switch theme
@@ -112,6 +119,7 @@ type Theme ext
         , divider : DividerTheme
         , menu : MenuTheme
         , navigation : NavigationTheme
+        , progress : ProgressTheme
         , switch : SwitchTheme
         , tabs : TabsTheme
         , textfield : TextFieldTheme
@@ -174,6 +182,13 @@ menu (Theme t) =
 navigation : Theme ext -> NavigationTheme
 navigation (Theme t) =
     t.navigation
+
+
+{-| get the progress theme
+-}
+progress : Theme ext -> ProgressTheme
+progress (Theme t) =
+    t.progress
 
 
 {-| get the switch theme
@@ -269,6 +284,13 @@ withNavigation value (Theme t) =
 
 {-| set the switch theme
 -}
+withProgress : ProgressTheme -> Theme ext -> Theme ext
+withProgress value (Theme t) =
+    Theme { t | progress = value }
+
+
+{-| set the switch theme
+-}
 withSwitch : SwitchTheme -> Theme ext -> Theme ext
 withSwitch value (Theme t) =
     Theme { t | switch = value }
@@ -308,6 +330,7 @@ withExt themeExt (Theme t) =
         , checkbox = t.checkbox
         , menu = t.menu
         , navigation = t.navigation
+        , progress = t.progress
         , radiobutton = t.radiobutton
         , switch = t.switch
         , tabs = t.tabs
@@ -329,6 +352,7 @@ defaultTheme =
         , checkbox = OUI.Material.Checkbox.defaultTheme
         , menu = OUI.Material.Menu.defaultTheme
         , navigation = OUI.Material.Navigation.defaultTheme
+        , progress = OUI.Material.Progress.defaultTheme
         , radiobutton = OUI.Material.RadioButton.defaultTheme
         , switch = OUI.Material.Switch.defaultTheme
         , tabs = OUI.Material.Tabs.defaultTheme

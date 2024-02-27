@@ -27115,6 +27115,600 @@ var $author$project$OUI$Showcase$Navigation$book = A2(
 										{expanded: value}));
 							})
 					})))));
+var $author$project$OUI$Progress$Circular = {$: 'Circular'};
+var $author$project$OUI$Progress$Progress = function (a) {
+	return {$: 'Progress', a: a};
+};
+var $author$project$OUI$Progress$circular = $author$project$OUI$Progress$Progress(
+	{color: $author$project$OUI$Primary, type_: $author$project$OUI$Progress$Circular, value: $elm$core$Maybe$Nothing});
+var $author$project$OUI$Progress$Linear = {$: 'Linear'};
+var $author$project$OUI$Progress$linear = $author$project$OUI$Progress$Progress(
+	{color: $author$project$OUI$Primary, type_: $author$project$OUI$Progress$Linear, value: $elm$core$Maybe$Nothing});
+var $author$project$OUI$Material$Theme$progress = function (_v0) {
+	var t = _v0.a;
+	return t.progress;
+};
+var $elm$svg$Svg$circle = $elm$svg$Svg$trustedNode('circle');
+var $elm$svg$Svg$Attributes$cx = _VirtualDom_attribute('cx');
+var $elm$svg$Svg$Attributes$cy = _VirtualDom_attribute('cy');
+var $elm$svg$Svg$Attributes$pathLength = _VirtualDom_attribute('pathLength');
+var $elm$svg$Svg$Attributes$r = _VirtualDom_attribute('r');
+var $elm$svg$Svg$Attributes$stroke = _VirtualDom_attribute('stroke');
+var $elm$svg$Svg$Attributes$strokeDasharray = _VirtualDom_attribute('stroke-dasharray');
+var $elm$svg$Svg$Attributes$strokeDashoffset = _VirtualDom_attribute('stroke-dashoffset');
+var $elm$svg$Svg$Attributes$strokeLinecap = _VirtualDom_attribute('stroke-linecap');
+var $elm$svg$Svg$Attributes$strokeWidth = _VirtualDom_attribute('stroke-width');
+var $elm$svg$Svg$Attributes$transform = _VirtualDom_attribute('transform');
+var $elm$svg$Svg$Attributes$xmlSpace = A2(_VirtualDom_attributeNS, 'http://www.w3.org/XML/1998/namespace', 'xml:space');
+var $author$project$OUI$Material$Progress$determinateCircularIcon = F5(
+	function (theme, color, trackColor, attribs, progress) {
+		var trackThickness = $elm$core$String$fromInt(theme.trackIndicator.thickness);
+		var thickest = A2($elm$core$Basics$max, theme.activeIndicator.thickness, theme.trackIndicator.thickness);
+		var size = $elm$core$String$fromInt(theme.circularSize);
+		var radius = $elm$core$Basics$floor((theme.circularSize - thickest) / 2);
+		var halfSize = $elm$core$String$fromInt((theme.circularSize / 2) | 0);
+		var gapSize = $elm$core$Basics$round(((thickest * 2) * 360) / ((3.1416 * radius) * 2.0));
+		var clampedProgress = A3($elm$core$Basics$clamp, 0, 1, progress);
+		var trackIndicatorRotation = $elm$core$String$fromInt(
+			((-90) + gapSize) + $elm$core$Basics$round(360 * clampedProgress));
+		var activeThickness = $elm$core$String$fromInt(theme.activeIndicator.thickness);
+		var activeLen = 360 * clampedProgress;
+		var activeStrokeDashoffset = $elm$core$String$fromFloat(360 - activeLen);
+		var trackLen = A2($elm$core$Basics$max, (360 - activeLen) - (2 * gapSize), 0);
+		var trackStrokeDashoffset = (activeLen === 0.0) ? 0 : $elm$core$Basics$ceiling(360 - trackLen);
+		var activeIndicatorRotation = $elm$core$String$fromFloat(-90);
+		return A2(
+			$mdgriffith$elm_ui$Element$el,
+			attribs,
+			$mdgriffith$elm_ui$Element$html(
+				A2(
+					$elm$svg$Svg$svg,
+					_List_fromArray(
+						[
+							$elm$svg$Svg$Attributes$height(size + 'px'),
+							$elm$svg$Svg$Attributes$width(size + 'px'),
+							$elm$svg$Svg$Attributes$viewBox('0 0 ' + (size + (' ' + size))),
+							$elm$svg$Svg$Attributes$xmlSpace('http://www.w3.org/2000/svg')
+						]),
+					_List_fromArray(
+						[
+							A2(
+							$elm$svg$Svg$g,
+							_List_Nil,
+							_List_fromArray(
+								[
+									A2(
+									$elm$svg$Svg$circle,
+									_List_fromArray(
+										[
+											$elm$svg$Svg$Attributes$fill('none'),
+											$elm$svg$Svg$Attributes$pathLength('360'),
+											$elm$svg$Svg$Attributes$stroke(
+											$avh4$elm_color$Color$toCssString(trackColor)),
+											$elm$svg$Svg$Attributes$strokeWidth(trackThickness),
+											$elm$svg$Svg$Attributes$strokeLinecap('round'),
+											$elm$svg$Svg$Attributes$cx(halfSize),
+											$elm$svg$Svg$Attributes$cy(halfSize),
+											$elm$svg$Svg$Attributes$r(
+											$elm$core$String$fromInt(radius)),
+											$elm$svg$Svg$Attributes$strokeDasharray('360 360'),
+											$elm$svg$Svg$Attributes$strokeDashoffset(
+											$elm$core$String$fromInt(trackStrokeDashoffset)),
+											$elm$svg$Svg$Attributes$transform('rotate(' + (trackIndicatorRotation + (' ' + (halfSize + (' ' + (halfSize + ')'))))))
+										]),
+									_List_Nil),
+									A2(
+									$elm$svg$Svg$circle,
+									_List_fromArray(
+										[
+											$elm$svg$Svg$Attributes$fill('none'),
+											$elm$svg$Svg$Attributes$pathLength('360'),
+											$elm$svg$Svg$Attributes$stroke(
+											$avh4$elm_color$Color$toCssString(color)),
+											$elm$svg$Svg$Attributes$strokeWidth(activeThickness),
+											$elm$svg$Svg$Attributes$strokeLinecap('butt'),
+											$elm$svg$Svg$Attributes$cx(halfSize),
+											$elm$svg$Svg$Attributes$cy(halfSize),
+											$elm$svg$Svg$Attributes$r(
+											$elm$core$String$fromInt(radius)),
+											$elm$svg$Svg$Attributes$strokeDasharray('360 360'),
+											$elm$svg$Svg$Attributes$strokeDashoffset(activeStrokeDashoffset),
+											$elm$svg$Svg$Attributes$transform('rotate(' + (activeIndicatorRotation + (' ' + (halfSize + (' ' + (halfSize + ')'))))))
+										]),
+									_List_Nil)
+								]))
+						]))));
+	});
+var $author$project$OUI$Material$Color$getContainerColor = function (c) {
+	switch (c.$) {
+		case 'Primary':
+			return function ($) {
+				return $.primaryContainer;
+			};
+		case 'PrimaryContainer':
+			return function ($) {
+				return $.primaryContainer;
+			};
+		case 'Secondary':
+			return function ($) {
+				return $.secondaryContainer;
+			};
+		case 'SecondaryContainer':
+			return function ($) {
+				return $.secondaryContainer;
+			};
+		case 'Tertiary':
+			return function ($) {
+				return $.tertiaryContainer;
+			};
+		case 'TertiaryContainer':
+			return function ($) {
+				return $.tertiaryContainer;
+			};
+		case 'Neutral':
+			return function ($) {
+				return $.surfaceContainer;
+			};
+		case 'NeutralVariant':
+			return function ($) {
+				return $.surfaceContainer;
+			};
+		case 'Error':
+			return function ($) {
+				return $.errorContainer;
+			};
+		case 'ErrorContainer':
+			return function ($) {
+				return $.errorContainer;
+			};
+		default:
+			var color = c.a.color;
+			return $elm$core$Basics$always(color);
+	}
+};
+var $elm$svg$Svg$animate = $elm$svg$Svg$trustedNode('animate');
+var $elm$svg$Svg$animateTransform = $elm$svg$Svg$trustedNode('animateTransform');
+var $elm$svg$Svg$Attributes$attributeName = _VirtualDom_attribute('attributeName');
+var $elm$svg$Svg$Attributes$begin = _VirtualDom_attribute('begin');
+var $elm$svg$Svg$Attributes$dur = _VirtualDom_attribute('dur');
+var $elm$svg$Svg$Attributes$repeatCount = _VirtualDom_attribute('repeatCount');
+var $elm$svg$Svg$Attributes$type_ = _VirtualDom_attribute('type');
+var $elm$svg$Svg$Attributes$values = function (value) {
+	return A2(
+		_VirtualDom_attribute,
+		'values',
+		_VirtualDom_noJavaScriptUri(value));
+};
+var $author$project$OUI$Material$Progress$indeterminateCircularIcon = F3(
+	function (theme, color, attribs) {
+		return A2(
+			$mdgriffith$elm_ui$Element$el,
+			attribs,
+			$mdgriffith$elm_ui$Element$html(
+				A2(
+					$elm$svg$Svg$svg,
+					_List_fromArray(
+						[
+							$elm$svg$Svg$Attributes$height(
+							$elm$core$String$fromInt(theme.circularSize) + 'px'),
+							$elm$svg$Svg$Attributes$width(
+							$elm$core$String$fromInt(theme.circularSize) + 'px'),
+							$elm$svg$Svg$Attributes$viewBox('0 0 66 66'),
+							$elm$svg$Svg$Attributes$xmlSpace('http://www.w3.org/2000/svg')
+						]),
+					_List_fromArray(
+						[
+							A2(
+							$elm$svg$Svg$g,
+							_List_Nil,
+							_List_fromArray(
+								[
+									A2(
+									$elm$svg$Svg$animateTransform,
+									_List_fromArray(
+										[
+											$elm$svg$Svg$Attributes$attributeName('transform'),
+											$elm$svg$Svg$Attributes$type_('rotate'),
+											$elm$svg$Svg$Attributes$values('0 33 33;270 33 33'),
+											$elm$svg$Svg$Attributes$begin('0s'),
+											$elm$svg$Svg$Attributes$dur('1.4s'),
+											$elm$svg$Svg$Attributes$fill('freeze'),
+											$elm$svg$Svg$Attributes$repeatCount('indefinite')
+										]),
+									_List_Nil),
+									A2(
+									$elm$svg$Svg$circle,
+									_List_fromArray(
+										[
+											$elm$svg$Svg$Attributes$fill('none'),
+											$elm$svg$Svg$Attributes$stroke(
+											$avh4$elm_color$Color$toCssString(color)),
+											$elm$svg$Svg$Attributes$strokeWidth('5'),
+											$elm$svg$Svg$Attributes$strokeLinecap('round'),
+											$elm$svg$Svg$Attributes$cx('33'),
+											$elm$svg$Svg$Attributes$cy('33'),
+											$elm$svg$Svg$Attributes$r('30'),
+											$elm$svg$Svg$Attributes$strokeDasharray('187'),
+											$elm$svg$Svg$Attributes$strokeDashoffset('610')
+										]),
+									_List_fromArray(
+										[
+											A2(
+											$elm$svg$Svg$animateTransform,
+											_List_fromArray(
+												[
+													$elm$svg$Svg$Attributes$attributeName('transform'),
+													$elm$svg$Svg$Attributes$type_('rotate'),
+													$elm$svg$Svg$Attributes$values('0 33 33;135 33 33;450 33 33'),
+													$elm$svg$Svg$Attributes$begin('0s'),
+													$elm$svg$Svg$Attributes$dur('1.4s'),
+													$elm$svg$Svg$Attributes$fill('freeze'),
+													$elm$svg$Svg$Attributes$repeatCount('indefinite')
+												]),
+											_List_Nil),
+											A2(
+											$elm$svg$Svg$animate,
+											_List_fromArray(
+												[
+													$elm$svg$Svg$Attributes$attributeName('stroke-dashoffset'),
+													$elm$svg$Svg$Attributes$values('187;46.75;187'),
+													$elm$svg$Svg$Attributes$begin('0s'),
+													$elm$svg$Svg$Attributes$dur('1.4s'),
+													$elm$svg$Svg$Attributes$fill('freeze'),
+													$elm$svg$Svg$Attributes$repeatCount('indefinite')
+												]),
+											_List_Nil)
+										]))
+								]))
+						]))));
+	});
+var $author$project$OUI$Progress$properties = function (_v0) {
+	var progress = _v0.a;
+	return progress;
+};
+var $author$project$OUI$Material$Progress$render = F4(
+	function (colorscheme, theme, attrs, progress) {
+		var props = $author$project$OUI$Progress$properties(progress);
+		var _v0 = _Utils_Tuple2(props.type_, props.value);
+		if (_v0.a.$ === 'Circular') {
+			if (_v0.b.$ === 'Nothing') {
+				var _v1 = _v0.a;
+				var _v2 = _v0.b;
+				return A3(
+					$author$project$OUI$Material$Progress$indeterminateCircularIcon,
+					theme,
+					A2($author$project$OUI$Material$Color$getColor, props.color, colorscheme),
+					attrs);
+			} else {
+				var _v3 = _v0.a;
+				var value = _v0.b.a;
+				return A5(
+					$author$project$OUI$Material$Progress$determinateCircularIcon,
+					theme,
+					A2($author$project$OUI$Material$Color$getColor, props.color, colorscheme),
+					A2($author$project$OUI$Material$Color$getContainerColor, props.color, colorscheme),
+					attrs,
+					value);
+			}
+		} else {
+			if (_v0.b.$ === 'Nothing') {
+				var _v4 = _v0.a;
+				var _v5 = _v0.b;
+				return $mdgriffith$elm_ui$Element$none;
+			} else {
+				var _v6 = _v0.a;
+				var value = _v0.b.a;
+				return $mdgriffith$elm_ui$Element$none;
+			}
+		}
+	});
+var $author$project$OUI$Material$progress = function (theme) {
+	return A2(
+		$author$project$OUI$Material$Progress$render,
+		$author$project$OUI$Material$Theme$colorscheme(theme),
+		$author$project$OUI$Material$Theme$progress(theme));
+};
+var $author$project$OUI$Progress$withValue = F2(
+	function (value, _v0) {
+		var progress = _v0.a;
+		return $author$project$OUI$Progress$Progress(
+			_Utils_update(
+				progress,
+				{
+					value: $elm$core$Maybe$Just(value)
+				}));
+	});
+var $author$project$OUI$Showcase$Progress$progressChapter = function (shared) {
+	return A2(
+		$mdgriffith$elm_ui$Element$table,
+		_List_fromArray(
+			[
+				$mdgriffith$elm_ui$Element$spacing(20)
+			]),
+		{
+			columns: _List_fromArray(
+				[
+					{
+					header: $mdgriffith$elm_ui$Element$none,
+					view: A2(
+						$elm$core$Basics$composeR,
+						function ($) {
+							return $.text;
+						},
+						A2(
+							$elm$core$Basics$composeR,
+							$author$project$OUI$Text$bodyLarge,
+							$author$project$OUI$Material$text(shared.theme))),
+					width: $mdgriffith$elm_ui$Element$shrink
+				},
+					{
+					header: A2(
+						$mdgriffith$elm_ui$Element$el,
+						_List_fromArray(
+							[
+								$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill)
+							]),
+						A2(
+							$mdgriffith$elm_ui$Element$el,
+							_List_fromArray(
+								[$mdgriffith$elm_ui$Element$centerX]),
+							A2(
+								$author$project$OUI$Material$text,
+								shared.theme,
+								$author$project$OUI$Text$bodyLarge('0%')))),
+					view: function (_v0) {
+						var progress = _v0.progress;
+						return A2(
+							$mdgriffith$elm_ui$Element$el,
+							_List_fromArray(
+								[
+									$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill)
+								]),
+							A3(
+								$author$project$OUI$Material$progress,
+								shared.theme,
+								_List_fromArray(
+									[$mdgriffith$elm_ui$Element$centerX]),
+								A2($author$project$OUI$Progress$withValue, 0, progress)));
+					},
+					width: $mdgriffith$elm_ui$Element$fill
+				},
+					{
+					header: A2(
+						$mdgriffith$elm_ui$Element$el,
+						_List_fromArray(
+							[
+								$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill)
+							]),
+						A2(
+							$mdgriffith$elm_ui$Element$el,
+							_List_fromArray(
+								[$mdgriffith$elm_ui$Element$centerX]),
+							A2(
+								$author$project$OUI$Material$text,
+								shared.theme,
+								$author$project$OUI$Text$bodyLarge('1%')))),
+					view: function (_v1) {
+						var progress = _v1.progress;
+						return A2(
+							$mdgriffith$elm_ui$Element$el,
+							_List_fromArray(
+								[
+									$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill)
+								]),
+							A3(
+								$author$project$OUI$Material$progress,
+								shared.theme,
+								_List_fromArray(
+									[$mdgriffith$elm_ui$Element$centerX]),
+								A2($author$project$OUI$Progress$withValue, 0.01, progress)));
+					},
+					width: $mdgriffith$elm_ui$Element$fill
+				},
+					{
+					header: A2(
+						$mdgriffith$elm_ui$Element$el,
+						_List_fromArray(
+							[
+								$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill)
+							]),
+						A2(
+							$mdgriffith$elm_ui$Element$el,
+							_List_fromArray(
+								[$mdgriffith$elm_ui$Element$centerX]),
+							A2(
+								$author$project$OUI$Material$text,
+								shared.theme,
+								$author$project$OUI$Text$bodyLarge('25%')))),
+					view: function (_v2) {
+						var progress = _v2.progress;
+						return A2(
+							$mdgriffith$elm_ui$Element$el,
+							_List_fromArray(
+								[
+									$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill)
+								]),
+							A3(
+								$author$project$OUI$Material$progress,
+								shared.theme,
+								_List_fromArray(
+									[$mdgriffith$elm_ui$Element$centerX]),
+								A2($author$project$OUI$Progress$withValue, 0.25, progress)));
+					},
+					width: $mdgriffith$elm_ui$Element$fill
+				},
+					{
+					header: A2(
+						$mdgriffith$elm_ui$Element$el,
+						_List_fromArray(
+							[
+								$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill)
+							]),
+						A2(
+							$mdgriffith$elm_ui$Element$el,
+							_List_fromArray(
+								[$mdgriffith$elm_ui$Element$centerX]),
+							A2(
+								$author$project$OUI$Material$text,
+								shared.theme,
+								$author$project$OUI$Text$bodyLarge('37%')))),
+					view: function (_v3) {
+						var progress = _v3.progress;
+						return A2(
+							$mdgriffith$elm_ui$Element$el,
+							_List_fromArray(
+								[
+									$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill)
+								]),
+							A3(
+								$author$project$OUI$Material$progress,
+								shared.theme,
+								_List_fromArray(
+									[$mdgriffith$elm_ui$Element$centerX]),
+								A2($author$project$OUI$Progress$withValue, 0.37, progress)));
+					},
+					width: $mdgriffith$elm_ui$Element$fill
+				},
+					{
+					header: A2(
+						$mdgriffith$elm_ui$Element$el,
+						_List_fromArray(
+							[
+								$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill)
+							]),
+						A2(
+							$mdgriffith$elm_ui$Element$el,
+							_List_fromArray(
+								[$mdgriffith$elm_ui$Element$centerX]),
+							A2(
+								$author$project$OUI$Material$text,
+								shared.theme,
+								$author$project$OUI$Text$bodyLarge('50%')))),
+					view: function (_v4) {
+						var progress = _v4.progress;
+						return A2(
+							$mdgriffith$elm_ui$Element$el,
+							_List_fromArray(
+								[
+									$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill)
+								]),
+							A3(
+								$author$project$OUI$Material$progress,
+								shared.theme,
+								_List_fromArray(
+									[$mdgriffith$elm_ui$Element$centerX]),
+								A2($author$project$OUI$Progress$withValue, 0.5, progress)));
+					},
+					width: $mdgriffith$elm_ui$Element$fill
+				},
+					{
+					header: A2(
+						$mdgriffith$elm_ui$Element$el,
+						_List_fromArray(
+							[
+								$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill)
+							]),
+						A2(
+							$mdgriffith$elm_ui$Element$el,
+							_List_fromArray(
+								[$mdgriffith$elm_ui$Element$centerX]),
+							A2(
+								$author$project$OUI$Material$text,
+								shared.theme,
+								$author$project$OUI$Text$bodyLarge('99%')))),
+					view: function (_v5) {
+						var progress = _v5.progress;
+						return A2(
+							$mdgriffith$elm_ui$Element$el,
+							_List_fromArray(
+								[
+									$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill)
+								]),
+							A3(
+								$author$project$OUI$Material$progress,
+								shared.theme,
+								_List_fromArray(
+									[$mdgriffith$elm_ui$Element$centerX]),
+								A2($author$project$OUI$Progress$withValue, 0.99, progress)));
+					},
+					width: $mdgriffith$elm_ui$Element$fill
+				},
+					{
+					header: A2(
+						$mdgriffith$elm_ui$Element$el,
+						_List_fromArray(
+							[
+								$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill)
+							]),
+						A2(
+							$mdgriffith$elm_ui$Element$el,
+							_List_fromArray(
+								[$mdgriffith$elm_ui$Element$centerX]),
+							A2(
+								$author$project$OUI$Material$text,
+								shared.theme,
+								$author$project$OUI$Text$bodyLarge('100%')))),
+					view: function (_v6) {
+						var progress = _v6.progress;
+						return A2(
+							$mdgriffith$elm_ui$Element$el,
+							_List_fromArray(
+								[
+									$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill)
+								]),
+							A3(
+								$author$project$OUI$Material$progress,
+								shared.theme,
+								_List_fromArray(
+									[$mdgriffith$elm_ui$Element$centerX]),
+								A2($author$project$OUI$Progress$withValue, 1, progress)));
+					},
+					width: $mdgriffith$elm_ui$Element$fill
+				},
+					{
+					header: A2(
+						$mdgriffith$elm_ui$Element$el,
+						_List_fromArray(
+							[
+								$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill)
+							]),
+						A2(
+							$mdgriffith$elm_ui$Element$el,
+							_List_fromArray(
+								[$mdgriffith$elm_ui$Element$centerX]),
+							A2(
+								$author$project$OUI$Material$text,
+								shared.theme,
+								$author$project$OUI$Text$bodyLarge('undetermined')))),
+					view: function (_v7) {
+						var progress = _v7.progress;
+						return A2(
+							$mdgriffith$elm_ui$Element$el,
+							_List_fromArray(
+								[
+									$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill)
+								]),
+							A3(
+								$author$project$OUI$Material$progress,
+								shared.theme,
+								_List_fromArray(
+									[$mdgriffith$elm_ui$Element$centerX]),
+								progress));
+					},
+					width: $mdgriffith$elm_ui$Element$fill
+				}
+				]),
+			data: _List_fromArray(
+				[
+					{progress: $author$project$OUI$Progress$circular, text: 'circular'},
+					{progress: $author$project$OUI$Progress$linear, text: 'linear'}
+				])
+		});
+};
+var $author$project$OUI$Showcase$Progress$book = A2(
+	$author$project$OUI$Explorer$withStaticChapter,
+	$author$project$OUI$Showcase$Progress$progressChapter,
+	$author$project$OUI$Explorer$book('Progress'));
 var $author$project$OUI$RadioButton$RadioButton = function (a) {
 	return {$: 'RadioButton', a: a};
 };
@@ -30417,23 +31011,26 @@ var $author$project$OUI$Showcase$addPages = A2(
 									$author$project$OUI$Explorer$addBook($author$project$OUI$Showcase$Menus$book),
 									A2(
 										$elm$core$Basics$composeR,
-										$author$project$OUI$Explorer$addBook($author$project$OUI$Showcase$RadioButtons$book),
+										$author$project$OUI$Explorer$addBook($author$project$OUI$Showcase$Progress$book),
 										A2(
 											$elm$core$Basics$composeR,
-											$author$project$OUI$Explorer$addBook($author$project$OUI$Showcase$Switches$book),
+											$author$project$OUI$Explorer$addBook($author$project$OUI$Showcase$RadioButtons$book),
 											A2(
 												$elm$core$Basics$composeR,
-												$author$project$OUI$Explorer$addBook($author$project$OUI$Showcase$Tabs$book),
+												$author$project$OUI$Explorer$addBook($author$project$OUI$Showcase$Switches$book),
 												A2(
 													$elm$core$Basics$composeR,
-													$author$project$OUI$Explorer$addBook($author$project$OUI$Showcase$TextFields$book),
+													$author$project$OUI$Explorer$addBook($author$project$OUI$Showcase$Tabs$book),
 													A2(
 														$elm$core$Basics$composeR,
-														$author$project$OUI$Explorer$category('Complex'),
+														$author$project$OUI$Explorer$addBook($author$project$OUI$Showcase$TextFields$book),
 														A2(
 															$elm$core$Basics$composeR,
-															$author$project$OUI$Explorer$addBook($author$project$OUI$Showcase$MenuButtons$book),
-															$author$project$OUI$Explorer$addBook($author$project$OUI$Showcase$Navigation$book))))))))))))))));
+															$author$project$OUI$Explorer$category('Complex'),
+															A2(
+																$elm$core$Basics$composeR,
+																$author$project$OUI$Explorer$addBook($author$project$OUI$Showcase$MenuButtons$book),
+																$author$project$OUI$Explorer$addBook($author$project$OUI$Showcase$Navigation$book)))))))))))))))));
 var $icidasset$elm_material_icons$Material$Icons$Internal$b = $elm$svg$Svg$Attributes$enableBackground;
 var $icidasset$elm_material_icons$Material$Icons$Internal$f = $elm$svg$Svg$Attributes$fill;
 var $icidasset$elm_material_icons$Material$Icons$Internal$icon = F4(
@@ -30701,6 +31298,11 @@ var $author$project$OUI$Material$Navigation$defaultTheme = {
 	drawer: {activeIndicatorHeight: 56, activeIndicatorPadding: 12, activeIndicatorShape: 28, activeIndicatorWidth: 336, badgeRightPadding: 16, containerWidth: 360, iconSize: 24, leftPadding: 28, paddingBetweenElements: 0, rightPadding: 28},
 	rail: {activeIndicatorHeight: 32, activeIndicatorShape: 16, activeIndicatorWidth: 56, badgeShape: 3, badgeSize: 6, containerWidth: 80, destinationItemHeight: 56, iconSize: 24, largeBadgeShape: 8, largeBadgeSize: 16, paddingBetweenDestinationItems: 12, paddingBetweenEdgeAndActiveIndicator: 12, paddingbetweenActiveIndicatorAndLabelText: 4}
 };
+var $author$project$OUI$Material$Progress$defaultTheme = {
+	activeIndicator: {thickness: 4},
+	circularSize: 48,
+	trackIndicator: {thickness: 4}
+};
 var $author$project$OUI$Material$RadioButton$defaultTheme = {borderWidth: 2, containerHeight: 20, containerShape: 10, containerWidth: 20, contentSize: 10, stateLayerSize: 40};
 var $author$project$OUI$Material$Switch$defaultTheme = {
 	icon: {sizeSelected: 16, sizeUnselected: 16},
@@ -30758,7 +31360,7 @@ var $author$project$OUI$Material$Theme$defaultTypescale = {
 	}
 };
 var $author$project$OUI$Material$Theme$defaultTheme = $author$project$OUI$Material$Theme$Theme(
-	{badge: $author$project$OUI$Material$Badge$defaultTheme, button: $author$project$OUI$Material$Button$defaultTheme, checkbox: $author$project$OUI$Material$Checkbox$defaultTheme, colorscheme: $author$project$OUI$Material$Color$defaultLightScheme, divider: $author$project$OUI$Material$Divider$defaultTheme, ext: _Utils_Tuple0, menu: $author$project$OUI$Material$Menu$defaultTheme, navigation: $author$project$OUI$Material$Navigation$defaultTheme, radiobutton: $author$project$OUI$Material$RadioButton$defaultTheme, _switch: $author$project$OUI$Material$Switch$defaultTheme, tabs: $author$project$OUI$Material$Tabs$defaultTheme, textfield: $author$project$OUI$Material$TextField$defaultTheme, typescale: $author$project$OUI$Material$Theme$defaultTypescale});
+	{badge: $author$project$OUI$Material$Badge$defaultTheme, button: $author$project$OUI$Material$Button$defaultTheme, checkbox: $author$project$OUI$Material$Checkbox$defaultTheme, colorscheme: $author$project$OUI$Material$Color$defaultLightScheme, divider: $author$project$OUI$Material$Divider$defaultTheme, ext: _Utils_Tuple0, menu: $author$project$OUI$Material$Menu$defaultTheme, navigation: $author$project$OUI$Material$Navigation$defaultTheme, progress: $author$project$OUI$Material$Progress$defaultTheme, radiobutton: $author$project$OUI$Material$RadioButton$defaultTheme, _switch: $author$project$OUI$Material$Switch$defaultTheme, tabs: $author$project$OUI$Material$Tabs$defaultTheme, textfield: $author$project$OUI$Material$TextField$defaultTheme, typescale: $author$project$OUI$Material$Theme$defaultTypescale});
 var $author$project$OUI$Explorer$Light = {$: 'Light'};
 var $author$project$OUI$Material$Color$defaultDarkScheme = $author$project$OUI$Material$Color$darkFromKeyColors($author$project$OUI$Material$Color$defaultKeyColors);
 var $author$project$OUI$Explorer$defaultView = {

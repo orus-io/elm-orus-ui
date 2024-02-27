@@ -15,6 +15,7 @@ import OUI.Showcase.Dividers as Dividers
 import OUI.Showcase.MenuButtons as MenuButtons
 import OUI.Showcase.Menus as Menus
 import OUI.Showcase.Navigation as Navigation
+import OUI.Showcase.Progress as Progress
 import OUI.Showcase.RadioButtons as RadioButtons
 import OUI.Showcase.Switches as Switches
 import OUI.Showcase.Tabs as Tabs
@@ -70,8 +71,12 @@ addPages :
                                                             ()
                                                             (Spa.PageStack.Model
                                                                 Spa.SetupError
-                                                                current
-                                                                previous
+                                                                ()
+                                                                (Spa.PageStack.Model
+                                                                    Spa.SetupError
+                                                                    current
+                                                                    previous
+                                                                )
                                                             )
                                                         )
                                                     )
@@ -124,8 +129,14 @@ addPages :
                                                             (Explorer.BookMsg ())
                                                             (Spa.PageStack.Msg
                                                                 Explorer.Route
-                                                                currentMsg
-                                                                previousMsg
+                                                                (Explorer.BookMsg
+                                                                    ()
+                                                                )
+                                                                (Spa.PageStack.Msg
+                                                                    Explorer.Route
+                                                                    currentMsg
+                                                                    previousMsg
+                                                                )
                                                             )
                                                         )
                                                     )
@@ -149,6 +160,7 @@ addPages =
         >> Explorer.addBook Checkbox.book
         >> Explorer.addBook Dividers.book
         >> Explorer.addBook Menus.book
+        >> Explorer.addBook Progress.book
         >> Explorer.addBook RadioButtons.book
         >> Explorer.addBook Switches.book
         >> Explorer.addBook Tabs.book
