@@ -127,46 +127,81 @@ determinateCircularIcon theme color trackColor attribs progress =
                 / 2
                 |> floor
 
+        circumference =
+            3.1416 * toFloat radius * 2.0
+
+        activeThicknessD =
+            toFloat theme.activeIndicator.thickness
+                * 360
+                / circumference
+                |> floor
+
         gapSize =
             toFloat thickest
                 * 2
                 * 360
-                / (3.1416 * toFloat radius * 2.0)
+                / circumference
                 |> round
 
         clampedProgress =
             clamp 0 1 progress
 
+        isZero =
+            clampedProgress == 0
+
+        isFull =
+            clampedProgress == 1
+
         activeLen =
-            360 * clampedProgress
-
-        trackLen =
-            max
-                (360 - activeLen - (2 * toFloat gapSize))
-                0
-
-        activeStrokeDashoffset =
-            360
-                - activeLen
-                |> String.fromFloat
-
-        activeIndicatorRotation =
-            -90
-                |> String.fromFloat
-
-        trackStrokeDashoffset =
-            if activeLen == 0.0 then
+            if isZero then
                 0
 
             else
+                ceiling (360 * clampedProgress)
+                    |> max activeThicknessD
+
+        trackLen =
+            if isZero then
                 360
-                    - trackLen
-                    |> ceiling
+
+            else if isFull then
+                0
+
+            else
+                (360 - activeLen - (2 * gapSize))
+                    |> max 0
+
+        activeStrokeDashoffset =
+            String.fromFloat <|
+                if isFull then
+                    0
+
+                else if isZero then
+                    360
+
+                else
+                    360
+                        - activeLen
+                        + activeThicknessD
+                        |> toFloat
+                        |> min 359.9
+
+        activeIndicatorRotation =
+            -90
+                + (activeThicknessD // 2)
+                |> String.fromInt
+
+        trackStrokeDashoffset =
+            if isZero then
+                0
+
+            else
+                360 - trackLen
 
         trackIndicatorRotation =
             (-90
                 + gapSize
-                + round (360 * clampedProgress)
+                + activeLen
             )
                 |> String.fromInt
 
@@ -208,7 +243,7 @@ determinateCircularIcon theme color trackColor attribs progress =
                 , Svg.Attributes.pathLength "360"
                 , Svg.Attributes.stroke (Color.toCssString color)
                 , Svg.Attributes.strokeWidth activeThickness
-                , Svg.Attributes.strokeLinecap "butt"
+                , Svg.Attributes.strokeLinecap "round"
                 , Svg.Attributes.cx halfSize
                 , Svg.Attributes.cy halfSize
                 , Svg.Attributes.r <| String.fromInt radius

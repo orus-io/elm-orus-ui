@@ -27147,16 +27147,23 @@ var $author$project$OUI$Material$Progress$determinateCircularIcon = F5(
 		var size = $elm$core$String$fromInt(theme.circularSize);
 		var radius = $elm$core$Basics$floor((theme.circularSize - thickest) / 2);
 		var halfSize = $elm$core$String$fromInt((theme.circularSize / 2) | 0);
-		var gapSize = $elm$core$Basics$round(((thickest * 2) * 360) / ((3.1416 * radius) * 2.0));
 		var clampedProgress = A3($elm$core$Basics$clamp, 0, 1, progress);
-		var trackIndicatorRotation = $elm$core$String$fromInt(
-			((-90) + gapSize) + $elm$core$Basics$round(360 * clampedProgress));
+		var isFull = clampedProgress === 1;
+		var isZero = !clampedProgress;
+		var circumference = (3.1416 * radius) * 2.0;
+		var gapSize = $elm$core$Basics$round(((thickest * 2) * 360) / circumference);
+		var activeThicknessD = $elm$core$Basics$floor((theme.activeIndicator.thickness * 360) / circumference);
 		var activeThickness = $elm$core$String$fromInt(theme.activeIndicator.thickness);
-		var activeLen = 360 * clampedProgress;
-		var activeStrokeDashoffset = $elm$core$String$fromFloat(360 - activeLen);
-		var trackLen = A2($elm$core$Basics$max, (360 - activeLen) - (2 * gapSize), 0);
-		var trackStrokeDashoffset = (activeLen === 0.0) ? 0 : $elm$core$Basics$ceiling(360 - trackLen);
-		var activeIndicatorRotation = $elm$core$String$fromFloat(-90);
+		var activeLen = isZero ? 0 : A2(
+			$elm$core$Basics$max,
+			activeThicknessD,
+			$elm$core$Basics$ceiling(360 * clampedProgress));
+		var activeStrokeDashoffset = $elm$core$String$fromFloat(
+			isFull ? 0 : (isZero ? 360 : A2($elm$core$Basics$min, 359.9, (360 - activeLen) + activeThicknessD)));
+		var trackIndicatorRotation = $elm$core$String$fromInt(((-90) + gapSize) + activeLen);
+		var trackLen = isZero ? 360 : (isFull ? 0 : A2($elm$core$Basics$max, 0, (360 - activeLen) - (2 * gapSize)));
+		var trackStrokeDashoffset = isZero ? 0 : (360 - trackLen);
+		var activeIndicatorRotation = $elm$core$String$fromInt((-90) + ((activeThicknessD / 2) | 0));
 		return A2(
 			$mdgriffith$elm_ui$Element$el,
 			attribs,
@@ -27206,7 +27213,7 @@ var $author$project$OUI$Material$Progress$determinateCircularIcon = F5(
 											$elm$svg$Svg$Attributes$stroke(
 											$avh4$elm_color$Color$toCssString(color)),
 											$elm$svg$Svg$Attributes$strokeWidth(activeThickness),
-											$elm$svg$Svg$Attributes$strokeLinecap('butt'),
+											$elm$svg$Svg$Attributes$strokeLinecap('round'),
 											$elm$svg$Svg$Attributes$cx(halfSize),
 											$elm$svg$Svg$Attributes$cy(halfSize),
 											$elm$svg$Svg$Attributes$r(
