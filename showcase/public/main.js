@@ -27452,6 +27452,99 @@ var $author$project$OUI$Material$Progress$indeterminateCircular = F3(
 								]))
 						]))));
 	});
+var $author$project$OUI$Material$Progress$indeterminateLinear = F4(
+	function (theme, color, trackColor, attrs) {
+		var thickest = A2($elm$core$Basics$max, theme.activeIndicator.thickness, theme.trackIndicator.thickness);
+		return A2(
+			$mdgriffith$elm_ui$Element$row,
+			A2(
+				$elm$core$List$cons,
+				$mdgriffith$elm_ui$Element$height(
+					$mdgriffith$elm_ui$Element$px(thickest)),
+				attrs),
+			_List_fromArray(
+				[
+					A2(
+					$mdgriffith$elm_ui$Element$row,
+					_List_fromArray(
+						[
+							$mdgriffith$elm_ui$Element$width(
+							$mdgriffith$elm_ui$Element$fillPortion(1)),
+							$mdgriffith$elm_ui$Element$height(
+							$mdgriffith$elm_ui$Element$px(theme.trackIndicator.thickness)),
+							$mdgriffith$elm_ui$Element$clipX
+						]),
+					_List_fromArray(
+						[
+							A2(
+							$mdgriffith$elm_ui$Element$el,
+							_List_fromArray(
+								[
+									$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
+									$mdgriffith$elm_ui$Element$height(
+									$mdgriffith$elm_ui$Element$px(theme.trackIndicator.thickness)),
+									$mdgriffith$elm_ui$Element$Background$color(
+									$author$project$OUI$Material$Color$toElementColor(trackColor)),
+									$mdgriffith$elm_ui$Element$Border$rounded(theme.trackIndicator.thickness)
+								]),
+							$mdgriffith$elm_ui$Element$none),
+							A2(
+							$mdgriffith$elm_ui$Element$el,
+							_List_fromArray(
+								[
+									$mdgriffith$elm_ui$Element$width(
+									$mdgriffith$elm_ui$Element$px(thickest))
+								]),
+							$mdgriffith$elm_ui$Element$none)
+						])),
+					A2(
+					$mdgriffith$elm_ui$Element$el,
+					_List_fromArray(
+						[
+							$mdgriffith$elm_ui$Element$width(
+							$mdgriffith$elm_ui$Element$fillPortion(1)),
+							$mdgriffith$elm_ui$Element$height(
+							$mdgriffith$elm_ui$Element$px(theme.activeIndicator.thickness)),
+							$mdgriffith$elm_ui$Element$Background$color(
+							$author$project$OUI$Material$Color$toElementColor(color)),
+							$mdgriffith$elm_ui$Element$Border$rounded(theme.activeIndicator.thickness)
+						]),
+					$mdgriffith$elm_ui$Element$none),
+					A2(
+					$mdgriffith$elm_ui$Element$row,
+					_List_fromArray(
+						[
+							$mdgriffith$elm_ui$Element$width(
+							$mdgriffith$elm_ui$Element$fillPortion(1)),
+							$mdgriffith$elm_ui$Element$height(
+							$mdgriffith$elm_ui$Element$px(theme.trackIndicator.thickness)),
+							$mdgriffith$elm_ui$Element$clipX
+						]),
+					_List_fromArray(
+						[
+							A2(
+							$mdgriffith$elm_ui$Element$el,
+							_List_fromArray(
+								[
+									$mdgriffith$elm_ui$Element$width(
+									$mdgriffith$elm_ui$Element$px(thickest))
+								]),
+							$mdgriffith$elm_ui$Element$none),
+							A2(
+							$mdgriffith$elm_ui$Element$el,
+							_List_fromArray(
+								[
+									$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
+									$mdgriffith$elm_ui$Element$height(
+									$mdgriffith$elm_ui$Element$px(theme.trackIndicator.thickness)),
+									$mdgriffith$elm_ui$Element$Background$color(
+									$author$project$OUI$Material$Color$toElementColor(trackColor)),
+									$mdgriffith$elm_ui$Element$Border$rounded(theme.trackIndicator.thickness)
+								]),
+							$mdgriffith$elm_ui$Element$none)
+						]))
+				]));
+	});
 var $author$project$OUI$Progress$properties = function (_v0) {
 	var progress = _v0.a;
 	return progress;
@@ -27484,7 +27577,12 @@ var $author$project$OUI$Material$Progress$render = F4(
 			if (_v0.b.$ === 'Nothing') {
 				var _v4 = _v0.a;
 				var _v5 = _v0.b;
-				return $mdgriffith$elm_ui$Element$none;
+				return A4(
+					$author$project$OUI$Material$Progress$indeterminateLinear,
+					theme,
+					A2($author$project$OUI$Material$Color$getColor, props.color, colorscheme),
+					A2($author$project$OUI$Material$Color$getContainerColor, props.color, colorscheme),
+					attrs);
 			} else {
 				var _v6 = _v0.a;
 				var value = _v0.b.a;

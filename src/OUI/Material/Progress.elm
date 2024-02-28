@@ -48,7 +48,10 @@ render colorscheme theme attrs progress =
                 value
 
         ( OUI.Progress.Linear, Nothing ) ->
-            Element.none
+            indeterminateLinear theme
+                (OUI.Material.Color.getColor props.color colorscheme)
+                (OUI.Material.Color.getContainerColor props.color colorscheme)
+                attrs
 
         ( OUI.Progress.Linear, Just value ) ->
             determinateLinear theme
@@ -56,6 +59,67 @@ render colorscheme theme attrs progress =
                 (OUI.Material.Color.getContainerColor props.color colorscheme)
                 attrs
                 value
+
+
+indeterminateLinear :
+    Theme
+    -> Color.Color
+    -> Color.Color
+    -> List (Attribute msg)
+    -> Element msg
+indeterminateLinear theme color trackColor attrs =
+    let
+        thickest =
+            max theme.activeIndicator.thickness theme.trackIndicator.thickness
+    in
+    Element.row
+        ((Element.height <| Element.px thickest)
+            :: attrs
+        )
+        [ Element.row
+            [ Element.width <| Element.fillPortion 1
+            , Element.height <| Element.px theme.trackIndicator.thickness
+            , Element.clipX
+            ]
+          <|
+            [ Element.el
+                [ Element.width Element.fill
+                , Element.height <| Element.px theme.trackIndicator.thickness
+                , Background.color <| OUI.Material.Color.toElementColor trackColor
+                , Border.rounded theme.trackIndicator.thickness
+                ]
+                Element.none
+            , Element.el
+                [ Element.width <| Element.px thickest
+                ]
+                Element.none
+            ]
+        , Element.el
+            [ Element.width <| Element.fillPortion 1
+            , Element.height <| Element.px theme.activeIndicator.thickness
+            , Background.color <| OUI.Material.Color.toElementColor color
+            , Border.rounded theme.activeIndicator.thickness
+            ]
+            Element.none
+        , Element.row
+            [ Element.width <| Element.fillPortion 1
+            , Element.height <| Element.px theme.trackIndicator.thickness
+            , Element.clipX
+            ]
+          <|
+            [ Element.el
+                [ Element.width <| Element.px thickest
+                ]
+                Element.none
+            , Element.el
+                [ Element.width Element.fill
+                , Element.height <| Element.px theme.trackIndicator.thickness
+                , Background.color <| OUI.Material.Color.toElementColor trackColor
+                , Border.rounded theme.trackIndicator.thickness
+                ]
+                Element.none
+            ]
+        ]
 
 
 determinateLinear :
