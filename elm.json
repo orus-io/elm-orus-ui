@@ -19,6 +19,7 @@
     "OUI.Menu",
     "OUI.MenuButton",
     "OUI.Navigation",
+    "OUI.Progress",
     "OUI.Showcase",
     "OUI.Switch",
     "OUI.RadioButton",

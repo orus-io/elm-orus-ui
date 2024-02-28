@@ -27161,8 +27161,7 @@ var $author$project$OUI$Material$Progress$determinateCircular = F5(
 		var activeStrokeDashoffset = $elm$core$String$fromFloat(
 			isFull ? 0 : (isZero ? 360 : A2($elm$core$Basics$min, 359.9, (360 - activeLen) + activeThicknessD)));
 		var trackIndicatorRotation = $elm$core$String$fromInt(((-90) + gapSize) + activeLen);
-		var trackLen = isZero ? 360 : (isFull ? 0 : A2($elm$core$Basics$max, 0, (360 - activeLen) - (2 * gapSize)));
-		var trackStrokeDashoffset = isZero ? 0 : (360 - trackLen);
+		var trackStrokeDashoffset = isZero ? 0 : (isFull ? 360 : A2($elm$core$Basics$min, 360, activeLen + (2 * gapSize)));
 		var activeIndicatorRotation = $elm$core$String$fromInt((-90) + ((activeThicknessD / 2) | 0));
 		return A2(
 			$mdgriffith$elm_ui$Element$el,

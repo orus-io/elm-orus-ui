@@ -4,6 +4,7 @@ import Color
 import Element exposing (Attribute, Element)
 import Element.Background as Background
 import Element.Border as Border
+import OUI
 import OUI.Material.Color
 import OUI.Progress exposing (Progress)
 import Svg
@@ -33,6 +34,11 @@ render :
     -> Element msg
 render colorscheme theme attrs progress =
     let
+        props :
+            { type_ : OUI.Progress.Type
+            , color : OUI.Color
+            , value : Maybe Float
+            }
         props =
             OUI.Progress.properties progress
     in
@@ -69,6 +75,7 @@ indeterminateLinear :
     -> Element msg
 indeterminateLinear theme color trackColor attrs =
     let
+        thickest : Int
         thickest =
             max theme.activeIndicator.thickness theme.trackIndicator.thickness
     in
@@ -131,15 +138,19 @@ determinateLinear :
     -> Element msg
 determinateLinear theme color trackColor attrs value =
     let
+        thickest : Int
         thickest =
             max theme.activeIndicator.thickness theme.trackIndicator.thickness
 
+        clampedProgress : Float
         clampedProgress =
             clamp 0 1.0 value
 
+        isZero : Bool
         isZero =
             clampedProgress == 0
 
+        activeLen : Int
         activeLen =
             clampedProgress * 1000 |> floor
     in
@@ -266,23 +277,28 @@ determinateCircular :
 determinateCircular theme color trackColor attribs progress =
     -- With help from https://css-tricks.com/building-progress-ring-quickly/
     let
+        thickest : Int
         thickest =
             max theme.activeIndicator.thickness theme.trackIndicator.thickness
 
+        radius : Int
         radius =
             toFloat (theme.circularSize - thickest)
                 / 2
                 |> floor
 
+        circumference : Float
         circumference =
             3.1416 * toFloat radius * 2.0
 
+        activeThicknessD : Int
         activeThicknessD =
             toFloat theme.activeIndicator.thickness
                 * 360
                 / circumference
                 |> floor
 
+        gapSize : Int
         gapSize =
             toFloat thickest
                 * 2
@@ -290,15 +306,19 @@ determinateCircular theme color trackColor attribs progress =
                 / circumference
                 |> round
 
+        clampedProgress : Float
         clampedProgress =
             clamp 0 1 progress
 
+        isZero : Bool
         isZero =
             clampedProgress == 0
 
+        isFull : Bool
         isFull =
             clampedProgress == 1
 
+        activeLen : Int
         activeLen =
             if isZero then
                 0
@@ -307,17 +327,7 @@ determinateCircular theme color trackColor attribs progress =
                 ceiling (360 * clampedProgress)
                     |> max activeThicknessD
 
-        trackLen =
-            if isZero then
-                360
-
-            else if isFull then
-                0
-
-            else
-                (360 - activeLen - (2 * gapSize))
-                    |> max 0
-
+        activeStrokeDashoffset : String
         activeStrokeDashoffset =
             String.fromFloat <|
                 if isFull then
@@ -333,18 +343,26 @@ determinateCircular theme color trackColor attribs progress =
                         |> toFloat
                         |> min 359.9
 
+        activeIndicatorRotation : String
         activeIndicatorRotation =
             -90
                 + (activeThicknessD // 2)
                 |> String.fromInt
 
+        trackStrokeDashoffset : Int
         trackStrokeDashoffset =
             if isZero then
                 0
 
-            else
-                360 - trackLen
+            else if isFull then
+                360
 
+            else
+                activeLen
+                    + (2 * gapSize)
+                    |> min 360
+
+        trackIndicatorRotation : String
         trackIndicatorRotation =
             (-90
                 + gapSize
@@ -352,15 +370,19 @@ determinateCircular theme color trackColor attribs progress =
             )
                 |> String.fromInt
 
+        size : String
         size =
             String.fromInt theme.circularSize
 
+        halfSize : String
         halfSize =
             String.fromInt <| theme.circularSize // 2
 
+        activeThickness : String
         activeThickness =
             String.fromInt theme.activeIndicator.thickness
 
+        trackThickness : String
         trackThickness =
             String.fromInt theme.trackIndicator.thickness
     in
