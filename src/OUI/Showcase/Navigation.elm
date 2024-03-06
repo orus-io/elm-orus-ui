@@ -2,6 +2,7 @@ module OUI.Showcase.Navigation exposing (Model, Msg, book)
 
 import Effect
 import Element exposing (Element)
+import OUI.Badge exposing (Badge)
 import OUI.Explorer as Explorer
 import OUI.Icon
 import OUI.Material as Material
@@ -36,11 +37,24 @@ book =
 
 addEntries : Navigation btnC String msg -> Navigation btnC String msg
 addEntries =
+    let
+        badge50 : Badge
+        badge50 =
+            OUI.Badge.number 50
+
+        badgeEmpty : Badge
+        badgeEmpty =
+            OUI.Badge.small
+
+        badgeLorem : Badge
+        badgeLorem =
+            OUI.Badge.label "lorem ipsum!"
+    in
     Navigation.addSectionHeader "Mail"
-        >> Navigation.addEntryWithBadge "inbox" "Inbox" OUI.Icon.check "50"
-        >> Navigation.addEntryWithBadge "trash" "Trash" OUI.Icon.clear ""
+        >> Navigation.addEntryWithBadge "inbox" "Inbox" OUI.Icon.check badge50
+        >> Navigation.addEntryWithBadge "trash" "Trash" OUI.Icon.clear badgeEmpty
         >> Navigation.addDivider
-        >> Navigation.addEntryWithBadge "folder" "Folder" OUI.Icon.check "4"
+        >> Navigation.addEntryWithBadge "folder" "Folder" OUI.Icon.check badgeLorem
         >> Navigation.addEntry "folder2" "Folder" OUI.Icon.light_mode
 
 

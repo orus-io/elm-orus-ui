@@ -7,7 +7,9 @@ import Element.Font as Font
 import Element.Input as Input
 import Element.Keyed as Keyed
 import Html.Attributes
+import OUI.Badge
 import OUI.Divider
+import OUI.Material.Badge
 import OUI.Material.Color exposing (toElementColor)
 import OUI.Material.Divider
 import OUI.Material.Icon
@@ -65,10 +67,7 @@ type alias RailTheme =
     --Active indicator height (no destination label text) 56dp
     --Active indicator shape (no destination label text) 28dp corner radius
     , iconSize : Int
-    , badgeShape : Int
-    , badgeSize : Int
-    , largeBadgeShape : Int
-    , largeBadgeSize : Int
+    , badgeTheme : OUI.Material.Badge.Theme
     , paddingBetweenEdgeAndActiveIndicator : Int
     , paddingbetweenActiveIndicatorAndLabelText : Int
     , paddingBetweenDestinationItems : Int
@@ -109,10 +108,7 @@ defaultTheme =
         --Active indicator height (no destination label text) 56dp
         --Active indicator shape (no destination label text) 28dp corner radius
         , iconSize = 24
-        , badgeShape = 3
-        , badgeSize = 6
-        , largeBadgeShape = 8
-        , largeBadgeSize = 16
+        , badgeTheme = OUI.Material.Badge.defaultTheme
         , paddingBetweenEdgeAndActiveIndicator = 12
         , paddingbetweenActiveIndicatorAndLabelText = 4
         , paddingBetweenDestinationItems = 12
@@ -200,9 +196,25 @@ renderEntry typescale colorscheme dividerTheme theme props entry =
         OUI.Navigation.Entry key { label, icon, badge } ->
             if isDrawer then
                 let
+                    badgeString : Maybe String
+                    badgeString =
+                        badge
+                            |> Maybe.map
+                                (\b ->
+                                    case b of
+                                        OUI.Badge.Small ->
+                                            ""
+
+                                        OUI.Badge.Label s ->
+                                            s
+
+                                        OUI.Badge.Number n ->
+                                            n |> String.fromInt
+                                )
+
                     badgeEl : Element msg
                     badgeEl =
-                        badge
+                        badgeString
                             |> Maybe.map
                                 (\text ->
                                     Element.el
@@ -290,66 +302,15 @@ renderEntry typescale colorscheme dividerTheme theme props entry =
 
             else
                 let
-                    badgeEl : Element msg
-                    badgeEl =
-                        badge
-                            |> Maybe.map
-                                (\text ->
-                                    let
-                                        large : Bool
-                                        large =
-                                            text /= ""
-                                    in
-                                    Element.el
-                                        ([ Element.paddingXY
-                                            (ifThenElse large (theme.rail.largeBadgeShape // 2) 0)
-                                            0
-                                         , Element.height <|
-                                            Element.px <|
-                                                ifThenElse large
-                                                    theme.rail.largeBadgeSize
-                                                    theme.rail.badgeSize
-                                         , Element.width <|
-                                            ifThenElse large
-                                                (Element.minimum theme.rail.largeBadgeSize <| Element.shrink)
-                                                (Element.px theme.rail.badgeSize)
-                                         , Border.rounded <|
-                                            ifThenElse large
-                                                theme.rail.largeBadgeShape
-                                                theme.rail.badgeShape
-                                         , Background.color <| toElementColor colorscheme.error
-                                         , Font.color <| toElementColor colorscheme.onError
-                                         , transitionAllEaseOut
-                                         ]
-                                            ++ ifThenElse large
-                                                [ Element.moveRight <|
-                                                    toFloat <|
-                                                        theme.rail.iconSize
-                                                            // 2
-                                                , Element.alignLeft
-                                                , Element.alignBottom
-                                                , Element.moveUp <|
-                                                    toFloat <|
-                                                        theme.rail.iconSize
-                                                            // 2
-                                                ]
-                                                [ Element.alignRight
-                                                , Element.alignTop
-                                                ]
-                                        )
-                                        (ifThenElse large
-                                            (OUI.Text.labelSmall text
-                                                |> Typography.renderWithAttrs
-                                                    typescale
-                                                    colorscheme
-                                                    [ Element.centerX
-                                                    , Element.centerY
-                                                    ]
-                                            )
-                                            Element.none
-                                        )
-                                )
-                            |> Maybe.withDefault Element.none
+                    badgeAttrs : List (Attribute msg)
+                    badgeAttrs =
+                        case badge of
+                            Nothing ->
+                                []
+
+                            Just b ->
+                                OUI.Material.Badge.render typescale colorscheme theme.rail.badgeTheme [] b
+                                    |> List.singleton
                 in
                 Keyed.column
                     [ Element.width Element.fill
@@ -389,10 +350,11 @@ renderEntry typescale colorscheme dividerTheme theme props entry =
                                             OUI.Material.Icon.renderWithSizeColor
                                                 theme.rail.iconSize
                                                 (OUI.Material.Color.getOnSurfaceVariantColor props.activeColor colorscheme)
-                                                [ transitionAllEaseOut
-                                                , Element.centerX
-                                                , Element.inFront badgeEl
-                                                ]
+                                                ([ transitionAllEaseOut
+                                                 , Element.centerX
+                                                 ]
+                                                    ++ badgeAttrs
+                                                )
                                                 icon
                                       )
                                     , ( "label"

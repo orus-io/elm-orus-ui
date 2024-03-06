@@ -29,6 +29,7 @@ module OUI.Navigation exposing
 -}
 
 import OUI exposing (Color(..))
+import OUI.Badge exposing (Badge)
 import OUI.Button exposing (Button)
 import OUI.Icon exposing (Icon)
 import OUI.Image exposing (Image)
@@ -39,7 +40,7 @@ import OUI.Image exposing (Image)
 type alias EntryProperties =
     { label : String
     , icon : Icon
-    , badge : Maybe String
+    , badge : Maybe Badge
     }
 
 
@@ -181,7 +182,7 @@ addEntry key label icon (Navigation props) =
 
 {-| Add an entry with a badge
 -}
-addEntryWithBadge : key -> String -> Icon -> String -> Navigation btnC key msg -> Navigation btnC key msg
+addEntryWithBadge : key -> String -> Icon -> Badge -> Navigation btnC key msg -> Navigation btnC key msg
 addEntryWithBadge key label icon badge (Navigation props) =
     Navigation
         { props
