@@ -2,7 +2,7 @@ module OUI.Showcase.Buttons exposing (book, commonButtonVariants, commonButtons)
 
 import Element exposing (Element)
 import OUI
-import OUI.Button as Button exposing (Button, Type)
+import OUI.Button as Button exposing (Button)
 import OUI.Explorer as Explorer
 import OUI.Icon exposing (clear)
 import OUI.Material as Material

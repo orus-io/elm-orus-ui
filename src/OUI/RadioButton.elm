@@ -27,7 +27,6 @@ module OUI.RadioButton exposing
 -}
 
 import OUI
-import OUI.Icon exposing (Icon)
 
 
 type alias Props msg =

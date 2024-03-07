@@ -2,7 +2,7 @@ module OUI.Material.Divider exposing (Theme, defaultTheme, render)
 
 import Element exposing (Attribute, Element)
 import Element.Background
-import OUI.Divider as Divider exposing (Divider)
+import OUI.Divider exposing (Divider)
 import OUI.Material.Color
 
 

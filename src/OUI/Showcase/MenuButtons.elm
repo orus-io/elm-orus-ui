@@ -1,11 +1,9 @@
 module OUI.Showcase.MenuButtons exposing (Model, Msg, book)
 
-import Dict exposing (Dict)
 import Effect exposing (Effect)
 import Element exposing (Element)
-import OUI.Button as Button exposing (Button)
-import OUI.Explorer as Explorer exposing (Explorer)
-import OUI.Helpers
+import OUI.Button as Button
+import OUI.Explorer as Explorer
 import OUI.Icon
 import OUI.Material
 import OUI.Menu as Menu

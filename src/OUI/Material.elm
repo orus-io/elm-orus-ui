@@ -23,7 +23,6 @@ module OUI.Material exposing
 
 -}
 
-import Color
 import Element exposing (Attribute, Element)
 import OUI.Badge
 import OUI.Button

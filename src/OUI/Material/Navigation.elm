@@ -205,11 +205,6 @@ renderEntry typescale colorscheme dividerTheme theme props entry =
                         badge
                             |> Maybe.map
                                 (\text ->
-                                    let
-                                        large : Bool
-                                        large =
-                                            text /= ""
-                                    in
                                     Element.el
                                         [ Element.alignRight
                                         , Element.moveRight <|

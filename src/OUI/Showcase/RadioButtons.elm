@@ -3,7 +3,6 @@ module OUI.Showcase.RadioButtons exposing (book)
 import Element exposing (Element)
 import OUI
 import OUI.Explorer as Explorer
-import OUI.Icon exposing (clear)
 import OUI.Material as Material
 import OUI.RadioButton as RadioButton
 

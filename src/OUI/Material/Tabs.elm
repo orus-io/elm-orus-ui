@@ -3,7 +3,6 @@ module OUI.Material.Tabs exposing (Theme, defaultTheme, render)
 import Element exposing (Attribute, Element)
 import Element.Background as Background
 import Element.Border as Border
-import Element.Events as Events
 import Element.Input as Input
 import OUI
 import OUI.Badge exposing (Badge)

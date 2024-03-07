@@ -53,9 +53,8 @@ config =
     , NoUnused.Parameters.rule
         |> Rule.ignoreErrorsForFiles []
     , NoUnused.Patterns.rule
-
-    --, NoUnused.Variables.rule
-    --    |> Rule.ignoreErrorsForFiles []
+    , NoUnused.Variables.rule
+        |> Rule.ignoreErrorsForFiles []
     , NoDebug.Log.rule
     , NoDebug.TodoOrToString.rule
     , Simplify.rule Simplify.defaults

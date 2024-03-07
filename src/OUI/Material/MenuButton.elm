@@ -1,6 +1,5 @@
 module OUI.Material.MenuButton exposing (render)
 
-import Browser.Events as Events
 import Element exposing (Attribute, Element)
 import Element.Events
 import Html.Attributes

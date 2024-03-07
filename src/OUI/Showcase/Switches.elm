@@ -37,19 +37,6 @@ type Msg
     = SetSwitch String Bool
 
 
-onChange : String -> Bool -> Explorer.BookMsg Msg
-onChange name selected =
-    Explorer.logEvent <|
-        name
-            ++ " changes to "
-            ++ (if selected then
-                    "'selected'"
-
-                else
-                    "'unselected'"
-               )
-
-
 checkbox : Explorer.Shared themeExt -> Model -> Element (Explorer.BookMsg Msg)
 checkbox { theme } { switches } =
     Element.column [ Element.spacing 30, Element.width <| Element.px 300 ]

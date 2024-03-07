@@ -12,7 +12,6 @@ module OUI.Explorer exposing
 
 -}
 
-import Browser
 import Browser.Navigation
 import Effect exposing (Effect)
 import Element exposing (Element)
@@ -28,7 +27,7 @@ import OUI.Material as Material
 import OUI.Material.Color as Color
 import OUI.Material.Markdown
 import OUI.Material.Theme as Theme exposing (Theme)
-import OUI.Navigation exposing (Navigation)
+import OUI.Navigation
 import OUI.Switch as Switch
 import OUI.Text
 import Spa
@@ -453,10 +452,6 @@ changeColorScheme index type_ shared =
                                 dark
                     )
                 |> Maybe.withDefault Color.defaultLightScheme
-
-        theme : Theme.Theme themeExt
-        theme =
-            shared.theme
     in
     { shared
         | theme = shared.theme |> Theme.withColorscheme colorScheme

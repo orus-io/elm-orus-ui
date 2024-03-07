@@ -51,7 +51,6 @@ Instead of a direct action (or disabled), a button can be a link
 
 import OUI exposing (Color(..))
 import OUI.Icon exposing (Icon)
-import OUI.Menu exposing (Menu)
 
 
 {-| A button type

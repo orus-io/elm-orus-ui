@@ -146,10 +146,6 @@ determinateLinear theme color trackColor attrs value =
         clampedProgress =
             clamp 0 1.0 value
 
-        isZero : Bool
-        isZero =
-            clampedProgress == 0
-
         activeLen : Int
         activeLen =
             clampedProgress * 1000 |> floor

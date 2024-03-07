@@ -30,7 +30,6 @@ module OUI.Icon exposing
 -}
 
 import Color exposing (Color)
-import Element
 import Html exposing (Html)
 import OUI
 import Svg exposing (Svg)

@@ -3,11 +3,9 @@ module OUI.Material.Menu exposing (Theme, defaultTheme, passiveOnClick, render)
 import Element exposing (Attribute, Element)
 import Element.Background as Background
 import Element.Border as Border
-import Element.Events as Events
 import Element.Font as Font
 import Html.Events
 import Json.Decode as Json
-import OUI
 import OUI.Divider
 import OUI.Icon exposing (Icon)
 import OUI.Material.Color

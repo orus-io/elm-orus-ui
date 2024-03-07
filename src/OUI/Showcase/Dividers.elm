@@ -1,11 +1,9 @@
 module OUI.Showcase.Dividers exposing (book, commonDividers)
 
-import Color
 import Element exposing (Element)
 import Element.Border
-import OUI
 import OUI.Divider as Divider
-import OUI.Explorer as Explorer exposing (Explorer)
+import OUI.Explorer as Explorer
 import OUI.Material as Material
 import OUI.Material.Color
 import OUI.Material.Theme as Theme

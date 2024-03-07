@@ -6,7 +6,6 @@ import Element exposing (Element)
 import Element.Background as Background
 import Element.Border as Border
 import OUI
-import OUI.Button exposing (color)
 import OUI.Explorer as Explorer
 import OUI.Icon exposing (check, clear)
 import OUI.Material as Material
