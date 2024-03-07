@@ -647,7 +647,7 @@ renderProps typescale colorscheme theme rightIcon attrs props =
                         ]
                         icon
 
-                ( False, icon, _ ) ->
+                ( False, icon, rIcon ) ->
                     [ icon
                         |> Maybe.map
                             (Icon.renderWithSizeColor size
@@ -657,7 +657,7 @@ renderProps typescale colorscheme theme rightIcon attrs props =
                                 ]
                             )
                     , Just (Element.text props.text)
-                    , rightIcon
+                    , rIcon
                         |> Maybe.map
                             (Icon.renderWithSizeColor size
                                 color

@@ -39,6 +39,7 @@ import NoUnused.Variables
 import NoUselessSubscriptions
 import Review.Rule as Rule exposing (Rule)
 import Simplify
+import VariablesBetweenCaseOf.AccessInCases
 
 
 config : List Rule
@@ -75,6 +76,7 @@ config =
         , argumentNamePredicate = always True
         }
     , NoModuleOnExposedNames.rule
+    , VariablesBetweenCaseOf.AccessInCases.forbid
 
     -- Docs-specific review config
     , Docs.NoMissing.rule
