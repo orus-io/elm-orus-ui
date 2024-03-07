@@ -14,6 +14,7 @@
             "jfmengels/elm-review-simplify": "2.0.31",
             "jfmengels/elm-review-the-elm-architecture": "1.0.3",
             "jfmengels/elm-review-unused": "1.2.0",
+            "jsuder-xx/elm-review-reducible-lambdas": "2.0.1",
             "stil4m/elm-syntax": "7.2.9"
         },
         "indirect": {
@@ -28,6 +29,7 @@
             "elm/virtual-dom": "1.0.3",
             "elm-community/list-extra": "8.7.0",
             "elm-explorations/test": "2.1.1",
+            "jsuder-xx/elm-ra": "1.1.1",
             "miniBill/elm-unicode": "1.0.3",
             "pzp1997/assoc-list": "1.0.0",
             "rtfeldman/elm-hex": "1.0.0",

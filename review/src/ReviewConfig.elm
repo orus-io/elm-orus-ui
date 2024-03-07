@@ -19,6 +19,7 @@ import NoConfusingPrefixOperator
 import NoDebug.Log
 import NoDebug.TodoOrToString
 import NoDeprecated
+import NoEtaReducibleLambdas
 import NoExposingEverything
 import NoImportingEverything
 import NoMissingSubscriptionsCall
@@ -68,6 +69,10 @@ config =
     , NoDebug.TodoOrToString.rule
     , Simplify.rule Simplify.defaults
         |> Rule.ignoreErrorsForFiles []
+    , NoEtaReducibleLambdas.rule
+        { lambdaReduceStrategy = NoEtaReducibleLambdas.AlwaysRemoveLambdaWhenPossible
+        , argumentNamePredicate = always True
+        }
 
     -- Docs-specific review config
     , Docs.NoMissing.rule
