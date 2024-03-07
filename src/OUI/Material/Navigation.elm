@@ -147,7 +147,7 @@ render typescale colorscheme dividerTheme theme _ nav =
                 theme.rail.containerWidth
     in
     Keyed.column
-        [ Background.color <| OUI.Material.Color.toElementColor (OUI.Material.Color.getSurfaceContainerLowColor props.activeColor colorscheme)
+        [ Background.color <| toElementColor (OUI.Material.Color.getSurfaceContainerLowColor props.activeColor colorscheme)
         , Element.width <| Element.px width
         , Element.height <| Element.fill
         , Element.scrollbarY
@@ -252,7 +252,7 @@ renderEntry typescale colorscheme dividerTheme theme props entry =
                                         |> OUI.Material.Color.withShade
                                             (OUI.Material.Color.getOnSurfaceColor props.activeColor colorscheme)
                                             OUI.Material.Color.hoverStateLayerOpacity
-                                        |> OUI.Material.Color.toElementColor
+                                        |> toElementColor
                                         |> Background.color
                                     ]
                             , transitionAllEaseOut

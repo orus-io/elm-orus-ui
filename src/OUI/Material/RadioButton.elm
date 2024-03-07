@@ -106,19 +106,19 @@ render colorscheme theme attrs radiobutton =
                , Element.focused
                     [ focusedAndHoveredColor
                         |> OUI.Material.Color.setAlpha OUI.Material.Color.focusStateLayerOpacity
-                        |> OUI.Material.Color.toElementColor
+                        |> toElementColor
                         |> Background.color
                     ]
                , Element.mouseOver
                     [ focusedAndHoveredColor
                         |> OUI.Material.Color.setAlpha OUI.Material.Color.hoverStateLayerOpacity
-                        |> OUI.Material.Color.toElementColor
+                        |> toElementColor
                         |> Background.color
                     ]
                , Element.mouseDown
                     [ pressedColor
                         |> OUI.Material.Color.setAlpha OUI.Material.Color.pressStateLayerOpacity
-                        |> OUI.Material.Color.toElementColor
+                        |> toElementColor
                         |> Background.color
                     ]
                ]

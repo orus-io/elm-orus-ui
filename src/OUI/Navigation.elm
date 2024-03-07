@@ -76,7 +76,7 @@ type alias Properties btnC key msg =
     , mode : Mode
     , onSelect : key -> msg
     , onDismiss : Maybe msg
-    , activeColor : OUI.Color
+    , activeColor : Color
     }
 
 

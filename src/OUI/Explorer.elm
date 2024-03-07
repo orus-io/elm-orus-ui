@@ -128,7 +128,7 @@ explorer =
 {-| creates an empty Explorer with a customized theme type
 -}
 explorerWithTheme :
-    Theme.Theme themeExt
+    Theme themeExt
     -> Explorer themeExt () () () ()
 explorerWithTheme theme =
     Explorer
@@ -150,7 +150,7 @@ explorerWithTheme theme =
 {-| set the theme
 -}
 setTheme :
-    Theme.Theme themeExt
+    Theme themeExt
     -> Explorer themeExt c p cm pm
     -> Explorer themeExt c p cm pm
 setTheme theme (Explorer expl) =

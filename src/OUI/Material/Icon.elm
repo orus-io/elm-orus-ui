@@ -46,7 +46,7 @@ render colorscheme attrs icon =
         size =
             properties.size |> Maybe.withDefault 24
 
-        color : Color.Color
+        color : Color
         color =
             OUI.Material.Color.getColor
                 (properties.color |> Maybe.withDefault OUI.Primary)

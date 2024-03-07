@@ -26,6 +26,7 @@ import NoMissingSubscriptionsCall
 import NoMissingTypeAnnotation
 import NoMissingTypeAnnotationInLetIn
 import NoMissingTypeExpose
+import NoModuleOnExposedNames
 import NoPrematureLetComputation
 import NoRecursiveUpdate
 import NoUnused.CustomTypeConstructors
@@ -73,6 +74,7 @@ config =
         { lambdaReduceStrategy = NoEtaReducibleLambdas.AlwaysRemoveLambdaWhenPossible
         , argumentNamePredicate = always True
         }
+    , NoModuleOnExposedNames.rule
 
     -- Docs-specific review config
     , Docs.NoMissing.rule

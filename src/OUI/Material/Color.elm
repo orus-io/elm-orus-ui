@@ -61,7 +61,7 @@ pressStateLayerOpacity =
 
 {-| Convert a Color to Element.Color
 -}
-toElementColor : Color.Color -> Element.Color
+toElementColor : Color -> Element.Color
 toElementColor =
     Color.toRgba
         >> Element.fromRgb
@@ -101,7 +101,7 @@ getOnContainerElementColor c =
 
 {-| Get a color of a scheme
 -}
-getColor : OUI.Color -> Scheme -> Color.Color
+getColor : OUI.Color -> Scheme -> Color
 getColor c =
     case c of
         OUI.Primary ->
@@ -140,7 +140,7 @@ getColor c =
 
 {-| Get a "on" color of a scheme
 -}
-getOnColor : OUI.Color -> Scheme -> Color.Color
+getOnColor : OUI.Color -> Scheme -> Color
 getOnColor c =
     case c of
         OUI.Primary ->
@@ -179,7 +179,7 @@ getOnColor c =
 
 {-| get a container color
 -}
-getContainerColor : OUI.Color -> Scheme -> Color.Color
+getContainerColor : OUI.Color -> Scheme -> Color
 getContainerColor c =
     case c of
         OUI.Primary ->
@@ -218,7 +218,7 @@ getContainerColor c =
 
 {-| get a "on container" color
 -}
-getOnContainerColor : OUI.Color -> Scheme -> Color.Color
+getOnContainerColor : OUI.Color -> Scheme -> Color
 getOnContainerColor c =
     case c of
         OUI.Primary ->
@@ -257,7 +257,7 @@ getOnContainerColor c =
 
 {-| get the "surface" color
 -}
-getSurfaceColor : OUI.Color -> Scheme -> Color.Color
+getSurfaceColor : OUI.Color -> Scheme -> Color
 getSurfaceColor c =
     case c of
         OUI.Custom { surface } ->
@@ -269,7 +269,7 @@ getSurfaceColor c =
 
 {-| get the "on surface" color
 -}
-getOnSurfaceColor : OUI.Color -> Scheme -> Color.Color
+getOnSurfaceColor : OUI.Color -> Scheme -> Color
 getOnSurfaceColor c =
     case c of
         OUI.Custom { onSurface } ->
@@ -281,7 +281,7 @@ getOnSurfaceColor c =
 
 {-| get the "surface variant" color
 -}
-getSurfaceVariantColor : OUI.Color -> Scheme -> Color.Color
+getSurfaceVariantColor : OUI.Color -> Scheme -> Color
 getSurfaceVariantColor c =
     case c of
         OUI.Custom { surface } ->
@@ -293,7 +293,7 @@ getSurfaceVariantColor c =
 
 {-| get the "on surface variant" color
 -}
-getOnSurfaceVariantColor : OUI.Color -> Scheme -> Color.Color
+getOnSurfaceVariantColor : OUI.Color -> Scheme -> Color
 getOnSurfaceVariantColor c =
     case c of
         OUI.Custom { onSurface } ->
@@ -305,7 +305,7 @@ getOnSurfaceVariantColor c =
 
 {-| get the "surface container lowest" color
 -}
-getSurfaceContainerLowestColor : OUI.Color -> Scheme -> Color.Color
+getSurfaceContainerLowestColor : OUI.Color -> Scheme -> Color
 getSurfaceContainerLowestColor c =
     case c of
         OUI.Custom { surface } ->
@@ -317,7 +317,7 @@ getSurfaceContainerLowestColor c =
 
 {-| get the "surface container low" color
 -}
-getSurfaceContainerLowColor : OUI.Color -> Scheme -> Color.Color
+getSurfaceContainerLowColor : OUI.Color -> Scheme -> Color
 getSurfaceContainerLowColor c =
     case c of
         OUI.Custom { surface } ->
@@ -329,7 +329,7 @@ getSurfaceContainerLowColor c =
 
 {-| get the "surface container" color
 -}
-getSurfaceContainerColor : OUI.Color -> Scheme -> Color.Color
+getSurfaceContainerColor : OUI.Color -> Scheme -> Color
 getSurfaceContainerColor c =
     case c of
         OUI.Custom { surface } ->
@@ -341,7 +341,7 @@ getSurfaceContainerColor c =
 
 {-| get the "surface container high" color
 -}
-getSurfaceContainerHighColor : OUI.Color -> Scheme -> Color.Color
+getSurfaceContainerHighColor : OUI.Color -> Scheme -> Color
 getSurfaceContainerHighColor c =
     case c of
         OUI.Custom { surface } ->
@@ -353,7 +353,7 @@ getSurfaceContainerHighColor c =
 
 {-| get the "surface container highest" color
 -}
-getSurfaceContainerHighestColor : OUI.Color -> Scheme -> Color.Color
+getSurfaceContainerHighestColor : OUI.Color -> Scheme -> Color
 getSurfaceContainerHighestColor c =
     case c of
         OUI.Custom { surface } ->
@@ -365,7 +365,7 @@ getSurfaceContainerHighestColor c =
 
 {-| set the opacity of a color
 -}
-setAlpha : Float -> Color.Color -> Color.Color
+setAlpha : Float -> Color -> Color
 setAlpha value color =
     let
         rgba : { red : Float, green : Float, blue : Float, alpha : Float }

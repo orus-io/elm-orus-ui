@@ -15,6 +15,7 @@
             "jfmengels/elm-review-the-elm-architecture": "1.0.3",
             "jfmengels/elm-review-unused": "1.2.0",
             "jsuder-xx/elm-review-reducible-lambdas": "2.0.1",
+            "sparksp/elm-review-imports": "1.0.2",
             "stil4m/elm-syntax": "7.2.9"
         },
         "indirect": {
