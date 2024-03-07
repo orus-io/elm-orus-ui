@@ -3,7 +3,7 @@ module OUI.Material.Icon exposing (render, renderWithSizeColor)
 import Color exposing (Color)
 import Element exposing (Attribute, Element)
 import OUI
-import OUI.Icon exposing (Icon, Renderer(..))
+import OUI.Icon exposing (Icon)
 import OUI.Material.Color
 import Svg
 

@@ -2,7 +2,6 @@ module OUI.Showcase.Icons exposing (Model, Msg, book, withChapter)
 
 import Effect exposing (Effect)
 import Element exposing (Element)
-import List.Extra as List
 import OUI.Explorer as Explorer
 import OUI.Icon as Icon exposing (Icon)
 import OUI.Material as Material

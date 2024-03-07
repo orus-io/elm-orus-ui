@@ -14,7 +14,6 @@ module OUI.Image exposing
 
 -}
 
-import Element.Region exposing (description)
 import Svg exposing (Svg)
 
 

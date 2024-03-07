@@ -11,7 +11,7 @@ import OUI.Icon exposing (check, clear)
 import OUI.Material as Material
 import OUI.Material.Color
 import OUI.Material.Theme as Theme
-import OUI.TextField as TextField exposing (TextField, multiline)
+import OUI.TextField as TextField exposing (TextField)
 
 
 book : Explorer.Book themeExt Model Msg

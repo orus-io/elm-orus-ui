@@ -14,8 +14,6 @@ module OUI.TextField exposing
 
 -}
 
-import Element.Events exposing (onLoseFocus)
-import Html.Events exposing (onFocus)
 import OUI
 import OUI.Icon exposing (Icon)
 
