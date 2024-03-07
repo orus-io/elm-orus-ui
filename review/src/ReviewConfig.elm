@@ -21,10 +21,12 @@ import NoDebug.TodoOrToString
 import NoDeprecated
 import NoExposingEverything
 import NoImportingEverything
+import NoMissingSubscriptionsCall
 import NoMissingTypeAnnotation
 import NoMissingTypeAnnotationInLetIn
 import NoMissingTypeExpose
 import NoPrematureLetComputation
+import NoRecursiveUpdate
 import NoUnused.CustomTypeConstructors
 import NoUnused.Dependencies
 import NoUnused.Exports
@@ -32,6 +34,7 @@ import NoUnused.Modules
 import NoUnused.Parameters
 import NoUnused.Patterns
 import NoUnused.Variables
+import NoUselessSubscriptions
 import Review.Rule as Rule exposing (Rule)
 import Simplify
 
@@ -74,4 +77,9 @@ config =
     , Docs.ReviewLinksAndSections.rule
     , Docs.ReviewAtDocs.rule
     , Docs.UpToDateReadmeLinks.rule
+
+    -- TEA reviewer
+    , NoMissingSubscriptionsCall.rule
+    , NoRecursiveUpdate.rule
+    , NoUselessSubscriptions.rule
     ]
