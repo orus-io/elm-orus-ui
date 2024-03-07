@@ -15,6 +15,7 @@ import Docs.NoMissing exposing (exposedModules, onlyExposed)
 import Docs.ReviewAtDocs
 import Docs.ReviewLinksAndSections
 import Docs.UpToDateReadmeLinks
+import NoConfusingPrefixOperator
 import NoDebug.Log
 import NoDebug.TodoOrToString
 import NoDeprecated
@@ -40,6 +41,7 @@ config =
     [ NoExposingEverything.rule
         |> Rule.ignoreErrorsForFiles []
     , NoDeprecated.rule NoDeprecated.defaults
+    , NoConfusingPrefixOperator.rule
     , NoImportingEverything.rule []
         |> Rule.ignoreErrorsForDirectories []
     , NoMissingTypeAnnotation.rule
