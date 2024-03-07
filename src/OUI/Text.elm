@@ -243,7 +243,8 @@ bodyLarge =
     textTypeSize Body Large
 
 
-{-| -}
+{-| get the Text properties
+-}
 properties :
     Text
     ->

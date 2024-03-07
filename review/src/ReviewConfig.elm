@@ -11,6 +11,10 @@ when inside the directory containing this file.
 
 -}
 
+import Docs.NoMissing exposing (exposedModules, onlyExposed)
+import Docs.ReviewAtDocs
+import Docs.ReviewLinksAndSections
+import Docs.UpToDateReadmeLinks
 import NoDebug.Log
 import NoDebug.TodoOrToString
 import NoDeprecated
@@ -59,4 +63,13 @@ config =
     , NoDebug.TodoOrToString.rule
     , Simplify.rule Simplify.defaults
         |> Rule.ignoreErrorsForFiles []
+
+    -- Docs-specific review config
+    , Docs.NoMissing.rule
+        { document = onlyExposed
+        , from = exposedModules
+        }
+    , Docs.ReviewLinksAndSections.rule
+    , Docs.ReviewAtDocs.rule
+    , Docs.UpToDateReadmeLinks.rule
     ]

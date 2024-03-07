@@ -24,7 +24,8 @@ type Image
     = Image Src String
 
 
-{-| -}
+{-| type of an Image source. It can be u URL or a Svg Icon
+-}
 type Src
     = Url String
     | Svg (Svg Never)
@@ -51,7 +52,8 @@ withDescription description src =
     Image src description
 
 
-{-| -}
+{-| get the Image properties
+-}
 properties : Image -> { description : String, src : Src }
 properties (Image src description) =
     { description = description

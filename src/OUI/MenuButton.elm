@@ -28,7 +28,7 @@ Menu + button is a stateful component
 ## update internals
 
 If you need to change the update effect into something else than Cmd (say, a
-[`Effect`](/packages/orus-io/elm-spa/latest/Effect#Effect), here is
+[`Effect`](https://package.elm-lang.org/packages/orus-io/elm-spa/latest/Effect#Effect), here is
 everything you need.
 
 @docs Effect, updateWithoutPerform, performEffect
@@ -365,7 +365,7 @@ updateWithoutPerform msg state =
             )
 
 
-{-| Change a [`Effect`](#Effect) into a [`Cmd`](/packages/elm/core/latest/Platform-Cmd#Cmd)
+{-| Change a [`Effect`](#Effect) into a [`Cmd`](https://package.elm-lang.org/packages/elm/core/latest/Platform-Cmd#Cmd)
 
 It simply does:
 
@@ -379,7 +379,8 @@ performEffect (Loopback msg) =
     Task.perform identity <| Task.succeed msg
 
 
-{-| -}
+{-| get the MenuButton properties
+-}
 properties :
     MenuButton btnC item msg
     ->

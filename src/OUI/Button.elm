@@ -275,7 +275,8 @@ downloadAsLink filename url (Button props) =
         }
 
 
-{-| -}
+{-| properties of the Button component
+-}
 type alias Properties msg =
     { text : String
     , icon : Maybe Icon
@@ -285,7 +286,8 @@ type alias Properties msg =
     }
 
 
-{-| -}
+{-| get the Button properties
+-}
 properties :
     Button { constraints | hasAction : () } msg
     -> Properties msg

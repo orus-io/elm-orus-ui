@@ -244,7 +244,7 @@ withLabel label semantics =
     { semantics | label = Just label }
 
 
-{-| Transform a [`ElementSemantics`](#ElementSemantics) in a list of [`Element.Attribute`](/packages/mdgriffith/elm-ui/latest/Element#Attribute).
+{-| Transform a [`ElementSemantics`](#ElementSemantics) in a list of [`Element.Attribute`](https://package.elm-lang.org/packages/mdgriffith/elm-ui/latest/Element#Attribute).
 -}
 toElementAttributes : ElementSemantics -> List (Attribute msg)
 toElementAttributes { role, label } =

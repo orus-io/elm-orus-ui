@@ -127,7 +127,8 @@ withSelected key (Tabs tabs) =
         }
 
 
-{-| -}
+{-| get the Tabs properties
+-}
 properties :
     Tabs key item msg
     ->

@@ -85,7 +85,8 @@ withValue value (Progress progress) =
         }
 
 
-{-| -}
+{-| get the Progress properties
+-}
 properties :
     Progress
     ->

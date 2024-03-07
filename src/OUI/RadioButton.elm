@@ -95,7 +95,8 @@ disabled (RadioButton props) =
     RadioButton props
 
 
-{-| -}
+{-| get the RadioButton properties
+-}
 properties :
     RadioButton { a | hasAction : (), withSelected : () } msg
     ->

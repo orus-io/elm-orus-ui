@@ -55,7 +55,8 @@ type Icon
         }
 
 
-{-| -}
+{-| renderer type of the Icon. Html or Svg
+-}
 type Renderer
     = Svg (Int -> Color -> Svg Never)
     | Html (Int -> Color -> Html Never)
@@ -331,7 +332,8 @@ materialIcons fun =
             )
 
 
-{-| -}
+{-| properties of the Icon component
+-}
 type alias Properties =
     { size : Maybe Int
     , color : Maybe OUI.Color

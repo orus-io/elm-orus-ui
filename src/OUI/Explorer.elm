@@ -108,7 +108,8 @@ mapView mapper abook =
     }
 
 
-{-| -}
+{-| explorer type definition
+-}
 type Explorer themeExt current previous currentMsg previousMsg
     = Explorer
         { app : Spa.Builder Route () (Shared themeExt) SharedMsg (Page (Spa.PageStack.Msg Route currentMsg previousMsg)) current previous currentMsg previousMsg

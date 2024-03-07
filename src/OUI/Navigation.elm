@@ -34,7 +34,8 @@ import OUI.Icon exposing (Icon)
 import OUI.Image exposing (Image)
 
 
-{-| -}
+{-| Properties of the Entry type
+-}
 type alias EntryProperties =
     { label : String
     , icon : Icon
@@ -42,21 +43,30 @@ type alias EntryProperties =
     }
 
 
-{-| -}
+{-| Type of Entry inside the Navigation component.
+Settings -> this is a SectionHeader
+Video -> this is an Entry
+Audio
+----- -> this is a Divider
+Gameplay
+Misc
+-}
 type Entry key
     = Entry key EntryProperties
     | SectionHeader String
     | Divider
 
 
-{-| -}
+{-| Mode of the Navigation component
+-}
 type Mode
     = Rail
     | Drawer
     | ModalDrawer
 
 
-{-| -}
+{-| Properties of the Navigation component
+-}
 type alias Properties btnC key msg =
     { imageHeader : Maybe Image
     , fab : Maybe (Button { btnC | hasAction : (), hasIcon : () } msg)
@@ -179,7 +189,8 @@ addEntryWithBadge key label icon badge (Navigation props) =
         }
 
 
-{-| -}
+{-| get the Navigation properties
+-}
 properties :
     Navigation btnC key msg
     -> Properties btnC key msg

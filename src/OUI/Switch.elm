@@ -86,7 +86,8 @@ onChange msg (Switch switch) =
         }
 
 
-{-| -}
+{-| get the Switch properties
+-}
 properties :
     Switch msg
     ->

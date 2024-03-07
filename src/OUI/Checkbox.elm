@@ -23,7 +23,8 @@ import OUI
 import OUI.Icon exposing (Icon)
 
 
-{-| -}
+{-| properties of the Checkbox component
+-}
 type alias Properties msg =
     { checked : Bool
     , icon : Icon
@@ -102,7 +103,8 @@ disabled (Checkbox props) =
     Checkbox props
 
 
-{-| -}
+{-| get the Checkbox properties
+-}
 properties :
     Checkbox { a | hasAction : (), withChecked : () } msg
     -> Properties msg

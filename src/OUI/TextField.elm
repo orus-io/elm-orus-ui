@@ -160,7 +160,8 @@ multiline spellcheck (TextField props) =
         }
 
 
-{-| -}
+{-| Properties of the TextField component
+-}
 type alias Properties msg =
     { onChange : String -> msg
     , label : String
@@ -180,7 +181,8 @@ type alias Properties msg =
     }
 
 
-{-| -}
+{-| Get the TextField properties
+-}
 properties :
     TextField msg
     -> Properties msg
