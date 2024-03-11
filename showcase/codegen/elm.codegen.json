@@ -1,0 +1,14 @@
+{
+    "elm-codegen-version": "0.5.2",
+    "codegen-helpers": {
+        "packages": {
+            "elm/core": "1.0.5",
+            "avh4/elm-color": "1.0.0",
+            "icidasset/elm-material-icons": "11.0.0"
+        },
+        "local": [
+            "../src/OUI/Showcase/Icons.elm",
+            "../src/OUI/Icon.elm"
+        ]
+    }
+}

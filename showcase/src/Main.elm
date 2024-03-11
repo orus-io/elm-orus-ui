@@ -2,7 +2,9 @@ module Main exposing (..)
 
 import Browser
 import Color exposing (Color)
-import Material.Icons.Outlined as Outlined
+import IcidassetMaterialIcons.Outlined as Outlined
+import IcidassetMaterialIcons.Regular as Regular
+import IcidassetMaterialIcons.Round as Round
 import Material.Icons.Types exposing (Coloring(..))
 import OUI.Explorer as Explorer
 import OUI.Icon
@@ -10,7 +12,6 @@ import OUI.Material.Color
 import OUI.Material.Theme as Theme exposing (Theme)
 import OUI.Material.Typography
 import OUI.Showcase as Showcase
-import OUI.Showcase.Icons as Icons
 
 
 intro : String
@@ -43,6 +44,7 @@ your own project 'src' list.
 
 """
 
+
 main =
     Explorer.explorer
         |> Explorer.setColorScheme lightColorscheme darkColorscheme
@@ -54,14 +56,10 @@ main =
                 |> Explorer.withMarkdownChapter get_started
             )
         |> Showcase.addPages
-        |> Explorer.addBook
-            (Icons.book "Material Icons"
-                |> Icons.withChapter "basics"
-                    [ ( "anchor", OUI.Icon.elmMaterialIcons Color Outlined.anchor )
-                    , ( "face", OUI.Icon.elmMaterialIcons Color Outlined.face )
-                    , ( "done_all", OUI.Icon.elmMaterialIcons Color Outlined.done_all )
-                    ]
-            )
+        |> Explorer.category "Material Icons"
+        |> Explorer.addBook Regular.book
+        |> Explorer.addBook Outlined.book
+        |> Explorer.addBook Round.book
         |> Explorer.finalize
         |> Browser.application
 
@@ -140,9 +138,10 @@ theme =
             button.common
     in
     base
-    |> Theme.withTypescale typescale
-    |> Theme.withButton
-    { button
+        |> Theme.withTypescale typescale
+        |> Theme.withButton
+            { button
                 | common = buttonCommon
+
                 --  | common = { buttonCommon | containerRadius = 8 }
             }
