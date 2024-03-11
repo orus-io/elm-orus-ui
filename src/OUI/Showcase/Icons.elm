@@ -32,36 +32,53 @@ capitalize =
 
 iconChapter : String -> List ( String, Icon ) -> Explorer.Shared themeExt -> Model -> Element msg
 iconChapter title iconList shared model =
+    let
+        filteredIconList =
+            iconList
+                |> List.filter (\( label, _ ) -> String.contains (String.toLower model.filter) label)
+
+        filterTitle =
+            String.contains model.filter title
+    in
     Element.column [ Element.spacing 20, Element.paddingXY 20 0, Element.width <| Element.maximum 1200 <| Element.fill ] <|
-        [ Text.titleLarge title
-            |> Material.text shared.theme
-        , iconList
-            |> List.filter (\( label, _ ) -> String.contains model.filter label)
-            |> List.map
-                (\( label, icon ) ->
-                    Element.column
-                        [ Element.spacing 25
-                        , Element.width <| Element.px 128
-                        , Element.height <| Element.px 128
-                        ]
-                        [ Material.icon shared.theme
-                            [ Element.centerX
-                            , Element.centerY
+        if List.length filteredIconList == 0 && not filterTitle then
+            Element.none
+                |> List.singleton
+
+        else
+            [ Text.titleLarge title
+                |> Material.text shared.theme
+            , (if String.contains model.filter title then
+                iconList
+
+               else
+                filteredIconList
+              )
+                |> List.map
+                    (\( label, icon ) ->
+                        Element.column
+                            [ Element.spacing 25
+                            , Element.width <| Element.px 128
+                            , Element.height <| Element.px 128
                             ]
-                          <|
-                            Icon.withSize 40 icon
-                        , Element.el
-                            [ Element.centerX
-                            , Element.centerY
+                            [ Material.icon shared.theme
+                                [ Element.centerX
+                                , Element.centerY
+                                ]
+                              <|
+                                Icon.withSize 40 icon
+                            , Element.el
+                                [ Element.centerX
+                                , Element.centerY
+                                ]
+                              <|
+                                Material.text shared.theme <|
+                                    Text.bodySmall <|
+                                        capitalize label
                             ]
-                          <|
-                            Material.text shared.theme <|
-                                Text.bodySmall <|
-                                    capitalize label
-                        ]
-                )
-            |> Element.wrappedRow [ Element.centerX ]
-        ]
+                    )
+                |> Element.wrappedRow [ Element.centerX ]
+            ]
 
 
 filterChapter : Explorer.Shared themeExt -> Model -> Element (Explorer.BookMsg Msg)
