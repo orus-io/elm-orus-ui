@@ -24,7 +24,15 @@ file : String -> List String -> Elm.File
 file filename importFrom =
     Elm.file [ "IcidassetMaterialIcons", filename ]
         [ Elm.declaration "book" <|
-            (MatIcons.iconList
+            Elm.withType  (
+                Type.namedWith [ "OUI", "Explorer" ]
+                "Book"
+                [Type.unit
+                , Type.named ["OUI", "Showcase", "Icons"] "Model"
+                , Type.named ["OUI", "Showcase", "Icons"] "Msg"]
+                )
+            <|
+                (MatIcons.iconList
                 |> List.map
                     (\( category, icons ) ->
                         icons
@@ -36,13 +44,13 @@ file filename importFrom =
                                             (Elm.value
                                                 { importFrom = [ "Material", "Icons", "Types" ]
                                                 , name = "Color"
-                                                , annotation = Just (Type.namedWith [] "Coloring" [])
+                                                , annotation = Just (Type.namedWith ["Material", "Icons", "Types"] "Coloring" [])
                                                 }
                                             )
                                             (Elm.value
                                                 { importFrom = importFrom
                                                 , name = name
-                                                , annotation = Nothing
+                                                , annotation = Just (Type.namedWith ["Material", "Icons", "Types"] "Icon" [])
                                                 }
                                             )
                                         )

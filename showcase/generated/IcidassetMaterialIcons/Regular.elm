@@ -9,6 +9,7 @@ import OUI.Icon
 import OUI.Showcase.Icons
 
 
+book : OUI.Explorer.Book () OUI.Showcase.Icons.Model OUI.Showcase.Icons.Msg
 book =
     OUI.Showcase.Icons.book "Regular"
         |> OUI.Showcase.Icons.withChapter
