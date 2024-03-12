@@ -32,10 +32,12 @@ capitalize =
 iconChapter : String -> List ( String, Icon ) -> Explorer.Shared themeExt -> Model -> Element msg
 iconChapter title iconList shared model =
     let
+        filteredIconList : List ( String, Icon )
         filteredIconList =
             iconList
                 |> List.filter (\( label, _ ) -> String.contains (String.toLower model.filter) label)
 
+        filterTitle : Bool
         filterTitle =
             String.contains model.filter title
     in
