@@ -128,7 +128,7 @@ update _ msg model =
 
 tabs : Explorer.Shared themeExt -> Model -> Element (Explorer.BookMsg Msg)
 tabs shared model =
-    Element.column [ Element.width Element.fill ]
+    Element.column [ Element.width Element.fill, Element.spacing 2 ]
         [ OUI.Tabs.new identity (Explorer.bookMsg << SelectTab)
             |> OUI.Tabs.withItems
                 [ ( TextField.Text, "Text" )
@@ -140,6 +140,7 @@ tabs shared model =
                 , ( TextField.Multiline, "Multiline" )
                 ]
             |> OUI.Tabs.secondary
+            |> OUI.Tabs.withSelected model.selectedTab
             |> Material.tabs shared.theme [ Element.width Element.fill ]
         , case model.selectedTab of
             TextField.Text ->
