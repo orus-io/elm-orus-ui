@@ -3,7 +3,6 @@ module OUI.Material.Navigation exposing (Theme, defaultTheme, render)
 import Element exposing (Attribute, Element)
 import Element.Background as Background
 import Element.Border as Border
-import Element.Font as Font
 import Element.Input as Input
 import Element.Keyed as Keyed
 import Html.Attributes
@@ -28,15 +27,6 @@ transitionAllEaseOut : Attribute msg
 transitionAllEaseOut =
     -- transition "all 0.3s ease-out"
     transition ""
-
-
-ifThenElse : Bool -> a -> a -> a
-ifThenElse condition if_ then_ =
-    if condition then
-        if_
-
-    else
-        then_
 
 
 type alias DrawerTheme =
