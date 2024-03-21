@@ -107,6 +107,10 @@ render typescale colorscheme buttonTheme theme attrs textfield =
         isFilled =
             p.type_ == OUI.TextField.Filled
 
+        isMultiline : Bool
+        isMultiline =
+            p.datatype == OUI.TextField.Multiline
+
         labelHoldPlace : Bool
         labelHoldPlace =
             isEmpty && not p.hasFocus
@@ -207,7 +211,7 @@ render typescale colorscheme buttonTheme theme attrs textfield =
 
         heightAttr : List (Attribute msg)
         heightAttr =
-            if p.isMultiline then
+            if isMultiline then
                 [ Element.scrollbarY
                 , Element.height Element.fill
                 ]
@@ -425,7 +429,7 @@ render typescale colorscheme buttonTheme theme attrs textfield =
                 :: Element.width Element.fill
                 :: focusEvents
                 ++ OUI.Material.Typography.attrs OUI.Text.Body OUI.Text.Large OUI.Text.NoColor typescale colorscheme
-                ++ (if p.isMultiline then
+                ++ (if isMultiline then
                         [ Element.height Element.fill ]
 
                     else
@@ -435,7 +439,7 @@ render typescale colorscheme buttonTheme theme attrs textfield =
     Element.column
         (Element.spacing theme.supportingTextTopPadding
             :: Element.inFront labelElement
-            :: (if p.isMultiline then
+            :: (if isMultiline then
                     [ Element.height <| Element.px <| theme.height * 3 ]
 
                 else
@@ -457,22 +461,49 @@ render typescale colorscheme buttonTheme theme attrs textfield =
                     |> Maybe.map
                         (OUI.Material.Icon.renderWithSizeColor 24 (OUI.Material.Color.getOnSurfaceVariantColor p.color colorscheme) [])
                 , Just <|
-                    if p.isMultiline then
-                        Input.multiline input_attrs
-                            { onChange = p.onChange
-                            , text = p.value
-                            , label = Input.labelHidden p.label
-                            , placeholder = Nothing
-                            , spellcheck = p.spellcheck
-                            }
+                    case p.datatype of
+                        OUI.TextField.Text ->
+                            Input.text input_attrs
+                                { onChange = p.onChange
+                                , text = p.value
+                                , label = Input.labelHidden p.label
+                                , placeholder = Nothing
+                                }
 
-                    else
-                        Input.text input_attrs
-                            { onChange = p.onChange
-                            , text = p.value
-                            , label = Input.labelHidden p.label
-                            , placeholder = Nothing
-                            }
+                        OUI.TextField.Email ->
+                            Input.email input_attrs
+                                { onChange = p.onChange
+                                , text = p.value
+                                , label = Input.labelHidden p.label
+                                , placeholder = Nothing
+                                }
+
+                        OUI.TextField.Password show ->
+                            Input.currentPassword input_attrs
+                                { onChange = p.onChange
+                                , text = p.value
+                                , label = Input.labelHidden p.label
+                                , placeholder = Nothing
+                                , show = show
+                                }
+
+                        OUI.TextField.NewPassword show ->
+                            Input.newPassword input_attrs
+                                { onChange = p.onChange
+                                , text = p.value
+                                , label = Input.labelHidden p.label
+                                , placeholder = Nothing
+                                , show = show
+                                }
+
+                        OUI.TextField.Multiline ->
+                            Input.multiline input_attrs
+                                { onChange = p.onChange
+                                , text = p.value
+                                , label = Input.labelHidden p.label
+                                , placeholder = Nothing
+                                , spellcheck = p.spellcheck
+                                }
                 , trailingIcon
                 ]
             )

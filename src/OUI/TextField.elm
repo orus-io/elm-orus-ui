@@ -1,14 +1,14 @@
 module OUI.TextField exposing
-    ( TextField, Type(..), new
-    , multiline, withColor, withType, withSupportingText, withFocused, withLeadingIcon, withTrailingIcon, withClickableTrailingIcon, withErrorIcon
+    ( TextField, Datatype(..), Type(..), new
+    , multiline, email, password, newPassword, withColor, withType, withSupportingText, withFocused, withLeadingIcon, withTrailingIcon, withClickableTrailingIcon, withErrorIcon
     , onFocusBlur
     , Properties, properties
     )
 
 {-| A [Text Field](https://m3.material.io/components/text-fields) component
 
-@docs TextField, Type, new
-@docs multiline, withColor, withType, withSupportingText, withFocused, withLeadingIcon, withTrailingIcon, withClickableTrailingIcon, withErrorIcon
+@docs TextField, Datatype, Type, new
+@docs multiline, email, password, newPassword, withColor, withType, withSupportingText, withFocused, withLeadingIcon, withTrailingIcon, withClickableTrailingIcon, withErrorIcon
 @docs onFocusBlur
 @docs Properties, properties
 
@@ -25,6 +25,16 @@ type Type
     | Outlined
 
 
+{-| Data type of the field
+-}
+type Datatype
+    = Text
+    | Multiline
+    | Email
+    | Password Bool
+    | NewPassword Bool
+
+
 {-| A Text input component
 -}
 type TextField msg
@@ -38,7 +48,7 @@ new label onChange value =
     TextField
         { onChange = onChange
         , label = label
-        , isMultiline = False
+        , datatype = Text
         , spellcheck = False
         , value = value
         , onFocus = Nothing
@@ -152,9 +162,45 @@ multiline : Bool -> TextField msg -> TextField msg
 multiline spellcheck (TextField props) =
     TextField
         { props
-            | isMultiline = True
+            | datatype = Multiline
             , spellcheck =
                 spellcheck
+        }
+
+
+{-| Change the datatype to 'Email'
+-}
+email : TextField msg -> TextField msg
+email (TextField props) =
+    TextField
+        { props
+            | datatype = Email
+        }
+
+
+{-| Change the datatype to 'Password'
+
+If the argument is 'True', the value is showed
+
+-}
+password : Bool -> TextField msg -> TextField msg
+password show (TextField props) =
+    TextField
+        { props
+            | datatype = Password show
+        }
+
+
+{-| Change the datatype to 'NewPassword'
+
+If the argument is 'True', the value is showed
+
+-}
+newPassword : Bool -> TextField msg -> TextField msg
+newPassword show (TextField props) =
+    TextField
+        { props
+            | datatype = NewPassword show
         }
 
 
@@ -163,7 +209,7 @@ multiline spellcheck (TextField props) =
 type alias Properties msg =
     { onChange : String -> msg
     , label : String
-    , isMultiline : Bool
+    , datatype : Datatype
     , spellcheck : Bool
     , value : String
     , onFocus : Maybe msg

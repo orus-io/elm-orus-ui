@@ -11,6 +11,7 @@ import OUI.Icon exposing (check, clear)
 import OUI.Material as Material
 import OUI.Material.Color
 import OUI.Material.Theme as Theme
+import OUI.Tabs
 import OUI.TextField as TextField exposing (TextField)
 
 
@@ -20,14 +21,14 @@ book =
         { init =
             \_ ->
                 { inputs = Dict.empty
+                , selectedTab = TextField.Text
                 }
                     |> Effect.withNone
         , update =
             update
         , subscriptions = \_ _ -> Sub.none
         }
-        |> Explorer.withChapter (textfields False)
-        |> Explorer.withChapter (textfields True)
+        |> Explorer.withChapter tabs
 
 
 type alias InputState =
@@ -44,7 +45,9 @@ newInputState =
 
 
 type alias Model =
-    { inputs : Dict String InputState }
+    { inputs : Dict String InputState
+    , selectedTab : TextField.Datatype
+    }
 
 
 inputText : String -> Model -> String
@@ -65,11 +68,18 @@ type Msg
     = OnChange String String
     | OnFocus String
     | OnLoseFocus String
+    | SelectTab TextField.Datatype
 
 
 update : a -> Msg -> Model -> ( Model, Effect sharedMsg msg )
 update _ msg model =
     case msg of
+        SelectTab tab ->
+            { model
+                | selectedTab = tab
+            }
+                |> Effect.withNone
+
         OnChange name value ->
             let
                 input : InputState
@@ -116,8 +126,41 @@ update _ msg model =
                 |> Effect.withNone
 
 
-textfields : Bool -> Explorer.Shared themeExt -> Model -> Element (Explorer.BookMsg Msg)
-textfields multiline { theme } model =
+tabs : Explorer.Shared themeExt -> Model -> Element (Explorer.BookMsg Msg)
+tabs shared model =
+    Element.column [ Element.width Element.fill ]
+        [ OUI.Tabs.new identity (Explorer.bookMsg << SelectTab)
+            |> OUI.Tabs.withItems
+                [ ( TextField.Text, "Text" )
+                , ( TextField.Email, "Email" )
+                , ( TextField.Password False, "Password" )
+                , ( TextField.Password True, "Password (show)" )
+                , ( TextField.NewPassword False, "New Password" )
+                , ( TextField.NewPassword True, "New Password (show)" )
+                , ( TextField.Multiline, "Multiline" )
+                ]
+            |> OUI.Tabs.secondary
+            |> Material.tabs shared.theme [ Element.width Element.fill ]
+        , case model.selectedTab of
+            TextField.Text ->
+                textfields ( "text", identity ) shared model
+
+            TextField.Email ->
+                textfields ( "email", TextField.email ) shared model
+
+            TextField.Password show ->
+                textfields ( "password", TextField.password show ) shared model
+
+            TextField.NewPassword show ->
+                textfields ( "newpassword", TextField.newPassword show ) shared model
+
+            TextField.Multiline ->
+                textfields ( "multiline", TextField.multiline True ) shared model
+        ]
+
+
+textfields : ( String, TextField (Explorer.BookMsg Msg) -> TextField (Explorer.BookMsg Msg) ) -> Explorer.Shared themeExt -> Model -> Element (Explorer.BookMsg Msg)
+textfields ( datatype, setDatatype ) { theme } model =
     let
         colorscheme : OUI.Material.Color.Scheme
         colorscheme =
@@ -125,28 +168,21 @@ textfields multiline { theme } model =
 
         key : String -> String
         key name =
-            name
-                ++ (if multiline then
-                        "-multiline"
+            name ++ "-" ++ datatype
 
-                    else
-                        ""
-                   )
-
-        textField : String -> String -> TextField Msg
+        textField : String -> String -> TextField (Explorer.BookMsg Msg)
         textField label name =
-            TextField.new label (OnChange (key name)) (inputText (key name) model)
-                |> TextField.onFocusBlur (OnFocus (key name)) (OnLoseFocus (key name))
+            TextField.new label
+                (Explorer.bookMsg << (OnChange <| key name))
+                (inputText (key name) model)
+                |> TextField.onFocusBlur
+                    (Explorer.bookMsg <| OnFocus <| key name)
+                    (Explorer.bookMsg <| OnLoseFocus <| key name)
                 |> TextField.withFocused (inputHasFocus (key name) model)
 
-        render : TextField msg -> Element msg
+        render : TextField (Explorer.BookMsg Msg) -> Element (Explorer.BookMsg Msg)
         render =
-            (if multiline then
-                TextField.multiline True
-
-             else
-                identity
-            )
+            setDatatype
                 >> Material.textField theme
                     [ Element.centerX
                     , Element.centerY
@@ -171,19 +207,16 @@ textfields multiline { theme } model =
                 |> TextField.withSupportingText "A filled text field"
                 |> TextField.withType TextField.Filled
                 |> render
-                |> Element.map Explorer.bookMsg
             , textField "Filled" "filledLeadIcon"
                 |> TextField.withSupportingText "A filled text field with leading icon"
                 |> TextField.withLeadingIcon check
                 |> TextField.withType TextField.Filled
                 |> render
-                |> Element.map Explorer.bookMsg
             , textField "Filled" "filledTrailIcon"
                 |> TextField.withSupportingText "A filled text field with trailing icon"
                 |> TextField.withTrailingIcon clear
                 |> TextField.withType TextField.Filled
                 |> render
-                |> Element.map Explorer.bookMsg
             , let
                 k : String
                 k =
@@ -208,14 +241,12 @@ textfields multiline { theme } model =
                 |> TextField.withType TextField.Filled
                 |> TextField.withColor OUI.Error
                 |> render
-                |> Element.map Explorer.bookMsg
             , textField "Filled" "filledErrorIcon"
                 |> TextField.withSupportingText "A filled text field with a error icon"
                 |> TextField.withType TextField.Filled
                 |> TextField.withErrorIcon clear
                 |> TextField.withColor OUI.Error
                 |> render
-                |> Element.map Explorer.bookMsg
             ]
         , Element.column
             [ Element.spacing 20
@@ -226,19 +257,16 @@ textfields multiline { theme } model =
                 |> TextField.withType TextField.Outlined
                 |> TextField.withSupportingText "A outlined text field"
                 |> render
-                |> Element.map Explorer.bookMsg
             , textField "Outlined" "outlinedLeadIcon"
                 |> TextField.withSupportingText "A outlined text field with leading icon"
                 |> TextField.withLeadingIcon check
                 |> TextField.withType TextField.Outlined
                 |> render
-                |> Element.map Explorer.bookMsg
             , textField "Outlined" "outlinedTrailIcon"
                 |> TextField.withSupportingText "A outlined text field with trailing icon"
                 |> TextField.withTrailingIcon clear
                 |> TextField.withType TextField.Outlined
                 |> render
-                |> Element.map Explorer.bookMsg
             , let
                 k : String
                 k =
@@ -263,13 +291,11 @@ textfields multiline { theme } model =
                 |> TextField.withType TextField.Outlined
                 |> TextField.withColor OUI.Error
                 |> render
-                |> Element.map Explorer.bookMsg
             , textField "Outlined" "outlinedErrorIcon"
                 |> TextField.withSupportingText "A outlined text field with a error icon"
                 |> TextField.withType TextField.Outlined
                 |> TextField.withErrorIcon clear
                 |> TextField.withColor OUI.Error
                 |> render
-                |> Element.map Explorer.bookMsg
             ]
         ]
