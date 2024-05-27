@@ -2,6 +2,7 @@
 showcase:
 	cd showcase && \
 	elm-go \
+		--port 8001 \
 		-d public \
 		-- src/Main.elm \
 		--output public/main.js
