@@ -30,6 +30,9 @@ Material design.
 This UI Explorer is a little crude for now but will get nicer when new components
 get implemented.
 
+The package is not yet published on [Elm Packages](https://package.elm-lang.org/),
+but the source code is [available on Github](https://github.com/orus-io/elm-orus-ui).
+
 *This is of course our feeling about it, and we hope you make it yours
 """
 
