@@ -1,6 +1,6 @@
 module OUI.TextField exposing
     ( TextField, Datatype(..), Type(..), new
-    , multiline, email, password, newPassword, withColor, withType, withSupportingText, withFocused, withLeadingIcon, withTrailingIcon, withClickableTrailingIcon, withErrorIcon
+    , multiline, search, username, email, password, newPassword, withColor, withType, withSupportingText, withFocused, withLeadingIcon, withTrailingIcon, withClickableTrailingIcon, withErrorIcon
     , onFocusBlur
     , Properties, properties
     )
@@ -8,7 +8,7 @@ module OUI.TextField exposing
 {-| A [Text Field](https://m3.material.io/components/text-fields) component
 
 @docs TextField, Datatype, Type, new
-@docs multiline, email, password, newPassword, withColor, withType, withSupportingText, withFocused, withLeadingIcon, withTrailingIcon, withClickableTrailingIcon, withErrorIcon
+@docs multiline, search, username, email, password, newPassword, withColor, withType, withSupportingText, withFocused, withLeadingIcon, withTrailingIcon, withClickableTrailingIcon, withErrorIcon
 @docs onFocusBlur
 @docs Properties, properties
 
@@ -33,6 +33,8 @@ type Datatype
     | Email
     | Password Bool
     | NewPassword Bool
+    | Username
+    | Search
 
 
 {-| A Text input component
@@ -165,6 +167,26 @@ multiline spellcheck (TextField props) =
             | datatype = Multiline
             , spellcheck =
                 spellcheck
+        }
+
+
+{-| Change the datatype to 'Search'
+-}
+search : TextField msg -> TextField msg
+search (TextField props) =
+    TextField
+        { props
+            | datatype = Search
+        }
+
+
+{-| Change the datatype to 'Username'
+-}
+username : TextField msg -> TextField msg
+username (TextField props) =
+    TextField
+        { props
+            | datatype = Username
         }
 
 

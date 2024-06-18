@@ -470,6 +470,22 @@ render typescale colorscheme buttonTheme theme attrs textfield =
                                 , placeholder = Nothing
                                 }
 
+                        OUI.TextField.Search ->
+                            Input.search input_attrs
+                                { onChange = p.onChange
+                                , text = p.value
+                                , label = Input.labelHidden p.label
+                                , placeholder = Nothing
+                                }
+
+                        OUI.TextField.Username ->
+                            Input.username input_attrs
+                                { onChange = p.onChange
+                                , text = p.value
+                                , label = Input.labelHidden p.label
+                                , placeholder = Nothing
+                                }
+
                         OUI.TextField.Email ->
                             Input.email input_attrs
                                 { onChange = p.onChange

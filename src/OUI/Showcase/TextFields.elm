@@ -132,6 +132,8 @@ tabs shared model =
         [ OUI.Tabs.new identity (Explorer.bookMsg << SelectTab)
             |> OUI.Tabs.withItems
                 [ ( TextField.Text, "Text" )
+                , ( TextField.Search, "Search" )
+                , ( TextField.Username, "Username" )
                 , ( TextField.Email, "Email" )
                 , ( TextField.Password False, "Password" )
                 , ( TextField.Password True, "Password (show)" )
@@ -145,6 +147,12 @@ tabs shared model =
         , case model.selectedTab of
             TextField.Text ->
                 textfields ( "text", identity ) shared model
+
+            TextField.Search ->
+                textfields ( "search", TextField.search ) shared model
+
+            TextField.Username ->
+                textfields ( "username", TextField.username ) shared model
 
             TextField.Email ->
                 textfields ( "email", TextField.email ) shared model
