@@ -1,4 +1,4 @@
-module OUI.Element exposing (Modal, singleModal, multiModal, mapModal)
+module OUI.Element.Modal exposing (Modal, single, multi, map)
 
 {-| Utilities for Elm-UI
 
@@ -8,7 +8,7 @@ module OUI.Element exposing (Modal, singleModal, multiModal, mapModal)
 This modal API is taken from
 [Orasund/elm-ui-widgets](https://package.elm-lang.org/packages/Orasund/elm-ui-widgets/latest/)
 
-@docs Modal, singleModal, multiModal, mapModal
+@docs Modal, single, multi, map
 
 -}
 
@@ -17,7 +17,8 @@ import Element.Background as Background
 import Element.Events as Events
 
 
-{-| -}
+{-| A modal
+-}
 type alias Modal msg =
     { onDismiss : Maybe msg
     , content : Element msg
@@ -26,15 +27,15 @@ type alias Modal msg =
 
 {-| map a Modal
 -}
-mapModal : (a -> b) -> Modal a -> Modal b
-mapModal f modal =
+map : (a -> b) -> Modal a -> Modal b
+map f modal =
     { onDismiss = Maybe.map f modal.onDismiss
     , content = Element.map f modal.content
     }
 
 
-modalBackground : Maybe msg -> List (Attribute msg)
-modalBackground onDismiss =
+background : Maybe msg -> List (Attribute msg)
+background onDismiss =
     [ Element.none
         |> Element.el
             ([ Element.width <| Element.fill
@@ -77,12 +78,12 @@ Technical Remark:
   - To stop the screen from scrolling, set the height of the layout to the height of the screen.
 
 -}
-singleModal : List (Modal msg) -> List (Attribute msg)
-singleModal =
+single : List (Modal msg) -> List (Attribute msg)
+single =
     List.head
         >> Maybe.map
             (\{ onDismiss, content } ->
-                modalBackground onDismiss ++ [ content |> Element.inFront ]
+                background onDismiss ++ [ content |> Element.inFront ]
             )
         >> Maybe.withDefault []
 
@@ -105,15 +106,15 @@ singleModal =
         |> always "Ignore this line" --> "Ignore this line"
 
 -}
-multiModal : List (Modal msg) -> List (Attribute msg)
-multiModal list =
+multi : List (Modal msg) -> List (Attribute msg)
+multi list =
     case list of
         head :: tail ->
             (tail
                 |> List.reverse
                 |> List.map (\{ content } -> content |> Element.inFront)
             )
-                ++ modalBackground head.onDismiss
+                ++ background head.onDismiss
                 ++ [ head.content |> Element.inFront ]
 
         _ ->
