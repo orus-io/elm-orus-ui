@@ -11,6 +11,7 @@ import OUI.Showcase.Badge as Badge
 import OUI.Showcase.Buttons as Buttons
 import OUI.Showcase.Checkbox as Checkbox
 import OUI.Showcase.Colors as Colors
+import OUI.Showcase.Dialog as Dialog
 import OUI.Showcase.Dividers as Dividers
 import OUI.Showcase.MenuButtons as MenuButtons
 import OUI.Showcase.Menus as Menus
@@ -32,22 +33,22 @@ addPages :
     ->
         Explorer
             themeExt
-            Navigation.Model
+            ()
             (Spa.PageStack.Model
                 Spa.SetupError
-                MenuButtons.Model
+                Navigation.Model
                 (Spa.PageStack.Model
                     Spa.SetupError
-                    TextFields.Model
+                    MenuButtons.Model
                     (Spa.PageStack.Model
                         Spa.SetupError
-                        Tabs.Model
+                        TextFields.Model
                         (Spa.PageStack.Model
                             Spa.SetupError
-                            Switches.Model
+                            Tabs.Model
                             (Spa.PageStack.Model
                                 Spa.SetupError
-                                ()
+                                Switches.Model
                                 (Spa.PageStack.Model
                                     Spa.SetupError
                                     ()
@@ -74,8 +75,12 @@ addPages :
                                                                 ()
                                                                 (Spa.PageStack.Model
                                                                     Spa.SetupError
-                                                                    current
-                                                                    previous
+                                                                    ()
+                                                                    (Spa.PageStack.Model
+                                                                        Spa.SetupError
+                                                                        current
+                                                                        previous
+                                                                    )
                                                                 )
                                                             )
                                                         )
@@ -90,22 +95,22 @@ addPages :
                     )
                 )
             )
-            (Explorer.BookMsg Navigation.Msg)
+            (Explorer.BookMsg ())
             (Spa.PageStack.Msg
                 Explorer.Route
-                (Explorer.BookMsg MenuButtons.Msg)
+                (Explorer.BookMsg Navigation.Msg)
                 (Spa.PageStack.Msg
                     Explorer.Route
-                    (Explorer.BookMsg TextFields.Msg)
+                    (Explorer.BookMsg MenuButtons.Msg)
                     (Spa.PageStack.Msg
                         Explorer.Route
-                        (Explorer.BookMsg Tabs.Msg)
+                        (Explorer.BookMsg TextFields.Msg)
                         (Spa.PageStack.Msg
                             Explorer.Route
-                            (Explorer.BookMsg Switches.Msg)
+                            (Explorer.BookMsg Tabs.Msg)
                             (Spa.PageStack.Msg
                                 Explorer.Route
-                                (Explorer.BookMsg ())
+                                (Explorer.BookMsg Switches.Msg)
                                 (Spa.PageStack.Msg
                                     Explorer.Route
                                     (Explorer.BookMsg ())
@@ -134,8 +139,14 @@ addPages :
                                                                 )
                                                                 (Spa.PageStack.Msg
                                                                     Explorer.Route
-                                                                    currentMsg
-                                                                    previousMsg
+                                                                    (Explorer.BookMsg
+                                                                        ()
+                                                                    )
+                                                                    (Spa.PageStack.Msg
+                                                                        Explorer.Route
+                                                                        currentMsg
+                                                                        previousMsg
+                                                                    )
                                                                 )
                                                             )
                                                         )
@@ -168,3 +179,4 @@ addPages =
         >> Explorer.category "Complex"
         >> Explorer.addBook MenuButtons.book
         >> Explorer.addBook Navigation.book
+        >> Explorer.addBook Dialog.book

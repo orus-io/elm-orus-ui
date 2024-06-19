@@ -1,7 +1,7 @@
 module OUI.Material exposing
     ( text, icon, divider, badge, progress
     , button, checkbox, switch, textField, radiobutton, menu, tabs
-    , menuButton, navigation
+    , dialog, menuButton, navigation
     )
 
 {-| A elm-ui based renderer API
@@ -19,7 +19,7 @@ module OUI.Material exposing
 
 # Complex
 
-@docs menuButton, navigation
+@docs dialog, menuButton, navigation
 
 -}
 
@@ -27,11 +27,14 @@ import Element exposing (Attribute, Element)
 import OUI.Badge
 import OUI.Button
 import OUI.Checkbox
+import OUI.Dialog
 import OUI.Divider
+import OUI.Element.Modal exposing (Modal)
 import OUI.Icon exposing (Icon)
 import OUI.Material.Badge
 import OUI.Material.Button
 import OUI.Material.Checkbox
+import OUI.Material.Dialog
 import OUI.Material.Divider
 import OUI.Material.Icon
 import OUI.Material.Menu
@@ -114,6 +117,17 @@ checkbox :
     -> Element msg
 checkbox theme =
     OUI.Material.Checkbox.render (Theme.colorscheme theme) (Theme.checkbox theme)
+
+
+{-| Render a dialog
+-}
+dialog :
+    Theme themeExt
+    -> List (Attribute msg)
+    -> OUI.Dialog.Dialog msg
+    -> Modal msg
+dialog theme =
+    OUI.Material.Dialog.render (Theme.typescale theme) (Theme.colorscheme theme) (Theme.button theme) (Theme.dialog theme)
 
 
 {-| Render a menu

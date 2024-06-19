@@ -1,19 +1,19 @@
 module OUI.Material.Theme exposing
     ( Theme, defaultTheme, Typescale, defaultTypescale, withExt
-    , BadgeTheme, ButtonTheme, CheckboxTheme, DividerTheme, MenuTheme, NavigationTheme, ProgressTheme, SwitchTheme, TextFieldTheme, RadioButtonTheme, TabsTheme
-    , colorscheme, typescale, badge, button, checkbox, divider, menu, navigation, progress, switch, textfield, radiobutton, tabs, ext
-    , withBadge, withButton, withCheckbox, withColorscheme, withDivider, withMenu, withNavigation, withProgress, withRadiobutton, withSwitch, withTabs, withTextfield, withTypescale
+    , BadgeTheme, ButtonTheme, CheckboxTheme, DialogTheme, DividerTheme, MenuTheme, NavigationTheme, ProgressTheme, SwitchTheme, TextFieldTheme, RadioButtonTheme, TabsTheme
+    , colorscheme, typescale, badge, button, checkbox, dialog, divider, menu, navigation, progress, switch, textfield, radiobutton, tabs, ext
+    , withBadge, withButton, withCheckbox, withColorscheme, withDialog, withDivider, withMenu, withNavigation, withProgress, withRadiobutton, withSwitch, withTabs, withTextfield, withTypescale
     )
 
 {-|
 
 @docs Theme, defaultTheme, Typescale, defaultTypescale, withExt
 
-@docs BadgeTheme, ButtonTheme, CheckboxTheme, DividerTheme, MenuTheme, NavigationTheme, ProgressTheme, SwitchTheme, TextFieldTheme, RadioButtonTheme, TabsTheme
+@docs BadgeTheme, ButtonTheme, CheckboxTheme, DialogTheme, DividerTheme, MenuTheme, NavigationTheme, ProgressTheme, SwitchTheme, TextFieldTheme, RadioButtonTheme, TabsTheme
 
-@docs colorscheme, typescale, badge, button, checkbox, divider, menu, navigation, progress, switch, textfield, radiobutton, tabs, ext
+@docs colorscheme, typescale, badge, button, checkbox, dialog, divider, menu, navigation, progress, switch, textfield, radiobutton, tabs, ext
 
-@docs withBadge, withButton, withCheckbox, withColorscheme, withDivider, withMenu, withNavigation, withProgress, withRadiobutton, withSwitch, withTabs, withTextfield, withTypescale
+@docs withBadge, withButton, withCheckbox, withColorscheme, withDialog, withDivider, withMenu, withNavigation, withProgress, withRadiobutton, withSwitch, withTabs, withTextfield, withTypescale
 
 -}
 
@@ -21,6 +21,7 @@ import OUI.Material.Badge
 import OUI.Material.Button
 import OUI.Material.Checkbox
 import OUI.Material.Color
+import OUI.Material.Dialog
 import OUI.Material.Divider
 import OUI.Material.Menu
 import OUI.Material.Navigation
@@ -54,6 +55,12 @@ type alias RadioButtonTheme =
 -}
 type alias CheckboxTheme =
     OUI.Material.Checkbox.Theme
+
+
+{-| A Dialog theme
+-}
+type alias DialogTheme =
+    OUI.Material.Dialog.Theme
 
 
 {-| A Menu theme
@@ -116,6 +123,7 @@ type Theme ext
         , badge : BadgeTheme
         , button : ButtonTheme
         , checkbox : CheckboxTheme
+        , dialog : DialogTheme
         , divider : DividerTheme
         , menu : MenuTheme
         , navigation : NavigationTheme
@@ -161,6 +169,13 @@ badge (Theme t) =
 checkbox : Theme ext -> CheckboxTheme
 checkbox (Theme t) =
     t.checkbox
+
+
+{-| get the dialog theme
+-}
+dialog : Theme ext -> DialogTheme
+dialog (Theme t) =
+    t.dialog
 
 
 {-| get the divider theme
@@ -261,6 +276,13 @@ withCheckbox value (Theme t) =
     Theme { t | checkbox = value }
 
 
+{-| set the dialog theme
+-}
+withDialog : DialogTheme -> Theme ext -> Theme ext
+withDialog value (Theme t) =
+    Theme { t | dialog = value }
+
+
 {-| set the divider theme
 -}
 withDivider : DividerTheme -> Theme ext -> Theme ext
@@ -327,6 +349,7 @@ withExt themeExt (Theme t) =
         , badge = t.badge
         , button = t.button
         , divider = t.divider
+        , dialog = t.dialog
         , checkbox = t.checkbox
         , menu = t.menu
         , navigation = t.navigation
@@ -349,6 +372,7 @@ defaultTheme =
         , badge = OUI.Material.Badge.defaultTheme
         , button = OUI.Material.Button.defaultTheme
         , divider = OUI.Material.Divider.defaultTheme
+        , dialog = OUI.Material.Dialog.defaultTheme
         , checkbox = OUI.Material.Checkbox.defaultTheme
         , menu = OUI.Material.Menu.defaultTheme
         , navigation = OUI.Material.Navigation.defaultTheme

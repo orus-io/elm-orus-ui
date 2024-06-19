@@ -9,6 +9,7 @@
     "OUI.Badge",
     "OUI.Button",
     "OUI.Checkbox",
+    "OUI.Dialog",
     "OUI.Divider",
     "OUI.Element.Modal",
     "OUI.Explorer",

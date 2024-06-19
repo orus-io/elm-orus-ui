@@ -252,6 +252,7 @@ addBook b (Explorer expl) =
                                             |> Element.column
                                                 [ Element.spacing 20
                                                 , Element.width Element.fill
+                                                , Element.height Element.fill
                                                 ]
                                     }
                             , subscriptions =
