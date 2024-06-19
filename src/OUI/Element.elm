@@ -1,4 +1,4 @@
-module OUI.Element exposing (Modal, singleModal, multiModal)
+module OUI.Element exposing (Modal, singleModal, multiModal, mapModal)
 
 {-| Utilities for Elm-UI
 
@@ -8,7 +8,7 @@ module OUI.Element exposing (Modal, singleModal, multiModal)
 This modal API is taken from
 [Orasund/elm-ui-widgets](https://package.elm-lang.org/packages/Orasund/elm-ui-widgets/latest/)
 
-@docs Modal, singleModal, multiModal
+@docs Modal, singleModal, multiModal, mapModal
 
 -}
 
@@ -24,8 +24,17 @@ type alias Modal msg =
     }
 
 
-background : Maybe msg -> List (Attribute msg)
-background onDismiss =
+{-| map a Modal
+-}
+mapModal : (a -> b) -> Modal a -> Modal b
+mapModal f modal =
+    { onDismiss = Maybe.map f modal.onDismiss
+    , content = Element.map f modal.content
+    }
+
+
+modalBackground : Maybe msg -> List (Attribute msg)
+modalBackground onDismiss =
     [ Element.none
         |> Element.el
             ([ Element.width <| Element.fill
@@ -73,7 +82,7 @@ singleModal =
     List.head
         >> Maybe.map
             (\{ onDismiss, content } ->
-                background onDismiss ++ [ content |> Element.inFront ]
+                modalBackground onDismiss ++ [ content |> Element.inFront ]
             )
         >> Maybe.withDefault []
 
@@ -104,7 +113,7 @@ multiModal list =
                 |> List.reverse
                 |> List.map (\{ content } -> content |> Element.inFront)
             )
-                ++ background head.onDismiss
+                ++ modalBackground head.onDismiss
                 ++ [ head.content |> Element.inFront ]
 
         _ ->
