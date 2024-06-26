@@ -1,8 +1,8 @@
 module OUI.Dialog exposing
-    ( Dialog, new
-    , withIcon, withSupportingText
+    ( Dialog, Width(..), new
+    , withIcon, withSupportingText, withWidth
     , onDismiss, onAccept
-    , headline, icon, supportingText, accept, dismiss
+    , headline, icon, supportingText, width, accept, dismiss
     )
 
 {-| Dialogs provide important prompts in a user flow
@@ -10,20 +10,30 @@ module OUI.Dialog exposing
 
 # Constructors
 
-@docs Dialog, new
+@docs Dialog, Width, new
 
-@docs withIcon, withSupportingText
+@docs withIcon, withSupportingText, withWidth
 
 @docs onDismiss, onAccept
 
 
 # Getters
 
-@docs headline, icon, supportingText, accept, dismiss
+@docs headline, icon, supportingText, width, accept, dismiss
 
 -}
 
 import OUI.Icon exposing (Icon)
+
+
+{-| Dialog width
+-}
+type Width
+    = Small
+    | Medium
+    | Large
+    | AutoWidth
+    | Fullscreen
 
 
 {-| A dialog
@@ -35,6 +45,7 @@ type Dialog msg
         , supportingText : Maybe String
         , accept : Maybe ( String, msg )
         , dismiss : Maybe ( String, msg )
+        , width : Width
         }
 
 
@@ -48,6 +59,17 @@ new headlineText =
         , supportingText = Nothing
         , accept = Nothing
         , dismiss = Nothing
+        , width = Small
+        }
+
+
+{-| set a width
+-}
+withWidth : Width -> Dialog msg -> Dialog msg
+withWidth value (Dialog dialog) =
+    Dialog
+        { dialog
+            | width = value
         }
 
 
@@ -107,6 +129,12 @@ headline (Dialog dialog) =
 supportingText : Dialog msg -> Maybe String
 supportingText (Dialog dialog) =
     dialog.supportingText
+
+
+{-| -}
+width : Dialog msg -> Width
+width (Dialog dialog) =
+    dialog.width
 
 
 {-| -}

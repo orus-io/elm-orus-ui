@@ -3,6 +3,7 @@ module OUI.Material.Dialog exposing (Theme, defaultTheme, render)
 import Element exposing (Attribute, Element)
 import Element.Background as Background
 import Element.Border as Border
+import OUI
 import OUI.Button exposing (Button)
 import OUI.Dialog as Dialog exposing (Dialog, dismiss)
 import OUI.Element.Modal exposing (Modal)
@@ -23,6 +24,7 @@ type alias Theme =
     , paddingBetweenIconAndTitle : Int
     , paddingBetweenTitleAndBody : Int
     , paddingBetweenBodyAndAction : Int
+    , fsCloseIcon : OUI.Icon.Icon
     }
 
 
@@ -36,6 +38,7 @@ defaultTheme =
     , paddingBetweenIconAndTitle = 16
     , paddingBetweenTitleAndBody = 16
     , paddingBetweenBodyAndAction = 24
+    , fsCloseIcon = OUI.Icon.clear
     }
 
 
@@ -53,31 +56,51 @@ render typescale colorscheme buttonTheme theme attrs dialog =
         hasIcon =
             Dialog.icon dialog /= Nothing
 
-        actions : List (Element msg)
-        actions =
-            List.filterMap
-                (Maybe.map
-                    (\( label, msg ) ->
-                        OUI.Button.new label
-                            |> OUI.Button.textButton
-                            |> OUI.Button.onClick msg
-                            |> OUI.Material.Button.render typescale colorscheme buttonTheme Nothing [ Element.alignRight ]
-                    )
-                )
-                [ Dialog.dismiss dialog
-                , Dialog.accept dialog
-                ]
+        dismissAction =
+            Dialog.dismiss dialog
+
+        acceptAction =
+            Dialog.accept dialog
+
+        isfullscreen : Bool
+        isfullscreen =
+            Dialog.width dialog == Dialog.Fullscreen
     in
     { content =
         Element.column
             [ Element.centerX
             , Element.centerY
             , Element.width <|
-                Element.minimum theme.containerWidth.min <|
-                    Element.maximum theme.containerWidth.max <|
-                        Element.shrink
+                case Dialog.width dialog of
+                    Dialog.Small ->
+                        Element.px theme.containerWidth.min
+
+                    Dialog.Medium ->
+                        Element.px <| (theme.containerWidth.min + theme.containerWidth.max) // 2
+
+                    Dialog.Large ->
+                        Element.px theme.containerWidth.max
+
+                    Dialog.AutoWidth ->
+                        Element.minimum theme.containerWidth.min <|
+                            Element.maximum theme.containerWidth.max <|
+                                Element.shrink
+
+                    Dialog.Fullscreen ->
+                        Element.fill
+            , Element.height <|
+                if isfullscreen then
+                    Element.fill
+
+                else
+                    Element.shrink
             , Element.padding theme.padding
-            , Border.rounded theme.containerShape
+            , Border.rounded <|
+                if isfullscreen then
+                    0
+
+                else
+                    theme.containerShape
             , Background.color <|
                 Color.toElementColor colorscheme.surfaceContainerHigh
             ]
@@ -107,12 +130,47 @@ render typescale colorscheme buttonTheme theme attrs dialog =
                         |> OUI.Text.headlineSmall
                         |> Typography.renderWithAttrs typescale
                             colorscheme
-                            [ if hasIcon then
-                                Element.centerX
+                            [ case ( isfullscreen, hasIcon ) of
+                                ( True, _ ) ->
+                                    Element.alignLeft
 
-                              else
-                                Element.alignLeft
+                                ( False, True ) ->
+                                    Element.centerX
+
+                                ( False, False ) ->
+                                    Element.alignLeft
                             ]
+                        |> (if isfullscreen then
+                                \h ->
+                                    Element.row
+                                        [ Element.width Element.fill
+                                        ]
+                                        [ case dismissAction of
+                                            Just ( label, msg ) ->
+                                                OUI.Button.new label
+                                                    |> OUI.Button.withIcon theme.fsCloseIcon
+                                                    |> OUI.Button.iconButton
+                                                    |> OUI.Button.onClick msg
+                                                    |> OUI.Button.color OUI.Neutral
+                                                    |> OUI.Material.Button.render typescale colorscheme buttonTheme Nothing []
+
+                                            Nothing ->
+                                                Element.none
+                                        , h
+                                        , case acceptAction of
+                                            Just ( label, msg ) ->
+                                                OUI.Button.new label
+                                                    |> OUI.Button.textButton
+                                                    |> OUI.Button.onClick msg
+                                                    |> OUI.Material.Button.render typescale colorscheme buttonTheme Nothing [ Element.alignRight ]
+
+                                            Nothing ->
+                                                Element.none
+                                        ]
+
+                            else
+                                identity
+                           )
                    ]
                 ++ (case Dialog.supportingText dialog of
                         Just text ->
@@ -139,23 +197,40 @@ render typescale colorscheme buttonTheme theme attrs dialog =
                         Nothing ->
                             []
                    )
-                ++ (case actions of
-                        [] ->
-                            []
+                ++ (if isfullscreen then
+                        []
 
-                        buttons ->
-                            [ Element.row
-                                [ Element.width Element.fill
-                                , Element.paddingEach
-                                    { top = theme.paddingBetweenBodyAndAction
-                                    , bottom = 0
-                                    , left = 0
-                                    , right = 0
-                                    }
-                                , Element.spacing theme.paddingBetweenButtons
+                    else
+                        case
+                            List.filterMap
+                                (Maybe.map
+                                    (\( label, msg ) ->
+                                        OUI.Button.new label
+                                            |> OUI.Button.textButton
+                                            |> OUI.Button.onClick msg
+                                            |> OUI.Material.Button.render typescale colorscheme buttonTheme Nothing [ Element.alignRight ]
+                                    )
+                                )
+                                [ dismissAction
+                                , acceptAction
                                 ]
-                                buttons
-                            ]
+                        of
+                            [] ->
+                                []
+
+                            buttons ->
+                                [ Element.row
+                                    [ Element.width Element.fill
+                                    , Element.paddingEach
+                                        { top = theme.paddingBetweenBodyAndAction
+                                        , bottom = 0
+                                        , left = 0
+                                        , right = 0
+                                        }
+                                    , Element.spacing theme.paddingBetweenButtons
+                                    ]
+                                    buttons
+                                ]
                    )
     , onDismiss =
         Dialog.dismiss dialog
