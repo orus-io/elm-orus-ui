@@ -1,7 +1,7 @@
 module OUI.Progress exposing
     ( Progress, Type(..)
     , circular, linear, withColor, withValue
-    , properties
+    , getType, getColor, getValue
     )
 
 {-| A progress widget
@@ -19,7 +19,7 @@ module OUI.Progress exposing
 
 # Internals
 
-@docs properties
+@docs getType, getColor, getValue
 
 -}
 
@@ -85,14 +85,22 @@ withValue value (Progress progress) =
         }
 
 
-{-| get the Progress properties
+{-| get the type
 -}
-properties :
-    Progress
-    ->
-        { type_ : Type
-        , color : OUI.Color
-        , value : Maybe Float
-        }
-properties (Progress progress) =
-    progress
+getType : Progress -> Type
+getType (Progress progress) =
+    progress.type_
+
+
+{-| get the color
+-}
+getColor : Progress -> OUI.Color
+getColor (Progress progress) =
+    progress.color
+
+
+{-| get the value
+-}
+getValue : Progress -> Maybe Float
+getValue (Progress progress) =
+    progress.value

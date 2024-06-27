@@ -40,7 +40,10 @@ render colorscheme theme attrs progress =
             , value : Maybe Float
             }
         props =
-            OUI.Progress.properties progress
+            { type_ = OUI.Progress.getType progress
+            , color = OUI.Progress.getColor progress
+            , value = OUI.Progress.getValue progress
+            }
     in
     case ( props.type_, props.value ) of
         ( OUI.Progress.Circular, Nothing ) ->
