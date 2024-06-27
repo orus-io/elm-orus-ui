@@ -7,7 +7,7 @@ import Element.Border as Border
 import Element.Input as Input
 import OUI
 import OUI.Material.Color exposing (toElementColor)
-import OUI.RadioButton
+import OUI.RadioButton exposing (RadioButton)
 import OUI.Utils.ARIA as ARIA
 
 
@@ -42,7 +42,7 @@ render :
     OUI.Material.Color.Scheme
     -> Theme
     -> List (Attribute msg)
-    -> OUI.RadioButton.RadioButton { hasAction : (), withSelected : () } msg
+    -> RadioButton { hasAction : (), withSelected : () } msg
     -> Element msg
 render colorscheme theme attrs radiobutton =
     let
@@ -52,7 +52,10 @@ render colorscheme theme attrs radiobutton =
             , color : OUI.Color
             }
         properties =
-            OUI.RadioButton.properties radiobutton
+            { selected = OUI.RadioButton.getSelected radiobutton
+            , onChange = OUI.RadioButton.getOnChange radiobutton
+            , color = OUI.RadioButton.getColor radiobutton
+            }
 
         aria : List (Attribute msg)
         aria =

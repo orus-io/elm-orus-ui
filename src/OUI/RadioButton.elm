@@ -2,7 +2,7 @@ module OUI.RadioButton exposing
     ( RadioButton
     , new
     , withColor, withSelected, onChange, disabled
-    , properties
+    , getColor, getOnChange, getSelected
     )
 
 {-| A Radiobutton creation API
@@ -22,7 +22,7 @@ module OUI.RadioButton exposing
 
 # Internals
 
-@docs properties
+@docs getColor, getOnChange, getSelected
 
 -}
 
@@ -95,14 +95,22 @@ disabled (RadioButton props) =
     RadioButton props
 
 
-{-| get the RadioButton properties
+{-| get the 'selected' value
 -}
-properties :
-    RadioButton { a | hasAction : (), withSelected : () } msg
-    ->
-        { selected : Bool
-        , onChange : Maybe (Bool -> msg)
-        , color : OUI.Color
-        }
-properties (RadioButton props) =
-    props
+getSelected : RadioButton c msg -> Bool
+getSelected (RadioButton props) =
+    props.selected
+
+
+{-| get the 'onChange' message
+-}
+getOnChange : RadioButton c msg -> Maybe (Bool -> msg)
+getOnChange (RadioButton props) =
+    props.onChange
+
+
+{-| get the color
+-}
+getColor : RadioButton c msg -> OUI.Color
+getColor (RadioButton props) =
+    props.color
