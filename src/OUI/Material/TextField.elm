@@ -10,6 +10,7 @@ import Element.Input as Input
 import Html.Attributes
 import OUI
 import OUI.Button as Button
+import OUI.Icon exposing (Icon)
 import OUI.Material.Button as Button
 import OUI.Material.Color
 import OUI.Material.Icon
@@ -87,9 +88,40 @@ render :
     -> Element msg
 render typescale colorscheme buttonTheme theme attrs textfield =
     let
-        p : OUI.TextField.Properties msg
+        p :
+            { onChange : String -> msg
+            , label : String
+            , datatype : OUI.TextField.Datatype
+            , spellcheck : Bool
+            , value : String
+            , onFocus : Maybe msg
+            , onLoseFocus : Maybe msg
+            , hasFocus : Bool
+            , supportingText : Maybe String
+            , color : OUI.Color
+            , type_ : OUI.TextField.Type
+            , leadingIcon : Maybe Icon
+            , trailingIcon : Maybe Icon
+            , onTrailingIconClick : Maybe msg
+            , errorIcon : Maybe Icon
+            }
         p =
-            OUI.TextField.properties textfield
+            { onChange = OUI.TextField.getOnChange textfield
+            , label = OUI.TextField.getLabel textfield
+            , datatype = OUI.TextField.getDatatype textfield
+            , spellcheck = OUI.TextField.getSpellcheck textfield
+            , value = OUI.TextField.getValue textfield
+            , onFocus = OUI.TextField.getOnFocus textfield
+            , onLoseFocus = OUI.TextField.getOnLoseFocus textfield
+            , hasFocus = OUI.TextField.getHasFocus textfield
+            , supportingText = OUI.TextField.getSupportingText textfield
+            , color = OUI.TextField.getColor textfield
+            , type_ = OUI.TextField.getType textfield
+            , leadingIcon = OUI.TextField.getLeadingIcon textfield
+            , trailingIcon = OUI.TextField.getTrailingIcon textfield
+            , onTrailingIconClick = OUI.TextField.getOnTrailingIconClick textfield
+            , errorIcon = OUI.TextField.getErrorIcon textfield
+            }
 
         isEmpty : Bool
         isEmpty =
