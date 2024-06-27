@@ -5,6 +5,8 @@ import Element.Background as Background
 import Element.Border as Border
 import Element.Input as Input
 import Html.Attributes
+import OUI
+import OUI.Icon exposing (Icon)
 import OUI.Material.Color as Color
 import OUI.Material.Icon as Icon
 import OUI.Switch as Switch exposing (Switch)
@@ -65,8 +67,25 @@ defaultTheme =
 render : Color.Scheme -> Theme -> List (Attribute msg) -> Switch msg -> Element msg
 render colorscheme theme attrs switch =
     let
-        { onChange, selected, color, iconSelected, iconUnselected } =
-            Switch.properties switch
+        onChange : Maybe (Bool -> msg)
+        onChange =
+            Switch.getOnChange switch
+
+        selected : Bool
+        selected =
+            Switch.getSelected switch
+
+        color : OUI.Color
+        color =
+            Switch.getColor switch
+
+        iconSelected : Maybe Icon
+        iconSelected =
+            Switch.getIconSelected switch
+
+        iconUnselected : Maybe Icon
+        iconUnselected =
+            Switch.getIconUnselected switch
 
         aria : List (Attribute msg)
         aria =
