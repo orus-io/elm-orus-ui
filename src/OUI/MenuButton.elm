@@ -100,8 +100,7 @@ new map onClick button menu =
     let
         menuitems : List (OUI.Menu.Item item)
         menuitems =
-            OUI.Menu.properties menu
-                |> .items
+            OUI.Menu.getItems menu
     in
     MenuButton
         { button =

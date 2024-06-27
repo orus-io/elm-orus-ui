@@ -63,7 +63,15 @@ render typescale colorscheme dividerTheme theme highlighted attrs menu =
             , textSize : OUI.Text.Size
             }
         props =
-            OUI.Menu.properties menu
+            { items = OUI.Menu.getItems menu
+            , itemToText = OUI.Menu.getItemToText menu
+            , itemToIcon = OUI.Menu.getItemToIcon menu
+            , itemToTrailingIcon = OUI.Menu.getItemToTrailingIcon menu
+            , itemSelected = OUI.Menu.getItemSelected menu
+            , onClick = OUI.Menu.getOnClick menu
+            , textType = OUI.Menu.getTextType menu
+            , textSize = OUI.Menu.getTextSize menu
+            }
 
         {- True if any entry as a leading icon -}
         hasLeadingIcons : Bool
