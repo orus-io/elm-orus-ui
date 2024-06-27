@@ -134,7 +134,11 @@ render typescale colorscheme text =
             , text : String
             }
         props =
-            OUI.Text.properties text
+            { type_ = OUI.Text.getType text
+            , size = OUI.Text.getSize text
+            , color = OUI.Text.getColor text
+            , text = OUI.Text.getText text
+            }
     in
     Element.el (attrs props.type_ props.size props.color typescale colorscheme) <|
         Element.text props.text
@@ -155,7 +159,11 @@ renderWithAttrs typescale colorscheme customAttrs text =
             , text : String
             }
         props =
-            OUI.Text.properties text
+            { type_ = OUI.Text.getType text
+            , size = OUI.Text.getSize text
+            , color = OUI.Text.getColor text
+            , text = OUI.Text.getText text
+            }
     in
     Element.el
         (attrs props.type_ props.size props.color typescale colorscheme

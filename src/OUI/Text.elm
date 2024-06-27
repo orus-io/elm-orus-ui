@@ -1,20 +1,18 @@
 module OUI.Text exposing
     ( Type(..), Size(..), Color(..), Text
-    , text, withSize, withType
-    , onColor, withColor, withCustomColor, withTextColor
     , displayLarge, displayMedium, displaySmall
     , headlineLarge, headlineMedium, headlineSmall
     , titleLarge, titleMedium, titleSmall
     , labelLarge, labelMedium, labelSmall
     , bodyLarge, bodyMedium, bodySmall
-    , properties
+    , text, withSize, withType
+    , onColor, withColor, withCustomColor, withTextColor
+    , getType, getSize, getColor, getText
     )
 
 {-|
 
 @docs Type, Size, Color, Text
-@docs text, withSize, withType
-@docs onColor, withColor, withCustomColor, withTextColor
 
 
 # Direct constructors
@@ -28,7 +26,16 @@ module OUI.Text exposing
 
 # Internal
 
-@docs properties
+
+## Setters
+
+@docs text, withSize, withType
+@docs onColor, withColor, withCustomColor, withTextColor
+
+
+## Getters
+
+@docs getType, getSize, getColor, getText
 
 -}
 
@@ -243,15 +250,29 @@ bodyLarge =
     textTypeSize Body Large
 
 
-{-| get the Text properties
+{-| get the Text type
 -}
-properties :
-    Text
-    ->
-        { type_ : Type
-        , size : Size
-        , color : Color
-        , text : String
-        }
-properties (Text props) =
-    props
+getType : Text -> Type
+getType (Text props) =
+    props.type_
+
+
+{-| get the Text size
+-}
+getSize : Text -> Size
+getSize (Text props) =
+    props.size
+
+
+{-| get the Text Color
+-}
+getColor : Text -> Color
+getColor (Text props) =
+    props.color
+
+
+{-| get the Text
+-}
+getText : Text -> String
+getText (Text props) =
+    props.text
