@@ -5,7 +5,7 @@ module OUI.Button exposing
     , onClick, disabled
     , link, newTabLink, downloadLink, downloadAsLink
     , elevatedButton, filledButton, outlinedButton, textButton, smallFAB, mediumFAB, largeFAB, extendedFAB, iconButton, filledIconButton, outlinedIconButton
-    , Properties, properties
+    , getText, getIcon, getAction, getColor, getType
     )
 
 {-| A button creation API
@@ -45,7 +45,7 @@ Instead of a direct action (or disabled), a button can be a link
 
 # Internal
 
-@docs Properties, properties
+@docs getText, getIcon, getAction, getColor, getType
 
 -}
 
@@ -275,21 +275,36 @@ downloadAsLink filename url (Button props) =
         }
 
 
-{-| properties of the Button component
+{-| get the button text
 -}
-type alias Properties msg =
-    { text : String
-    , icon : Maybe Icon
-    , action : Action msg
-    , color : Color
-    , type_ : Type
-    }
+getText : Button c msg -> String
+getText (Button props) =
+    props.text
 
 
-{-| get the Button properties
+{-| get the button icon
 -}
-properties :
-    Button { constraints | hasAction : () } msg
-    -> Properties msg
-properties (Button props) =
-    props
+getIcon : Button c msg -> Maybe Icon
+getIcon (Button props) =
+    props.icon
+
+
+{-| get the button action
+-}
+getAction : Button c msg -> Action msg
+getAction (Button props) =
+    props.action
+
+
+{-| get the button color
+-}
+getColor : Button c msg -> Color
+getColor (Button props) =
+    props.color
+
+
+{-| get the button type
+-}
+getType : Button c msg -> Type
+getType (Button props) =
+    props.type_

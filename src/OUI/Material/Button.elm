@@ -15,7 +15,7 @@ import Element.Border as Border
 import Element.Font as Font
 import Element.Input as Input
 import OUI
-import OUI.Button exposing (Button, properties)
+import OUI.Button exposing (Button)
 import OUI.Icon exposing (Icon)
 import OUI.Material.Color
 import OUI.Material.Icon as Icon
@@ -589,9 +589,20 @@ render :
     -> Element msg
 render typescale colorscheme theme rightIcon attrs button =
     let
-        props : OUI.Button.Properties msg
+        props :
+            { text : String
+            , icon : Maybe Icon
+            , action : OUI.Button.Action msg
+            , color : OUI.Color
+            , type_ : OUI.Button.Type
+            }
         props =
-            properties button
+            { text = OUI.Button.getText button
+            , icon = OUI.Button.getIcon button
+            , action = OUI.Button.getAction button
+            , color = OUI.Button.getColor button
+            , type_ = OUI.Button.getType button
+            }
     in
     renderProps typescale colorscheme theme rightIcon attrs props
 
@@ -602,7 +613,13 @@ renderProps :
     -> Theme
     -> Maybe Icon
     -> List (Attribute msg)
-    -> OUI.Button.Properties msg
+    ->
+        { text : String
+        , icon : Maybe Icon
+        , action : OUI.Button.Action msg
+        , color : OUI.Color
+        , type_ : OUI.Button.Type
+        }
     -> Element msg
 renderProps typescale colorscheme theme rightIcon attrs props =
     let
