@@ -6,8 +6,11 @@ import Element.Border as Border
 import Element.Input as Input
 import Element.Keyed as Keyed
 import Html.Attributes
+import OUI
 import OUI.Badge
+import OUI.Button exposing (Button)
 import OUI.Divider
+import OUI.Image exposing (Image)
 import OUI.Material.Badge
 import OUI.Material.Color exposing (toElementColor)
 import OUI.Material.Divider
@@ -116,9 +119,28 @@ render :
     -> Element msg
 render typescale colorscheme dividerTheme theme _ nav =
     let
-        props : OUI.Navigation.Properties btnC key msg
+        props :
+            { imageHeader : Maybe Image
+            , fab : Maybe (Button { btnC | hasAction : (), hasIcon : () } msg)
+            , header : Maybe String
+            , selected : Maybe key
+            , entries : List (OUI.Navigation.Entry key)
+            , mode : OUI.Navigation.Mode
+            , onSelect : key -> msg
+            , onDismiss : Maybe msg
+            , activeColor : OUI.Color
+            }
         props =
-            OUI.Navigation.properties nav
+            { imageHeader = OUI.Navigation.getImageHeader nav
+            , fab = OUI.Navigation.getFAB nav
+            , header = OUI.Navigation.getHeader nav
+            , selected = OUI.Navigation.getSelected nav
+            , entries = OUI.Navigation.getEntries nav
+            , mode = OUI.Navigation.getMode nav
+            , onSelect = OUI.Navigation.getOnSelect nav
+            , onDismiss = OUI.Navigation.getOnDismiss nav
+            , activeColor = OUI.Navigation.getActiveColor nav
+            }
 
         isDrawer : Bool
         isDrawer =
@@ -173,7 +195,17 @@ renderEntry :
     -> OUI.Material.Color.Scheme
     -> OUI.Material.Divider.Theme
     -> Theme
-    -> OUI.Navigation.Properties btnC key msg
+    ->
+        { imageHeader : Maybe Image
+        , fab : Maybe (Button { btnC | hasAction : (), hasIcon : () } msg)
+        , header : Maybe String
+        , selected : Maybe key
+        , entries : List (OUI.Navigation.Entry key)
+        , mode : OUI.Navigation.Mode
+        , onSelect : key -> msg
+        , onDismiss : Maybe msg
+        , activeColor : OUI.Color
+        }
     -> OUI.Navigation.Entry key
     -> Element msg
 renderEntry typescale colorscheme dividerTheme theme props entry =

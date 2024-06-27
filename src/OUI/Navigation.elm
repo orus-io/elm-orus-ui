@@ -4,7 +4,7 @@ module OUI.Navigation exposing
     , withFAB, withHeader, withImageHeader
     , addEntry, addEntryWithBadge
     , addSectionHeader, addDivider
-    , Mode(..), Entry(..), EntryProperties, Properties, properties
+    , Mode(..), Entry(..), EntryProperties, getFAB, getHeader, getImageHeader, getSelected, getEntries, getMode, getOnSelect, getOnDismiss, getActiveColor
     )
 
 {-| A Navigation drawer(+rail) component
@@ -24,7 +24,7 @@ module OUI.Navigation exposing
 
 # Internals
 
-@docs Mode, Entry, EntryProperties, Properties, properties
+@docs Mode, Entry, EntryProperties, getFAB, getHeader, getImageHeader, getSelected, getEntries, getMode, getOnSelect, getOnDismiss, getActiveColor
 
 -}
 
@@ -190,10 +190,64 @@ addEntryWithBadge key label icon badge (Navigation props) =
         }
 
 
-{-| get the Navigation properties
+{-| get the image header
 -}
-properties :
-    Navigation btnC key msg
-    -> Properties btnC key msg
-properties (Navigation props) =
-    props
+getImageHeader : Navigation btnC key msg -> Maybe Image
+getImageHeader (Navigation props) =
+    props.imageHeader
+
+
+{-| get the FAB button
+-}
+getFAB : Navigation btnC key msg -> Maybe (Button { btnC | hasAction : (), hasIcon : () } msg)
+getFAB (Navigation props) =
+    props.fab
+
+
+{-| get the text header
+-}
+getHeader : Navigation btnC key msg -> Maybe String
+getHeader (Navigation props) =
+    props.header
+
+
+{-| get the selected key
+-}
+getSelected : Navigation btnC key msg -> Maybe key
+getSelected (Navigation props) =
+    props.selected
+
+
+{-| get the entries
+-}
+getEntries : Navigation btnC key msg -> List (Entry key)
+getEntries (Navigation props) =
+    props.entries
+
+
+{-| get the mode
+-}
+getMode : Navigation btnC key msg -> Mode
+getMode (Navigation props) =
+    props.mode
+
+
+{-| get the select message
+-}
+getOnSelect : Navigation btnC key msg -> key -> msg
+getOnSelect (Navigation props) =
+    props.onSelect
+
+
+{-| get the dismiss message
+-}
+getOnDismiss : Navigation btnC key msg -> Maybe msg
+getOnDismiss (Navigation props) =
+    props.onDismiss
+
+
+{-| get the active color
+-}
+getActiveColor : Navigation btnC key msg -> Color
+getActiveColor (Navigation props) =
+    props.activeColor
