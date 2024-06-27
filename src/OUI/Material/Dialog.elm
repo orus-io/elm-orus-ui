@@ -1,11 +1,11 @@
 module OUI.Material.Dialog exposing (Theme, defaultTheme, render)
 
-import Element exposing (Attribute, Element)
+import Element exposing (Attribute)
 import Element.Background as Background
 import Element.Border as Border
 import OUI
-import OUI.Button exposing (Button)
-import OUI.Dialog as Dialog exposing (Dialog, dismiss)
+import OUI.Button
+import OUI.Dialog as Dialog exposing (Dialog)
 import OUI.Element.Modal exposing (Modal)
 import OUI.Icon
 import OUI.Material.Button
@@ -54,58 +54,62 @@ render typescale colorscheme buttonTheme theme attrs dialog =
     let
         hasIcon : Bool
         hasIcon =
-            Dialog.icon dialog /= Nothing
+            Dialog.getIcon dialog /= Nothing
 
+        dismissAction : Maybe ( String, msg )
         dismissAction =
-            Dialog.dismiss dialog
+            Dialog.getDismiss dialog
 
+        acceptAction : Maybe ( String, msg )
         acceptAction =
-            Dialog.accept dialog
+            Dialog.getAccept dialog
 
         isfullscreen : Bool
         isfullscreen =
-            Dialog.width dialog == Dialog.Fullscreen
+            Dialog.getWidth dialog == Dialog.Fullscreen
     in
     { content =
         Element.column
-            [ Element.centerX
-            , Element.centerY
-            , Element.width <|
-                case Dialog.width dialog of
-                    Dialog.Small ->
-                        Element.px theme.containerWidth.min
+            (attrs
+                ++ [ Element.centerX
+                   , Element.centerY
+                   , Element.width <|
+                        case Dialog.getWidth dialog of
+                            Dialog.Small ->
+                                Element.px theme.containerWidth.min
 
-                    Dialog.Medium ->
-                        Element.px <| (theme.containerWidth.min + theme.containerWidth.max) // 2
+                            Dialog.Medium ->
+                                Element.px <| (theme.containerWidth.min + theme.containerWidth.max) // 2
 
-                    Dialog.Large ->
-                        Element.px theme.containerWidth.max
+                            Dialog.Large ->
+                                Element.px theme.containerWidth.max
 
-                    Dialog.AutoWidth ->
-                        Element.minimum theme.containerWidth.min <|
-                            Element.maximum theme.containerWidth.max <|
-                                Element.shrink
+                            Dialog.AutoWidth ->
+                                Element.minimum theme.containerWidth.min <|
+                                    Element.maximum theme.containerWidth.max <|
+                                        Element.shrink
 
-                    Dialog.Fullscreen ->
-                        Element.fill
-            , Element.height <|
-                if isfullscreen then
-                    Element.fill
+                            Dialog.Fullscreen ->
+                                Element.fill
+                   , Element.height <|
+                        if isfullscreen then
+                            Element.fill
 
-                else
-                    Element.shrink
-            , Element.padding theme.padding
-            , Border.rounded <|
-                if isfullscreen then
-                    0
+                        else
+                            Element.shrink
+                   , Element.padding theme.padding
+                   , Border.rounded <|
+                        if isfullscreen then
+                            0
 
-                else
-                    theme.containerShape
-            , Background.color <|
-                Color.toElementColor colorscheme.surfaceContainerHigh
-            ]
+                        else
+                            theme.containerShape
+                   , Background.color <|
+                        Color.toElementColor colorscheme.surfaceContainerHigh
+                   ]
+            )
         <|
-            (case Dialog.icon dialog of
+            (case Dialog.getIcon dialog of
                 Just icon ->
                     [ icon
                         |> OUI.Icon.withSize theme.iconSize
@@ -126,7 +130,7 @@ render typescale colorscheme buttonTheme theme attrs dialog =
                 Nothing ->
                     []
             )
-                ++ [ Dialog.headline dialog
+                ++ [ Dialog.getHeadline dialog
                         |> OUI.Text.headlineSmall
                         |> Typography.renderWithAttrs typescale
                             colorscheme
@@ -172,7 +176,7 @@ render typescale colorscheme buttonTheme theme attrs dialog =
                                 identity
                            )
                    ]
-                ++ (case Dialog.supportingText dialog of
+                ++ (case Dialog.getSupportingText dialog of
                         Just text ->
                             [ Element.paragraph
                                 []
@@ -233,6 +237,6 @@ render typescale colorscheme buttonTheme theme attrs dialog =
                                 ]
                    )
     , onDismiss =
-        Dialog.dismiss dialog
+        Dialog.getDismiss dialog
             |> Maybe.map Tuple.second
     }

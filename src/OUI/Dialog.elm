@@ -2,7 +2,7 @@ module OUI.Dialog exposing
     ( Dialog, Width(..), new
     , withIcon, withSupportingText, withWidth
     , onDismiss, onAccept
-    , headline, icon, supportingText, width, accept, dismiss
+    , getHeadline, getIcon, getSupportingText, getWidth, getAccept, getDismiss
     )
 
 {-| Dialogs provide important prompts in a user flow
@@ -19,7 +19,7 @@ module OUI.Dialog exposing
 
 # Getters
 
-@docs headline, icon, supportingText, width, accept, dismiss
+@docs getHeadline, getIcon, getSupportingText, getWidth, getAccept, getDismiss
 
 -}
 
@@ -113,37 +113,43 @@ onDismiss label msg (Dialog dialog) =
         }
 
 
-{-| -}
-icon : Dialog msg -> Maybe Icon
-icon (Dialog dialog) =
+{-| get the icon
+-}
+getIcon : Dialog msg -> Maybe Icon
+getIcon (Dialog dialog) =
     dialog.icon
 
 
-{-| -}
-headline : Dialog msg -> String
-headline (Dialog dialog) =
+{-| get the headline
+-}
+getHeadline : Dialog msg -> String
+getHeadline (Dialog dialog) =
     dialog.headline
 
 
-{-| -}
-supportingText : Dialog msg -> Maybe String
-supportingText (Dialog dialog) =
+{-| get the supporting text
+-}
+getSupportingText : Dialog msg -> Maybe String
+getSupportingText (Dialog dialog) =
     dialog.supportingText
 
 
-{-| -}
-width : Dialog msg -> Width
-width (Dialog dialog) =
+{-| get the width
+-}
+getWidth : Dialog msg -> Width
+getWidth (Dialog dialog) =
     dialog.width
 
 
-{-| -}
-accept : Dialog msg -> Maybe ( String, msg )
-accept (Dialog dialog) =
+{-| get the 'accept' action
+-}
+getAccept : Dialog msg -> Maybe ( String, msg )
+getAccept (Dialog dialog) =
     dialog.accept
 
 
-{-| -}
-dismiss : Dialog msg -> Maybe ( String, msg )
-dismiss (Dialog dialog) =
+{-| get the 'dismiss' action
+-}
+getDismiss : Dialog msg -> Maybe ( String, msg )
+getDismiss (Dialog dialog) =
     dialog.dismiss
