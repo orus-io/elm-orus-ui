@@ -2,7 +2,7 @@ module OUI.Icon exposing
     ( Icon, withSize, withColor
     , blank, check, clear, light_mode, dark_mode, arrow_drop_down, arrow_drop_up
     , elmMaterialIcons, materialIcons
-    , Renderer(..), Properties, properties
+    , Renderer(..), getSize, getColor, getRenderer
     )
 
 {-|
@@ -25,7 +25,7 @@ module OUI.Icon exposing
 
 # Internals
 
-@docs Renderer, Properties, properties
+@docs Renderer, getSize, getColor, getRenderer
 
 -}
 
@@ -332,19 +332,22 @@ materialIcons fun =
             )
 
 
-{-| properties of the Icon component
+{-| get the size
 -}
-type alias Properties =
-    { size : Maybe Int
-    , color : Maybe OUI.Color
-    , renderer : Renderer
-    }
+getSize : Icon -> Maybe Int
+getSize (Icon props) =
+    props.size
 
 
-{-| returns the properties of an icon
+{-| get the color
 -}
-properties :
-    Icon
-    -> Properties
-properties (Icon props) =
-    props
+getColor : Icon -> Maybe OUI.Color
+getColor (Icon props) =
+    props.color
+
+
+{-| get the renderer
+-}
+getRenderer : Icon -> Renderer
+getRenderer (Icon props) =
+    props.renderer

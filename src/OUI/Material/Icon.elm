@@ -11,9 +11,16 @@ import Svg
 renderWithSizeColor : Int -> Color -> List (Attribute msg) -> Icon -> Element msg
 renderWithSizeColor size color attrs icon =
     let
-        properties : OUI.Icon.Properties
+        properties :
+            { size : Maybe Int
+            , color : Maybe OUI.Color
+            , renderer : OUI.Icon.Renderer
+            }
         properties =
-            OUI.Icon.properties icon
+            { size = OUI.Icon.getSize icon
+            , color = OUI.Icon.getColor icon
+            , renderer = OUI.Icon.getRenderer icon
+            }
     in
     (case properties.renderer of
         OUI.Icon.Html renderHtml ->
@@ -38,9 +45,16 @@ renderWithSizeColor size color attrs icon =
 render : OUI.Material.Color.Scheme -> List (Attribute msg) -> Icon -> Element msg
 render colorscheme attrs icon =
     let
-        properties : OUI.Icon.Properties
+        properties :
+            { size : Maybe Int
+            , color : Maybe OUI.Color
+            , renderer : OUI.Icon.Renderer
+            }
         properties =
-            OUI.Icon.properties icon
+            { size = OUI.Icon.getSize icon
+            , color = OUI.Icon.getColor icon
+            , renderer = OUI.Icon.getRenderer icon
+            }
 
         size : Int
         size =
