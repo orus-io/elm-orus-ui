@@ -6,6 +6,7 @@ import Element.Border as Border
 import Element.Input as Input
 import OUI
 import OUI.Checkbox
+import OUI.Icon exposing (Icon)
 import OUI.Material.Color exposing (toElementColor)
 import OUI.Material.Icon as Icon
 import OUI.Utils.ARIA as ARIA
@@ -44,9 +45,18 @@ render :
     -> Element msg
 render colorscheme theme attrs checkbox =
     let
-        properties : OUI.Checkbox.Properties msg
+        properties :
+            { checked : Bool
+            , icon : Icon
+            , onChange : Maybe (Bool -> msg)
+            , color : OUI.Color
+            }
         properties =
-            OUI.Checkbox.properties checkbox
+            { checked = OUI.Checkbox.getChecked checkbox
+            , icon = OUI.Checkbox.getIcon checkbox
+            , onChange = OUI.Checkbox.getOnChange checkbox
+            , color = OUI.Checkbox.getColor checkbox
+            }
 
         aria : List (Attribute msg)
         aria =

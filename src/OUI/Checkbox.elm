@@ -1,7 +1,7 @@
 module OUI.Checkbox exposing
     ( new, Checkbox
     , withIcon, withColor, withChecked, onChange, disabled
-    , Properties, properties
+    , getChecked, getIcon, getOnChange, getColor
     )
 
 {-|
@@ -15,7 +15,7 @@ module OUI.Checkbox exposing
 
 # Internals
 
-@docs Properties, properties
+@docs getChecked, getIcon, getOnChange, getColor
 
 -}
 
@@ -103,10 +103,29 @@ disabled (Checkbox props) =
     Checkbox props
 
 
-{-| get the Checkbox properties
+{-| get the 'checked' state
 -}
-properties :
-    Checkbox { a | hasAction : (), withChecked : () } msg
-    -> Properties msg
-properties (Checkbox props) =
-    props
+getChecked : Checkbox c msg -> Bool
+getChecked (Checkbox props) =
+    props.checked
+
+
+{-| get the icon
+-}
+getIcon : Checkbox c msg -> Icon
+getIcon (Checkbox props) =
+    props.icon
+
+
+{-| get the on change handler
+-}
+getOnChange : Checkbox c msg -> Maybe (Bool -> msg)
+getOnChange (Checkbox props) =
+    props.onChange
+
+
+{-| get the color
+-}
+getColor : Checkbox c msg -> OUI.Color
+getColor (Checkbox props) =
+    props.color
