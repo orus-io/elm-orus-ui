@@ -37,7 +37,13 @@ render typescale colorscheme buttonTheme dividerTheme menuTheme state attrs menu
             , openCloseIcons : Maybe ( Icon, Icon )
             }
         props =
-            OUI.MenuButton.properties menuBtn
+            { button = OUI.MenuButton.getButton menuBtn
+            , menu = OUI.MenuButton.getMenu menuBtn
+            , menuAlign = OUI.MenuButton.getMenuAlign menuBtn
+            , onKeyDown = OUI.MenuButton.getOnKeyDown menuBtn
+            , onLoseFocus = OUI.MenuButton.getOnLoseFocus menuBtn
+            , openCloseIcons = OUI.MenuButton.getOpenCloseIcons menuBtn
+            }
     in
     Button.render typescale
         colorscheme

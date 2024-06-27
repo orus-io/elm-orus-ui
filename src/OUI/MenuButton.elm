@@ -3,7 +3,7 @@ module OUI.MenuButton exposing
     , new, alignLeft, alignRight, withOpenCloseIcons
     , State, Msg, init, update, onOutsideClick
     , Effect(..), updateWithoutPerform, performEffect
-    , properties
+    , getButton, getMenu, getMenuAlign, getOnKeyDown, getOnLoseFocus, getOpenCloseIcons
     )
 
 {-| A button+menu creation API
@@ -36,7 +36,7 @@ everything you need.
 
 # Internal
 
-@docs properties
+@docs getButton, getMenu, getMenuAlign, getOnKeyDown, getOnLoseFocus, getOpenCloseIcons
 
 -}
 
@@ -378,17 +378,43 @@ performEffect (Loopback msg) =
     Task.perform identity <| Task.succeed msg
 
 
-{-| get the MenuButton properties
+{-| get the button
 -}
-properties :
-    MenuButton btnC item msg
-    ->
-        { button : OUI.Button.Button { btnC | hasAction : () } msg
-        , menu : OUI.Menu.Menu item msg
-        , menuAlign : Align
-        , onKeyDown : Key -> msg
-        , onLoseFocus : msg
-        , openCloseIcons : Maybe ( Icon, Icon )
-        }
-properties (MenuButton props) =
-    props
+getButton : MenuButton btnC item msg -> OUI.Button.Button { btnC | hasAction : () } msg
+getButton (MenuButton props) =
+    props.button
+
+
+{-| get the menu
+-}
+getMenu : MenuButton btnC item msg -> OUI.Menu.Menu item msg
+getMenu (MenuButton props) =
+    props.menu
+
+
+{-| get the menu alignment
+-}
+getMenuAlign : MenuButton btnC item msg -> Align
+getMenuAlign (MenuButton props) =
+    props.menuAlign
+
+
+{-| get the keydown message
+-}
+getOnKeyDown : MenuButton btnC item msg -> Key -> msg
+getOnKeyDown (MenuButton props) =
+    props.onKeyDown
+
+
+{-| get the lose focus message
+-}
+getOnLoseFocus : MenuButton btnC item msg -> msg
+getOnLoseFocus (MenuButton props) =
+    props.onLoseFocus
+
+
+{-| get the open/close icons
+-}
+getOpenCloseIcons : MenuButton btnC item msg -> Maybe ( Icon, Icon )
+getOpenCloseIcons (MenuButton props) =
+    props.openCloseIcons
