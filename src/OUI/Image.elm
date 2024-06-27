@@ -1,6 +1,6 @@
 module OUI.Image exposing
     ( Image, url, svg, withDescription
-    , Src, properties
+    , Src, getDescription, getSrc
     )
 
 {-| Image component
@@ -10,7 +10,7 @@ module OUI.Image exposing
 
 # Internals
 
-@docs Src, properties
+@docs Src, getDescription, getSrc
 
 -}
 
@@ -51,10 +51,15 @@ withDescription description src =
     Image src description
 
 
-{-| get the Image properties
+{-| get the description
 -}
-properties : Image -> { description : String, src : Src }
-properties (Image src description) =
-    { description = description
-    , src = src
-    }
+getDescription : Image -> String
+getDescription (Image _ description) =
+    description
+
+
+{-| get the src
+-}
+getSrc : Image -> Src
+getSrc (Image src _) =
+    src
