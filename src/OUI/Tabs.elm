@@ -1,7 +1,7 @@
 module OUI.Tabs exposing
     ( Type(..), Tabs
     , new, withType, secondary, withIcon, withBadge, withItems, withSelected
-    , properties
+    , getColor, getItemToBadge, getItemToIcon, getItemToText, getItems, getOnClick, getSelected, getType
     )
 
 {-| A tabs component that implement the material specs : <https://m3.material.io/components/tabs/overview>
@@ -19,7 +19,7 @@ module OUI.Tabs exposing
 
 # internals
 
-@docs properties
+@docs getColor, getItemToBadge, getItemToIcon, getItemToText, getItems, getOnClick, getSelected, getType
 
 -}
 
@@ -127,19 +127,57 @@ withSelected key (Tabs tabs) =
         }
 
 
-{-| get the Tabs properties
+{-| get the type
 -}
-properties :
-    Tabs key item msg
-    ->
-        { type_ : Type
-        , items : List ( key, item )
-        , itemToText : item -> String
-        , itemToIcon : item -> Maybe Icon
-        , itemToBadge : item -> Maybe Badge
-        , selected : Maybe key
-        , onClick : key -> msg
-        , color : OUI.Color
-        }
-properties (Tabs props) =
-    props
+getType : Tabs key item msg -> Type
+getType (Tabs props) =
+    props.type_
+
+
+{-| get the items
+-}
+getItems : Tabs key item msg -> List ( key, item )
+getItems (Tabs props) =
+    props.items
+
+
+{-| get the itemToText function
+-}
+getItemToText : Tabs key item msg -> item -> String
+getItemToText (Tabs props) =
+    props.itemToText
+
+
+{-| get the itemToIcon function
+-}
+getItemToIcon : Tabs key item msg -> item -> Maybe Icon
+getItemToIcon (Tabs props) =
+    props.itemToIcon
+
+
+{-| get the itemToBadge function
+-}
+getItemToBadge : Tabs key item msg -> item -> Maybe Badge
+getItemToBadge (Tabs props) =
+    props.itemToBadge
+
+
+{-| get the selected key
+-}
+getSelected : Tabs key item msg -> Maybe key
+getSelected (Tabs props) =
+    props.selected
+
+
+{-| get the 'on click' message
+-}
+getOnClick : Tabs key item msg -> key -> msg
+getOnClick (Tabs props) =
+    props.onClick
+
+
+{-| get the color
+-}
+getColor : Tabs key item msg -> OUI.Color
+getColor (Tabs props) =
+    props.color

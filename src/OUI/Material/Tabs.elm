@@ -298,7 +298,15 @@ render typescale colorscheme btheme theme attrs tabs =
             , color : OUI.Color
             }
         props =
-            OUI.Tabs.properties tabs
+            { type_ = OUI.Tabs.getType tabs
+            , items = OUI.Tabs.getItems tabs
+            , itemToText = OUI.Tabs.getItemToText tabs
+            , itemToIcon = OUI.Tabs.getItemToIcon tabs
+            , itemToBadge = OUI.Tabs.getItemToBadge tabs
+            , selected = OUI.Tabs.getSelected tabs
+            , onClick = OUI.Tabs.getOnClick tabs
+            , color = OUI.Tabs.getColor tabs
+            }
 
         isPrimary : Bool
         isPrimary =
