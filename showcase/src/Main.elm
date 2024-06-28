@@ -1,13 +1,11 @@
 module Main exposing (..)
 
 import Browser
-import Color exposing (Color)
 import IcidassetMaterialIcons.Outlined as Outlined
 import IcidassetMaterialIcons.Regular as Regular
 import IcidassetMaterialIcons.Round as Round
 import Material.Icons.Types exposing (Coloring(..))
 import OUI.Explorer as Explorer
-import OUI.Icon
 import OUI.Material.Color
 import OUI.Material.Theme as Theme exposing (Theme)
 import OUI.Material.Typography
