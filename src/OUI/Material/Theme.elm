@@ -1,22 +1,114 @@
 module OUI.Material.Theme exposing
-    ( Theme, defaultTheme, Typescale, defaultTypescale, withExt
-    , BadgeTheme, ButtonTheme, CheckboxTheme, DialogTheme, DividerTheme, MenuTheme, NavigationTheme, ProgressTheme, SwitchTheme, TextFieldTheme, RadioButtonTheme, TabsTheme
-    , colorscheme, typescale, badge, button, checkbox, dialog, divider, menu, navigation, progress, switch, textfield, radiobutton, tabs, ext
-    , withBadge, withButton, withCheckbox, withColorscheme, withDialog, withDivider, withMenu, withNavigation, withProgress, withRadiobutton, withSwitch, withTabs, withTextfield, withTypescale
+    ( Theme, defaultTheme
+    , Typescale, Typography, defaultTypescale, typescale, withTypescale
+    , colorscheme, withColorscheme
+    , ext, withExt
+    , BadgeTheme, badge, withBadge
+    , ButtonTheme, ButtonLayout, ButtonFABLayout, ButtonIconLayout, button, withButton
+    , CheckboxTheme, checkbox, withCheckbox
+    , DialogTheme, dialog, withDialog
+    , DividerTheme, divider, withDivider
+    , MenuTheme, menu, withMenu
+    , NavigationTheme, navigation, withNavigation
+    , ProgressTheme, progress, withProgress
+    , RadioButtonTheme, radiobutton, withRadiobutton
+    , SwitchTheme, switch, withSwitch
+    , TabsTheme, tabs, withTabs
+    , TextFieldTheme, textfield, withTextfield
     )
 
 {-|
 
-@docs Theme, defaultTheme, Typescale, defaultTypescale, withExt
 
-@docs BadgeTheme, ButtonTheme, CheckboxTheme, DialogTheme, DividerTheme, MenuTheme, NavigationTheme, ProgressTheme, SwitchTheme, TextFieldTheme, RadioButtonTheme, TabsTheme
+# Constructor
 
-@docs colorscheme, typescale, badge, button, checkbox, dialog, divider, menu, navigation, progress, switch, textfield, radiobutton, tabs, ext
+@docs Theme, defaultTheme
 
-@docs withBadge, withButton, withCheckbox, withColorscheme, withDialog, withDivider, withMenu, withNavigation, withProgress, withRadiobutton, withSwitch, withTabs, withTextfield, withTypescale
+
+# Core properties
+
+
+## Typescale
+
+@docs Typescale, Typography, defaultTypescale, typescale, withTypescale
+
+
+## Color scheme
+
+@docs colorscheme, withColorscheme
+
+
+## Extension
+
+@docs ext, withExt
+
+
+# Component themes
+
+
+## Badge
+
+@docs BadgeTheme, badge, withBadge
+
+
+## Button
+
+@docs ButtonTheme, ButtonLayout, ButtonFABLayout, ButtonIconLayout, button, withButton
+
+
+## Checkbox
+
+@docs CheckboxTheme, checkbox, withCheckbox
+
+
+## Dialog
+
+@docs DialogTheme, dialog, withDialog
+
+
+## Divider
+
+@docs DividerTheme, divider, withDivider
+
+
+## Menu
+
+@docs MenuTheme, menu, withMenu
+
+
+## Navigation
+
+@docs NavigationTheme, navigation, withNavigation
+
+
+## Progress
+
+@docs ProgressTheme, progress, withProgress
+
+
+## Radio button
+
+@docs RadioButtonTheme, radiobutton, withRadiobutton
+
+
+## Switch
+
+@docs SwitchTheme, switch, withSwitch
+
+
+## Tabs
+
+@docs TabsTheme, tabs, withTabs
+
+
+## TextField
+
+@docs TextFieldTheme, textfield, withTextfield
 
 -}
 
+import OUI
+import OUI.Icon
 import OUI.Material.Badge
 import OUI.Material.Button
 import OUI.Material.Checkbox
@@ -30,90 +122,302 @@ import OUI.Material.RadioButton
 import OUI.Material.Switch
 import OUI.Material.Tabs
 import OUI.Material.TextField
-import OUI.Material.Typography
+import OUI.Text
 
 
 {-| A badge theme
 -}
 type alias BadgeTheme =
-    OUI.Material.Badge.Theme
+    { small :
+        { shape : Int
+        , size : Int
+
+        -- position of the badge bottom left corner relative to the top right corner of the element
+        , pos : ( Int, Int )
+        }
+    , large :
+        { shape : Int
+        , size : Int
+        , padding : Int
+        , textSize : OUI.Text.Size
+        , textType : OUI.Text.Type
+        , textColor : OUI.Text.Color
+
+        -- position of the badge bottom left corner relative to the top right corner of the element
+        , pos : ( Int, Int )
+        }
+    , color : OUI.Color
+    }
+
+
+{-| A normal button layout
+-}
+type alias ButtonLayout =
+    { containerHeight : Int
+    , containerRadius : Int
+    , iconSize : Int
+    , leftRightPadding : Int
+    , leftPaddingWithIcon : Int
+    , rightPaddingWithIcon : Int
+    , paddingBetweenElements : Int
+    , textType : OUI.Text.Type
+    , textSize : OUI.Text.Size
+
+    -- Label text alignment Center-aligned
+    }
+
+
+{-| A FAB button layout
+-}
+type alias ButtonFABLayout =
+    { containerHeight : Int
+    , containerShape : Int
+    , containerWidth : Int
+    , iconSize : Int
+    }
+
+
+{-| A Icon button layout
+-}
+type alias ButtonIconLayout =
+    { iconSize : Int
+    , containerSize : Int
+    }
 
 
 {-| A Button theme
 -}
 type alias ButtonTheme =
-    OUI.Material.Button.Theme
-
-
-{-| A RadioButton theme
--}
-type alias RadioButtonTheme =
-    OUI.Material.RadioButton.Theme
+    { common : ButtonLayout
+    , fab :
+        { small : ButtonFABLayout
+        , medium : ButtonFABLayout
+        , large : ButtonFABLayout
+        , extended : ButtonLayout
+        }
+    , icon : ButtonIconLayout
+    }
 
 
 {-| A Checkbox theme
 -}
 type alias CheckboxTheme =
-    OUI.Material.Checkbox.Theme
+    { containerWidth : Int
+    , containerHeight : Int
+    , containerShape : Int
+    , iconSize : Int
+    , stateLayerSize : Int
+    }
 
 
 {-| A Dialog theme
 -}
 type alias DialogTheme =
-    OUI.Material.Dialog.Theme
-
-
-{-| A Menu theme
--}
-type alias MenuTheme =
-    OUI.Material.Menu.Theme
-
-
-{-| A Navigation theme
--}
-type alias NavigationTheme =
-    OUI.Material.Navigation.Theme
-
-
-{-| A Progress theme
--}
-type alias ProgressTheme =
-    OUI.Material.Progress.Theme
-
-
-{-| A Switch theme
--}
-type alias SwitchTheme =
-    OUI.Material.Switch.Theme
-
-
-{-| A Tabs theme
--}
-type alias TabsTheme =
-    OUI.Material.Tabs.Theme
-
-
-{-| A TextField theme
--}
-type alias TextFieldTheme =
-    OUI.Material.TextField.Theme
+    { containerShape : Int
+    , containerWidth : { min : Int, max : Int }
+    , iconSize : Int
+    , padding : Int
+    , paddingBetweenButtons : Int
+    , paddingBetweenIconAndTitle : Int
+    , paddingBetweenTitleAndBody : Int
+    , paddingBetweenBodyAndAction : Int
+    , fsCloseIcon : OUI.Icon.Icon
+    }
 
 
 {-| A Divider theme
 -}
 type alias DividerTheme =
-    OUI.Material.Divider.Theme
+    { thickness : Int
+    }
+
+
+{-| A Menu theme
+-}
+type alias MenuTheme =
+    { radius : Int
+    , topBottomPadding : Int
+    , leftRightPadding : Int
+    , paddingWithinItem : Int
+    , itemHeight : Int
+    , iconSize : Int
+    , minWidth : Int
+    , maxWidth : Int
+    }
+
+
+{-| A Navigation theme
+-}
+type alias NavigationTheme =
+    { drawer :
+        { containerWidth : Int
+        , iconSize : Int
+        , activeIndicatorHeight : Int
+        , activeIndicatorShape : Int
+        , activeIndicatorWidth : Int
+        , leftPadding : Int
+        , rightPadding : Int
+        , activeIndicatorPadding : Int
+        , badgeRightPadding : Int
+        , paddingBetweenElements : Int
+        }
+    , rail :
+        { containerWidth : Int
+        , destinationItemHeight : Int
+        , activeIndicatorHeight : Int
+        , activeIndicatorWidth : Int
+        , activeIndicatorShape : Int
+        , iconSize : Int
+        , badgeTheme : BadgeTheme
+        , paddingBetweenEdgeAndActiveIndicator : Int
+        , paddingbetweenActiveIndicatorAndLabelText : Int
+        , paddingBetweenDestinationItems : Int
+        }
+    }
+
+
+{-| A Progress theme
+-}
+type alias ProgressTheme =
+    { activeIndicator : { thickness : Int }
+    , trackIndicator : { thickness : Int }
+    , circularSize : Int
+    }
+
+
+{-| A RadioButton theme
+-}
+type alias RadioButtonTheme =
+    { containerWidth : Int
+    , containerHeight : Int
+    , containerShape : Int
+    , contentSize : Int
+    , stateLayerSize : Int
+    , borderWidth : Int
+    }
+
+
+{-| A Switch theme
+-}
+type alias SwitchTheme =
+    { track :
+        { height : Int
+        , width : Int
+        , outlineWidth : Int
+        , corner : Int
+        }
+    , thumb :
+        { size :
+            { unselected : Int
+            , withIcon : Int
+            , selected : Int
+            , pressed : Int
+            }
+        }
+    , stateLayer :
+        { size : Int
+        }
+    , icon :
+        { sizeUnselected : Int
+        , sizeSelected : Int
+        }
+    }
+
+
+{-| A Tabs theme
+-}
+type alias TabsTheme =
+    { primary :
+        { containerHeight : Int
+        , activeIndicatorHeight : Int
+        , activeIndicatorWidth : Int
+        }
+    , secondary :
+        { containerHeight : Int
+        , activeIndicatorHeight : Int
+        }
+    , paddingBetweenIconAndText : Int
+    , paddingBetweenInlineIconAndText : Int
+    , paddingBetweenInlineTextAndBadge : Int
+    , text :
+        { size : OUI.Text.Size
+        , type_ : OUI.Text.Type
+        }
+    , color :
+        { selected : OUI.Color
+        }
+    }
+
+
+{-| A TextField theme
+-}
+type alias TextFieldTheme =
+    { height : Int
+    , leftRightPaddingWithoutIcon : Int
+    , leftRightPaddingWithIcon : Int
+    , paddingBetweenIconAndText : Int
+    , supportingTextTopPadding : Int
+    , paddingBetweenSupportingTextAndCharacterCounter : Int
+    , iconSize : Int
+    , filled :
+        { topBottomPadding : Int
+        }
+    , outlined :
+        { labelLeftRightPadding : Int
+        , labelBottom : Int
+        , shape : Int
+        }
+    }
+
+
+{-| A font type
+-}
+type alias Typography =
+    { font : String
+    , lineHeight : Int
+    , size : Int
+    , tracking : Float
+    , weight : Int
+    }
 
 
 {-| A font typescale
 -}
 type alias Typescale =
-    OUI.Material.Typography.Typescale
+    { display :
+        { small : Typography
+        , medium : Typography
+        , large : Typography
+        }
+    , headline :
+        { small : Typography
+        , medium : Typography
+        , large : Typography
+        }
+    , title :
+        { small : Typography
+        , medium : Typography
+        , large : Typography
+        }
+    , label :
+        { small : Typography
+        , medium : Typography
+        , large : Typography
+        }
+    , body :
+        { small : Typography
+        , medium : Typography
+        , large : Typography
+        }
+    }
 
 
 {-| A material theme
 
 Contains a color scheme, a typescale, and layouts for all the components
+
+It can also carry a custom extension to store your own components theme, extra
+colors, or anything that makes sense in your application
 
 -}
 type Theme ext
@@ -136,7 +440,7 @@ type Theme ext
         }
 
 
-{-| get the coloscheme
+{-| get the color [Scheme](OUI-Material-Color#Scheme)
 -}
 colorscheme : Theme ext -> OUI.Material.Color.Scheme
 colorscheme (Theme t) =
