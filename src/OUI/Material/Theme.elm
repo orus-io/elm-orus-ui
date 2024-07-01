@@ -12,6 +12,7 @@ module OUI.Material.Theme exposing
     , NavigationTheme, navigation, withNavigation
     , ProgressTheme, progress, withProgress
     , RadioButtonTheme, radiobutton, withRadiobutton
+    , SliderTheme, slider, withSlider
     , SwitchTheme, switch, withSwitch
     , TabsTheme, tabs, withTabs
     , TextFieldTheme, textfield, withTextfield
@@ -91,6 +92,11 @@ module OUI.Material.Theme exposing
 @docs RadioButtonTheme, radiobutton, withRadiobutton
 
 
+## Slider
+
+@docs SliderTheme, slider, withSlider
+
+
 ## Switch
 
 @docs SwitchTheme, switch, withSwitch
@@ -119,6 +125,7 @@ import OUI.Material.Menu
 import OUI.Material.Navigation
 import OUI.Material.Progress
 import OUI.Material.RadioButton
+import OUI.Material.Slider
 import OUI.Material.Switch
 import OUI.Material.Tabs
 import OUI.Material.TextField
@@ -297,6 +304,17 @@ type alias RadioButtonTheme =
     }
 
 
+{-| A Slider theme
+-}
+type alias SliderTheme =
+    { trackHeight : Int
+    , labelContainerHeight : Int
+    , labelContainerWidth : Int
+    , handleHeight : Int
+    , handleWidth : Int
+    }
+
+
 {-| A Switch theme
 -}
 type alias SwitchTheme =
@@ -432,6 +450,7 @@ type Theme ext
         , menu : MenuTheme
         , navigation : NavigationTheme
         , progress : ProgressTheme
+        , slider : SliderTheme
         , switch : SwitchTheme
         , tabs : TabsTheme
         , textfield : TextFieldTheme
@@ -508,6 +527,13 @@ navigation (Theme t) =
 progress : Theme ext -> ProgressTheme
 progress (Theme t) =
     t.progress
+
+
+{-| get the slider theme
+-}
+slider : Theme ext -> SliderTheme
+slider (Theme t) =
+    t.slider
 
 
 {-| get the switch theme
@@ -615,6 +641,13 @@ withProgress value (Theme t) =
     Theme { t | progress = value }
 
 
+{-| set the slider theme
+-}
+withSlider : SliderTheme -> Theme ext -> Theme ext
+withSlider value (Theme t) =
+    Theme { t | slider = value }
+
+
 {-| set the switch theme
 -}
 withSwitch : SwitchTheme -> Theme ext -> Theme ext
@@ -659,6 +692,7 @@ withExt themeExt (Theme t) =
         , navigation = t.navigation
         , progress = t.progress
         , radiobutton = t.radiobutton
+        , slider = t.slider
         , switch = t.switch
         , tabs = t.tabs
         , textfield = t.textfield
@@ -682,6 +716,7 @@ defaultTheme =
         , navigation = OUI.Material.Navigation.defaultTheme
         , progress = OUI.Material.Progress.defaultTheme
         , radiobutton = OUI.Material.RadioButton.defaultTheme
+        , slider = OUI.Material.Slider.defaultTheme
         , switch = OUI.Material.Switch.defaultTheme
         , tabs = OUI.Material.Tabs.defaultTheme
         , textfield = OUI.Material.TextField.defaultTheme
