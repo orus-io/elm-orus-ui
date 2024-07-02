@@ -3,10 +3,12 @@ module OUI.Showcase.Buttons exposing (book, commonButtonVariants, commonButtons)
 import Element exposing (Element)
 import OUI
 import OUI.Button as Button exposing (Button)
+import OUI.Divider as Divider
 import OUI.Explorer as Explorer
 import OUI.Icon exposing (clear)
 import OUI.Material as Material
 import OUI.Material.Theme
+import OUI.Text as Text
 
 
 book : Explorer.Book themeExt () ()
@@ -57,22 +59,42 @@ commonButtonVariants theme label btnType =
 commonButtons : Explorer.Shared themeExt -> Element (Explorer.BookMsg ())
 commonButtons { theme } =
     let
-        btnRow : String -> (Button { hasNoIcon : (), needOnClickOrDisabled : () } (Explorer.BookMsg msg) -> Button { hasNoIcon : (), needOnClickOrDisabled : () } (Explorer.BookMsg msg)) -> Element (Explorer.BookMsg msg)
+        btnRow :
+            String
+            ->
+                (Button
+                    { hasNoIcon : ()
+                    , needOnClickOrDisabled : ()
+                    }
+                    (Explorer.BookMsg msg)
+                 ->
+                    Button
+                        { hasNoIcon : ()
+                        , needOnClickOrDisabled : ()
+                        }
+                        (Explorer.BookMsg msg)
+                )
+            -> Element (Explorer.BookMsg msg)
         btnRow label btnType =
             commonButtonVariants theme label btnType
-                |> (::) (Element.text label)
+                |> (::) (Text.titleSmall label |> Material.text theme)
                 |> List.map (Element.el [ Element.width <| Element.px 100 ])
                 |> Element.row [ Element.spacing 30 ]
+
+        divider =
+            Divider.new |> Material.divider theme []
     in
     Element.column [ Element.spacing 30 ]
-        [ Element.text "Common buttons"
+        [ divider
+        , Text.titleLarge "Common buttons" |> Material.text theme
         , Element.column [ Element.spacing 30 ]
             [ btnRow "Elevated" Button.elevatedButton
             , btnRow "Filled" Button.filledButton
             , btnRow "Outlined" Button.outlinedButton
             , btnRow "Text" Button.textButton
             ]
-        , Element.text "FAB"
+        , divider
+        , Text.titleLarge "FAB" |> Material.text theme
         , Element.row [ Element.spacing 30 ]
             (let
                 btn : String -> Button { hasIcon : (), needOnClickOrDisabled : () } (Explorer.BookMsg msg)
@@ -124,7 +146,8 @@ commonButtons { theme } =
                 |> Material.button theme [ Element.centerX ]
              ]
             )
-        , Element.text "Icon Buttons"
+        , divider
+        , Text.titleLarge "Icon buttons" |> Material.text theme
         , Element.row [ Element.spacing 30 ]
             (let
                 btn : String -> Button { hasIcon : (), needOnClickOrDisabled : () } (Explorer.BookMsg msg)
@@ -140,7 +163,7 @@ commonButtons { theme } =
                 linkBtn : String -> Button { hasAction : (), hasIcon : () } (Explorer.BookMsg msg)
                 linkBtn s =
                     btn s
-                        |> Button.link "#/Basics/Button"
+                        |> Button.link "#/Basics/Buttons"
              in
              [ clickBtn "Standard"
                 |> Button.iconButton
