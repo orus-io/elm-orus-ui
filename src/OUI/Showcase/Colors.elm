@@ -3,6 +3,7 @@ module OUI.Showcase.Colors exposing (book)
 import Color exposing (Color)
 import Element exposing (Element)
 import Element.Background as Background
+import Element.Border as Border
 import Element.Font as Font
 import OUI.Explorer as Explorer
 import OUI.Material.Color
@@ -23,6 +24,11 @@ colorCell name color onColor height =
 
 showColorScheme : String -> OUI.Material.Color.Scheme -> Element msg
 showColorScheme title scheme =
+    let
+        gray : Element.Color
+        gray =
+            Element.rgb255 128 128 128
+    in
     Element.column
         [ Element.spacing 5
         , Font.size 12
@@ -102,6 +108,11 @@ showColorScheme title scheme =
             , colorCell "Outline Variant" scheme.outlineVariant scheme.onSurface 40
             ]
         ]
+        |> Element.el
+            [ Background.color gray
+            , Element.padding 15
+            , Border.rounded 5
+            ]
 
 
 book : Explorer.Book themeExt () ()
