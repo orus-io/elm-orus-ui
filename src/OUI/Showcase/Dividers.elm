@@ -7,6 +7,7 @@ import OUI.Explorer as Explorer
 import OUI.Material as Material
 import OUI.Material.Color
 import OUI.Material.Theme as Theme
+import OUI.Text as Text
 
 
 book : Explorer.Book themeExt () ()
@@ -33,9 +34,9 @@ commonDividers { theme } =
                 OUI.Material.Color.hoverStateLayerOpacity
             |> OUI.Material.Color.toElementColor
             |> Element.Border.color
-        , Element.centerX
         ]
-        [ Element.text "Full width divider"
+        [ Text.titleMedium "Full width divider"
+            |> Material.text theme
             |> Element.el
                 [ Element.paddingEach
                     { top = 16
@@ -46,7 +47,8 @@ commonDividers { theme } =
                 ]
         , Divider.new
             |> Material.divider theme []
-        , Element.text "Inset divider"
+        , Text.titleMedium "Inset divider"
+            |> Material.text theme
             |> Element.el [ Element.paddingXY 16 0 ]
         , Divider.new
             |> Material.divider theme []
