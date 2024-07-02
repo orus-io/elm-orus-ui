@@ -28,34 +28,31 @@ onChange name selected =
 
 radiobutton : Explorer.Shared themeExt -> Element (Explorer.BookMsg ())
 radiobutton { theme } =
-    Element.column [ Element.spacing 30 ]
-        [ Element.text "RadioButton"
-        , Element.row [ Element.spacing 30 ]
-            [ RadioButton.new
-                |> RadioButton.onChange (onChange "unselected")
-                |> RadioButton.withSelected False
-                |> Material.radiobutton theme []
-            , RadioButton.new
-                |> RadioButton.onChange (onChange "selected")
-                |> RadioButton.withSelected True
-                |> Material.radiobutton theme []
-            , RadioButton.new
-                |> RadioButton.disabled
-                |> RadioButton.withSelected False
-                |> Material.radiobutton theme []
-            , RadioButton.new
-                |> RadioButton.disabled
-                |> RadioButton.withSelected True
-                |> Material.radiobutton theme []
-            , RadioButton.new
-                |> RadioButton.onChange (onChange "unselected error")
-                |> RadioButton.withSelected False
-                |> RadioButton.withColor OUI.Error
-                |> Material.radiobutton theme []
-            , RadioButton.new
-                |> RadioButton.onChange (onChange "selected error")
-                |> RadioButton.withSelected True
-                |> RadioButton.withColor OUI.Error
-                |> Material.radiobutton theme []
-            ]
+    Element.row [ Element.spacing 30 ]
+        [ RadioButton.new
+            |> RadioButton.onChange (onChange "unselected")
+            |> RadioButton.withSelected False
+            |> Material.radiobutton theme []
+        , RadioButton.new
+            |> RadioButton.onChange (onChange "selected")
+            |> RadioButton.withSelected True
+            |> Material.radiobutton theme []
+        , RadioButton.new
+            |> RadioButton.disabled
+            |> RadioButton.withSelected False
+            |> Material.radiobutton theme []
+        , RadioButton.new
+            |> RadioButton.disabled
+            |> RadioButton.withSelected True
+            |> Material.radiobutton theme []
+        , RadioButton.new
+            |> RadioButton.onChange (onChange "unselected error")
+            |> RadioButton.withSelected False
+            |> RadioButton.withColor OUI.Error
+            |> Material.radiobutton theme []
+        , RadioButton.new
+            |> RadioButton.onChange (onChange "selected error")
+            |> RadioButton.withSelected True
+            |> RadioButton.withColor OUI.Error
+            |> Material.radiobutton theme []
         ]
