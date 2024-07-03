@@ -3,10 +3,12 @@ module OUI.Showcase.Tabs exposing (Model, Msg, book)
 import Effect exposing (Effect)
 import Element exposing (Element)
 import OUI.Badge as Badge exposing (Badge)
+import OUI.Divider as Divider
 import OUI.Explorer as Explorer exposing (withChapter)
 import OUI.Icon as Icon exposing (Icon)
-import OUI.Material
+import OUI.Material as Material
 import OUI.Tabs
+import OUI.Text as Text
 
 
 type alias Entry =
@@ -26,18 +28,20 @@ entries =
 
 
 type alias Model =
-    { selected : Int
+    { primarySelected : Int
+    , secondarySelected : Int
     }
 
 
 type Msg
-    = OnClick Int
+    = OnClickPrimary Int
+    | OnClickSecondary Int
 
 
 book : Explorer.Book themeExt Model Msg
 book =
     Explorer.statefulBook "Tabs"
-        { init = \_ -> { selected = 0 } |> Effect.withNone
+        { init = \_ -> { primarySelected = 0, secondarySelected = 0 } |> Effect.withNone
         , update = update
         , subscriptions = \_ _ -> Sub.none
         }
@@ -47,20 +51,30 @@ book =
 tabs : Explorer.Shared themeExt -> Model -> Element (Explorer.BookMsg Msg)
 tabs { theme } model =
     let
-        base : OUI.Tabs.Tabs Int Entry Msg
-        base =
-            OUI.Tabs.new .label OnClick
+        primary : OUI.Tabs.Tabs Int Entry Msg
+        primary =
+            OUI.Tabs.new .label OnClickPrimary
                 |> OUI.Tabs.withItems entries
                 |> OUI.Tabs.withIcon .icon
                 |> OUI.Tabs.withBadge .badge
-                |> OUI.Tabs.withSelected model.selected
+                |> OUI.Tabs.withSelected model.primarySelected
+
+        secondary : OUI.Tabs.Tabs Int Entry Msg
+        secondary =
+            OUI.Tabs.new .label OnClickSecondary
+                |> OUI.Tabs.withItems entries
+                |> OUI.Tabs.withIcon .icon
+                |> OUI.Tabs.withBadge .badge
+                |> OUI.Tabs.withSelected model.secondarySelected
+                |> OUI.Tabs.secondary
     in
-    Element.column [ Element.spacing 50, Element.padding 50 ]
-        [ base
-            |> OUI.Material.tabs theme [ Element.width <| Element.px 500 ]
-        , base
-            |> OUI.Tabs.secondary
-            |> OUI.Material.tabs theme [ Element.width <| Element.px 500 ]
+    Element.column [ Element.spacing 30, Element.padding 50 ]
+        [ Text.titleLarge "Primary tabs" |> Material.text theme
+        , primary
+            |> Material.tabs theme [ Element.width <| Element.px 500 ]
+        , Text.titleLarge "Secondary tabs" |> Material.text theme
+        , secondary
+            |> Material.tabs theme [ Element.width <| Element.px 500 ]
         ]
         |> Element.map Explorer.bookMsg
 
@@ -68,6 +82,10 @@ tabs { theme } model =
 update : Explorer.Shared themeExt -> Msg -> Model -> ( Model, Effect shared msg )
 update _ msg model =
     case msg of
-        OnClick key ->
-            { model | selected = key }
+        OnClickPrimary key ->
+            { model | primarySelected = key }
+                |> Effect.withNone
+
+        OnClickSecondary key ->
+            { model | secondarySelected = key }
                 |> Effect.withNone
