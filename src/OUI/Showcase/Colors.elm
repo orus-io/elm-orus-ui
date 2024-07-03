@@ -5,8 +5,13 @@ import Element exposing (Element)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
+import OUI
 import OUI.Explorer as Explorer
+import OUI.Material
 import OUI.Material.Color
+import OUI.Material.Theme
+import OUI.Material.Typography
+import OUI.Text
 
 
 colorCell : String -> Color -> Color -> Int -> Element msg
@@ -22,19 +27,30 @@ colorCell name color onColor height =
         ]
 
 
-showColorScheme : String -> OUI.Material.Color.Scheme -> Element msg
-showColorScheme title scheme =
+showColorScheme : String -> OUI.Material.Theme.Theme themeExt -> Element msg
+showColorScheme title theme =
     let
-        gray : Element.Color
-        gray =
-            Element.rgb255 128 128 128
+        scheme : OUI.Material.Color.Scheme
+        scheme =
+            OUI.Material.Theme.colorscheme theme
+
+        typescale : OUI.Material.Typography.Typescale
+        typescale =
+            OUI.Material.Theme.typescale theme
     in
     Element.column
-        [ Element.spacing 5
-        , Font.size 12
-        , Element.width <| Element.px 820
-        ]
-        [ Element.text title
+        ([ Element.spacing 5
+         , Element.width <| Element.px 820
+         ]
+            ++ OUI.Material.Typography.attrs OUI.Text.Body OUI.Text.Small OUI.Text.NoColor typescale scheme
+        )
+        [ OUI.Text.titleMedium title
+            |> OUI.Text.withColor OUI.Neutral
+            |> OUI.Material.Typography.renderWithAttrs
+                typescale
+                scheme
+                [ Element.paddingEach { bottom = 10, top = 0, left = 0, right = 0 }
+                ]
         , Element.row [ Element.spacing 5, Element.width Element.fill ]
             [ Element.column [ Element.spacing 5, Element.width Element.fill ]
                 [ Element.column [ Element.width Element.fill ]
@@ -109,9 +125,11 @@ showColorScheme title scheme =
             ]
         ]
         |> Element.el
-            [ Background.color gray
+            [ Background.color <| OUI.Material.Color.toElementColor scheme.surfaceContainer
             , Element.padding 15
-            , Border.rounded 5
+            , Border.rounded 10
+            , Border.color <| OUI.Material.Color.toElementColor scheme.outlineVariant
+            , Border.width 1
             ]
 
 
@@ -123,19 +141,25 @@ The two default color schemes
     """
         |> Explorer.withStaticChapter
             (\shared ->
-                shared.colorSchemeList
-                    |> List.drop (shared.selectedColorScheme |> Tuple.first)
-                    |> List.head
-                    |> Maybe.map Tuple.first
-                    |> Maybe.withDefault OUI.Material.Color.defaultLightScheme
+                shared.theme
+                    |> OUI.Material.Theme.withColorscheme
+                        (shared.colorSchemeList
+                            |> List.drop (shared.selectedColorScheme |> Tuple.first)
+                            |> List.head
+                            |> Maybe.map Tuple.first
+                            |> Maybe.withDefault OUI.Material.Color.defaultLightScheme
+                        )
                     |> showColorScheme "Light Scheme"
             )
         |> Explorer.withStaticChapter
             (\shared ->
-                shared.colorSchemeList
-                    |> List.drop (shared.selectedColorScheme |> Tuple.first)
-                    |> List.head
-                    |> Maybe.map Tuple.second
-                    |> Maybe.withDefault OUI.Material.Color.defaultLightScheme
+                shared.theme
+                    |> OUI.Material.Theme.withColorscheme
+                        (shared.colorSchemeList
+                            |> List.drop (shared.selectedColorScheme |> Tuple.first)
+                            |> List.head
+                            |> Maybe.map Tuple.second
+                            |> Maybe.withDefault OUI.Material.Color.defaultDarkScheme
+                        )
                     |> showColorScheme "Dark Scheme"
             )
