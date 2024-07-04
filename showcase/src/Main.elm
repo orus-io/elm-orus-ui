@@ -53,6 +53,7 @@ main =
         |> Explorer.addColorScheme ColorScheme.springLight ColorScheme.springDark
         |> Explorer.addColorScheme ColorScheme.autumnLight ColorScheme.autumnDark
         |> Explorer.addColorScheme ColorScheme.summerLight ColorScheme.summerDark
+        |> Explorer.addColorScheme ColorScheme.skyLight ColorScheme.skyDark
         |> Explorer.setTheme theme
         |> Explorer.addBook
             (Explorer.book "Introduction" |> Explorer.withMarkdownChapter intro)
