@@ -1,17 +1,50 @@
 module OUI.Material.Color exposing
-    ( KeyColors, Scheme, defaultKeyColors, defaultLightScheme, defaultDarkScheme, lightFromKeyColors, darkFromKeyColors
-    , getColor, getOnColor, getElementColor, getContainerColor, getOnContainerColor, getOnElementColor, toElementColor, getContainerElementColor, getOnContainerElementColor, getSurfaceColor, getOnSurfaceColor, getSurfaceVariantColor, getOnSurfaceVariantColor, getSurfaceContainerLowestColor, getSurfaceContainerLowColor, getSurfaceContainerColor, getSurfaceContainerHighColor, getSurfaceContainerHighestColor
+    ( KeyColors, Scheme
+    , defaultKeyColors, defaultLightScheme, defaultDarkScheme, lightFromKeyColors, darkFromKeyColors
+    , getColor, getOnColor
+    , getElementColor, getOnElementColor, toElementColor
+    , getContainerColor, getOnContainerColor
+    , getContainerElementColor, getOnContainerElementColor
+    , getSurfaceColor, getOnSurfaceColor
+    , getSurfaceVariantColor, getOnSurfaceVariantColor
+    , getSurfaceContainerLowestColor, getSurfaceContainerLowColor, getSurfaceContainerColor, getSurfaceContainerHighColor, getSurfaceContainerHighestColor
     , hoverStateLayerOpacity, focusStateLayerOpacity, pressStateLayerOpacity
     , setAlpha, withShade, isError, tone
     )
 
 {-| Material 3 color utilities and scheme
 
-@docs KeyColors, Scheme, defaultKeyColors, defaultLightScheme, defaultDarkScheme, lightFromKeyColors, darkFromKeyColors
 
-@docs getColor, getOnColor, getElementColor, getContainerColor, getOnContainerColor, getOnElementColor, toElementColor, getContainerElementColor, getOnContainerElementColor, getSurfaceColor, getOnSurfaceColor, getSurfaceVariantColor, getOnSurfaceVariantColor, getSurfaceContainerLowestColor, getSurfaceContainerLowColor, getSurfaceContainerColor, getSurfaceContainerHighColor, getSurfaceContainerHighestColor
+# Types
+
+@docs KeyColors, Scheme
+
+
+# Constructors
+
+@docs defaultKeyColors, defaultLightScheme, defaultDarkScheme, lightFromKeyColors, darkFromKeyColors
+
+
+# Getters
+
+@docs getColor, getOnColor
+
+@docs getElementColor, getOnElementColor, toElementColor
+
+@docs getContainerColor, getOnContainerColor
+
+@docs getContainerElementColor, getOnContainerElementColor
+
+@docs getSurfaceColor, getOnSurfaceColor
+
+@docs getSurfaceVariantColor, getOnSurfaceVariantColor
+
+@docs getSurfaceContainerLowestColor, getSurfaceContainerLowColor, getSurfaceContainerColor, getSurfaceContainerHighColor, getSurfaceContainerHighestColor
 
 @docs hoverStateLayerOpacity, focusStateLayerOpacity, pressStateLayerOpacity
+
+
+# Helper functions
 
 @docs setAlpha, withShade, isError, tone
 
