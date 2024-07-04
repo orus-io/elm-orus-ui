@@ -3,6 +3,7 @@ module ColorScheme exposing
     , springKeyColors, springLight, springDark
     , autumnKeyColors, autumnLight, autumnDark
     , summerKeyColors, summerLight, summerDark
+    , skyKeyColors, skyLight, skyDark
     )
 
 {-| Implementation of Material 3 color schemes
@@ -28,6 +29,11 @@ to see all the added themes
 # Summer
 
 @docs summerKeyColors, summerLight, summerDark
+
+
+# Sky
+
+@docs skyKeyColors, skyLight, skyDark
 
 -}
 
@@ -153,3 +159,30 @@ summerLight =
 summerDark : OUI.Material.Color.Scheme
 summerDark =
     OUI.Material.Color.darkFromKeyColors summerKeyColors
+
+
+{-| skyKeyColors
+-}
+skyKeyColors : OUI.Material.Color.KeyColors
+skyKeyColors =
+    { primary = Color.rgb255 118 156 223
+    , secondary = Color.rgb255 137 145 162
+    , tertiary = Color.rgb255 162 136 166
+    , neutral = Color.rgb255 145 144 147
+    , neutralVariant = Color.rgb255 142 144 152
+    , error = Color.rgb255 255 84 73
+    }
+
+
+{-| skyLight colorScheme
+-}
+skyLight : OUI.Material.Color.Scheme
+skyLight =
+    OUI.Material.Color.lightFromKeyColors skyKeyColors
+
+
+{-| skyDark colorScheme
+-}
+skyDark : OUI.Material.Color.Scheme
+skyDark =
+    OUI.Material.Color.darkFromKeyColors skyKeyColors
