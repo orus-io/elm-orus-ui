@@ -1,14 +1,40 @@
 module OUI.Explorer exposing
-    ( Book, BookMsg, Page, Route, Shared, SharedMsg, Explorer
-    , setTheme, ColorSchemeType, setColorScheme, addBook, book, statefulBook, category, bookMsg, logEvent, logEffect, explorer, explorerWithTheme, finalize
+    ( Explorer, explorer, explorerWithTheme
+    , Book, BookMsg, addBook, book, statefulBook, bookMsg
+    , ColorSchemeType, setColorScheme, addColorScheme
     , withMarkdownChapter, withStaticChapter, withChapter
+    , Page, Route, Shared, SharedMsg
+    , setTheme, category, logEvent, logEffect, finalize
     )
 
 {-|
 
-@docs Book, BookMsg, Page, Route, Shared, SharedMsg, Explorer
-@docs setTheme, ColorSchemeType, setColorScheme, addBook, book, statefulBook, category, bookMsg, logEvent, logEffect, explorer, explorerWithTheme, finalize
+
+# Explorers
+
+@docs Explorer, explorer, explorerWithTheme
+
+
+# Books
+
+@docs Book, BookMsg, addBook, book, statefulBook, bookMsg
+
+
+# Colorschemes
+
+@docs ColorSchemeType, setColorScheme, addColorScheme
+
+
+# Chapters
+
 @docs withMarkdownChapter, withStaticChapter, withChapter
+
+
+# Other
+
+@docs Page, Route, Shared, SharedMsg
+
+@docs setTheme, category, logEvent, logEffect, finalize
 
 -}
 
@@ -147,7 +173,7 @@ explorerWithTheme theme =
         }
 
 
-{-| set the theme
+{-| sets the theme
 -}
 setTheme :
     Theme themeExt
@@ -165,7 +191,8 @@ setTheme theme (Explorer expl) =
         }
 
 
-{-| setColorScheme
+{-| setColorScheme takes a light and dark color schemes and sets them
+as default schemes
 -}
 setColorScheme :
     Color.Scheme
@@ -181,6 +208,29 @@ setColorScheme light dark (Explorer expl) =
     Explorer
         { expl
             | initialShared = { shared | colorSchemeList = [ ( light, dark ) ] }
+        }
+
+
+{-| addColorScheme takes a light and dark schemes and add them to the Explorer
+-}
+addColorScheme :
+    Color.Scheme
+    -> Color.Scheme
+    -> Explorer themeExt c p cm pm
+    -> Explorer themeExt c p cm pm
+addColorScheme light dark (Explorer expl) =
+    let
+        shared : InitialShared themeExt
+        shared =
+            expl.initialShared
+
+        newColorSchemeList : List ( Color.Scheme, Color.Scheme )
+        newColorSchemeList =
+            List.append shared.colorSchemeList (List.singleton ( light, dark ))
+    in
+    Explorer
+        { expl
+            | initialShared = { shared | colorSchemeList = newColorSchemeList }
         }
 
 
