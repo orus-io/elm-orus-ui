@@ -3,10 +3,11 @@ module OUI.Showcase.Slider exposing (Model, Msg, book)
 import Dict exposing (Dict)
 import Effect
 import Element exposing (Element)
+import OUI.Divider as Divider
 import OUI.Explorer as Explorer
 import OUI.Material as Material
 import OUI.Slider as Slider
-import OUI.Text
+import OUI.Text as Text
 
 
 type alias Model =
@@ -53,10 +54,16 @@ slider { theme } { sliders } =
         add name =
             Slider.new (Dict.get name sliders |> Maybe.withDefault 30)
                 |> Slider.onChange (Explorer.bookMsg << SetValue name)
+
+        divider : Element msg
+        divider =
+            Divider.new |> Material.divider theme []
     in
     Element.column [ Element.spacing 30 ]
-        [ Element.row [ Element.spacing 30, Element.width Element.fill ]
-            [ Element.text "Continue"
+        [ divider
+        , Element.row [ Element.spacing 30, Element.width Element.fill ]
+            [ Text.titleSmall "Continuous"
+                |> Material.text theme
                 |> Element.el [ Element.width (Element.px 100) ]
             , add "continue"
                 |> Material.slider theme
@@ -66,11 +73,12 @@ slider { theme } { sliders } =
             , Dict.get "continue" sliders
                 |> Maybe.withDefault 30
                 |> fmtFloat
-                |> OUI.Text.bodyLarge
+                |> Text.bodyLarge
                 |> Material.text theme
             ]
         , Element.row [ Element.spacing 30, Element.width Element.fill ]
-            [ Element.text "With steps"
+            [ Text.titleSmall "With steps"
+                |> Material.text theme
                 |> Element.el [ Element.width (Element.px 100) ]
             , add "steps"
                 |> Slider.withStep 1
@@ -81,11 +89,12 @@ slider { theme } { sliders } =
             , Dict.get "steps" sliders
                 |> Maybe.withDefault 30
                 |> String.fromFloat
-                |> OUI.Text.bodyLarge
+                |> Text.bodyLarge
                 |> Material.text theme
             ]
         , Element.row [ Element.spacing 30, Element.width Element.fill ]
-            [ Element.text "Discrete"
+            [ Text.titleSmall "Discrete"
+                |> Material.text theme
                 |> Element.el [ Element.width (Element.px 100) ]
             , add "discrete"
                 |> Slider.withDiscreteStep 10
@@ -96,11 +105,12 @@ slider { theme } { sliders } =
             , Dict.get "discrete" sliders
                 |> Maybe.withDefault 30
                 |> String.fromFloat
-                |> OUI.Text.bodyLarge
+                |> Text.bodyLarge
                 |> Material.text theme
             ]
         , Element.row [ Element.spacing 30, Element.width Element.fill ]
-            [ Element.text "Read-only"
+            [ Text.titleSmall "Read-only"
+                |> Material.text theme
                 |> Element.el [ Element.width (Element.px 100) ]
             , Slider.new (Dict.get "readonly" sliders |> Maybe.withDefault 30)
                 |> Slider.withDiscreteStep 10
@@ -111,7 +121,7 @@ slider { theme } { sliders } =
             , Dict.get "readonly" sliders
                 |> Maybe.withDefault 30
                 |> String.fromFloat
-                |> OUI.Text.bodyLarge
+                |> Text.bodyLarge
                 |> Material.text theme
             ]
         ]
