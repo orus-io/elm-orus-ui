@@ -3,10 +3,12 @@ module OUI.Showcase.Navigation exposing (Model, Msg, book)
 import Effect
 import Element exposing (Element)
 import OUI.Badge exposing (Badge)
+import OUI.Divider as Divider
 import OUI.Explorer as Explorer
 import OUI.Icon
 import OUI.Material as Material
 import OUI.Navigation as Navigation exposing (Navigation)
+import OUI.Text as Text
 
 
 type alias Model =
@@ -66,50 +68,86 @@ nav =
 
 drawer : Explorer.Shared themeExt -> Element (Explorer.BookMsg Msg)
 drawer { theme } =
-    Element.el
-        [ Element.width Element.fill
-        , Element.height <| Element.px 500
+    let
+        divider : Element msg
+        divider =
+            Divider.new |> Material.divider theme []
+    in
+    Element.column [ Element.spacing 30 ]
+        [ divider
+        , Text.titleLarge "Drawer" |> Material.text theme
+        , Element.el
+            [ Element.width Element.fill
+            , Element.height <| Element.px 500
+            ]
+            (nav |> Material.navigation theme [])
         ]
-        (nav |> Material.navigation theme [])
 
 
 rail : Explorer.Shared themeExt -> Element (Explorer.BookMsg Msg)
 rail { theme } =
-    Element.el
-        [ Element.width Element.fill
-        , Element.height <| Element.px 500
+    let
+        divider : Element msg
+        divider =
+            Divider.new |> Material.divider theme []
+    in
+    Element.column [ Element.spacing 30, Element.width <| Element.px 360 ]
+        [ divider
+        , Text.titleLarge "Rail" |> Material.text theme
+        , Element.el
+            [ Element.width Element.fill
+            , Element.height <| Element.px 500
+            ]
+            (nav
+                |> Navigation.rail
+                |> Material.navigation theme []
+            )
         ]
-        (nav
-            |> Navigation.rail
-            |> Material.navigation theme []
-        )
 
 
 modal : Explorer.Shared themeExt -> Element (Explorer.BookMsg Msg)
 modal { theme } =
-    Element.el
-        [ Element.width Element.fill
-        , Element.height <| Element.px 500
+    let
+        divider : Element msg
+        divider =
+            Divider.new |> Material.divider theme []
+    in
+    Element.column [ Element.spacing 30 ]
+        [ divider
+        , Text.titleLarge "Modal" |> Material.text theme
+        , Element.el
+            [ Element.width Element.fill
+            , Element.height <| Element.px 500
+            ]
+            (nav
+                |> Navigation.modal (Explorer.logEvent "dismiss modal")
+                |> Material.navigation theme []
+            )
         ]
-        (nav
-            |> Navigation.modal (Explorer.logEvent "dismiss modal")
-            |> Material.navigation theme []
-        )
 
 
 dynamic : Explorer.Shared themeExt -> Model -> Element (Explorer.BookMsg Msg)
 dynamic { theme } { expanded } =
-    Element.el
-        [ Element.width Element.fill
-        , Element.height <| Element.px 500
-        ]
-        (Navigation.new (\_ -> Explorer.bookMsg <| Expand <| not expanded)
-            |> addEntries
-            |> (if expanded then
-                    Navigation.rail
+    let
+        divider : Element msg
+        divider =
+            Divider.new |> Material.divider theme []
+    in
+    Element.column [ Element.spacing 30, Element.width <| Element.px 360 ]
+        [ divider
+        , Text.titleLarge "Dynamic" |> Material.text theme
+        , Element.el
+            [ Element.width Element.fill
+            , Element.height <| Element.px 500
+            ]
+            (Navigation.new (\_ -> Explorer.bookMsg <| Expand <| not expanded)
+                |> addEntries
+                |> (if expanded then
+                        Navigation.rail
 
-                else
-                    identity
-               )
-            |> Material.navigation theme []
-        )
+                    else
+                        identity
+                   )
+                |> Material.navigation theme []
+            )
+        ]
