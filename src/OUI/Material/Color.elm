@@ -1,17 +1,50 @@
 module OUI.Material.Color exposing
-    ( KeyColors, Scheme, defaultKeyColors, defaultLightScheme, defaultDarkScheme, lightFromKeyColors, darkFromKeyColors
-    , getColor, getOnColor, getElementColor, getContainerColor, getOnContainerColor, getOnElementColor, toElementColor, getContainerElementColor, getOnContainerElementColor, getSurfaceColor, getOnSurfaceColor, getSurfaceVariantColor, getOnSurfaceVariantColor, getSurfaceContainerLowestColor, getSurfaceContainerLowColor, getSurfaceContainerColor, getSurfaceContainerHighColor, getSurfaceContainerHighestColor
+    ( KeyColors, Scheme
+    , defaultKeyColors, defaultLightScheme, defaultDarkScheme, lightFromKeyColors, darkFromKeyColors
+    , getColor, getOnColor
+    , getElementColor, getOnElementColor, toElementColor
+    , getContainerColor, getOnContainerColor
+    , getContainerElementColor, getOnContainerElementColor
+    , getSurfaceColor, getOnSurfaceColor
+    , getSurfaceVariantColor, getOnSurfaceVariantColor
+    , getSurfaceContainerLowestColor, getSurfaceContainerLowColor, getSurfaceContainerColor, getSurfaceContainerHighColor, getSurfaceContainerHighestColor
     , hoverStateLayerOpacity, focusStateLayerOpacity, pressStateLayerOpacity
     , setAlpha, withShade, isError, tone
     )
 
 {-| Material 3 color utilities and scheme
 
-@docs KeyColors, Scheme, defaultKeyColors, defaultLightScheme, defaultDarkScheme, lightFromKeyColors, darkFromKeyColors
 
-@docs getColor, getOnColor, getElementColor, getContainerColor, getOnContainerColor, getOnElementColor, toElementColor, getContainerElementColor, getOnContainerElementColor, getSurfaceColor, getOnSurfaceColor, getSurfaceVariantColor, getOnSurfaceVariantColor, getSurfaceContainerLowestColor, getSurfaceContainerLowColor, getSurfaceContainerColor, getSurfaceContainerHighColor, getSurfaceContainerHighestColor
+# Types
+
+@docs KeyColors, Scheme
+
+
+# Constructors
+
+@docs defaultKeyColors, defaultLightScheme, defaultDarkScheme, lightFromKeyColors, darkFromKeyColors
+
+
+# Getters
+
+@docs getColor, getOnColor
+
+@docs getElementColor, getOnElementColor, toElementColor
+
+@docs getContainerColor, getOnContainerColor
+
+@docs getContainerElementColor, getOnContainerElementColor
+
+@docs getSurfaceColor, getOnSurfaceColor
+
+@docs getSurfaceVariantColor, getOnSurfaceVariantColor
+
+@docs getSurfaceContainerLowestColor, getSurfaceContainerLowColor, getSurfaceContainerColor, getSurfaceContainerHighColor, getSurfaceContainerHighestColor
 
 @docs hoverStateLayerOpacity, focusStateLayerOpacity, pressStateLayerOpacity
+
+
+# Helper functions
 
 @docs setAlpha, withShade, isError, tone
 
@@ -482,7 +515,8 @@ defaultDarkScheme =
 -}
 lightFromKeyColors : KeyColors -> Scheme
 lightFromKeyColors keyColors =
-    { primary = tone 40 keyColors.primary
+    { keyColors = keyColors
+    , primary = tone 40 keyColors.primary
     , primaryContainer = tone 90 keyColors.primary
     , onPrimary = tone 100 keyColors.primary
     , onPrimaryContainer = tone 10 keyColors.primary
@@ -526,7 +560,8 @@ lightFromKeyColors keyColors =
 -}
 darkFromKeyColors : KeyColors -> Scheme
 darkFromKeyColors keyColors =
-    { primary = tone 80 keyColors.primary
+    { keyColors = keyColors
+    , primary = tone 80 keyColors.primary
     , primaryContainer = tone 30 keyColors.primary
     , onPrimary = tone 20 keyColors.primary
     , onPrimaryContainer = tone 90 keyColors.primary
@@ -598,7 +633,8 @@ tone light color =
 {-| A Material 3 color scheme
 -}
 type alias Scheme =
-    { primary : Color
+    { keyColors : KeyColors
+    , primary : Color
     , primaryContainer : Color
     , onPrimary : Color
     , onPrimaryContainer : Color
