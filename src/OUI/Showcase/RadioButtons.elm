@@ -1,5 +1,6 @@
-module OUI.Showcase.RadioButtons exposing (book)
+module OUI.Showcase.RadioButtons exposing (Model, Msg, book)
 
+import Effect exposing (Effect)
 import Element exposing (Element)
 import OUI
 import OUI.Divider as Divider
@@ -9,27 +10,62 @@ import OUI.RadioButton as RadioButton
 import OUI.Text as Text
 
 
-book : Explorer.Book themeExt () ()
+type alias Model =
+    { basicSelect : Bool
+    , basicUnselect : Bool
+    , errorSelect : Bool
+    , errorUnselect : Bool
+    }
+
+
+type Msg
+    = OnClickBasicSelect
+    | OnClickBasicUnselect
+    | OnClickErrorSelect
+    | OnClickErrorUnselect
+
+
+init : Model
+init =
+    { basicSelect = True
+    , basicUnselect = False
+    , errorSelect = True
+    , errorUnselect = False
+    }
+
+
+update : Explorer.Shared themeExt -> Msg -> Model -> ( Model, Effect shared msg )
+update _ msg model =
+    case msg of
+        OnClickBasicSelect ->
+            { model | basicSelect = not model.basicSelect }
+                |> Effect.withNone
+
+        OnClickBasicUnselect ->
+            { model | basicUnselect = not model.basicUnselect }
+                |> Effect.withNone
+
+        OnClickErrorSelect ->
+            { model | errorSelect = not model.errorSelect }
+                |> Effect.withNone
+
+        OnClickErrorUnselect ->
+            { model | errorUnselect = not model.errorUnselect }
+                |> Effect.withNone
+
+
+book : Explorer.Book themeExt Model Msg
 book =
-    Explorer.book "Radio Buttons"
-        |> Explorer.withStaticChapter radiobutton
+    Explorer.statefulBook "Radio Buttons"
+        { init = \_ -> init |> Effect.withNone
+        , update = update
+        , subscriptions = \_ _ -> Sub.none
+        }
+        |> Explorer.withChapter radiobuttons
 
 
-onChange : String -> Bool -> Explorer.BookMsg ()
-onChange name selected =
-    Explorer.logEvent <|
-        name
-            ++ " changes to "
-            ++ (if selected then
-                    "'selected'"
-
-                else
-                    "'unselected'"
-               )
-
-
-radiobutton : Explorer.Shared themeExt -> Element (Explorer.BookMsg ())
-radiobutton { theme } =
+radiobuttons : Explorer.Shared themeExt -> Model -> Element (Explorer.BookMsg Msg)
+radiobuttons { theme } model =
     let
         divider : Element msg
         divider =
@@ -47,34 +83,35 @@ radiobutton { theme } =
             , Element.column [ Element.spacing 30 ]
                 [ Text.titleSmall "Unselected" |> Material.text theme
                 , RadioButton.new
-                    |> RadioButton.onChange (onChange "unselected")
-                    |> RadioButton.withSelected False
+                    |> RadioButton.onChange (\_ -> OnClickBasicUnselect)
+                    |> RadioButton.withSelected model.basicUnselect
                     |> Material.radiobutton theme []
                 , RadioButton.new
                     |> RadioButton.disabled
                     |> RadioButton.withSelected False
                     |> Material.radiobutton theme []
                 , RadioButton.new
-                    |> RadioButton.onChange (onChange "unselected error")
-                    |> RadioButton.withSelected False
+                    |> RadioButton.onChange (\_ -> OnClickErrorUnselect)
+                    |> RadioButton.withSelected model.errorUnselect
                     |> RadioButton.withColor OUI.Error
                     |> Material.radiobutton theme []
                 ]
             , Element.column [ Element.spacing 30 ]
                 [ Text.titleSmall "Selected" |> Material.text theme
                 , RadioButton.new
-                    |> RadioButton.onChange (onChange "selected")
-                    |> RadioButton.withSelected True
+                    |> RadioButton.onChange (\_ -> OnClickBasicSelect)
+                    |> RadioButton.withSelected model.basicSelect
                     |> Material.radiobutton theme []
                 , RadioButton.new
                     |> RadioButton.disabled
                     |> RadioButton.withSelected True
                     |> Material.radiobutton theme []
                 , RadioButton.new
-                    |> RadioButton.onChange (onChange "selected error")
-                    |> RadioButton.withSelected True
+                    |> RadioButton.onChange (\_ -> OnClickErrorSelect)
+                    |> RadioButton.withSelected model.errorSelect
                     |> RadioButton.withColor OUI.Error
                     |> Material.radiobutton theme []
                 ]
             ]
         ]
+        |> Element.map Explorer.bookMsg

@@ -55,7 +55,7 @@ addPages :
                                     Slider.Model
                                     (Spa.PageStack.Model
                                         Spa.SetupError
-                                        ()
+                                        RadioButtons.Model
                                         (Spa.PageStack.Model
                                             Spa.SetupError
                                             ()
@@ -121,7 +121,7 @@ addPages :
                                     (Explorer.BookMsg Slider.Msg)
                                     (Spa.PageStack.Msg
                                         Explorer.Route
-                                        (Explorer.BookMsg ())
+                                        (Explorer.BookMsg RadioButtons.Msg)
                                         (Spa.PageStack.Msg
                                             Explorer.Route
                                             (Explorer.BookMsg ())
