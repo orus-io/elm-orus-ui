@@ -64,7 +64,7 @@ defaultLight : OUI.Material.Color.Scheme
 defaultLight =
     let
         light =
-            OUI.Material.Color.lightFromKeyColors defaultKeyColors
+            OUI.Material.Color.lightFromKeyColors defaultKeyColors "default-light" ""
     in
     light
 
@@ -75,7 +75,7 @@ defaultDark : OUI.Material.Color.Scheme
 defaultDark =
     let
         dark =
-            OUI.Material.Color.darkFromKeyColors defaultKeyColors
+            OUI.Material.Color.darkFromKeyColors defaultKeyColors "default-dark" ""
     in
     dark
 
@@ -97,14 +97,14 @@ springKeyColors =
 -}
 springLight : OUI.Material.Color.Scheme
 springLight =
-    OUI.Material.Color.lightFromKeyColors springKeyColors
+    OUI.Material.Color.lightFromKeyColors springKeyColors "spring-light" ""
 
 
 {-| springDark colorScheme
 -}
 springDark : OUI.Material.Color.Scheme
 springDark =
-    OUI.Material.Color.darkFromKeyColors springKeyColors
+    OUI.Material.Color.darkFromKeyColors springKeyColors "spring-dark" ""
 
 
 {-| autumnKeyColors
@@ -124,14 +124,14 @@ autumnKeyColors =
 -}
 autumnLight : OUI.Material.Color.Scheme
 autumnLight =
-    OUI.Material.Color.lightFromKeyColors autumnKeyColors
+    OUI.Material.Color.lightFromKeyColors autumnKeyColors "autumn-light" ""
 
 
 {-| autumnDark colorScheme
 -}
 autumnDark : OUI.Material.Color.Scheme
 autumnDark =
-    OUI.Material.Color.darkFromKeyColors autumnKeyColors
+    OUI.Material.Color.darkFromKeyColors autumnKeyColors "autumn-dark" ""
 
 
 {-| summerKeyColors
@@ -151,14 +151,14 @@ summerKeyColors =
 -}
 summerLight : OUI.Material.Color.Scheme
 summerLight =
-    OUI.Material.Color.lightFromKeyColors summerKeyColors
+    OUI.Material.Color.lightFromKeyColors summerKeyColors "summer-light" ""
 
 
 {-| summerDark colorScheme
 -}
 summerDark : OUI.Material.Color.Scheme
 summerDark =
-    OUI.Material.Color.darkFromKeyColors summerKeyColors
+    OUI.Material.Color.darkFromKeyColors summerKeyColors "summer-dark" ""
 
 
 {-| skyKeyColors
@@ -178,11 +178,11 @@ skyKeyColors =
 -}
 skyLight : OUI.Material.Color.Scheme
 skyLight =
-    OUI.Material.Color.lightFromKeyColors skyKeyColors
+    OUI.Material.Color.lightFromKeyColors skyKeyColors "sky-light" ""
 
 
 {-| skyDark colorScheme
 -}
 skyDark : OUI.Material.Color.Scheme
 skyDark =
-    OUI.Material.Color.darkFromKeyColors skyKeyColors
+    OUI.Material.Color.darkFromKeyColors skyKeyColors "sky-dark" ""

@@ -71,7 +71,9 @@ type alias KeyColors =
 {-| A Material 3 color scheme
 -}
 type alias Scheme =
-    { keyColors : KeyColors
+    { name : String
+    , description : String
+    , keyColors : KeyColors
     , primary : Color
     , primaryContainer : Color
     , onPrimary : Color
@@ -129,21 +131,23 @@ defaultKeyColors =
 -}
 defaultLightScheme : Scheme
 defaultLightScheme =
-    lightFromKeyColors defaultKeyColors
+    lightFromKeyColors defaultKeyColors "default-light" ""
 
 
 {-| The default Material 3 dark theme based on the default key colors
 -}
 defaultDarkScheme : Scheme
 defaultDarkScheme =
-    darkFromKeyColors defaultKeyColors
+    darkFromKeyColors defaultKeyColors "default-dark" ""
 
 
 {-| Create a light color scheme from key colors
 -}
-lightFromKeyColors : KeyColors -> Scheme
-lightFromKeyColors keyColors =
-    { keyColors = keyColors
+lightFromKeyColors : KeyColors -> String -> String -> Scheme
+lightFromKeyColors keyColors name description =
+    { name = name
+    , description = description
+    , keyColors = keyColors
     , primary = tone 40 keyColors.primary
     , primaryContainer = tone 90 keyColors.primary
     , onPrimary = tone 100 keyColors.primary
@@ -186,9 +190,11 @@ lightFromKeyColors keyColors =
 
 {-| Create a dark color scheme from key colors
 -}
-darkFromKeyColors : KeyColors -> Scheme
-darkFromKeyColors keyColors =
-    { keyColors = keyColors
+darkFromKeyColors : KeyColors -> String -> String -> Scheme
+darkFromKeyColors keyColors name description =
+    { name = name
+    , description = description
+    , keyColors = keyColors
     , primary = tone 80 keyColors.primary
     , primaryContainer = tone 30 keyColors.primary
     , onPrimary = tone 20 keyColors.primary
