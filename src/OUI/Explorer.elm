@@ -48,11 +48,14 @@ import Html.Attributes
 import Json.Decode
 import Markdown.Parser
 import Markdown.Renderer
+import OUI.Button
 import OUI.Icon as Icon
 import OUI.Material as Material
 import OUI.Material.Color as Color
 import OUI.Material.Markdown
 import OUI.Material.Theme as Theme exposing (Theme)
+import OUI.Menu
+import OUI.MenuButton
 import OUI.Navigation
 import OUI.Switch as Switch
 import OUI.Text
@@ -101,6 +104,7 @@ type alias Shared themeExt =
     , colorSchemeList : List ( Color.Scheme, Color.Scheme )
     , selectedColorScheme : ( Int, ColorSchemeType )
     , selectedBook : String
+    , schemeSelectState : OUI.MenuButton.State
     }
 
 
@@ -118,6 +122,8 @@ type SharedMsg
     | SelectColorScheme Int ColorSchemeType
     | OnBookClick String
     | OnRouteChange String
+    | OnSelect String ( Color.Scheme, Color.Scheme )
+    | MenuButtonMsg String (OUI.MenuButton.Msg ( Color.Scheme, Color.Scheme ) SharedMsg)
 
 
 defaultView : Page msg
@@ -564,6 +570,7 @@ finalize (Explorer expl) =
                       , colorSchemeList = expl.initialShared.colorSchemeList
                       , selectedColorScheme = expl.initialShared.selectedColorScheme
                       , selectedBook = ""
+                      , schemeSelectState = OUI.MenuButton.init "scheme-select"
                       }
                         |> changeColorScheme 0
                             (if dFlags.dark_mode then
@@ -660,53 +667,84 @@ finalize (Explorer expl) =
                                                         nav
                                            )
                                         |> Material.navigation shared.theme []
-                                    , Element.row
-                                        [ Element.width Element.fill
-                                        , Element.padding 15
-                                        , colorscheme.surfaceContainerLow
-                                            |> Color.toElementColor
-                                            |> Background.color
-                                        , Element.pointer
-                                        , Element.mouseOver
-                                            [ colorscheme.surfaceContainerLow
-                                                |> Color.withShade colorscheme.onSurface
-                                                    Color.hoverStateLayerOpacity
+                                    , Element.row []
+                                        [ Element.row
+                                            [ Element.width Element.fill
+                                            , Element.padding 15
+                                            , colorscheme.surfaceContainerLow
                                                 |> Color.toElementColor
                                                 |> Background.color
-                                            ]
-                                        , Events.onClick
-                                            (SelectColorScheme
-                                                (Tuple.first shared.selectedColorScheme)
-                                                (shared.selectedColorScheme
-                                                    |> Tuple.second
-                                                    |> invertColorSchemeType
-                                                )
-                                                |> Spa.mapSharedMsg
-                                            )
-                                        ]
-                                        [ OUI.Text.labelLarge "Light/Dark"
-                                            |> Material.text shared.theme
-                                        , Switch.new
-                                            (Tuple.second shared.selectedColorScheme
-                                                == Dark
-                                            )
-                                            |> Switch.onChange
-                                                (\dark ->
-                                                    SelectColorScheme
-                                                        (Tuple.first shared.selectedColorScheme)
-                                                        (if dark then
-                                                            Dark
-
-                                                         else
-                                                            Light
-                                                        )
-                                                        |> Spa.mapSharedMsg
-                                                )
-                                            |> Switch.withIconSelected Icon.dark_mode
-                                            |> Switch.withIconUnselected Icon.light_mode
-                                            |> Material.switch shared.theme
-                                                [ Element.alignRight
+                                            , Element.pointer
+                                            , Element.mouseOver
+                                                [ colorscheme.surfaceContainerLow
+                                                    |> Color.withShade colorscheme.onSurface
+                                                        Color.hoverStateLayerOpacity
+                                                    |> Color.toElementColor
+                                                    |> Background.color
                                                 ]
+                                            , Events.onClick
+                                                (SelectColorScheme
+                                                    (Tuple.first shared.selectedColorScheme)
+                                                    (shared.selectedColorScheme
+                                                        |> Tuple.second
+                                                        |> invertColorSchemeType
+                                                    )
+                                                    |> Spa.mapSharedMsg
+                                                )
+                                            ]
+                                            [ OUI.Text.labelLarge "Light/Dark"
+                                                |> Material.text shared.theme
+                                            , Switch.new
+                                                (Tuple.second shared.selectedColorScheme
+                                                    == Dark
+                                                )
+                                                |> Switch.onChange
+                                                    (\dark ->
+                                                        SelectColorScheme
+                                                            (Tuple.first shared.selectedColorScheme)
+                                                            (if dark then
+                                                                Dark
+
+                                                             else
+                                                                Light
+                                                            )
+                                                            |> Spa.mapSharedMsg
+                                                    )
+                                                |> Switch.withIconSelected Icon.dark_mode
+                                                |> Switch.withIconUnselected Icon.light_mode
+                                                |> Material.switch shared.theme
+                                                    [ Element.alignRight
+                                                    ]
+                                            ]
+                                        , let
+                                            button : OUI.Button.Button { hasNoIcon : (), needOnClickOrDisabled : () } msg
+                                            button =
+                                                OUI.Button.new "Change colorscheme"
+                                                    |> OUI.Button.filledButton
+
+                                            toLabel : ( Color.Scheme, Color.Scheme ) -> String
+                                            toLabel ( light, dark ) =
+                                                case shared.selectedColorScheme of
+                                                    ( _, Light ) ->
+                                                        light.name
+
+                                                    ( _, Dark ) ->
+                                                        dark.name
+
+                                            menu : OUI.Menu.Menu ( Color.Scheme, Color.Scheme ) msg
+                                            menu =
+                                                OUI.Menu.new toLabel
+                                                    |> OUI.Menu.addItems shared.colorSchemeList
+
+                                            menuButton : Element SharedMsg
+                                            menuButton =
+                                                OUI.MenuButton.new (MenuButtonMsg "scheme-select")
+                                                    (OnSelect "scheme-select")
+                                                    button
+                                                    menu
+                                                    |> Material.menuButton shared.theme shared.schemeSelectState []
+                                          in
+                                          menuButton
                                         ]
                                     ]
                                 , Element.column
