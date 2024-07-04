@@ -1,6 +1,7 @@
 module Main exposing (..)
 
 import Browser
+import ColorScheme
 import IcidassetMaterialIcons.Outlined as Outlined
 import IcidassetMaterialIcons.Regular as Regular
 import IcidassetMaterialIcons.Round as Round
@@ -48,7 +49,8 @@ your own project 'src' list.
 
 main =
     Explorer.explorer
-        |> Explorer.setColorScheme lightColorscheme darkColorscheme
+        |> Explorer.setColorScheme ColorScheme.defaultLight ColorScheme.defaultDark
+        |> Explorer.addColorScheme ColorScheme.springLight ColorScheme.springDark
         |> Explorer.setTheme theme
         |> Explorer.addBook
             (Explorer.book "Introduction" |> Explorer.withMarkdownChapter intro)
@@ -63,42 +65,6 @@ main =
         |> Explorer.addBook Round.book
         |> Explorer.finalize
         |> Browser.application
-
-
-keyColors : OUI.Material.Color.KeyColors
-keyColors =
-    { primary =
-        OUI.Material.Color.defaultKeyColors.primary
-
-    -- Color.rgb255 50 255 100
-    , secondary = OUI.Material.Color.defaultKeyColors.secondary
-    , tertiary = OUI.Material.Color.defaultKeyColors.tertiary
-    , neutral = OUI.Material.Color.defaultKeyColors.neutral
-    , neutralVariant = OUI.Material.Color.defaultKeyColors.neutralVariant
-    , error = OUI.Material.Color.defaultKeyColors.error
-    }
-
-
-lightColorscheme : OUI.Material.Color.Scheme
-lightColorscheme =
-    let
-        light =
-            OUI.Material.Color.lightFromKeyColors keyColors
-    in
-    light
-
-
-
---{ light | primary = Color.rgb255 130 160 255, onPrimary = Color.rgb255 255 230 210 }
-
-
-darkColorscheme : OUI.Material.Color.Scheme
-darkColorscheme =
-    let
-        dark =
-            OUI.Material.Color.darkFromKeyColors keyColors
-    in
-    dark
 
 
 typescale : OUI.Material.Typography.Typescale
