@@ -67,7 +67,7 @@ addPages :
                                                     ()
                                                     (Spa.PageStack.Model
                                                         Spa.SetupError
-                                                        ()
+                                                        Checkbox.Model
                                                         (Spa.PageStack.Model
                                                             Spa.SetupError
                                                             ()
@@ -133,7 +133,9 @@ addPages :
                                                     (Explorer.BookMsg ())
                                                     (Spa.PageStack.Msg
                                                         Explorer.Route
-                                                        (Explorer.BookMsg ())
+                                                        (Explorer.BookMsg
+                                                            Checkbox.Msg
+                                                        )
                                                         (Spa.PageStack.Msg
                                                             Explorer.Route
                                                             (Explorer.BookMsg ())
