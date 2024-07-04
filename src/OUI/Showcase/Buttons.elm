@@ -81,6 +81,7 @@ commonButtons { theme } =
                 |> List.map (Element.el [ Element.width <| Element.px 100 ])
                 |> Element.row [ Element.spacing 30 ]
 
+        divider : Element msg
         divider =
             Divider.new |> Material.divider theme []
     in

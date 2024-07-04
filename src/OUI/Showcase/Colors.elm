@@ -7,7 +7,6 @@ import Element.Border as Border
 import Element.Font as Font
 import OUI
 import OUI.Explorer as Explorer
-import OUI.Material
 import OUI.Material.Color
 import OUI.Material.Theme
 import OUI.Material.Typography

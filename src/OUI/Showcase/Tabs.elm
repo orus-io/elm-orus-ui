@@ -3,7 +3,6 @@ module OUI.Showcase.Tabs exposing (Model, Msg, book)
 import Effect exposing (Effect)
 import Element exposing (Element)
 import OUI.Badge as Badge exposing (Badge)
-import OUI.Divider as Divider
 import OUI.Explorer as Explorer exposing (withChapter)
 import OUI.Icon as Icon exposing (Icon)
 import OUI.Material as Material
