@@ -1,9 +1,8 @@
-module ColorScheme exposing
-    ( defaultKeyColors, defaultLight, defaultDark
-    , springKeyColors, springLight, springDark
-    , autumnKeyColors, autumnLight, autumnDark
-    , summerKeyColors, summerLight, summerDark
-    , skyKeyColors, skyLight, skyDark
+module ColorThemes exposing
+    ( spring
+    , autumn
+    , summer
+    , sky
     )
 
 {-| Implementation of Material 3 color schemes
@@ -11,29 +10,7 @@ see <https://material-foundation.github.io/material-theme-builder/>
 to see all the added themes
 
 
-# Default
-
-@docs defaultKeyColors, defaultLight, defaultDark
-
-
-# Spring
-
-@docs springKeyColors, springLight, springDark
-
-
-# Autumn
-
-@docs autumnKeyColors, autumnLight, autumnDark
-
-
-# Summer
-
-@docs summerKeyColors, summerLight, summerDark
-
-
-# Sky
-
-@docs skyKeyColors, skyLight, skyDark
+@docs spring, autumn, summer, sky
 
 -}
 
@@ -58,26 +35,9 @@ defaultKeyColors =
     }
 
 
-{-| defaultLight colorscheme
--}
-defaultLight : OUI.Material.Color.Scheme
-defaultLight =
-    let
-        light =
-            OUI.Material.Color.lightFromKeyColors defaultKeyColors
-    in
-    light
-
-
-{-| defaultDark colorScheme
--}
-defaultDark : OUI.Material.Color.Scheme
-defaultDark =
-    let
-        dark =
-            OUI.Material.Color.darkFromKeyColors defaultKeyColors
-    in
-    dark
+default : OUI.Material.Color.Theme
+default =
+    OUI.Material.Color.makeTheme "default" "Default material theme" defaultKeyColors
 
 
 {-| springKeyColors
@@ -92,19 +52,10 @@ springKeyColors =
     , error = Color.rgb255 255 84 73
     }
 
+spring : OUI.Material.Color.Theme
+spring =
+    OUI.Material.Color.makeTheme "spring" "Spring colors" springKeyColors
 
-{-| springLight colorScheme
--}
-springLight : OUI.Material.Color.Scheme
-springLight =
-    OUI.Material.Color.lightFromKeyColors springKeyColors
-
-
-{-| springDark colorScheme
--}
-springDark : OUI.Material.Color.Scheme
-springDark =
-    OUI.Material.Color.darkFromKeyColors springKeyColors
 
 
 {-| autumnKeyColors
@@ -119,19 +70,9 @@ autumnKeyColors =
     , error = Color.rgb255 255 84 73
     }
 
-
-{-| autumnLight colorScheme
--}
-autumnLight : OUI.Material.Color.Scheme
-autumnLight =
-    OUI.Material.Color.lightFromKeyColors autumnKeyColors
-
-
-{-| autumnDark colorScheme
--}
-autumnDark : OUI.Material.Color.Scheme
-autumnDark =
-    OUI.Material.Color.darkFromKeyColors autumnKeyColors
+autumn : OUI.Material.Color.Theme
+autumn =
+    OUI.Material.Color.makeTheme "autumn" "Autumn colors" autumnKeyColors
 
 
 {-| summerKeyColors
@@ -147,18 +88,9 @@ summerKeyColors =
     }
 
 
-{-| summerLight colorScheme
--}
-summerLight : OUI.Material.Color.Scheme
-summerLight =
-    OUI.Material.Color.lightFromKeyColors summerKeyColors
-
-
-{-| summerDark colorScheme
--}
-summerDark : OUI.Material.Color.Scheme
-summerDark =
-    OUI.Material.Color.darkFromKeyColors summerKeyColors
+summer : OUI.Material.Color.Theme
+summer =
+    OUI.Material.Color.makeTheme "summer" "Summer colors" summerKeyColors
 
 
 {-| skyKeyColors
@@ -174,15 +106,7 @@ skyKeyColors =
     }
 
 
-{-| skyLight colorScheme
--}
-skyLight : OUI.Material.Color.Scheme
-skyLight =
-    OUI.Material.Color.lightFromKeyColors skyKeyColors
+sky : OUI.Material.Color.Theme
+sky =
+    OUI.Material.Color.makeTheme "sky" "Sky colors" skyKeyColors
 
-
-{-| skyDark colorScheme
--}
-skyDark : OUI.Material.Color.Scheme
-skyDark =
-    OUI.Material.Color.darkFromKeyColors skyKeyColors

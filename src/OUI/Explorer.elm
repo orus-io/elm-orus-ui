@@ -1,7 +1,7 @@
 module OUI.Explorer exposing
     ( Explorer, explorer, explorerWithTheme
     , Book, BookMsg, addBook, book, statefulBook, bookMsg
-    , ColorSchemeType, setColorScheme, addColorScheme
+    , ColorSchemeType, setColorTheme, addColorTheme
     , withMarkdownChapter, withStaticChapter, withChapter
     , Page, Route, Shared, SharedMsg
     , setTheme, category, logEvent, logEffect, finalize
@@ -22,7 +22,7 @@ module OUI.Explorer exposing
 
 # Colorschemes
 
-@docs ColorSchemeType, setColorScheme, addColorScheme
+@docs ColorSchemeType, setColorTheme, addColorTheme
 
 
 # Chapters
@@ -98,7 +98,7 @@ type alias Shared themeExt =
     { navKey : Browser.Navigation.Key
     , lastEvents : List String
     , theme : Theme themeExt
-    , colorSchemeList : List ( Color.Scheme, Color.Scheme )
+    , colorThemeList : List Color.Theme
     , selectedColorScheme : ( Int, ColorSchemeType )
     , selectedBook : String
     }
@@ -106,7 +106,7 @@ type alias Shared themeExt =
 
 type alias InitialShared themeExt =
     { theme : Theme themeExt
-    , colorSchemeList : List ( Color.Scheme, Color.Scheme )
+    , colorThemeList : List Color.Theme
     , selectedColorScheme : ( Int, ColorSchemeType )
     }
 
@@ -166,7 +166,7 @@ explorerWithTheme theme =
         , categories = []
         , initialShared =
             { theme = theme
-            , colorSchemeList = [ ( Color.defaultLightScheme, Color.defaultDarkScheme ) ]
+            , colorThemeList = [ Color.defaultTheme ]
             , selectedColorScheme =
                 ( 0, Light )
             }
@@ -191,15 +191,13 @@ setTheme theme (Explorer expl) =
         }
 
 
-{-| setColorScheme takes a light and dark color schemes and sets them
-as default schemes
+{-| takes a color theme sets it as default
 -}
-setColorScheme :
-    Color.Scheme
-    -> Color.Scheme
+setColorTheme :
+    Color.Theme
     -> Explorer themeExt c p cm pm
     -> Explorer themeExt c p cm pm
-setColorScheme light dark (Explorer expl) =
+setColorTheme colorTheme (Explorer expl) =
     let
         shared : InitialShared themeExt
         shared =
@@ -207,30 +205,25 @@ setColorScheme light dark (Explorer expl) =
     in
     Explorer
         { expl
-            | initialShared = { shared | colorSchemeList = [ ( light, dark ) ] }
+            | initialShared = { shared | colorThemeList = [ colorTheme ] }
         }
 
 
-{-| addColorScheme takes a light and dark schemes and add them to the Explorer
+{-| adds a color theme to the list of selectable color themes
 -}
-addColorScheme :
-    Color.Scheme
-    -> Color.Scheme
+addColorTheme :
+    Color.Theme
     -> Explorer themeExt c p cm pm
     -> Explorer themeExt c p cm pm
-addColorScheme light dark (Explorer expl) =
+addColorTheme colorTheme (Explorer expl) =
     let
         shared : InitialShared themeExt
         shared =
             expl.initialShared
-
-        newColorSchemeList : List ( Color.Scheme, Color.Scheme )
-        newColorSchemeList =
-            List.append shared.colorSchemeList (List.singleton ( light, dark ))
     in
     Explorer
         { expl
-            | initialShared = { shared | colorSchemeList = newColorSchemeList }
+            | initialShared = { shared | colorThemeList = shared.colorThemeList ++ [ colorTheme ] }
         }
 
 
@@ -478,15 +471,15 @@ changeColorScheme index type_ shared =
             if index < 0 then
                 0
 
-            else if index >= List.length shared.colorSchemeList then
-                List.length shared.colorSchemeList - 1
+            else if index >= List.length shared.colorThemeList then
+                List.length shared.colorThemeList - 1
 
             else
                 index
 
         colorScheme : Color.Scheme
         colorScheme =
-            shared.colorSchemeList
+            shared.colorThemeList
                 |> (if realIndex > 0 then
                         List.take realIndex
 
@@ -495,13 +488,13 @@ changeColorScheme index type_ shared =
                    )
                 |> List.head
                 |> Maybe.map
-                    (\( light, dark ) ->
+                    (\colorTheme ->
                         case type_ of
                             Light ->
-                                light
+                                colorTheme.schemes.light
 
                             Dark ->
-                                dark
+                                colorTheme.schemes.dark
                     )
                 |> Maybe.withDefault Color.defaultLightScheme
     in
@@ -561,7 +554,7 @@ finalize (Explorer expl) =
                     ( { navKey = key
                       , lastEvents = []
                       , theme = expl.initialShared.theme
-                      , colorSchemeList = expl.initialShared.colorSchemeList
+                      , colorThemeList = expl.initialShared.colorThemeList
                       , selectedColorScheme = expl.initialShared.selectedColorScheme
                       , selectedBook = ""
                       }

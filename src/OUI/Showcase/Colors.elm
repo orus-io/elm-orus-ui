@@ -142,10 +142,10 @@ The two default color schemes
             (\shared ->
                 shared.theme
                     |> OUI.Material.Theme.withColorscheme
-                        (shared.colorSchemeList
+                        (shared.colorThemeList
                             |> List.drop (shared.selectedColorScheme |> Tuple.first)
                             |> List.head
-                            |> Maybe.map Tuple.first
+                            |> Maybe.map (.schemes >> .light)
                             |> Maybe.withDefault OUI.Material.Color.defaultLightScheme
                         )
                     |> showColorScheme "Light Scheme"
@@ -154,10 +154,10 @@ The two default color schemes
             (\shared ->
                 shared.theme
                     |> OUI.Material.Theme.withColorscheme
-                        (shared.colorSchemeList
+                        (shared.colorThemeList
                             |> List.drop (shared.selectedColorScheme |> Tuple.first)
                             |> List.head
-                            |> Maybe.map Tuple.second
+                            |> Maybe.map (.schemes >> .dark)
                             |> Maybe.withDefault OUI.Material.Color.defaultDarkScheme
                         )
                     |> showColorScheme "Dark Scheme"

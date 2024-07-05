@@ -1,7 +1,7 @@
 module Main exposing (..)
 
 import Browser
-import ColorScheme
+import ColorThemes
 import IcidassetMaterialIcons.Outlined as Outlined
 import IcidassetMaterialIcons.Regular as Regular
 import IcidassetMaterialIcons.Round as Round
@@ -49,11 +49,11 @@ your own project 'src' list.
 
 main =
     Explorer.explorer
-        |> Explorer.setColorScheme ColorScheme.defaultLight ColorScheme.defaultDark
-        |> Explorer.addColorScheme ColorScheme.springLight ColorScheme.springDark
-        |> Explorer.addColorScheme ColorScheme.autumnLight ColorScheme.autumnDark
-        |> Explorer.addColorScheme ColorScheme.summerLight ColorScheme.summerDark
-        |> Explorer.addColorScheme ColorScheme.skyLight ColorScheme.skyDark
+        |> Explorer.setColorTheme OUI.Material.Color.defaultTheme
+        |> Explorer.addColorTheme ColorThemes.spring
+        |> Explorer.addColorTheme ColorThemes.autumn
+        |> Explorer.addColorTheme ColorThemes.summer
+        |> Explorer.addColorTheme ColorThemes.sky
         |> Explorer.setTheme theme
         |> Explorer.addBook
             (Explorer.book "Introduction" |> Explorer.withMarkdownChapter intro)

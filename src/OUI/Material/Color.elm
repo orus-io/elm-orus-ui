@@ -1,6 +1,6 @@
 module OUI.Material.Color exposing
-    ( KeyColors, Scheme
-    , defaultKeyColors, defaultLightScheme, defaultDarkScheme, lightFromKeyColors, darkFromKeyColors
+    ( KeyColors, Scheme, Theme
+    , defaultKeyColors, defaultLightScheme, defaultDarkScheme, defaultTheme, lightFromKeyColors, darkFromKeyColors, makeTheme
     , getColor, getOnColor
     , getElementColor, getOnElementColor, toElementColor
     , getContainerColor, getOnContainerColor
@@ -17,12 +17,12 @@ module OUI.Material.Color exposing
 
 # Types
 
-@docs KeyColors, Scheme
+@docs KeyColors, Scheme, Theme
 
 
 # Constructors
 
-@docs defaultKeyColors, defaultLightScheme, defaultDarkScheme, lightFromKeyColors, darkFromKeyColors
+@docs defaultKeyColors, defaultLightScheme, defaultDarkScheme, defaultTheme, lightFromKeyColors, darkFromKeyColors, makeTheme
 
 
 # Getters
@@ -112,6 +112,19 @@ type alias Scheme =
     }
 
 
+{-| A Material color theme
+-}
+type alias Theme =
+    { name : String
+    , description : String
+    , keyColors : KeyColors
+    , schemes :
+        { light : Scheme
+        , dark : Scheme
+        }
+    }
+
+
 {-| The default Material 3 key colors
 -}
 defaultKeyColors : KeyColors
@@ -137,6 +150,25 @@ defaultLightScheme =
 defaultDarkScheme : Scheme
 defaultDarkScheme =
     darkFromKeyColors defaultKeyColors
+
+
+defaultTheme : Theme
+defaultTheme =
+    makeTheme "default" "Default Material Colors" defaultKeyColors
+
+
+{-| Build a theme
+-}
+makeTheme : String -> String -> KeyColors -> Theme
+makeTheme name description keyColors =
+    { name = name
+    , description = description
+    , keyColors = keyColors
+    , schemes =
+        { light = lightFromKeyColors keyColors
+        , dark = darkFromKeyColors keyColors
+        }
+    }
 
 
 {-| Create a light color scheme from key colors
