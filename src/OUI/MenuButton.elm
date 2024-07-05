@@ -1,6 +1,6 @@
 module OUI.MenuButton exposing
     ( MenuButton, Align(..), Key(..)
-    , new, alignLeft, alignRight, withOpenCloseIcons
+    , new, alignLeft, alignRight, alignTop, alignBottom, withOpenCloseIcons
     , State, Msg, init, update, onOutsideClick
     , Effect(..), updateWithoutPerform, performEffect
     , getButton, getMenu, getMenuAlign, getOnKeyDown, getOnLoseFocus, getOpenCloseIcons
@@ -15,7 +15,7 @@ The button will open a menu when clicked.
 
 # Constructor
 
-@docs new, alignLeft, alignRight, withOpenCloseIcons
+@docs new, alignLeft, alignRight, alignTop, alignBottom, withOpenCloseIcons
 
 
 # State management
@@ -50,8 +50,10 @@ import Task
 {-| Menu alignment
 -}
 type Align
-    = AlignLeft
-    | AlignRight
+    = AlignTopLeft
+    | AlignTopRight
+    | AlignBottomRight
+    | AlignBottomLeft
 
 
 {-| A Button + Menu component
@@ -109,7 +111,7 @@ new map onClick button menu =
         , menu =
             menu
                 |> OUI.Menu.onClick (map << OnClickItem << onClick)
-        , menuAlign = AlignLeft
+        , menuAlign = AlignBottomLeft
         , onKeyDown = OnKeyDown onClick menuitems >> map
         , onLoseFocus = map OnBlur
         , openCloseIcons = Nothing
@@ -126,23 +128,79 @@ withOpenCloseIcons open close (MenuButton props) =
         }
 
 
-{-| Change the menu alignment to 'right'
--}
-alignRight : MenuButton btnC item msg -> MenuButton btnC item msg
-alignRight (MenuButton props) =
-    MenuButton
-        { props
-            | menuAlign = AlignRight
-        }
-
-
 {-| Change the menu alignment to 'left' (default)
 -}
 alignLeft : MenuButton btnC item msg -> MenuButton btnC item msg
 alignLeft (MenuButton props) =
     MenuButton
         { props
-            | menuAlign = AlignLeft
+            | menuAlign =
+                case props.menuAlign of
+                    AlignTopRight ->
+                        AlignTopLeft
+
+                    AlignBottomRight ->
+                        AlignBottomLeft
+
+                    _ ->
+                        props.menuAlign
+        }
+
+
+{-| Change the menu alignment to 'right'
+-}
+alignRight : MenuButton btnC item msg -> MenuButton btnC item msg
+alignRight (MenuButton props) =
+    MenuButton
+        { props
+            | menuAlign =
+                case props.menuAlign of
+                    AlignTopLeft ->
+                        AlignTopRight
+
+                    AlignBottomLeft ->
+                        AlignBottomRight
+
+                    _ ->
+                        props.menuAlign
+        }
+
+
+{-| Change the menu alignment to 'top'
+-}
+alignTop : MenuButton btnC item msg -> MenuButton btnC item msg
+alignTop (MenuButton props) =
+    MenuButton
+        { props
+            | menuAlign =
+                case props.menuAlign of
+                    AlignBottomLeft ->
+                        AlignTopLeft
+
+                    AlignBottomRight ->
+                        AlignTopRight
+
+                    _ ->
+                        props.menuAlign
+        }
+
+
+{-| Change the menu alignment to 'bottom'
+-}
+alignBottom : MenuButton btnC item msg -> MenuButton btnC item msg
+alignBottom (MenuButton props) =
+    MenuButton
+        { props
+            | menuAlign =
+                case props.menuAlign of
+                    AlignTopLeft ->
+                        AlignBottomLeft
+
+                    AlignTopRight ->
+                        AlignBottomRight
+
+                    _ ->
+                        props.menuAlign
         }
 
 

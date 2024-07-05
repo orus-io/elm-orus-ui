@@ -152,6 +152,8 @@ defaultDarkScheme =
     darkFromKeyColors defaultKeyColors
 
 
+{-| The default Material 3 theme
+-}
 defaultTheme : Theme
 defaultTheme =
     makeTheme "default" "Default Material Colors" defaultKeyColors

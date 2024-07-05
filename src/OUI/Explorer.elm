@@ -42,17 +42,19 @@ import Browser.Navigation
 import Effect exposing (Effect)
 import Element exposing (Element)
 import Element.Background as Background
-import Element.Events as Events
 import Element.Font as Font
 import Html.Attributes
 import Json.Decode
 import Markdown.Parser
 import Markdown.Renderer
+import OUI.Button as Button
 import OUI.Icon as Icon
 import OUI.Material as Material
 import OUI.Material.Color as Color
 import OUI.Material.Markdown
 import OUI.Material.Theme as Theme exposing (Theme)
+import OUI.Menu as Menu
+import OUI.MenuButton as MenuButton
 import OUI.Navigation
 import OUI.Switch as Switch
 import OUI.Text
@@ -82,16 +84,6 @@ type ColorSchemeType
     | Dark
 
 
-invertColorSchemeType : ColorSchemeType -> ColorSchemeType
-invertColorSchemeType t =
-    case t of
-        Light ->
-            Dark
-
-        Dark ->
-            Light
-
-
 {-| The shared state
 -}
 type alias Shared themeExt =
@@ -101,6 +93,7 @@ type alias Shared themeExt =
     , colorThemeList : List Color.Theme
     , selectedColorScheme : ( Int, ColorSchemeType )
     , selectedBook : String
+    , colorThemeButton : MenuButton.State
     }
 
 
@@ -116,6 +109,7 @@ type alias InitialShared themeExt =
 type SharedMsg
     = Event String
     | SelectColorScheme Int ColorSchemeType
+    | ColorThemeButtonMsg (MenuButton.Msg Int SharedMsg)
     | OnBookClick String
     | OnRouteChange String
 
@@ -463,6 +457,19 @@ decodeFlags =
         )
 
 
+getColorTheme : Int -> Shared themeExt -> Color.Theme
+getColorTheme i shared =
+    shared.colorThemeList
+        |> List.drop i
+        |> List.head
+        |> Maybe.withDefault Color.defaultTheme
+
+
+getSelectedColorTheme : Shared themeExt -> Color.Theme
+getSelectedColorTheme shared =
+    getColorTheme (shared.selectedColorScheme |> Tuple.first) shared
+
+
 changeColorScheme : Int -> ColorSchemeType -> Shared themeExt -> Shared themeExt
 changeColorScheme index type_ shared =
     let
@@ -481,7 +488,7 @@ changeColorScheme index type_ shared =
         colorScheme =
             shared.colorThemeList
                 |> (if realIndex > 0 then
-                        List.take realIndex
+                        List.drop realIndex
 
                     else
                         identity
@@ -557,6 +564,7 @@ finalize (Explorer expl) =
                       , colorThemeList = expl.initialShared.colorThemeList
                       , selectedColorScheme = expl.initialShared.selectedColorScheme
                       , selectedBook = ""
+                      , colorThemeButton = MenuButton.init "color-theme-button"
                       }
                         |> changeColorScheme 0
                             (if dFlags.dark_mode then
@@ -578,6 +586,17 @@ finalize (Explorer expl) =
                                         |> List.take 5
                               }
                             , Cmd.none
+                            )
+
+                        ColorThemeButtonMsg buttonMsg ->
+                            let
+                                ( state, cmd ) =
+                                    MenuButton.update buttonMsg shared.colorThemeButton
+                            in
+                            ( { shared
+                                | colorThemeButton = state
+                              }
+                            , cmd
                             )
 
                         SelectColorScheme index type_ ->
@@ -656,29 +675,37 @@ finalize (Explorer expl) =
                                     , Element.row
                                         [ Element.width Element.fill
                                         , Element.padding 15
-                                        , colorscheme.surfaceContainerLow
+                                        , Element.spacing 15
+                                        , colorscheme.surfaceContainerHigh
                                             |> Color.toElementColor
                                             |> Background.color
-                                        , Element.pointer
-                                        , Element.mouseOver
-                                            [ colorscheme.surfaceContainerLow
-                                                |> Color.withShade colorscheme.onSurface
-                                                    Color.hoverStateLayerOpacity
-                                                |> Color.toElementColor
-                                                |> Background.color
-                                            ]
-                                        , Events.onClick
-                                            (SelectColorScheme
-                                                (Tuple.first shared.selectedColorScheme)
-                                                (shared.selectedColorScheme
-                                                    |> Tuple.second
-                                                    |> invertColorSchemeType
-                                                )
-                                                |> Spa.mapSharedMsg
-                                            )
                                         ]
-                                        [ OUI.Text.labelLarge "Light/Dark"
+                                        [ OUI.Text.labelMedium "Color theme:"
                                             |> Material.text shared.theme
+                                            |> Element.el
+                                                [ Element.alignLeft
+                                                ]
+                                        , MenuButton.new ColorThemeButtonMsg
+                                            (\i ->
+                                                SelectColorScheme i
+                                                    (Tuple.second shared.selectedColorScheme)
+                                            )
+                                            (Button.new
+                                                (getSelectedColorTheme shared |> .name)
+                                            )
+                                            (Menu.new
+                                                (\i ->
+                                                    getColorTheme i shared
+                                                        |> .name
+                                                )
+                                                |> Menu.addItems (List.range 0 (List.length shared.colorThemeList - 1))
+                                            )
+                                            |> MenuButton.alignTop
+                                            |> Material.menuButton shared.theme
+                                                shared.colorThemeButton
+                                                [ Element.centerX
+                                                ]
+                                            |> Element.map Spa.mapSharedMsg
                                         , Switch.new
                                             (Tuple.second shared.selectedColorScheme
                                                 == Dark
