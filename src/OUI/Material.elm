@@ -1,7 +1,7 @@
 module OUI.Material exposing
     ( text, icon, divider, badge, progress
     , button, checkbox, switch, textField, radiobutton, slider, menu, tabs
-    , dialog, menuButton, navigation
+    , dialog, dialogWithContent, menuButton, navigation
     )
 
 {-| A elm-ui based renderer API
@@ -19,7 +19,7 @@ module OUI.Material exposing
 
 # Complex
 
-@docs dialog, menuButton, navigation
+@docs dialog, dialogWithContent, menuButton, navigation
 
 -}
 
@@ -128,8 +128,20 @@ dialog :
     -> List (Attribute msg)
     -> OUI.Dialog.Dialog msg
     -> Modal msg
-dialog theme =
-    OUI.Material.Dialog.render (Theme.typescale theme) (Theme.colorscheme theme) (Theme.button theme) (Theme.dialog theme)
+dialog theme attrs =
+    OUI.Material.Dialog.render (Theme.typescale theme) (Theme.colorscheme theme) (Theme.button theme) (Theme.dialog theme) attrs Nothing
+
+
+{-| Render a dialog with a custom content
+-}
+dialogWithContent :
+    Theme themeExt
+    -> List (Attribute msg)
+    -> Element msg
+    -> OUI.Dialog.Dialog msg
+    -> Modal msg
+dialogWithContent theme attrs content =
+    OUI.Material.Dialog.render (Theme.typescale theme) (Theme.colorscheme theme) (Theme.button theme) (Theme.dialog theme) attrs (Just content)
 
 
 {-| Render a menu

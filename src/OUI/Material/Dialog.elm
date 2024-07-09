@@ -48,9 +48,10 @@ render :
     -> OUI.Material.Button.Theme
     -> Theme
     -> List (Attribute msg)
+    -> Maybe (Element.Element msg)
     -> Dialog msg
     -> Modal msg
-render typescale colorscheme buttonTheme theme attrs dialog =
+render typescale colorscheme buttonTheme theme attrs content dialog =
     let
         hasIcon : Bool
         hasIcon =
@@ -196,6 +197,23 @@ render typescale colorscheme buttonTheme theme attrs dialog =
                                         , left = 0
                                         }
                                     ]
+                            ]
+
+                        Nothing ->
+                            []
+                   )
+                ++ (case content of
+                        Just el ->
+                            [ Element.el
+                                [ Element.paddingEach
+                                    { top = theme.paddingBetweenTitleAndBody
+                                    , bottom = 0
+                                    , right = 0
+                                    , left = 0
+                                    }
+                                , Element.width Element.fill
+                                ]
+                                el
                             ]
 
                         Nothing ->
