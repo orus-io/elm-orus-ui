@@ -1,6 +1,6 @@
 module OUI.Material exposing
     ( text, icon, divider, badge, progress
-    , button, checkbox, switch, textField, radiobutton, slider, menu, tabs
+    , button, checkbox, switch, textField, radiobutton, slider, menu, tabs, timepicker
     , dialog, dialogWithContent, menuButton, navigation
     )
 
@@ -14,7 +14,7 @@ module OUI.Material exposing
 
 # Inputs
 
-@docs button, checkbox, switch, textField, radiobutton, slider, menu, tabs
+@docs button, checkbox, switch, textField, radiobutton, slider, menu, tabs, timepicker
 
 
 # Complex
@@ -47,6 +47,7 @@ import OUI.Material.Switch
 import OUI.Material.Tabs
 import OUI.Material.TextField
 import OUI.Material.Theme as Theme exposing (Theme)
+import OUI.Material.TimePicker
 import OUI.Material.Typography
 import OUI.Menu
 import OUI.MenuButton
@@ -58,6 +59,7 @@ import OUI.Switch
 import OUI.Tabs
 import OUI.Text
 import OUI.TextField
+import OUI.TimePicker
 
 
 {-| Render a text
@@ -270,6 +272,21 @@ textField theme =
         (Theme.colorscheme theme)
         (Theme.button theme)
         (Theme.textfield theme)
+
+
+{-| Render a TimePicker
+-}
+timepicker :
+    Theme themeExt
+    -> OUI.TimePicker.State
+    -> List (Attribute msg)
+    -> OUI.TimePicker.TimePicker
+    -> Element msg
+timepicker theme =
+    OUI.Material.TimePicker.render
+        (Theme.typescale theme)
+        (Theme.colorscheme theme)
+        (Theme.timepicker theme)
 
 
 {-| Render a divider

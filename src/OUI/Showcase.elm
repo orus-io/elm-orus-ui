@@ -22,6 +22,7 @@ import OUI.Showcase.Slider as Slider
 import OUI.Showcase.Switches as Switches
 import OUI.Showcase.Tabs as Tabs
 import OUI.Showcase.TextFields as TextFields
+import OUI.Showcase.TimePickers as TimePickers
 import OUI.Showcase.Typography as Typography
 import Spa
 import Spa.PageStack
@@ -34,31 +35,31 @@ addPages :
     ->
         Explorer
             themeExt
-            ()
+            TimePickers.Model
             (Spa.PageStack.Model
                 Spa.SetupError
-                Navigation.Model
+                ()
                 (Spa.PageStack.Model
                     Spa.SetupError
-                    MenuButtons.Model
+                    Navigation.Model
                     (Spa.PageStack.Model
                         Spa.SetupError
-                        TextFields.Model
+                        MenuButtons.Model
                         (Spa.PageStack.Model
                             Spa.SetupError
-                            Tabs.Model
+                            TextFields.Model
                             (Spa.PageStack.Model
                                 Spa.SetupError
-                                Switches.Model
+                                Tabs.Model
                                 (Spa.PageStack.Model
                                     Spa.SetupError
-                                    Slider.Model
+                                    Switches.Model
                                     (Spa.PageStack.Model
                                         Spa.SetupError
-                                        RadioButtons.Model
+                                        Slider.Model
                                         (Spa.PageStack.Model
                                             Spa.SetupError
-                                            ()
+                                            RadioButtons.Model
                                             (Spa.PageStack.Model
                                                 Spa.SetupError
                                                 ()
@@ -67,10 +68,10 @@ addPages :
                                                     ()
                                                     (Spa.PageStack.Model
                                                         Spa.SetupError
-                                                        Checkbox.Model
+                                                        ()
                                                         (Spa.PageStack.Model
                                                             Spa.SetupError
-                                                            ()
+                                                            Checkbox.Model
                                                             (Spa.PageStack.Model
                                                                 Spa.SetupError
                                                                 ()
@@ -82,8 +83,12 @@ addPages :
                                                                         ()
                                                                         (Spa.PageStack.Model
                                                                             Spa.SetupError
-                                                                            current
-                                                                            previous
+                                                                            ()
+                                                                            (Spa.PageStack.Model
+                                                                                Spa.SetupError
+                                                                                current
+                                                                                previous
+                                                                            )
                                                                         )
                                                                     )
                                                                 )
@@ -100,31 +105,31 @@ addPages :
                     )
                 )
             )
-            (Explorer.BookMsg ())
+            (Explorer.BookMsg TimePickers.Msg)
             (Spa.PageStack.Msg
                 Explorer.Route
-                (Explorer.BookMsg Navigation.Msg)
+                (Explorer.BookMsg ())
                 (Spa.PageStack.Msg
                     Explorer.Route
-                    (Explorer.BookMsg MenuButtons.Msg)
+                    (Explorer.BookMsg Navigation.Msg)
                     (Spa.PageStack.Msg
                         Explorer.Route
-                        (Explorer.BookMsg TextFields.Msg)
+                        (Explorer.BookMsg MenuButtons.Msg)
                         (Spa.PageStack.Msg
                             Explorer.Route
-                            (Explorer.BookMsg Tabs.Msg)
+                            (Explorer.BookMsg TextFields.Msg)
                             (Spa.PageStack.Msg
                                 Explorer.Route
-                                (Explorer.BookMsg Switches.Msg)
+                                (Explorer.BookMsg Tabs.Msg)
                                 (Spa.PageStack.Msg
                                     Explorer.Route
-                                    (Explorer.BookMsg Slider.Msg)
+                                    (Explorer.BookMsg Switches.Msg)
                                     (Spa.PageStack.Msg
                                         Explorer.Route
-                                        (Explorer.BookMsg RadioButtons.Msg)
+                                        (Explorer.BookMsg Slider.Msg)
                                         (Spa.PageStack.Msg
                                             Explorer.Route
-                                            (Explorer.BookMsg ())
+                                            (Explorer.BookMsg RadioButtons.Msg)
                                             (Spa.PageStack.Msg
                                                 Explorer.Route
                                                 (Explorer.BookMsg ())
@@ -133,12 +138,12 @@ addPages :
                                                     (Explorer.BookMsg ())
                                                     (Spa.PageStack.Msg
                                                         Explorer.Route
-                                                        (Explorer.BookMsg
-                                                            Checkbox.Msg
-                                                        )
+                                                        (Explorer.BookMsg ())
                                                         (Spa.PageStack.Msg
                                                             Explorer.Route
-                                                            (Explorer.BookMsg ())
+                                                            (Explorer.BookMsg
+                                                                Checkbox.Msg
+                                                            )
                                                             (Spa.PageStack.Msg
                                                                 Explorer.Route
                                                                 (Explorer.BookMsg
@@ -156,8 +161,14 @@ addPages :
                                                                         )
                                                                         (Spa.PageStack.Msg
                                                                             Explorer.Route
-                                                                            currentMsg
-                                                                            previousMsg
+                                                                            (Explorer.BookMsg
+                                                                                ()
+                                                                            )
+                                                                            (Spa.PageStack.Msg
+                                                                                Explorer.Route
+                                                                                currentMsg
+                                                                                previousMsg
+                                                                            )
                                                                         )
                                                                     )
                                                                 )
@@ -194,3 +205,4 @@ addPages =
         >> Explorer.addBook MenuButtons.book
         >> Explorer.addBook Navigation.book
         >> Explorer.addBook Dialog.book
+        >> Explorer.addBook TimePickers.book

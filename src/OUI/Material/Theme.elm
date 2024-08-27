@@ -16,6 +16,7 @@ module OUI.Material.Theme exposing
     , SwitchTheme, switch, withSwitch
     , TabsTheme, tabs, withTabs
     , TextFieldTheme, textfield, withTextfield
+    , TimePickerTheme, timepicker, withTimepicker
     )
 
 {-|
@@ -111,6 +112,11 @@ module OUI.Material.Theme exposing
 
 @docs TextFieldTheme, textfield, withTextfield
 
+
+## TimePicker
+
+@docs TimePickerTheme, timepicker, withTimepicker
+
 -}
 
 import OUI
@@ -129,6 +135,7 @@ import OUI.Material.Slider
 import OUI.Material.Switch
 import OUI.Material.Tabs
 import OUI.Material.TextField
+import OUI.Material.TimePicker
 import OUI.Text
 
 
@@ -388,6 +395,12 @@ type alias TextFieldTheme =
     }
 
 
+{-| A TimePicker theme
+-}
+type alias TimePickerTheme =
+    {}
+
+
 {-| A font type
 -}
 type alias Typography =
@@ -454,6 +467,7 @@ type Theme ext
         , switch : SwitchTheme
         , tabs : TabsTheme
         , textfield : TextFieldTheme
+        , timepicker : TimePickerTheme
         , radiobutton : RadioButtonTheme
         , ext : ext
         }
@@ -555,6 +569,13 @@ tabs (Theme t) =
 textfield : Theme ext -> TextFieldTheme
 textfield (Theme t) =
     t.textfield
+
+
+{-| get the timepicker theme
+-}
+timepicker : Theme ext -> TimePickerTheme
+timepicker (Theme t) =
+    t.timepicker
 
 
 {-| get the radiobutton theme
@@ -669,6 +690,13 @@ withTextfield value (Theme t) =
     Theme { t | textfield = value }
 
 
+{-| set the timepicker theme
+-}
+withTimepicker : TimePickerTheme -> Theme ext -> Theme ext
+withTimepicker value (Theme t) =
+    Theme { t | timepicker = value }
+
+
 {-| set the radiobutton theme
 -}
 withRadiobutton : RadioButtonTheme -> Theme ext -> Theme ext
@@ -696,6 +724,7 @@ withExt themeExt (Theme t) =
         , switch = t.switch
         , tabs = t.tabs
         , textfield = t.textfield
+        , timepicker = t.timepicker
         , ext = themeExt
         }
 
@@ -720,6 +749,7 @@ defaultTheme =
         , switch = OUI.Material.Switch.defaultTheme
         , tabs = OUI.Material.Tabs.defaultTheme
         , textfield = OUI.Material.TextField.defaultTheme
+        , timepicker = OUI.Material.TimePicker.defaultTheme
         , ext = ()
         }
 
