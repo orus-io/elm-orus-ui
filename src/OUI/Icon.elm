@@ -90,7 +90,7 @@ fromRenderer renderer =
 blank : Icon
 blank =
     fromRenderer <|
-        Svg
+        Html
             (\size _ ->
                 let
                     sizeAsString : String
@@ -111,7 +111,7 @@ blank =
 check : Icon
 check =
     fromRenderer <|
-        Svg
+        Html
             (\size color ->
                 let
                     sizeAsString : String
@@ -141,7 +141,7 @@ check =
 clear : Icon
 clear =
     fromRenderer <|
-        Svg
+        Html
             (\size color ->
                 let
                     sizeAsString : String
@@ -171,7 +171,7 @@ clear =
 dark_mode : Icon
 dark_mode =
     fromRenderer <|
-        Svg
+        Html
             (\size color ->
                 let
                     sizeAsString : String
@@ -203,7 +203,7 @@ dark_mode =
 light_mode : Icon
 light_mode =
     fromRenderer <|
-        Svg
+        Html
             (\size color ->
                 let
                     sizeAsString : String
@@ -235,7 +235,7 @@ light_mode =
 arrow_drop_down : Icon
 arrow_drop_down =
     fromRenderer <|
-        Svg
+        Html
             (\size color ->
                 let
                     sizeAsString : String
@@ -263,7 +263,7 @@ arrow_drop_down =
 arrow_drop_up : Icon
 arrow_drop_up =
     fromRenderer <|
-        Svg
+        Html
             (\size color ->
                 let
                     sizeAsString : String
@@ -321,7 +321,7 @@ elmMaterialIcons wrapper fun =
 materialIcons : (Color -> Int -> Svg Never) -> Icon
 materialIcons fun =
     fromRenderer <|
-        Svg
+        Html
             (\size color ->
                 fun color size
                     |> List.singleton
