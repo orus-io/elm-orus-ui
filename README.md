@@ -88,3 +88,9 @@ customTheme =
             }
 ```
 
+
+## Contribute
+
+Contributions are very welcome! Please read the modest [Developer
+Guide](https://github.com/orus-io/elm-orus-ui/blob/main/DEVELOP.md), it will
+give you some precious indications.

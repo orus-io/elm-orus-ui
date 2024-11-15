@@ -26,10 +26,10 @@ each component, and a colorscheme.
 The colorscheme can be generated from a few key colors as specified in
 Material design.
 
-This UI Explorer is a little crude for now but will get nicer when new components
-get implemented.
+This UI Explorer demonstrate all the components provided by Elm Orus UI. It can
+also be extended with your own components and themes.
 
-The package is not yet published on [Elm Packages](https://package.elm-lang.org/),
+The package is available on [Elm Packages](https://package.elm-lang.org/packages/orus-io/elm-orus-ui/latest/),
 but the source code is [available on Github](https://github.com/orus-io/elm-orus-ui).
 
 *This is of course our feeling about it, and we hope you make it yours
@@ -39,11 +39,16 @@ but the source code is [available on Github](https://github.com/orus-io/elm-orus
 get_started : String
 get_started =
     """
-Elm Orus UI is still in a alpha state, and is not yet released on Elm packages.
 
-To use it, you have to clone the project, and add its 'src' subdirectory into
-your own project 'src' list.
+Add Elm Orus UI to your project:
 
+```
+elm install orus-io/elm-orus-ui
+```
+
+Have a look at the
+[documentation](https://package.elm-lang.org/packages/orus-io/elm-orus-ui/latest/)
+for code snippets.
 """
 
 
