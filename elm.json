@@ -1,6 +1,6 @@
 {
   "type": "package",
-  "name": "cdevienne/elm-orus-ui",
+  "name": "orus-io/elm-orus-ui",
   "summary": "A Material Design based UI Toolkit.",
   "license": "MIT",
   "version": "1.0.0",
