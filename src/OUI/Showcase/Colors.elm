@@ -7,7 +7,7 @@ import Element.Border as Border
 import Element.Font as Font
 import OUI
 import OUI.Explorer as Explorer
-import OUI.Material.Color
+import OUI.Material.Color exposing (KeyColors)
 import OUI.Material.Theme
 import OUI.Material.Typography
 import OUI.Text
@@ -24,6 +24,66 @@ colorCell name color onColor height =
         ]
         [ Element.el [ Element.alignTop ] <| Element.text name
         ]
+
+
+showKeyColors : OUI.Material.Theme.Theme themeExt -> Element msg
+showKeyColors theme =
+    let
+        scheme : OUI.Material.Color.Scheme
+        scheme =
+            OUI.Material.Theme.colorscheme theme
+
+        typescale : OUI.Material.Typography.Typescale
+        typescale =
+            OUI.Material.Theme.typescale theme
+    in
+    Element.column
+        ([ Element.spacing 5
+         , Element.width <| Element.px 820
+         ]
+            ++ OUI.Material.Typography.attrs OUI.Text.Body OUI.Text.Small OUI.Text.NoColor typescale scheme
+        )
+        [ OUI.Text.titleMedium "Key Colors"
+            |> OUI.Text.withColor OUI.Neutral
+            |> OUI.Material.Typography.renderWithAttrs
+                typescale
+                scheme
+                [ Element.paddingEach { bottom = 10, top = 0, left = 0, right = 0 }
+                ]
+        , Element.row [ Element.spacing 5, Element.width Element.fill ]
+            [ Element.column [ Element.width Element.fill ]
+                [ colorCell "Primary" scheme.surfaceContainer scheme.onSurface 40
+                , colorCell "" scheme.keyColors.primary Color.white 70
+                ]
+            , Element.column [ Element.width Element.fill ]
+                [ colorCell "Secondary" scheme.surfaceContainer scheme.onSurface 40
+                , colorCell "" scheme.keyColors.secondary Color.white 70
+                ]
+            , Element.column [ Element.width Element.fill ]
+                [ colorCell "Tertiary" scheme.surfaceContainer scheme.onSurface 40
+                , colorCell "" scheme.keyColors.tertiary Color.white 70
+                ]
+            , Element.column [ Element.width Element.fill ]
+                [ colorCell "Error" scheme.surfaceContainer scheme.onSurface 40
+                , colorCell "" scheme.keyColors.error Color.white 70
+                ]
+            , Element.column [ Element.width Element.fill ]
+                [ colorCell "Neutral" scheme.surfaceContainer scheme.onSurface 40
+                , colorCell "" scheme.keyColors.neutral Color.white 70
+                ]
+            , Element.column [ Element.width Element.fill ]
+                [ colorCell "Neutral Variant" scheme.surfaceContainer scheme.onSurface 40
+                , colorCell "" scheme.keyColors.neutralVariant Color.white 70
+                ]
+            ]
+        ]
+        |> Element.el
+            [ Background.color <| OUI.Material.Color.toElementColor scheme.surfaceContainer
+            , Element.padding 15
+            , Border.rounded 10
+            , Border.color <| OUI.Material.Color.toElementColor scheme.outlineVariant
+            , Border.width 1
+            ]
 
 
 showColorScheme : String -> OUI.Material.Theme.Theme themeExt -> Element msg
@@ -138,6 +198,11 @@ book =
         |> Explorer.withMarkdownChapter """
 The two default color schemes
     """
+        |> Explorer.withStaticChapter
+            (\shared ->
+                shared.theme
+                    |> showKeyColors
+            )
         |> Explorer.withStaticChapter
             (\shared ->
                 shared.theme
