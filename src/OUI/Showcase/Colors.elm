@@ -1,15 +1,20 @@
-module OUI.Showcase.Colors exposing (book)
+module OUI.Showcase.Colors exposing (Model, Msg, book)
 
 import Color exposing (Color)
+import Effect exposing (Effect)
 import Element exposing (Element)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
 import OUI
+import OUI.Button
 import OUI.Explorer as Explorer
+import OUI.Material
 import OUI.Material.Color exposing (KeyColors)
 import OUI.Material.Theme
 import OUI.Material.Typography
+import OUI.Menu
+import OUI.MenuButton
 import OUI.Text
 
 
@@ -192,12 +197,44 @@ showColorScheme title theme =
             ]
 
 
-book : Explorer.Book themeExt () ()
+book : Explorer.Book themeExt Model Msg
 book =
-    Explorer.book "Colors"
-        |> Explorer.withMarkdownChapter """
-The two default color schemes
-    """
+    Explorer.statefulBook "Colors"
+        { init = init
+        , update = update
+        , subscriptions = \_ _ -> Sub.none
+        }
+        |> Explorer.withChapter
+            (\shared model ->
+                Element.row
+                    [ Element.spacing 20
+                    ]
+                    [ "Current color scheme: "
+                        |> OUI.Text.bodyLarge
+                        |> OUI.Material.text shared.theme
+                    , OUI.MenuButton.new ColorThemeButtonMsg
+                        (\i ->
+                            SelectColorScheme i
+                                (Tuple.second shared.selectedColorScheme)
+                        )
+                        (OUI.Button.new
+                            (Explorer.getSelectedColorTheme shared |> .name)
+                        )
+                        (OUI.Menu.new
+                            (\i ->
+                                Explorer.getColorTheme i shared
+                                    |> .name
+                            )
+                            |> OUI.Menu.addItems (List.range 0 (List.length shared.colorThemeList - 1))
+                        )
+                        |> OUI.MenuButton.alignBottom
+                        |> OUI.Material.menuButton shared.theme
+                            model.colorThemeButton
+                            [ Element.centerX
+                            ]
+                    ]
+                    |> Element.map Explorer.bookMsg
+            )
         |> Explorer.withStaticChapter
             (\shared ->
                 shared.theme
@@ -227,3 +264,37 @@ The two default color schemes
                         )
                     |> showColorScheme "Dark Scheme"
             )
+
+
+type Msg
+    = ColorThemeButtonMsg (OUI.MenuButton.Msg Int Msg)
+    | SelectColorScheme Int Explorer.ColorSchemeType
+
+
+type alias Model =
+    { colorThemeButton : OUI.MenuButton.State
+    }
+
+
+init : Explorer.Shared themeExt -> ( Model, Effect Explorer.SharedMsg Msg )
+init shared =
+    { colorThemeButton = OUI.MenuButton.init "color-page-color-theme-button" }
+        |> Effect.withNone
+
+
+update : Explorer.Shared themeExt -> Msg -> Model -> ( Model, Effect Explorer.SharedMsg Msg )
+update _ msg model =
+    case msg of
+        ColorThemeButtonMsg buttonMsg ->
+            let
+                ( state, cmd ) =
+                    OUI.MenuButton.update buttonMsg model.colorThemeButton
+            in
+            { model
+                | colorThemeButton = state
+            }
+                |> Effect.withCmd cmd
+
+        SelectColorScheme i t ->
+            model
+                |> Effect.withShared (Explorer.selectColorScheme i t)

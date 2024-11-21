@@ -2,6 +2,7 @@ module OUI.Explorer exposing
     ( Explorer, explorer, explorerWithTheme
     , Book, BookMsg, addBook, book, statefulBook, bookMsg
     , ColorSchemeType, setColorTheme, addColorTheme
+    , selectColorScheme, getColorTheme, getSelectedColorTheme
     , withMarkdownChapter, withStaticChapter, withChapter
     , Page, Route, Shared, SharedMsg
     , setTheme, category, logEvent, logEffect, finalize
@@ -23,6 +24,7 @@ module OUI.Explorer exposing
 # Colorschemes
 
 @docs ColorSchemeType, setColorTheme, addColorTheme
+@docs selectColorScheme, getColorTheme, getSelectedColorTheme
 
 
 # Chapters
@@ -45,6 +47,7 @@ import Element.Background as Background
 import Element.Font as Font
 import Html.Attributes
 import Json.Decode
+import Json.Encode
 import Markdown.Parser
 import Markdown.Renderer
 import OUI.Button as Button
@@ -273,8 +276,8 @@ addBook b (Explorer expl) =
                             , update =
                                 \msg model ->
                                     case msg of
-                                        SharedMsg sharedMsg ->
-                                            ( model, Effect.fromShared sharedMsg )
+                                        SharedMsg subMsg ->
+                                            ( model, Effect.fromShared subMsg )
 
                                         BookMsg subMsg ->
                                             b.update shared subMsg model
@@ -354,6 +357,13 @@ logEffect =
 bookMsg : msg -> BookMsg msg
 bookMsg =
     BookMsg
+
+
+{-| build a Explorer.SharedMsg that changes the currently selected color scheme
+-}
+selectColorScheme : Int -> ColorSchemeType -> SharedMsg
+selectColorScheme i t =
+    SelectColorScheme i t
 
 
 {-| Creates a new static book
@@ -457,6 +467,8 @@ decodeFlags =
         )
 
 
+{-| return the color theme with the given index
+-}
 getColorTheme : Int -> Shared themeExt -> Color.Theme
 getColorTheme i shared =
     shared.colorThemeList
@@ -465,6 +477,8 @@ getColorTheme i shared =
         |> Maybe.withDefault Color.defaultTheme
 
 
+{-| return the currently selected color theme
+-}
 getSelectedColorTheme : Shared themeExt -> Color.Theme
 getSelectedColorTheme shared =
     getColorTheme (shared.selectedColorScheme |> Tuple.first) shared

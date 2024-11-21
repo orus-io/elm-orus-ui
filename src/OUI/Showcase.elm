@@ -79,7 +79,7 @@ addPages :
                                                                     ()
                                                                     (Spa.PageStack.Model
                                                                         Spa.SetupError
-                                                                        ()
+                                                                        Colors.Model
                                                                         (Spa.PageStack.Model
                                                                             Spa.SetupError
                                                                             current
@@ -152,7 +152,7 @@ addPages :
                                                                     (Spa.PageStack.Msg
                                                                         Explorer.Route
                                                                         (Explorer.BookMsg
-                                                                            ()
+                                                                            Colors.Msg
                                                                         )
                                                                         (Spa.PageStack.Msg
                                                                             Explorer.Route
