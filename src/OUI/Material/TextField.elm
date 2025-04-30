@@ -89,7 +89,8 @@ render :
 render typescale colorscheme buttonTheme theme attrs textfield =
     let
         p :
-            { onChange : String -> msg
+            { id : Maybe String
+            , onChange : String -> msg
             , label : String
             , datatype : OUI.TextField.Datatype
             , spellcheck : Bool
@@ -106,7 +107,8 @@ render typescale colorscheme buttonTheme theme attrs textfield =
             , errorIcon : Maybe Icon
             }
         p =
-            { onChange = OUI.TextField.getOnChange textfield
+            { id = OUI.TextField.getID textfield
+            , onChange = OUI.TextField.getOnChange textfield
             , label = OUI.TextField.getLabel textfield
             , datatype = OUI.TextField.getDatatype textfield
             , spellcheck = OUI.TextField.getSpellcheck textfield
@@ -467,6 +469,9 @@ render typescale colorscheme buttonTheme theme attrs textfield =
                     else
                         []
                    )
+                ++ (p.id |> Maybe.map (List.singleton<<Element.htmlAttribute << Html.Attributes.id)
+                |> Maybe.withDefault []
+                    )
     in
     Element.column
         (Element.spacing theme.supportingTextTopPadding

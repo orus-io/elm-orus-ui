@@ -1,9 +1,9 @@
 module OUI.TextField exposing
     ( TextField, Datatype(..), Type(..), new
     , multiline, search, username, email, password, newPassword
-    , withColor, withType, withSupportingText, withFocused, withLeadingIcon, withTrailingIcon, withClickableTrailingIcon, withErrorIcon
+    , withColor, withType, withSupportingText, withFocused, withLeadingIcon, withTrailingIcon, withClickableTrailingIcon, withErrorIcon, withID
     , onFocusBlur
-    , getOnChange, getDatatype, getLabel, getSpellcheck, getColor, getErrorIcon, getHasFocus, getLeadingIcon, getOnFocus, getOnLoseFocus, getOnTrailingIconClick, getSupportingText, getTrailingIcon, getType, getValue
+    , getOnChange, getDatatype, getLabel, getSpellcheck, getColor, getErrorIcon, getHasFocus, getLeadingIcon, getOnFocus, getOnLoseFocus, getOnTrailingIconClick, getSupportingText, getTrailingIcon, getType, getValue, getID
     )
 
 {-| A [Text Field](https://m3.material.io/components/text-fields) component
@@ -21,13 +21,13 @@ module OUI.TextField exposing
 
 ## Setters
 
-@docs withColor, withType, withSupportingText, withFocused, withLeadingIcon, withTrailingIcon, withClickableTrailingIcon, withErrorIcon
+@docs withID, withColor, withType, withSupportingText, withFocused, withLeadingIcon, withTrailingIcon, withClickableTrailingIcon, withErrorIcon
 @docs onFocusBlur
 
 
 ## Getters
 
-@docs getOnChange, getDatatype, getLabel, getSpellcheck, getColor, getErrorIcon, getHasFocus, getLeadingIcon, getOnFocus, getOnLoseFocus, getOnTrailingIconClick, getSupportingText, getTrailingIcon, getType, getValue
+@docs getID, getOnChange, getDatatype, getLabel, getSpellcheck, getColor, getErrorIcon, getHasFocus, getLeadingIcon, getOnFocus, getOnLoseFocus, getOnTrailingIconClick, getSupportingText, getTrailingIcon, getType, getValue
 
 -}
 
@@ -65,7 +65,8 @@ type TextField msg
 new : String -> (String -> msg) -> String -> TextField msg
 new label onChange value =
     TextField
-        { onChange = onChange
+        { id = Nothing
+        ,onChange = onChange
         , label = label
         , datatype = Text
         , spellcheck = False
@@ -152,6 +153,15 @@ withSupportingText value (TextField props) =
         { props
             | supportingText = Just value
         }
+
+
+{-| set an id on the input node
+-}
+withID : String -> TextField msg -> TextField msg
+withID value (TextField props) =
+    TextField 
+    { props
+        | id = Just value}
 
 
 {-| set the onFocus / onLoseFocus events
@@ -246,7 +256,8 @@ newPassword show (TextField props) =
 {-| Properties of the TextField component
 -}
 type alias Properties msg =
-    { onChange : String -> msg
+    { id: Maybe String
+    , onChange : String -> msg
     , label : String
     , datatype : Datatype
     , spellcheck : Bool
@@ -263,6 +274,12 @@ type alias Properties msg =
     , errorIcon : Maybe Icon
     }
 
+
+{-| Get the input ID
+-}
+getID : TextField msg -> Maybe String
+getID (TextField {id}) =
+    id
 
 {-| Get the on change msg
 -}
