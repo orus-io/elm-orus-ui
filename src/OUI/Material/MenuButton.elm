@@ -1,6 +1,6 @@
 module OUI.Material.MenuButton exposing (render)
 
-import Element exposing (Attribute, Element, alignBottom)
+import Element exposing (Attribute, Element)
 import Element.Events
 import Html.Attributes
 import Html.Events
@@ -44,20 +44,6 @@ render typescale colorscheme buttonTheme dividerTheme menuTheme state attrs menu
             , onLoseFocus = OUI.MenuButton.getOnLoseFocus menuBtn
             , openCloseIcons = OUI.MenuButton.getOpenCloseIcons menuBtn
             }
-
-        ( alignBottom, alignRight ) =
-            case props.menuAlign of
-                OUI.MenuButton.AlignTopLeft ->
-                    ( False, False )
-
-                OUI.MenuButton.AlignTopRight ->
-                    ( False, True )
-
-                OUI.MenuButton.AlignBottomLeft ->
-                    ( True, False )
-
-                OUI.MenuButton.AlignBottomRight ->
-                    ( True, True )
     in
     Button.render typescale
         colorscheme
@@ -76,6 +62,21 @@ render typescale colorscheme buttonTheme dividerTheme menuTheme state attrs menu
             :: Element.Events.onLoseFocus props.onLoseFocus
             :: attrs
             ++ (if state.opened then
+                    let
+                        ( alignBottom, alignRight ) =
+                            case props.menuAlign of
+                                OUI.MenuButton.AlignTopLeft ->
+                                    ( False, False )
+
+                                OUI.MenuButton.AlignTopRight ->
+                                    ( False, True )
+
+                                OUI.MenuButton.AlignBottomLeft ->
+                                    ( True, False )
+
+                                OUI.MenuButton.AlignBottomRight ->
+                                    ( True, True )
+                    in
                     [ (if alignBottom then
                         Element.below
 

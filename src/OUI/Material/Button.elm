@@ -217,12 +217,10 @@ iconButtonAttrs layout =
 
 
 elevatedAttrs :
-    OUI.Material.Typography.Typescale
-    -> OUI.Material.Color.Scheme
-    -> Layout
+    OUI.Material.Color.Scheme
     -> OUI.Color
     -> List (Attribute msg)
-elevatedAttrs _ colorscheme _ color =
+elevatedAttrs colorscheme color =
     let
         ( frontColor, backColor ) =
             btnColors colorscheme OUI.Button.Elevated color False
@@ -263,12 +261,10 @@ elevatedAttrs _ colorscheme _ color =
 
 
 elevatedDisabledAttrs :
-    OUI.Material.Typography.Typescale
-    -> OUI.Material.Color.Scheme
+    OUI.Material.Color.Scheme
     -> OUI.Color
-    -> Layout
     -> List (Attribute msg)
-elevatedDisabledAttrs _ colorscheme color _ =
+elevatedDisabledAttrs colorscheme color =
     let
         ( frontColor, backColor ) =
             btnColors colorscheme OUI.Button.Elevated OUI.Primary True
@@ -286,12 +282,10 @@ elevatedDisabledAttrs _ colorscheme color _ =
 
 
 filledAttrs :
-    OUI.Material.Typography.Typescale
-    -> OUI.Material.Color.Scheme
-    -> Layout
+    OUI.Material.Color.Scheme
     -> OUI.Color
     -> List (Attribute msg)
-filledAttrs _ colorscheme _ color =
+filledAttrs colorscheme color =
     let
         ( frontColor, backColor ) =
             btnColors colorscheme OUI.Button.Filled color False
@@ -326,12 +320,10 @@ filledAttrs _ colorscheme _ color =
 
 
 filledDisabledAttrs :
-    OUI.Material.Typography.Typescale
-    -> OUI.Material.Color.Scheme
+    OUI.Material.Color.Scheme
     -> OUI.Color
-    -> Layout
     -> List (Attribute msg)
-filledDisabledAttrs _ colorscheme color _ =
+filledDisabledAttrs colorscheme color =
     let
         ( frontColor, backColor ) =
             btnColors colorscheme OUI.Button.Filled OUI.Primary True
@@ -349,12 +341,10 @@ filledDisabledAttrs _ colorscheme color _ =
 
 
 outlinedAttrs :
-    OUI.Material.Typography.Typescale
-    -> OUI.Material.Color.Scheme
-    -> Layout
+    OUI.Material.Color.Scheme
     -> OUI.Color
     -> List (Attribute msg)
-outlinedAttrs _ colorscheme _ color =
+outlinedAttrs colorscheme color =
     [ Border.width 1
     , Border.color <| OUI.Material.Color.toElementColor colorscheme.outline
     , Font.color <| OUI.Material.Color.getElementColor color colorscheme
@@ -386,12 +376,10 @@ outlinedAttrs _ colorscheme _ color =
 
 
 outlinedDisabledAttrs :
-    OUI.Material.Typography.Typescale
-    -> OUI.Material.Color.Scheme
+    OUI.Material.Color.Scheme
     -> OUI.Color
-    -> Layout
     -> List (Attribute msg)
-outlinedDisabledAttrs _ colorscheme color _ =
+outlinedDisabledAttrs colorscheme color =
     [ Border.width 1
     , Border.color <|
         OUI.Material.Color.toElementColor <|
@@ -410,12 +398,10 @@ outlinedDisabledAttrs _ colorscheme color _ =
 
 
 textAttrs :
-    OUI.Material.Typography.Typescale
-    -> OUI.Material.Color.Scheme
-    -> Layout
+    OUI.Material.Color.Scheme
     -> OUI.Color
     -> List (Attribute msg)
-textAttrs _ colorscheme _ color =
+textAttrs colorscheme color =
     [ Font.color <| OUI.Material.Color.getElementColor color colorscheme
     , Element.focused
         [ OUI.Material.Color.getSurfaceColor color colorscheme
@@ -445,12 +431,10 @@ textAttrs _ colorscheme _ color =
 
 
 textDisabledAttrs :
-    OUI.Material.Typography.Typescale
-    -> OUI.Material.Color.Scheme
+    OUI.Material.Color.Scheme
     -> OUI.Color
-    -> Layout
     -> List (Attribute msg)
-textDisabledAttrs _ colorscheme color _ =
+textDisabledAttrs colorscheme color =
     [ Font.color <|
         OUI.Material.Color.toElementColor <|
             OUI.Material.Color.setAlpha 0.38 (OUI.Material.Color.getOnSurfaceColor color colorscheme)
@@ -696,59 +680,59 @@ renderProps typescale colorscheme theme rightIcon attrs props =
                 ++ (case ( props.type_, props.action ) of
                         ( OUI.Button.Elevated, OUI.Button.Disabled ) ->
                             layoutAttrs typescale colorscheme theme.common hasIcon
-                                ++ elevatedDisabledAttrs typescale colorscheme props.color theme.common
+                                ++ elevatedDisabledAttrs colorscheme props.color
 
                         ( OUI.Button.Elevated, _ ) ->
                             layoutAttrs typescale colorscheme theme.common hasIcon
-                                ++ elevatedAttrs typescale colorscheme theme.common props.color
+                                ++ elevatedAttrs colorscheme props.color
 
                         ( OUI.Button.Filled, OUI.Button.Disabled ) ->
                             layoutAttrs typescale colorscheme theme.common hasIcon
-                                ++ filledDisabledAttrs typescale colorscheme props.color theme.common
+                                ++ filledDisabledAttrs colorscheme props.color
 
                         ( OUI.Button.Filled, _ ) ->
                             layoutAttrs typescale colorscheme theme.common hasIcon
-                                ++ filledAttrs typescale colorscheme theme.common props.color
+                                ++ filledAttrs colorscheme props.color
 
                         ( OUI.Button.FilledIcon, OUI.Button.Disabled ) ->
                             iconButtonAttrs theme.icon
-                                ++ filledDisabledAttrs typescale colorscheme props.color theme.common
+                                ++ filledDisabledAttrs colorscheme props.color
 
                         ( OUI.Button.FilledIcon, _ ) ->
                             iconButtonAttrs theme.icon
-                                ++ filledAttrs typescale colorscheme theme.common props.color
+                                ++ filledAttrs colorscheme props.color
 
                         ( OUI.Button.Outlined, OUI.Button.Disabled ) ->
                             layoutAttrs typescale colorscheme theme.common hasIcon
-                                ++ outlinedDisabledAttrs typescale colorscheme props.color theme.common
+                                ++ outlinedDisabledAttrs colorscheme props.color
 
                         ( OUI.Button.Outlined, _ ) ->
                             layoutAttrs typescale colorscheme theme.common hasIcon
-                                ++ outlinedAttrs typescale colorscheme theme.common props.color
+                                ++ outlinedAttrs colorscheme props.color
 
                         ( OUI.Button.OutlinedIcon, OUI.Button.Disabled ) ->
                             iconButtonAttrs theme.icon
-                                ++ outlinedDisabledAttrs typescale colorscheme props.color theme.common
+                                ++ outlinedDisabledAttrs colorscheme props.color
 
                         ( OUI.Button.OutlinedIcon, _ ) ->
                             iconButtonAttrs theme.icon
-                                ++ outlinedAttrs typescale colorscheme theme.common props.color
+                                ++ outlinedAttrs colorscheme props.color
 
                         ( OUI.Button.Text, OUI.Button.Disabled ) ->
                             layoutAttrs typescale colorscheme theme.common hasIcon
-                                ++ textDisabledAttrs typescale colorscheme props.color theme.common
+                                ++ textDisabledAttrs colorscheme props.color
 
                         ( OUI.Button.Text, _ ) ->
                             layoutAttrs typescale colorscheme theme.common hasIcon
-                                ++ textAttrs typescale colorscheme theme.common props.color
+                                ++ textAttrs colorscheme props.color
 
                         ( OUI.Button.Icon, OUI.Button.Disabled ) ->
                             iconButtonAttrs theme.icon
-                                ++ textDisabledAttrs typescale colorscheme props.color theme.common
+                                ++ textDisabledAttrs colorscheme props.color
 
                         ( OUI.Button.Icon, _ ) ->
                             iconButtonAttrs theme.icon
-                                ++ textAttrs typescale colorscheme theme.common props.color
+                                ++ textAttrs colorscheme props.color
 
                         ( OUI.Button.SmallFAB, _ ) ->
                             fabLayoutAttrs theme.fab.small

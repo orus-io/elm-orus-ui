@@ -51,24 +51,6 @@ render colorscheme theme attrs slider =
         value =
             Slider.getValue slider
 
-        thumbAttrs : List (Attribute Never)
-        thumbAttrs =
-            [ Element.width <| Element.px theme.trackHeight
-            , Element.height <| Element.px theme.handleHeight
-            , Element.pointer
-            , Element.inFront <|
-                Element.el
-                    [ Element.width <| Element.px theme.handleWidth
-                    , Element.height <| Element.px theme.handleHeight
-                    , Element.centerX
-                    , Border.rounded theme.handleWidth
-                    , Background.color <|
-                        OUI.Material.Color.toElementColor <|
-                            OUI.Material.Color.getColor color colorscheme
-                    ]
-                    Element.none
-            ]
-
         trackDot : Color.Color -> Element msg
         trackDot dotColor =
             Element.el
@@ -178,6 +160,25 @@ render colorscheme theme attrs slider =
     in
     case onChange of
         Just fn ->
+            let
+                thumbAttrs : List (Attribute Never)
+                thumbAttrs =
+                    [ Element.width <| Element.px theme.trackHeight
+                    , Element.height <| Element.px theme.handleHeight
+                    , Element.pointer
+                    , Element.inFront <|
+                        Element.el
+                            [ Element.width <| Element.px theme.handleWidth
+                            , Element.height <| Element.px theme.handleHeight
+                            , Element.centerX
+                            , Border.rounded theme.handleWidth
+                            , Background.color <|
+                                OUI.Material.Color.toElementColor <|
+                                    OUI.Material.Color.getColor color colorscheme
+                            ]
+                            Element.none
+                    ]
+            in
             Input.slider (attrs ++ trackAttrs)
                 { onChange = fn
                 , label = Input.labelHidden ""
