@@ -1,0 +1,12 @@
+[tools]
+elm = "0.19.2"
+"github:zwilias/elm-json" = "latest"
+"npm:elm-review" = "2.11.2"
+
+[tasks.build]
+description = "Build the library"
+run = "elm make"
+
+[tasks.lint]
+description = "Run elm-review"
+run = "elm-review"
