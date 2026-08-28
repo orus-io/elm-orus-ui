@@ -68,17 +68,7 @@ url_api = "https://api.github.com/repos/zwilias/elm-json/releases/assets/8101431
 url = "https://github.com/zwilias/elm-json/releases/download/v0.2.13/elm-json-v0.2.13-x86_64-pc-windows-msvc.tar.gz"
 url_api = "https://api.github.com/repos/zwilias/elm-json/releases/assets/81014311"
 
-[[tools."npm:@lydell/elm-json"]]
-version = "0.2.13-1"
-backend = "npm:@lydell/elm-json"
-specifiers = ["0.2.13-1"]
-
-[[tools."npm:elm-json"]]
-version = "0.2.13"
-backend = "npm:elm-json"
-specifiers = ["0.2.13"]
-
 [[tools."npm:elm-review"]]
-version = "2.11.2"
+version = "2.13.5"
 backend = "npm:elm-review"
-specifiers = ["2.11.2"]
+specifiers = ["2.13.5"]

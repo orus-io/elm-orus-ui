@@ -1,7 +1,7 @@
 [tools]
 elm = "0.19.2"
 "github:zwilias/elm-json" = "latest"
-"npm:elm-review" = "2.11.2"
+"npm:elm-review" = "2.13.5"
 
 [tasks.build]
 description = "Build the library"
