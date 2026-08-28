@@ -1,0 +1,11 @@
+{
+    "$schema": "https://opencode.ai/config.json",
+    "permission": {
+        "bash": {
+            "mise run lint": "allow",
+            "mise run build": "allow",
+            "mise run format-validate": "allow",
+            "mise run review": "allow"
+        }
+    }
+}
