@@ -42,6 +42,46 @@ checksum = "sha256:47830fe67a8cca55ce82da4e04c29d150f5725b92b0a354b83121d6903ff6
 url = "https://github.com/elm/compiler/releases/download/0.19.2/elm-0.19.2-windows-x64.gz"
 url_api = "https://api.github.com/repos/elm/compiler/releases/assets/467829002"
 
+[[tools."github:avh4/elm-format"]]
+version = "0.8.8"
+backend = "github:avh4/elm-format"
+specifiers = ["0.8.8"]
+
+[tools."github:avh4/elm-format"."platforms.linux-arm64"]
+checksum = "sha256:0be0046a81432e6e16340b8093cafa35a454e84956522d53f6a28f815dceac23"
+url = "https://github.com/avh4/elm-format/releases/download/0.8.8/elm-format-0.8.8-linux-aarch64.tgz"
+url_api = "https://api.github.com/repos/avh4/elm-format/releases/assets/265282228"
+
+[tools."github:avh4/elm-format"."platforms.linux-arm64-musl"]
+checksum = "sha256:0be0046a81432e6e16340b8093cafa35a454e84956522d53f6a28f815dceac23"
+url = "https://github.com/avh4/elm-format/releases/download/0.8.8/elm-format-0.8.8-linux-aarch64.tgz"
+url_api = "https://api.github.com/repos/avh4/elm-format/releases/assets/265282228"
+
+[tools."github:avh4/elm-format"."platforms.linux-x64"]
+checksum = "sha256:ee749898a07871e5dcbe7adf77a6c3d95de2fcde2e15de30e4fa7457faf05a71"
+url = "https://github.com/avh4/elm-format/releases/download/0.8.8/elm-format-0.8.8-linux-x64.tgz"
+url_api = "https://api.github.com/repos/avh4/elm-format/releases/assets/265282232"
+
+[tools."github:avh4/elm-format"."platforms.linux-x64-musl"]
+checksum = "sha256:ee749898a07871e5dcbe7adf77a6c3d95de2fcde2e15de30e4fa7457faf05a71"
+url = "https://github.com/avh4/elm-format/releases/download/0.8.8/elm-format-0.8.8-linux-x64.tgz"
+url_api = "https://api.github.com/repos/avh4/elm-format/releases/assets/265282232"
+
+[tools."github:avh4/elm-format"."platforms.macos-arm64"]
+checksum = "sha256:230bbf3777191f631bb592dfe85c06ebdcff6f56e8f5ed8b29804f8938961a79"
+url = "https://github.com/avh4/elm-format/releases/download/0.8.8/elm-format-0.8.8-mac-arm64.tgz"
+url_api = "https://api.github.com/repos/avh4/elm-format/releases/assets/265282242"
+
+[tools."github:avh4/elm-format"."platforms.macos-x64"]
+checksum = "sha256:e2a1fcf041ee12fc5d24a99520531e98c28358c8b7e62ecdccb9dd64b51fe084"
+url = "https://github.com/avh4/elm-format/releases/download/0.8.8/elm-format-0.8.8-mac-x64.tgz"
+url_api = "https://api.github.com/repos/avh4/elm-format/releases/assets/265282244"
+
+[tools."github:avh4/elm-format"."platforms.windows-x64"]
+checksum = "sha256:4a2d0eb0529944fbfb7974943df5a03881ec4b67501a631e1272aa9fd746bc82"
+url = "https://github.com/avh4/elm-format/releases/download/0.8.8/elm-format-0.8.8-win-x64.zip"
+url_api = "https://api.github.com/repos/avh4/elm-format/releases/assets/265282248"
+
 [[tools."github:zwilias/elm-json"]]
 version = "0.2.13"
 backend = "github:zwilias/elm-json"

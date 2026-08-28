@@ -1,5 +1,6 @@
 [tools]
 elm = "0.19.2"
+"github:avh4/elm-format" = "0.8.8"
 "github:zwilias/elm-json" = "latest"
 "npm:elm-review" = "2.13.5"
 
@@ -7,6 +8,14 @@ elm = "0.19.2"
 description = "Build the library"
 run = "elm make"
 
-[tasks.lint]
+[tasks.review]
 description = "Run elm-review"
 run = "elm-review"
+
+[tasks.format-validate]
+description = "Run elm-format --validate"
+run = "elm-format --validate src"
+
+[tasks.lint]
+description = "Run all linters"
+depends = ["format-validate", "review"]

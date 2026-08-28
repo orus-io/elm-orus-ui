@@ -1,9 +1,9 @@
 module OUI.TextField exposing
     ( TextField, Datatype(..), Type(..), new
     , multiline, search, username, email, password, newPassword
-    , withColor, withType, withSupportingText, withFocused, withLeadingIcon, withTrailingIcon, withClickableTrailingIcon, withErrorIcon, withID
+    , withID, withColor, withType, withSupportingText, withFocused, withLeadingIcon, withTrailingIcon, withClickableTrailingIcon, withErrorIcon
     , onFocusBlur
-    , getOnChange, getDatatype, getLabel, getSpellcheck, getColor, getErrorIcon, getHasFocus, getLeadingIcon, getOnFocus, getOnLoseFocus, getOnTrailingIconClick, getSupportingText, getTrailingIcon, getType, getValue, getID
+    , getID, getOnChange, getDatatype, getLabel, getSpellcheck, getColor, getErrorIcon, getHasFocus, getLeadingIcon, getOnFocus, getOnLoseFocus, getOnTrailingIconClick, getSupportingText, getTrailingIcon, getType, getValue
     )
 
 {-| A [Text Field](https://m3.material.io/components/text-fields) component
@@ -66,7 +66,7 @@ new : String -> (String -> msg) -> String -> TextField msg
 new label onChange value =
     TextField
         { id = Nothing
-        ,onChange = onChange
+        , onChange = onChange
         , label = label
         , datatype = Text
         , spellcheck = False
@@ -159,9 +159,10 @@ withSupportingText value (TextField props) =
 -}
 withID : String -> TextField msg -> TextField msg
 withID value (TextField props) =
-    TextField 
-    { props
-        | id = Just value}
+    TextField
+        { props
+            | id = Just value
+        }
 
 
 {-| set the onFocus / onLoseFocus events
@@ -256,7 +257,7 @@ newPassword show (TextField props) =
 {-| Properties of the TextField component
 -}
 type alias Properties msg =
-    { id: Maybe String
+    { id : Maybe String
     , onChange : String -> msg
     , label : String
     , datatype : Datatype
@@ -278,8 +279,9 @@ type alias Properties msg =
 {-| Get the input ID
 -}
 getID : TextField msg -> Maybe String
-getID (TextField {id}) =
+getID (TextField { id }) =
     id
+
 
 {-| Get the on change msg
 -}

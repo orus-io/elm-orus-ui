@@ -469,9 +469,10 @@ render typescale colorscheme buttonTheme theme attrs textfield =
                     else
                         []
                    )
-                ++ (p.id |> Maybe.map (List.singleton<<Element.htmlAttribute << Html.Attributes.id)
-                |> Maybe.withDefault []
-                    )
+                ++ (p.id
+                        |> Maybe.map (List.singleton << Element.htmlAttribute << Html.Attributes.id)
+                        |> Maybe.withDefault []
+                   )
     in
     Element.column
         (Element.spacing theme.supportingTextTopPadding
