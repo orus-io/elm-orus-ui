@@ -6,7 +6,7 @@ elm = "0.19.2"
 
 [tasks.build]
 description = "Build the library"
-run = "elm make"
+run = ["elm make --docs docs.json"]
 
 [tasks.review]
 description = "Run elm-review"
