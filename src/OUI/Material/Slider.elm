@@ -182,8 +182,8 @@ render colorscheme theme attrs slider =
             Input.slider (attrs ++ trackAttrs)
                 { onChange = fn
                 , label = Input.labelHidden ""
-                , min = 0
-                , max = 100
+                , min = minValue
+                , max = maxValue
                 , value = value
                 , thumb = Input.thumb thumbAttrs
                 , step = step |> Maybe.map Tuple.first
