@@ -622,6 +622,14 @@ renderProps typescale colorscheme theme rightIcon attrs props =
             let
                 ( size, color ) =
                     iconSizeColor colorscheme theme props.type_ props.color (props.action == OUI.Button.Disabled)
+
+                iconColor icon =
+                    OUI.Icon.getColor icon
+                        |> Maybe.map
+                            (\c ->
+                                OUI.Material.Color.getColor c colorscheme
+                            )
+                        |> Maybe.withDefault color
             in
             case ( iconOnly props.type_, props.icon, rightIcon ) of
                 ( _, Nothing, Nothing ) ->
@@ -634,7 +642,7 @@ renderProps typescale colorscheme theme rightIcon attrs props =
 
                 ( True, _, Just icon ) ->
                     Icon.renderWithSizeColor size
-                        color
+                        (iconColor icon)
                         [ Element.centerX
                         , Element.centerY
                         ]
@@ -642,7 +650,7 @@ renderProps typescale colorscheme theme rightIcon attrs props =
 
                 ( True, Just icon, _ ) ->
                     Icon.renderWithSizeColor size
-                        color
+                        (iconColor icon)
                         [ Element.centerX
                         , Element.centerY
                         ]
@@ -651,20 +659,24 @@ renderProps typescale colorscheme theme rightIcon attrs props =
                 ( False, icon, rIcon ) ->
                     [ icon
                         |> Maybe.map
-                            (Icon.renderWithSizeColor size
-                                color
-                                [ Element.centerX
-                                , Element.centerY
-                                ]
+                            (\i ->
+                                Icon.renderWithSizeColor size
+                                    (iconColor i)
+                                    [ Element.centerX
+                                    , Element.centerY
+                                    ]
+                                    i
                             )
                     , Just (Element.text props.text)
                     , rIcon
                         |> Maybe.map
-                            (Icon.renderWithSizeColor size
-                                color
-                                [ Element.centerX
-                                , Element.centerY
-                                ]
+                            (\i ->
+                                Icon.renderWithSizeColor size
+                                    (iconColor i)
+                                    [ Element.centerX
+                                    , Element.centerY
+                                    ]
+                                    i
                             )
                     ]
                         |> List.filterMap identity
