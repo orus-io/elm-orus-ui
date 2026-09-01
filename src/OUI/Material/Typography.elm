@@ -49,11 +49,32 @@ typographyAttrs typography =
     -- TODO take inspiration from Paack-UI.Text
     [ Font.family [ Font.typeface typography.font ]
     , Font.size typography.size
-    , if typography.weight == 500 then
+    , if typography.weight <= 150 then
+        Font.hairline
+
+      else if typography.weight <= 250 then
+        Font.extraLight
+
+      else if typography.weight <= 350 then
+        Font.light
+
+      else if typography.weight <= 450 then
+        Font.regular
+
+      else if typography.weight <= 550 then
         Font.medium
 
+      else if typography.weight <= 650 then
+        Font.semiBold
+
+      else if typography.weight <= 750 then
+        Font.bold
+
+      else if typography.weight <= 850 then
+        Font.extraBold
+
       else
-        Font.regular
+        Font.heavy
     ]
 
 
